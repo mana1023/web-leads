@@ -212,9 +212,9 @@ export default function BuscarPage() {
   const whatsappUrl = (r: Resultado): string | null => {
     if (!r.telefono) return null
     const phone = r.telefono.replace(/\D/g, '')
-    const nombre = settings.nombre || 'un desarrollador web'
-    const agencia = settings.agencia ? ` de ${settings.agencia}` : ''
-    const msg = `Hola ${r.nombre}, soy ${nombre}${agencia}. Vi que no tenes pagina web y me gustaria ayudarte a crear una profesional. Tenes un momento para hablar?`
+    const nombre = settings.nombre || 'un programador web'
+    const agencia = settings.agencia ? ` — ${settings.agencia}` : ''
+    const msg = `Hola ${r.nombre} 👋 Soy ${nombre}${agencia}, programador web freelance. Vi que todavia no tenes tu propia pagina web y me gustaria ayudarte con eso.\n\nCreo sitios modernos, rapidos y personalizados:\n✔ Diseno profesional desde cero\n✔ Adaptado para celulares 📱\n✔ Optimizado para atraer clientes\n✔ Precio accesible y entrega rapida\n\nTe paso una propuesta sin compromiso 🙂 Tenes un momento para hablar?`
     return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`
   }
 

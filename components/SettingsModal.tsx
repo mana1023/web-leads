@@ -63,7 +63,7 @@ export default function SettingsModal({ open, onClose }: Props) {
         </div>
         <div className="bg-green-50 rounded-xl p-3">
           <p className="text-xs font-semibold text-green-800 mb-1">Tu mensaje de WhatsApp:</p>
-          <p className="text-xs text-green-700 italic">"Hola [Negocio], soy {nombre || 'tu nombre'} de {agencia || 'tu agencia'}. Vi que no tenes pagina web y me gustaria ayudarte a crear una profesional. Tenes un momento para hablar?"</p>
+          <p className="text-xs text-green-700 italic whitespace-pre-line">{`Hola [Negocio] 👋 Soy ${nombre || 'tu nombre'}${agencia ? ` — ${agencia}` : ''}, programador web freelance. Vi que todavia no tenes tu propia pagina web y me gustaria ayudarte.\n\n✔ Diseno profesional desde cero\n✔ Adaptado para celulares 📱\n✔ Precio accesible\n\nTe paso una propuesta sin compromiso 🙂`}</p>
         </div>
         <button onClick={guardar} className={`w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm transition-colors ${guardado ? 'bg-green-600 text-white' : 'bg-blue-700 hover:bg-blue-800 text-white'}`}>
           <Save size={16} />
