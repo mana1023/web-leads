@@ -1,8 +1,9 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Lead, LeadEstado } from '@/types/lead'
 import EstadoBadge from './EstadoBadge'
-import { Phone, Globe, ChevronDown, ChevronUp, Trash2, MessageCircle } from 'lucide-react'
+import { Phone, Globe, ChevronDown, ChevronUp, Trash2 } from 'lucide-react'
+import { getSettings } from './SettingsModal'
 
 const ESTADOS: LeadEstado[] = ['nuevo', 'contactado', 'en_proceso', 'vendido', 'descartado']
 const ESTADO_LABELS: Record<LeadEstado, string> = {
@@ -23,6 +24,11 @@ export default function LeadCard({ lead, onUpdate, onDelete }: Props) {
   const [expandido, setExpandido] = useState(false)
   const [notas, setNotas] = useState(lead.notas || '')
   const [guardandoNotas, setGuardandoNotas] = useState(false)
+  const [settings, setSettings] = useState({ nombre: '', agencia: '' })
+
+  useEffect(() => {
+    setSettings(getSettings())
+  }, [])
 
   const guardarNotas = async () => {
     setGuardandoNotas(true)
@@ -30,11 +36,16 @@ export default function LeadCard({ lead, onUpdate, onDelete }: Props) {
     setGuardandoNotas(false)
   }
 
-  const whatsappUrl = lead.telefono
-    ? `https://wa.me/${lead.telefono.replace(/\D/g, '')}?text=${encodeURIComponent(
-        `Hola ${lead.nombre}, te contacto porque vi que no tenés página web y podría ayudarte a crear una. ¿Tenés un momento para hablar?`
-      )}`
-    : null
+  const buildWhatsappUrl = () => {
+    if (!lead.telefono) return null
+    const phone = lead.telefono.replace(/\D/g, '')
+    const nombre = settings.nombre || 'un desarrollador web'
+    const agencia = settings.agencia ? ` de ${settings.agencia}` : ''
+    const msg = `Hola ${lead.nombre}, soy ${nombre}${agencia}. Vi que no tenés página web y me gustaría ayudarte a crear una profesional. ¿Tenés un momento para hablar?`
+    return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`
+  }
+
+  const whatsappUrl = buildWhatsappUrl()
 
   return (
     <div className={`bg-white rounded-2xl shadow-sm border overflow-hidden transition-all ${
@@ -79,7 +90,7 @@ export default function LeadCard({ lead, onUpdate, onDelete }: Props) {
                   rel="noopener noreferrer"
                   className="flex-1 flex items-center justify-center gap-1.5 bg-green-100 hover:bg-green-200 text-green-700 text-sm py-2 rounded-xl transition-colors"
                 >
-                  <MessageCircle size={14} /> WhatsApp
+                  💬 WhatsApp
                 </a>
               )}
             </>
@@ -89,14 +100,14 @@ export default function LeadCard({ lead, onUpdate, onDelete }: Props) {
               href={lead.website_actual}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-1.5 bg-orange-100 hover:bg-orange-200 text-orange-700 text-sm px-3 py-2 rounded-xl transition-colors"
+              className="flex items-center justify-center bg-orange-100 hover:bg-orange-200 text-orange-700 text-sm px-3 py-2 rounded-xl transition-colors"
             >
               <Globe size={14} />
             </a>
           )}
           <button
             onClick={() => setExpandido(!expandido)}
-            className="flex items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 text-gray-600 text-sm px-3 py-2 rounded-xl transition-colors"
+            className="flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-gray-600 text-sm px-3 py-2 rounded-xl transition-colors"
           >
             {expandido ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
           </button>
@@ -108,7 +119,7 @@ export default function LeadCard({ lead, onUpdate, onDelete }: Props) {
         <div className="border-t border-gray-100 p-4 space-y-3 bg-gray-50">
           {/* Cambiar estado */}
           <div>
-            <p className="text-xs font-semibold text-gray-500 mb-2">CAMBIAR ESTADO</p>
+            <p className="text-xs font-semibold text-gray-500 mb-2">MOVER A</p>
             <div className="flex flex-wrap gap-1.5">
               {ESTADOS.map(e => (
                 <button
