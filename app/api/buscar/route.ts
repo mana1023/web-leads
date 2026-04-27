@@ -18,6 +18,25 @@ const BUSINESS_TYPES = [
 
 const FIELDS = 'places.id,places.displayName,places.formattedAddress,places.nationalPhoneNumber,places.websiteUri,places.types,places.rating,places.userRatingCount,places.location'
 
+// Dominios que NO cuentan como página web real
+const SOCIAL_DOMAINS = [
+  'instagram.com', 'facebook.com', 'fb.com', 'twitter.com', 'x.com',
+  'tiktok.com', 'youtube.com', 'linkedin.com', 'pinterest.com',
+  'wa.me', 'whatsapp.com', 'linktr.ee', 'linktree.com',
+  'maps.google.com', 'goo.gl', 'g.page',
+  'tripadvisor.com', 'yelp.com', 'booking.com', 'mercadolibre.com',
+]
+
+function tieneWebReal(websiteUri?: string): boolean {
+  if (!websiteUri) return false
+  try {
+    const host = new URL(websiteUri).hostname.replace('www.', '').toLowerCase()
+    return !SOCIAL_DOMAINS.some(d => host === d || host.endsWith('.' + d))
+  } catch {
+    return false
+  }
+}
+
 function haversine(lat1: number, lon1: number, lat2: number, lon2: number): number {
   const R = 6371000
   const phi1 = lat1 * Math.PI / 180
@@ -30,7 +49,7 @@ function haversine(lat1: number, lon1: number, lat2: number, lon2: number): numb
 
 function needScore(p: any): number {
   let score = 0
-  if (!p.websiteUri) score += 20
+  if (!tieneWebReal(p.websiteUri)) score += 20
   if (p.nationalPhoneNumber) score += 5
   const rating = p.rating || 0
   const reviews = p.userRatingCount || 0
@@ -101,8 +120,8 @@ export async function GET(req: NextRequest) {
       return true
     })
 
-    // Solo potenciales: sin web, con minimo puntaje
-    const potenciales = unique.filter(p => !p.websiteUri && needScore(p) >= 5)
+    // Solo potenciales: sin web real (Instagram/Facebook no cuentan), con minimo puntaje
+    const potenciales = unique.filter(p => !tieneWebReal(p.websiteUri) && needScore(p) >= 5)
 
     // Calcular distancia y formatear
     const results = potenciales.map(p => {
@@ -120,7 +139,7 @@ export async function GET(req: NextRequest) {
         direccion: p.formattedAddress || undefined,
         categoria,
         website: p.websiteUri || undefined,
-        tiene_web: !!p.websiteUri,
+        tiene_web: tieneWebReal(p.websiteUri),
         tipo_web_sugerida: suggestion.tipo,
         descripcion_propuesta: suggestion.descripcion,
         precio_estimado: suggestion.precio,
