@@ -1,6 +1,6 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { MapPin, Loader2, Plus, Check, Globe, Zap } from 'lucide-react'
+import { useState, useEffect, useCallback } from 'react'
+import { Loader2, RefreshCw, Plus, Check, ChevronDown, ChevronUp } from 'lucide-react'
 import { getSettings } from '@/components/SettingsModal'
 
 interface Resultado {
@@ -17,23 +17,140 @@ interface Resultado {
   rating?: number
   total_ratings?: number
   need_score: number
+  distancia: number
+}
+
+function distanciaLabel(metros: number): string {
+  if (metros < 1000) return `${metros}m`
+  return `${(metros / 1000).toFixed(1)}km`
+}
+
+function CategoriaSection({
+  categoria,
+  leads,
+  guardados,
+  guardando,
+  onGuardar,
+  onWhatsApp,
+}: {
+  categoria: string
+  leads: Resultado[]
+  guardados: Set<string>
+  guardando: Set<string>
+  onGuardar: (r: Resultado) => void
+  onWhatsApp: (r: Resultado) => string | null
+}) {
+  const [expandido, setExpandido] = useState(true)
+
+  return (
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+      <button
+        onClick={() => setExpandido(v => !v)}
+        className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-100"
+      >
+        <div className="flex items-center gap-2">
+          <span className="font-bold text-gray-800 text-sm">{categoria}</span>
+          <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-medium">{leads.length}</span>
+        </div>
+        <div className="flex items-center gap-1 text-xs text-gray-400">
+          <span>desde {distanciaLabel(leads[0].distancia)}</span>
+          {expandido ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+        </div>
+      </button>
+
+      {expandido && (
+        <div className="divide-y divide-gray-50">
+          {leads.map(r => (
+            <div key={r.place_id} className="p-4 space-y-2.5">
+              {/* Header negocio */}
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-gray-900 text-sm leading-tight">{r.nombre}</h3>
+                  {r.direccion && (
+                    <p className="text-xs text-gray-400 truncate mt-0.5">📍 {r.direccion}</p>
+                  )}
+                </div>
+                <span className="shrink-0 text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-lg">
+                  {distanciaLabel(r.distancia)}
+                </span>
+              </div>
+
+              {r.rating !== undefined && (
+                <p className="text-xs text-gray-400">
+                  ⭐ {r.rating} ({r.total_ratings ?? 0} reseñas)
+                </p>
+              )}
+
+              {/* Propuesta */}
+              <div className="bg-blue-50 rounded-xl p-3">
+                <p className="text-xs font-semibold text-blue-800">💡 Podés ofrecerle:</p>
+                <p className="text-sm font-medium text-blue-900 mt-0.5">{r.tipo_web_sugerida}</p>
+                <p className="text-xs text-blue-700 mt-0.5">{r.descripcion_propuesta}</p>
+                <p className="text-xs font-bold text-blue-800 mt-1">💰 {r.precio_estimado}</p>
+              </div>
+
+              {/* Acciones */}
+              <div className="flex gap-2">
+                {r.telefono && (
+                  <>
+                    <a
+                      href={`tel:${r.telefono}`}
+                      className="flex-1 flex items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs py-2 rounded-xl transition-colors font-medium"
+                    >
+                      📞 Llamar
+                    </a>
+                    {onWhatsApp(r) && (
+                      <a
+                        href={onWhatsApp(r)!}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 flex items-center justify-center gap-1 bg-green-100 hover:bg-green-200 text-green-700 text-xs py-2 rounded-xl transition-colors font-medium"
+                      >
+                        💬 WhatsApp
+                      </a>
+                    )}
+                  </>
+                )}
+              </div>
+
+              <button
+                onClick={() => onGuardar(r)}
+                disabled={guardados.has(r.place_id) || guardando.has(r.place_id)}
+                className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-xl font-medium text-xs transition-colors ${
+                  guardados.has(r.place_id)
+                    ? 'bg-green-100 text-green-700 cursor-default'
+                    : 'bg-gray-900 hover:bg-gray-700 text-white'
+                }`}
+              >
+                {guardados.has(r.place_id) ? (
+                  <><Check size={13} /> Guardado en pendientes</>
+                ) : guardando.has(r.place_id) ? (
+                  <Loader2 size={13} className="animate-spin" />
+                ) : (
+                  <><Plus size={13} /> Guardar como lead</>
+                )}
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
 }
 
 export default function BuscarPage() {
-  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null)
   const [resultados, setResultados] = useState<Resultado[]>([])
   const [buscando, setBuscando] = useState(false)
   const [error, setError] = useState('')
   const [guardados, setGuardados] = useState<Set<string>>(new Set())
   const [guardando, setGuardando] = useState<Set<string>>(new Set())
-  const [soloSinWeb, setSoloSinWeb] = useState(true)
   const [settings, setSettings] = useState({ nombre: '', agencia: '' })
 
   useEffect(() => {
     setSettings(getSettings())
   }, [])
 
-  const buscar = () => {
+  const buscar = useCallback(() => {
     setError('')
     setBuscando(true)
     setResultados([])
@@ -42,8 +159,6 @@ export default function BuscarPage() {
       async (pos) => {
         const lat = pos.coords.latitude
         const lng = pos.coords.longitude
-        setCoords({ lat, lng })
-
         try {
           const res = await fetch(`/api/buscar?lat=${lat}&lng=${lng}`)
           const data = await res.json()
@@ -56,11 +171,17 @@ export default function BuscarPage() {
         }
       },
       () => {
-        setError('No se pudo obtener tu ubicación. Activá el GPS e intentá de nuevo.')
+        setError('No se pudo obtener tu ubicacion. Activa el GPS e intenta de nuevo.')
         setBuscando(false)
-      }
+      },
+      { timeout: 10000 }
     )
-  }
+  }, [])
+
+  // Auto-cargar al abrir la pagina
+  useEffect(() => {
+    buscar()
+  }, [buscar])
 
   const guardarLead = async (r: Resultado) => {
     setGuardando(prev => new Set([...prev, r.place_id]))
@@ -88,146 +209,104 @@ export default function BuscarPage() {
     }
   }
 
-  const whatsappUrl = (r: Resultado) => {
+  const whatsappUrl = (r: Resultado): string | null => {
     if (!r.telefono) return null
     const phone = r.telefono.replace(/\D/g, '')
     const nombre = settings.nombre || 'un desarrollador web'
     const agencia = settings.agencia ? ` de ${settings.agencia}` : ''
-    const msg = `Hola ${r.nombre}, soy ${nombre}${agencia}. Vi que no tenés página web y me gustaría ayudarte a crear una profesional. ¿Tenés un momento para hablar?`
+    const msg = `Hola ${r.nombre}, soy ${nombre}${agencia}. Vi que no tenes pagina web y me gustaria ayudarte a crear una profesional. Tenes un momento para hablar?`
     return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`
   }
 
-  const visibles = soloSinWeb ? resultados.filter(r => !r.tiene_web) : resultados
+  // Agrupar por categoria (ya vienen ordenados por distancia)
+  const grouped = resultados.reduce((acc, r) => {
+    if (!acc[r.categoria]) acc[r.categoria] = []
+    acc[r.categoria].push(r)
+    return acc
+  }, {} as Record<string, Resultado[]>)
+
+  // Ordenar categorias por el negocio mas cercano de cada una
+  const categorias = Object.entries(grouped).sort((a, b) => a[1][0].distancia - b[1][0].distancia)
 
   return (
-    <div className="py-4 space-y-4">
-      {/* Botón principal */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center space-y-3">
-        <div className="text-5xl">🎯</div>
-        <h2 className="font-bold text-gray-900 text-lg">Encontrá clientes potenciales</h2>
-        <p className="text-sm text-gray-500">
-          Buscamos automáticamente los negocios cercanos que más necesitan una página web y te los mostramos ordenados por potencial.
-        </p>
-
-        {error && <p className="text-sm text-red-500 bg-red-50 rounded-xl p-3">{error}</p>}
-
+    <div className="py-4 space-y-3">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="font-bold text-gray-900 text-lg">Clientes potenciales</h2>
+          <p className="text-xs text-gray-400">
+            {buscando
+              ? 'Buscando cerca tuyo...'
+              : resultados.length > 0
+              ? `${resultados.length} negocios sin web encontrados`
+              : error ? '' : 'Cargando...'}
+          </p>
+        </div>
         <button
           onClick={buscar}
           disabled={buscando}
-          className="w-full flex items-center justify-center gap-2 bg-blue-700 hover:bg-blue-800 text-white font-bold py-4 rounded-2xl transition-colors disabled:opacity-60 text-base shadow-lg shadow-blue-200"
+          className="p-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 transition-colors disabled:opacity-40"
+          title="Actualizar"
         >
           {buscando
-            ? <><Loader2 size={20} className="animate-spin" /> Buscando cerca tuyo...</>
-            : <><MapPin size={20} /> Buscar clientes cercanos</>
-          }
+            ? <Loader2 size={18} className="animate-spin" />
+            : <RefreshCw size={18} />}
         </button>
-
-        {!buscando && resultados.length === 0 && (
-          <p className="text-xs text-gray-400">Usamos tu GPS — activalo cuando te pida permiso</p>
-        )}
       </div>
 
-      {/* Resultados */}
-      {resultados.length > 0 && (
+      {/* Error */}
+      {error && (
+        <div className="bg-red-50 border border-red-100 rounded-2xl p-4 text-center space-y-2">
+          <p className="text-sm text-red-600">{error}</p>
+          <button
+            onClick={buscar}
+            className="text-xs text-red-700 font-semibold underline"
+          >
+            Reintentar
+          </button>
+        </div>
+      )}
+
+      {/* Loading skeleton */}
+      {buscando && (
         <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-semibold text-gray-700">
-                {visibles.length} negocios encontrados
-              </p>
-              <p className="text-xs text-gray-400">Ordenados por potencial de venta</p>
-            </div>
-            <label className="flex items-center gap-1.5 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={soloSinWeb}
-                onChange={e => setSoloSinWeb(e.target.checked)}
-                className="w-4 h-4 text-blue-600 rounded"
-              />
-              <span className="text-xs text-gray-600">Solo sin web</span>
-            </label>
-          </div>
-
-          {visibles.map((r, i) => (
-            <div key={r.place_id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-              <div className="p-4">
-                {/* Badge de potencial */}
-                <div className="flex items-start justify-between gap-2 mb-2">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      {i < 3 && (
-                        <span className="shrink-0 text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
-                          <Zap size={10} /> Top {i + 1}
-                        </span>
-                      )}
-                      {r.tiene_web
-                        ? <span className="shrink-0 text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full flex items-center gap-1"><Globe size={10} />Tiene web</span>
-                        : <span className="shrink-0 text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-semibold">✓ Sin web</span>
-                      }
-                    </div>
-                    <h3 className="font-semibold text-gray-900 truncate mt-1">{r.nombre}</h3>
-                    <p className="text-xs text-gray-500">{r.categoria}</p>
-                    {r.direccion && <p className="text-xs text-gray-400 truncate">📍 {r.direccion}</p>}
-                  </div>
-                </div>
-
-                {r.rating !== undefined && (
-                  <p className="text-xs text-gray-400 mb-2">
-                    ⭐ {r.rating} ({r.total_ratings ?? 0} reseñas)
-                  </p>
-                )}
-
-                {/* Propuesta */}
-                <div className="bg-blue-50 rounded-xl p-3">
-                  <p className="text-xs font-semibold text-blue-800">💡 Podés ofrecerle:</p>
-                  <p className="text-sm font-medium text-blue-900 mt-0.5">{r.tipo_web_sugerida}</p>
-                  <p className="text-xs text-blue-700 mt-1">{r.descripcion_propuesta}</p>
-                  <p className="text-xs font-bold text-blue-800 mt-1.5">💰 {r.precio_estimado}</p>
-                </div>
-
-                {/* Acciones */}
-                <div className="flex gap-2 mt-3">
-                  {r.telefono && (
-                    <>
-                      <a
-                        href={`tel:${r.telefono}`}
-                        className="flex-1 flex items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm py-2 rounded-xl transition-colors"
-                      >
-                        📞 Llamar
-                      </a>
-                      {whatsappUrl(r) && (
-                        <a
-                          href={whatsappUrl(r)!}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 flex items-center justify-center gap-1 bg-green-100 hover:bg-green-200 text-green-700 text-sm py-2 rounded-xl transition-colors"
-                        >
-                          💬 WhatsApp
-                        </a>
-                      )}
-                    </>
-                  )}
-                </div>
-
-                <button
-                  onClick={() => guardarLead(r)}
-                  disabled={guardados.has(r.place_id) || guardando.has(r.place_id)}
-                  className={`mt-2 w-full flex items-center justify-center gap-2 py-2.5 rounded-xl font-medium text-sm transition-colors ${
-                    guardados.has(r.place_id)
-                      ? 'bg-green-100 text-green-700 cursor-default'
-                      : 'bg-gray-900 hover:bg-gray-700 text-white'
-                  }`}
-                >
-                  {guardados.has(r.place_id)
-                    ? <><Check size={15} /> Guardado en pendientes</>
-                    : guardando.has(r.place_id)
-                    ? <Loader2 size={15} className="animate-spin" />
-                    : <><Plus size={15} /> Guardar como lead</>
-                  }
-                </button>
+          {[1, 2, 3].map(i => (
+            <div key={i} className="bg-white rounded-2xl border border-gray-100 p-4 space-y-3 animate-pulse">
+              <div className="flex justify-between">
+                <div className="h-4 bg-gray-200 rounded w-1/3" />
+                <div className="h-4 bg-gray-200 rounded w-12" />
               </div>
+              <div className="h-3 bg-gray-100 rounded w-2/3" />
+              <div className="h-16 bg-blue-50 rounded-xl" />
+              <div className="h-9 bg-gray-100 rounded-xl" />
             </div>
           ))}
+        </div>
+      )}
+
+      {/* Resultados agrupados */}
+      {!buscando && categorias.length > 0 && (
+        <div className="space-y-3">
+          {categorias.map(([cat, leads]) => (
+            <CategoriaSection
+              key={cat}
+              categoria={cat}
+              leads={leads}
+              guardados={guardados}
+              guardando={guardando}
+              onGuardar={guardarLead}
+              onWhatsApp={whatsappUrl}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Empty */}
+      {!buscando && !error && resultados.length === 0 && (
+        <div className="py-16 text-center text-gray-400 space-y-2">
+          <p className="text-4xl">🔍</p>
+          <p className="font-semibold text-gray-600">No se encontraron clientes potenciales</p>
+          <p className="text-sm">Proba ampliar la zona o buscar de nuevo</p>
         </div>
       )}
     </div>

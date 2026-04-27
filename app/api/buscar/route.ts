@@ -3,7 +3,6 @@ import { getWebSuggestion, categoriaFromTypes } from '@/lib/website-suggestions'
 
 const GOOGLE_API_KEY = process.env.GOOGLE_PLACES_API_KEY
 
-// Todos los tipos de negocios locales que suelen no tener web
 const BUSINESS_TYPES = [
   'restaurant', 'cafe', 'bar', 'bakery', 'meal_delivery',
   'hair_care', 'beauty_salon', 'nail_salon', 'spa', 'barber_shop',
@@ -19,15 +18,25 @@ const BUSINESS_TYPES = [
 
 const FIELDS = 'places.id,places.displayName,places.formattedAddress,places.nationalPhoneNumber,places.websiteUri,places.types,places.rating,places.userRatingCount,places.location'
 
+function haversine(lat1: number, lon1: number, lat2: number, lon2: number): number {
+  const R = 6371000
+  const phi1 = lat1 * Math.PI / 180
+  const phi2 = lat2 * Math.PI / 180
+  const dPhi = (lat2 - lat1) * Math.PI / 180
+  const dLam = (lon2 - lon1) * Math.PI / 180
+  const a = Math.sin(dPhi / 2) ** 2 + Math.cos(phi1) * Math.cos(phi2) * Math.sin(dLam / 2) ** 2
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+}
+
 function needScore(p: any): number {
   let score = 0
-  if (!p.websiteUri) score += 20           // Sin web = máximo puntaje
-  if (p.nationalPhoneNumber) score += 5    // Tiene teléfono = contactable
+  if (!p.websiteUri) score += 20
+  if (p.nationalPhoneNumber) score += 5
   const rating = p.rating || 0
   const reviews = p.userRatingCount || 0
-  if (rating > 0 && rating < 3.8) score += 4   // Rating bajo = más necesidad
-  if (reviews < 30) score += 3                   // Pocas reseñas = negocio pequeño
-  if (reviews === 0) score += 2                  // Sin reseñas = muy necesita presencia
+  if (rating > 0 && rating < 3.8) score += 4
+  if (reviews < 30) score += 3
+  if (reviews === 0) score += 2
   return score
 }
 
@@ -41,11 +50,13 @@ export async function GET(req: NextRequest) {
   const lng = searchParams.get('lng')
 
   if (!lat || !lng) {
-    return NextResponse.json({ error: 'Se requiere ubicación GPS (lat y lng)' }, { status: 400 })
+    return NextResponse.json({ error: 'Se requiere ubicacion GPS (lat y lng)' }, { status: 400 })
   }
 
+  const userLat = parseFloat(lat)
+  const userLng = parseFloat(lng)
+
   try {
-    // Buscar múltiples tipos de negocio en paralelo (en grupos para no saturar la API)
     const BATCH_SIZE = 8
     const allPlaces: any[] = []
 
@@ -63,10 +74,10 @@ export async function GET(req: NextRequest) {
             },
             body: JSON.stringify({
               includedTypes: [type],
-              maxResultCount: 5,
+              maxResultCount: 10,
               locationRestriction: {
                 circle: {
-                  center: { latitude: parseFloat(lat), longitude: parseFloat(lng) },
+                  center: { latitude: userLat, longitude: userLng },
                   radius: 3000,
                 },
               },
@@ -90,15 +101,17 @@ export async function GET(req: NextRequest) {
       return true
     })
 
-    // Calcular puntaje y ordenar: sin web primero, luego por puntaje
-    const scored = unique.map(p => ({ place: p, score: needScore(p) }))
-    scored.sort((a, b) => b.score - a.score)
+    // Solo potenciales: sin web, con minimo puntaje
+    const potenciales = unique.filter(p => !p.websiteUri && needScore(p) >= 5)
 
-    // Formatear resultados
-    const results = scored.map(({ place: p, score }) => {
+    // Calcular distancia y formatear
+    const results = potenciales.map(p => {
       const types: string[] = p.types || []
       const suggestion = getWebSuggestion(types)
       const categoria = categoriaFromTypes(types)
+      const dist = p.location
+        ? Math.round(haversine(userLat, userLng, p.location.latitude, p.location.longitude))
+        : 99999
 
       return {
         place_id: p.id || '',
@@ -113,9 +126,13 @@ export async function GET(req: NextRequest) {
         precio_estimado: suggestion.precio,
         rating: p.rating || undefined,
         total_ratings: p.userRatingCount || undefined,
-        need_score: score,
+        need_score: needScore(p),
+        distancia: dist,
       }
     })
+
+    // Ordenar por distancia (mas cerca primero)
+    results.sort((a, b) => a.distancia - b.distancia)
 
     return NextResponse.json({ results })
   } catch (e: any) {
