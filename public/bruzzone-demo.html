@@ -3,34 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bruzzone | Panadería & Confitería — Glew, Buenos Aires</title>
+  <title>Bruzzone | Panadería & Confitería Artesanal — Glew, Buenos Aires</title>
 
-  <!-- SEO -->
-  <meta name="description" content="Panadería & Confitería Bruzzone en Glew, Buenos Aires. Productos artesanales dulces, salados y sin TACC. Catering para eventos. Mar–Sáb 7–20hs." />
-  <meta name="keywords" content="panadería Glew, confitería Glew, sin TACC Glew, catering Glew, panadería artesanal Buenos Aires" />
+  <meta name="description" content="Panadería & Confitería Bruzzone en Glew. Medialunas, tortas artesanales, alfajores, pan y productos Sin TACC. Catering para eventos. Mar–Sáb 7–20hs." />
+  <meta name="keywords" content="panadería Glew, medialunas Glew, tortas Glew, alfajores Glew, sin TACC Glew, catering Glew, panadería artesanal Buenos Aires" />
   <link rel="canonical" href="https://bruzzone.com.ar/" />
-
-  <!-- Open Graph (preview al compartir por WhatsApp/redes) -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Bruzzone | Panadería & Confitería — Glew" />
-  <meta property="og:description" content="Cocinamos en familia y con mucho amor. Lo mejor en productos artesanales dulces, salados y sin TACC en Glew, Buenos Aires." />
-  <meta property="og:image" content="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1200&q=80" />
+  <meta property="og:description" content="Cocinamos en familia y con mucho amor. Medialunas, tortas, alfajores artesanales en Glew, Buenos Aires." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=1200&q=80" />
   <meta property="og:url" content="https://bruzzone.com.ar/" />
   <meta property="og:locale" content="es_AR" />
-
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Bruzzone | Panadería & Confitería — Glew" />
-  <meta name="twitter:description" content="Cocinamos en familia y con mucho amor. Lo mejor en productos artesanales en Glew." />
-  <meta name="twitter:image" content="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1200&q=80" />
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=1200&q=80" />
 
-  <!-- Schema.org LocalBusiness -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Bakery",
     "name": "Bruzzone Panadería & Confitería",
-    "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800",
+    "image": "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Gervasio Méndez 206",
@@ -41,8 +33,9 @@
     "telephone": "+5491153379763",
     "url": "https://bruzzone.com.ar",
     "openingHours": ["Tu-Sa 07:00-20:00", "Su 07:00-13:30", "Su 16:00-19:00"],
-    "servesCuisine": "Bakery",
-    "priceRange": "$"
+    "servesCuisine": "Bakery, Confectionery",
+    "priceRange": "$",
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "127" }
   }
   </script>
 
@@ -52,38 +45,24 @@
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --naranja: #F59E0B;
-      --naranja-dark: #D97706;
-      --negro: #111111;
+      --amber: #F59E0B;
+      --amber-dark: #D97706;
+      --amber-light: #FDE68A;
+      --negro: #0F0F0F;
       --gris-dark: #1C1C1C;
       --gris: #2A2A2A;
-      --gris-medio: #555;
-      --crema: #FFF8ED;
+      --gris-medio: #666;
+      --crema: #FDF8F0;
+      --crema-dark: #F5EDD8;
       --blanco: #FFFFFF;
     }
-
     html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--crema); color: var(--negro); line-height: 1.6; overflow-x: hidden; }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--crema);
-      color: var(--negro);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    /* ── ANIMACIONES SCROLL ── */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    /* ── ANIMACIONES ── */
+    .fade-up { opacity: 0; transform: translateY(36px); transition: opacity 0.75s ease, transform 0.75s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
     .fade-up-delay-1 { transition-delay: 0.1s; }
     .fade-up-delay-2 { transition-delay: 0.2s; }
     .fade-up-delay-3 { transition-delay: 0.3s; }
@@ -92,1441 +71,1004 @@
 
     /* ── NAV ── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 2rem;
-      background: rgba(17,17,17,0.95);
-      backdrop-filter: blur(10px);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.9rem 2.5rem;
+      background: rgba(15,15,15,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(245,158,11,0.15);
+      transition: padding 0.3s;
     }
-
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      text-decoration: none;
+    nav.scrolled { padding: 0.65rem 2.5rem; }
+    .nav-logo { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; }
+    .nav-logo img { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; }
+    .nav-logo-text { font-family: 'Playfair Display', serif; color: var(--blanco); font-size: 1.15rem; font-weight: 700; letter-spacing: 0.02em; }
+    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--amber); }
+    .nav-cta {
+      background: var(--amber); color: var(--negro) !important;
+      padding: 0.5rem 1.1rem; border-radius: 6px; font-weight: 600 !important;
+      letter-spacing: 0.04em !important; transition: background 0.2s !important;
     }
-
-    .nav-logo-icon {
-      width: 36px; height: 36px;
-      background: var(--naranja);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
-    }
-
-    .nav-logo-text {
-      font-family: 'Playfair Display', serif;
-      color: var(--blanco);
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 1.8rem;
-      list-style: none;
-      align-items: center;
-    }
-
-    .nav-links a {
-      color: rgba(255,255,255,0.8);
-      text-decoration: none;
-      font-size: 0.82rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: var(--naranja); }
-
-    .nav-wa {
-      background: #25D366;
-      color: white !important;
-      padding: 0.5rem 1.1rem;
-      border-radius: 50px;
-      font-weight: 600 !important;
-      transition: background 0.2s !important;
-      display: inline-flex !important;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .nav-wa:hover { background: #1ebe5d !important; }
-
-    /* ── HAMBURGER ── */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 4px;
-      z-index: 101;
-    }
-
-    .hamburger span {
-      display: block;
-      width: 24px; height: 2px;
-      background: white;
-      border-radius: 2px;
-      transition: transform 0.3s, opacity 0.3s;
-      transform-origin: center;
-    }
-
+    .nav-cta:hover { background: var(--amber-dark) !important; color: var(--negro) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--blanco); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
     .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
     .mobile-menu {
-      display: none;
-      position: fixed;
-      inset: 0;
-      top: 64px;
-      background: rgba(17,17,17,0.98);
-      backdrop-filter: blur(16px);
-      z-index: 99;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
+      display: none; position: fixed; inset: 0; z-index: 99;
+      background: rgba(15,15,15,0.98); flex-direction: column;
+      align-items: center; justify-content: center; gap: 2rem;
       padding: 2rem;
     }
-
     .mobile-menu.open { display: flex; }
-
     .mobile-menu a {
-      color: white;
-      text-decoration: none;
-      font-size: 1.5rem;
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      padding: 1rem 0;
-      width: 100%;
-      text-align: center;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--blanco);
+      text-decoration: none; letter-spacing: 0.02em;
       transition: color 0.2s;
     }
-
-    .mobile-menu a:last-child { border-bottom: none; }
-    .mobile-menu a:hover { color: var(--naranja); }
-
-    .mobile-menu .mobile-wa {
-      margin-top: 1.5rem;
-      background: #25D366;
-      border-radius: 50px;
-      padding: 1rem 2.5rem;
-      font-family: 'Inter', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      border-bottom: none !important;
-      color: white !important;
-    }
-
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
+    .mobile-menu a:hover { color: var(--amber); }
+    .mobile-menu-wa {
+      margin-top: 1rem;
+      display: flex; align-items: center; gap: 0.6rem;
+      background: #25D366; color: white; font-family: 'Inter', sans-serif;
+      font-size: 1rem; font-weight: 600; text-decoration: none;
+      padding: 0.9rem 2rem; border-radius: 50px;
     }
 
     /* ── HERO ── */
     .hero {
-      min-height: 100vh;
-      background: var(--negro);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 6rem 1.5rem 4rem;
-      position: relative;
+      position: relative; height: 100vh; min-height: 620px;
+      display: flex; align-items: center; justify-content: center;
       overflow: hidden;
     }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: url('https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1400&q=80') center/cover no-repeat;
-      opacity: 0.18;
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=1920&q=85&auto=format');
+      background-size: cover; background-position: center 40%;
+      filter: brightness(0.45);
     }
-
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.55) 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 2; text-align: center;
+      padding: 0 1.5rem; max-width: 760px;
+    }
     .hero-badge {
-      display: inline-block;
-      background: var(--naranja);
-      color: var(--negro);
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 0.4rem 1.2rem;
-      border-radius: 50px;
-      margin-bottom: 1.5rem;
+      display: inline-block; background: rgba(245,158,11,0.2);
+      border: 1px solid var(--amber); color: var(--amber-light);
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; padding: 0.35rem 1rem; border-radius: 50px;
+      margin-bottom: 1.4rem;
     }
-
-    .hero-logo {
-      width: 110px; height: 110px;
-      margin: 0 auto 1.5rem;
-      background: var(--naranja);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      border: 4px solid rgba(245,158,11,0.3);
-    }
-
-    .hero-logo svg { width: 60px; height: 60px; }
-
-    .hero-content { position: relative; z-index: 1; max-width: 700px; }
-
     .hero h1 {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(3rem, 8vw, 5.5rem);
-      font-weight: 900;
-      color: var(--blanco);
-      line-height: 1.05;
-      margin-bottom: 0.3rem;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 900; color: var(--blanco); line-height: 1.1;
+      margin-bottom: 1.2rem;
     }
-
-    .hero h1 span { color: var(--naranja); }
-
+    .hero h1 em { font-style: italic; color: var(--amber); }
     .hero-sub {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(0.9rem, 2.5vw, 1.15rem);
-      color: rgba(255,255,255,0.6);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
+      font-size: 1.05rem; color: rgba(255,255,255,0.78); font-weight: 300;
+      margin-bottom: 2.4rem; line-height: 1.7;
     }
-
-    .hero-desc {
-      font-size: 1.05rem;
-      color: rgba(255,255,255,0.75);
-      margin-bottom: 2.5rem;
-      max-width: 480px;
-      margin-left: auto;
-      margin-right: auto;
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-hero-primary {
+      background: var(--amber); color: var(--negro); font-weight: 700;
+      font-size: 0.88rem; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.9rem 2rem; border-radius: 8px; text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
     }
-
-    .hero-btns {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      background: var(--naranja);
-      color: var(--negro);
-      padding: 0.9rem 2rem;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      text-decoration: none;
-      transition: transform 0.2s, background 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .btn-primary:hover { background: var(--naranja-dark); transform: translateY(-2px); }
-
-    .btn-outline {
-      border: 2px solid rgba(255,255,255,0.3);
-      color: var(--blanco);
-      padding: 0.9rem 2rem;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      text-decoration: none;
+    .btn-hero-primary:hover { background: var(--amber-dark); transform: translateY(-2px); }
+    .btn-hero-outline {
+      border: 1.5px solid rgba(255,255,255,0.55); color: var(--blanco);
+      font-size: 0.88rem; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.9rem 2rem; border-radius: 8px; text-decoration: none;
       transition: border-color 0.2s, transform 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
     }
-
-    .btn-outline:hover { border-color: var(--naranja); color: var(--naranja); transform: translateY(-2px); }
-
-    .hero-stats {
-      display: flex;
-      gap: 2.5rem;
-      justify-content: center;
-      margin-top: 3.5rem;
-      padding-top: 2.5rem;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      position: relative;
-      z-index: 1;
+    .btn-hero-outline:hover { border-color: var(--amber); color: var(--amber); transform: translateY(-2px); }
+    .hero-scroll {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      color: rgba(255,255,255,0.5); font-size: 0.7rem; letter-spacing: 0.1em;
+      text-transform: uppercase; z-index: 2;
+      animation: bounce 2s infinite;
     }
+    @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
 
-    .hero-stat span {
-      display: block;
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      font-weight: 900;
-      color: var(--naranja);
+    /* ── STRIP / STATS ── */
+    .strip {
+      background: var(--negro); color: var(--blanco);
+      display: flex; align-items: center; justify-content: center;
+      gap: 3rem; padding: 1.2rem 2rem; flex-wrap: wrap;
     }
+    .strip-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.82rem; letter-spacing: 0.06em; }
+    .strip-item span:first-child { color: var(--amber); font-size: 1rem; }
 
-    .hero-stat p {
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.5);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    /* ── SECTION HEADERS ── */
-    section { padding: 5rem 1.5rem; }
-
+    /* ── SECTION UTIL ── */
+    .section { padding: 6rem 2rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
     .section-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--naranja);
-      margin-bottom: 0.6rem;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 0.6rem;
     }
-
     .section-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 5vw, 2.8rem);
-      font-weight: 900;
-      line-height: 1.15;
-      margin-bottom: 1rem;
+      font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 900;
+      color: var(--negro); line-height: 1.2; margin-bottom: 1.2rem;
     }
-
-    .section-desc {
-      font-size: 1rem;
-      color: var(--gris-medio);
-      max-width: 500px;
-    }
-
-    .container { max-width: 1100px; margin: 0 auto; }
+    .section-title.light { color: var(--blanco); }
+    .section-desc { color: var(--gris-medio); font-size: 1rem; max-width: 540px; line-height: 1.75; }
 
     /* ── NOSOTROS ── */
-    .nosotros { background: var(--negro); color: var(--blanco); }
-
-    .nosotros-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
+    .nosotros { background: var(--crema); }
+    .nosotros-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+    }
+    .nosotros-img { position: relative; }
+    .nosotros-img img {
+      width: 100%; height: 480px; object-fit: cover; border-radius: 1.5rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    }
+    .nosotros-badge {
+      position: absolute; bottom: -1.5rem; right: -1.5rem;
+      background: var(--amber); color: var(--negro);
+      font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700;
+      padding: 1rem 1.4rem; border-radius: 1rem; text-align: center;
+      box-shadow: 0 8px 24px rgba(245,158,11,0.35);
+    }
+    .nosotros-badge strong { display: block; font-size: 1.6rem; }
+    .nosotros-text .section-title { margin-bottom: 1rem; }
+    .nosotros-text p { color: var(--gris-medio); margin-bottom: 1rem; line-height: 1.8; }
+    .nosotros-features { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.8rem; }
+    .nosotros-feat {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-size: 0.9rem; font-weight: 500; color: var(--negro);
+    }
+    .nosotros-feat::before {
+      content: ''; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--amber); flex-shrink: 0;
     }
 
-    @media (max-width: 768px) { .nosotros-inner { grid-template-columns: 1fr; } }
-
-    .nosotros .section-title { color: var(--blanco); }
-    .nosotros .section-desc { color: rgba(255,255,255,0.6); }
-    .nosotros-text p { color: rgba(255,255,255,0.7); font-size: 1rem; margin-bottom: 1rem; }
-
-    .nosotros-img { border-radius: 1.5rem; overflow: hidden; aspect-ratio: 4/3; }
-    .nosotros-img img { width: 100%; height: 100%; object-fit: cover; }
-
-    .valores { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
-
-    .valor {
-      background: var(--gris);
-      border-radius: 1rem;
-      padding: 1.2rem;
-      display: flex;
-      align-items: flex-start;
-      gap: 0.8rem;
-    }
-
-    .valor-icon {
-      width: 36px; height: 36px; min-width: 36px;
-      background: rgba(245,158,11,0.15);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
-    }
-
-    .valor h4 { font-size: 0.85rem; font-weight: 700; color: var(--blanco); margin-bottom: 0.2rem; }
-    .valor p { font-size: 0.78rem; color: rgba(255,255,255,0.45); }
-
-    /* ── CARTA ── */
-    .carta { background: var(--crema); }
-
-    .carta-header { text-align: center; margin-bottom: 3.5rem; }
-    .carta-header .section-desc { margin: 0 auto; }
-
+    /* ── PRODUCTOS ── */
+    .productos { background: var(--blanco); }
+    .productos-header { text-align: center; margin-bottom: 3.5rem; }
+    .productos-header .section-desc { margin: 0 auto; }
     .productos-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
     }
-
     .producto-card {
-      background: white;
-      border-radius: 1.25rem;
-      overflow: hidden;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      border-radius: 1.25rem; overflow: hidden; background: var(--crema);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
       transition: transform 0.25s, box-shadow 0.25s;
     }
-
-    .producto-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,0.12); }
-
+    .producto-card:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(0,0,0,0.12); }
     .producto-img { aspect-ratio: 4/3; overflow: hidden; }
-    .producto-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
-    .producto-card:hover .producto-img img { transform: scale(1.05); }
-
-    .producto-body { padding: 1.2rem; }
-
+    .producto-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+    .producto-card:hover .producto-img img { transform: scale(1.07); }
+    .producto-body { padding: 1.4rem; }
     .producto-tag {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.25rem 0.7rem;
-      border-radius: 50px;
-      margin-bottom: 0.6rem;
+      display: inline-block; font-size: 0.67rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 0.4rem;
     }
-
-    .tag-dulce { background: #FEF3C7; color: #92400E; }
-    .tag-salado { background: #F0FDF4; color: #166534; }
-    .tag-sintacc { background: #EDE9FE; color: #5B21B6; }
-
-    .producto-body h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem; }
-    .producto-body p { font-size: 0.85rem; color: var(--gris-medio); line-height: 1.5; }
+    .producto-body h3 {
+      font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700;
+      color: var(--negro); margin-bottom: 0.5rem;
+    }
+    .producto-body p { font-size: 0.85rem; color: var(--gris-medio); line-height: 1.65; }
 
     /* ── GALERÍA ── */
-    .galeria { background: var(--negro); padding: 5rem 1.5rem; }
+    .galeria { background: var(--negro); padding: 6rem 2rem; }
     .galeria-header { text-align: center; margin-bottom: 3rem; }
-    .galeria-header .section-title { color: var(--blanco); }
-    .galeria-header .section-desc { color: rgba(255,255,255,0.5); margin: 0 auto; }
-
     .galeria-grid {
+      max-width: 1100px; margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       grid-template-rows: auto;
       gap: 0.75rem;
-      max-width: 1100px;
-      margin: 0 auto;
     }
-
+    .galeria-grid .g-tall { grid-row: span 2; }
+    .galeria-grid .g-wide { grid-column: span 2; }
     .galeria-item {
-      overflow: hidden;
-      border-radius: 0.75rem;
-      position: relative;
-      cursor: pointer;
+      position: relative; overflow: hidden; border-radius: 0.75rem;
+      background: var(--gris-dark); cursor: pointer;
     }
-
-    .galeria-item:nth-child(1) { grid-column: span 2; aspect-ratio: 16/9; }
-    .galeria-item:nth-child(2) { aspect-ratio: 1; }
-    .galeria-item:nth-child(3) { aspect-ratio: 1; }
-    .galeria-item:nth-child(4) { aspect-ratio: 1; }
-    .galeria-item:nth-child(5) { grid-column: span 2; aspect-ratio: 16/9; }
-
-    @media (max-width: 640px) {
-      .galeria-grid { grid-template-columns: 1fr 1fr; }
-      .galeria-item:nth-child(1),
-      .galeria-item:nth-child(5) { grid-column: span 2; aspect-ratio: 16/9; }
+    .galeria-item img {
+      width: 100%; height: 100%; object-fit: cover;
+      min-height: 180px;
+      transition: transform 0.6s;
     }
-
-    .galeria-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-    .galeria-item:hover img { transform: scale(1.08); }
-
-    .galeria-item .overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0);
-      transition: background 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .g-tall img { min-height: 380px; }
+    .g-wide img { min-height: 200px; }
+    .galeria-item:hover img { transform: scale(1.07); }
+    .galeria-caption {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%);
+      display: flex; align-items: flex-end; padding: 1rem 0.9rem;
+      opacity: 0; transition: opacity 0.3s;
     }
-
-    .galeria-item:hover .overlay { background: rgba(0,0,0,0.35); }
-
-    .overlay-icon {
-      color: white;
-      font-size: 1.8rem;
-      opacity: 0;
-      transform: scale(0.7);
-      transition: opacity 0.3s, transform 0.3s;
+    .galeria-item:hover .galeria-caption { opacity: 1; }
+    .galeria-caption span {
+      color: var(--blanco); font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.04em;
     }
-
-    .galeria-item:hover .overlay-icon { opacity: 1; transform: scale(1); }
-
-    .galeria-cta {
+    .galeria-ig {
+      max-width: 1100px; margin: 2rem auto 0;
       text-align: center;
-      margin-top: 2rem;
     }
-
-    .btn-ig {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-      color: white;
-      padding: 0.85rem 2rem;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      text-decoration: none;
-      transition: transform 0.2s, opacity 0.2s;
+    .galeria-ig a {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: rgba(255,255,255,0.55); font-size: 0.82rem; font-weight: 500;
+      text-decoration: none; border: 1px solid rgba(255,255,255,0.2);
+      padding: 0.6rem 1.4rem; border-radius: 50px; transition: all 0.2s;
     }
-
-    .btn-ig:hover { transform: translateY(-2px); opacity: 0.9; }
+    .galeria-ig a:hover { color: var(--blanco); border-color: var(--amber); }
 
     /* ── RESEÑAS ── */
-    .resenas { background: var(--crema); }
-
+    .resenas { background: var(--crema-dark); }
     .resenas-header { text-align: center; margin-bottom: 3rem; }
-    .resenas-header .section-desc { margin: 0 auto; }
-
-    .resenas-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1.5rem;
-    }
-
+    .resenas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
     .resena-card {
-      background: white;
-      border-radius: 1.25rem;
-      padding: 1.5rem;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      position: relative;
-      transition: transform 0.25s, box-shadow 0.25s;
+      background: var(--blanco); border-radius: 1.25rem; padding: 1.75rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-
-    .resena-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
-
-    .resena-card::before {
-      content: '"';
-      position: absolute;
-      top: -0.5rem;
-      left: 1.2rem;
-      font-family: 'Playfair Display', serif;
-      font-size: 5rem;
-      line-height: 1;
-      color: var(--naranja);
-      opacity: 0.2;
-    }
-
-    .estrellas { display: flex; gap: 2px; }
-    .estrella { color: #F59E0B; font-size: 1rem; }
-
-    .resena-texto {
-      font-size: 0.9rem;
-      color: #444;
-      line-height: 1.6;
-      font-style: italic;
-      flex: 1;
-    }
-
-    .resena-autor {
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-    }
-
-    .autor-avatar {
-      width: 38px; height: 38px;
-      border-radius: 50%;
+    .resena-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.1); }
+    .resena-stars { color: var(--amber); font-size: 0.95rem; letter-spacing: 2px; margin-bottom: 0.9rem; }
+    .resena-texto { font-size: 0.93rem; color: #333; line-height: 1.7; margin-bottom: 1.2rem; font-style: italic; }
+    .resena-autor { display: flex; align-items: center; gap: 0.7rem; }
+    .resena-avatar {
+      width: 38px; height: 38px; border-radius: 50%; background: var(--amber);
       display: flex; align-items: center; justify-content: center;
-      font-weight: 700;
-      font-size: 0.9rem;
-      color: white;
-      flex-shrink: 0;
+      font-weight: 700; font-size: 0.85rem; color: var(--negro); flex-shrink: 0;
     }
-
-    .autor-nombre { font-size: 0.85rem; font-weight: 700; color: var(--negro); }
-    .autor-fecha { font-size: 0.75rem; color: var(--gris-medio); }
-
-    .resenas-footer {
-      text-align: center;
-      margin-top: 2.5rem;
-      padding: 1.5rem;
-      background: white;
-      border-radius: 1.25rem;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-    }
-
-    .google-rating {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .google-score {
-      font-family: 'Playfair Display', serif;
-      font-size: 3rem;
-      font-weight: 900;
-      color: var(--negro);
-      line-height: 1;
-    }
-
-    .google-stars { display: flex; flex-direction: column; gap: 0.3rem; }
-    .google-stars .estrellas { font-size: 1.2rem; }
-    .google-stars small { font-size: 0.75rem; color: var(--gris-medio); }
-
-    .google-logo {
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-      font-size: 0.8rem;
-      color: var(--gris-medio);
-      font-weight: 600;
-    }
+    .resena-autor-info strong { display: block; font-size: 0.85rem; color: var(--negro); }
+    .resena-autor-info span { font-size: 0.75rem; color: var(--gris-medio); }
 
     /* ── SIN TACC ── */
-    .sintacc { background: var(--gris-dark); color: var(--blanco); }
-
+    .sintacc {
+      background: var(--negro);
+      padding: 5rem 2rem;
+    }
     .sintacc-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
     }
-
-    @media (max-width: 768px) { .sintacc-inner { grid-template-columns: 1fr; } }
-
-    .sintacc .section-title { color: var(--blanco); }
-    .sintacc-text p { color: rgba(255,255,255,0.65); margin-bottom: 1rem; }
-
-    .sintacc-items { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem; }
-
+    .sintacc-img img {
+      width: 100%; height: 420px; object-fit: cover;
+      border-radius: 1.5rem; filter: brightness(0.9);
+    }
+    .sintacc-text .section-label { color: var(--amber); }
+    .sintacc-text .section-title { color: var(--blanco); }
+    .sintacc-text p { color: rgba(255,255,255,0.65); line-height: 1.8; margin-bottom: 1rem; }
+    .sintacc-items { display: flex; flex-direction: column; gap: 0.65rem; margin: 1.5rem 0 2rem; }
     .sintacc-item {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      background: rgba(255,255,255,0.05);
-      border-radius: 0.75rem;
-      padding: 0.9rem 1.2rem;
+      display: flex; align-items: center; gap: 0.75rem;
+      color: rgba(255,255,255,0.85); font-size: 0.9rem;
     }
-
-    .sintacc-item span { font-size: 1.3rem; }
-    .sintacc-item p { font-size: 0.9rem; color: rgba(255,255,255,0.8); }
-
-    .sintacc-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: #5B21B6;
-      color: white;
-      padding: 0.5rem 1.2rem;
-      border-radius: 50px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      margin-top: 1.2rem;
-      letter-spacing: 0.05em;
+    .sintacc-item::before {
+      content: '✓'; background: var(--amber); color: var(--negro);
+      width: 20px; height: 20px; border-radius: 50%; display: flex;
+      align-items: center; justify-content: center;
+      font-size: 0.65rem; font-weight: 800; flex-shrink: 0;
     }
-
-    .sintacc-img { border-radius: 1.5rem; overflow: hidden; aspect-ratio: 1; }
-    .sintacc-img img { width: 100%; height: 100%; object-fit: cover; }
+    .btn-wa-green {
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      background: #25D366; color: var(--blanco); font-weight: 600;
+      font-size: 0.88rem; padding: 0.85rem 1.8rem; border-radius: 8px;
+      text-decoration: none; transition: background 0.2s, transform 0.2s;
+    }
+    .btn-wa-green:hover { background: #1ebe5d; transform: translateY(-2px); }
 
     /* ── CATERING ── */
     .catering { background: var(--crema); }
-
     .catering-inner {
-      background: var(--negro);
-      border-radius: 2rem;
-      padding: 3.5rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
-      overflow: hidden;
-      position: relative;
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
     }
-
-    @media (max-width: 768px) { .catering-inner { grid-template-columns: 1fr; padding: 2rem; } }
-
-    .catering-inner::before {
-      content: '';
-      position: absolute;
-      top: -80px; right: -80px;
-      width: 300px; height: 300px;
-      background: radial-gradient(circle, rgba(245,158,11,0.15), transparent 70%);
-      border-radius: 50%;
-    }
-
-    .catering .section-title { color: var(--blanco); }
-    .catering-text p { color: rgba(255,255,255,0.65); margin-bottom: 1.5rem; }
-
-    .catering-features { display: flex; flex-direction: column; gap: 0.75rem; }
-
+    .catering-text .section-title { margin-bottom: 1rem; }
+    .catering-text p { color: var(--gris-medio); line-height: 1.8; margin-bottom: 0.9rem; }
+    .catering-features { display: flex; flex-direction: column; gap: 0.65rem; margin: 1.5rem 0 2rem; }
     .catering-feat {
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-      color: rgba(255,255,255,0.75);
-      font-size: 0.9rem;
+      display: flex; align-items: center; gap: 0.75rem;
+      font-size: 0.9rem; color: var(--negro);
     }
-
     .catering-feat::before {
-      content: '';
-      width: 7px; height: 7px;
-      background: var(--naranja);
-      border-radius: 50%;
-      flex-shrink: 0;
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--amber); flex-shrink: 0;
     }
-
-    .catering-img { border-radius: 1.25rem; overflow: hidden; aspect-ratio: 4/3; }
-    .catering-img img { width: 100%; height: 100%; object-fit: cover; }
+    .catering-img img {
+      width: 100%; height: 440px; object-fit: cover;
+      border-radius: 1.5rem; box-shadow: 0 16px 48px rgba(0,0,0,0.14);
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--amber); color: var(--negro); font-weight: 700;
+      font-size: 0.88rem; letter-spacing: 0.04em; text-transform: uppercase;
+      padding: 0.85rem 1.8rem; border-radius: 8px; text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--amber-dark); transform: translateY(-2px); }
 
     /* ── PEDIDO FORM ── */
-    .pedido { background: var(--negro); }
-
+    .pedido { background: var(--gris-dark); padding: 6rem 2rem; }
     .pedido-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: start;
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1.1fr; gap: 4rem; align-items: start;
     }
-
-    @media (max-width: 768px) { .pedido-inner { grid-template-columns: 1fr; gap: 2rem; } }
-
-    .pedido .section-title { color: var(--blanco); }
-    .pedido-text p { color: rgba(255,255,255,0.6); margin-bottom: 1rem; font-size: 0.95rem; }
-
-    .pedido-beneficios { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem; }
-
+    .pedido-text .section-label { color: var(--amber); }
+    .pedido-text .section-title { color: var(--blanco); margin-bottom: 1rem; }
+    .pedido-text p { color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 0.9rem; }
+    .pedido-beneficios { display: flex; flex-direction: column; gap: 0.65rem; margin-top: 1.5rem; }
     .pedido-bene {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      color: rgba(255,255,255,0.7);
-      font-size: 0.88rem;
+      display: flex; align-items: center; gap: 0.75rem;
+      color: rgba(255,255,255,0.8); font-size: 0.88rem;
     }
-
     .pedido-bene-icon {
-      width: 32px; height: 32px; min-width: 32px;
-      background: rgba(245,158,11,0.12);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 15px;
+      width: 32px; height: 32px; background: rgba(245,158,11,0.15);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      font-size: 0.95rem; flex-shrink: 0;
     }
-
     .pedido-form {
-      background: var(--gris);
-      border-radius: 1.5rem;
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+      background: var(--blanco); border-radius: 1.5rem;
+      padding: 2rem; box-shadow: 0 16px 48px rgba(0,0,0,0.2);
     }
-
     .form-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--blanco);
-      margin-bottom: 0.5rem;
+      font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700;
+      color: var(--negro); margin-bottom: 1.4rem;
     }
-
-    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-
-    .form-group label {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: rgba(255,255,255,0.5);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+    .form-group { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1rem; }
+    .form-group label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #555; }
+    .form-group input, .form-group select, .form-group textarea {
+      border: 1.5px solid #E5E7EB; border-radius: 10px;
+      padding: 0.7rem 0.9rem; font-size: 0.9rem; font-family: 'Inter', sans-serif;
+      background: #FAFAFA; transition: border-color 0.2s;
+      outline: none; width: 100%;
     }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      background: rgba(255,255,255,0.06);
-      border: 1.5px solid rgba(255,255,255,0.1);
-      border-radius: 0.75rem;
-      padding: 0.75rem 1rem;
-      color: white;
-      font-size: 0.9rem;
-      font-family: 'Inter', sans-serif;
-      transition: border-color 0.2s;
-      width: 100%;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--naranja);
-    }
-
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--amber); background: var(--blanco); }
     .form-group textarea { resize: vertical; min-height: 80px; }
-
-    .form-group select option { background: var(--gris); color: white; }
-
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
     .btn-form-wa {
-      background: #25D366;
-      color: white;
-      border: none;
-      padding: 1rem;
-      border-radius: 0.75rem;
-      font-weight: 700;
-      font-size: 0.95rem;
-      font-family: 'Inter', sans-serif;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.6rem;
-      transition: background 0.2s, transform 0.2s;
-      margin-top: 0.5rem;
+      width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.55rem;
+      background: #25D366; color: var(--blanco); font-weight: 700; font-size: 0.9rem;
+      padding: 0.9rem; border-radius: 10px; border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.2s; margin-top: 0.5rem;
     }
-
     .btn-form-wa:hover { background: #1ebe5d; transform: translateY(-1px); }
-
-    .form-nota {
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.3);
-      text-align: center;
-    }
+    .form-nota { font-size: 0.72rem; color: #999; text-align: center; margin-top: 0.6rem; }
 
     /* ── HORARIOS ── */
-    .horarios { background: var(--gris-dark); color: var(--blanco); }
-
+    .horarios { background: var(--crema); padding: 6rem 2rem; }
     .horarios-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: start;
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1.4fr; gap: 4rem; align-items: start;
     }
-
-    @media (max-width: 768px) { .horarios-inner { grid-template-columns: 1fr; } }
-
-    .horarios .section-title { color: var(--blanco); }
-
-    .horario-tabla { margin-top: 1.5rem; }
-
-    .horario-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.9rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+    .horarios-text .section-title { margin-bottom: 2rem; }
+    .horario-tabla { width: 100%; border-collapse: collapse; }
+    .horario-tabla td { padding: 0.65rem 0; font-size: 0.9rem; border-bottom: 1px solid rgba(0,0,0,0.06); }
+    .horario-tabla td:first-child { font-weight: 600; color: var(--negro); width: 60%; }
+    .horario-tabla td:last-child { color: var(--amber-dark); font-weight: 500; }
+    .horario-tabla tr:last-child td { border-bottom: none; }
+    .contact-cards { display: flex; flex-direction: column; gap: 0.9rem; margin-top: 2rem; }
+    .contact-card {
+      display: flex; align-items: center; gap: 1rem;
+      background: var(--blanco); border-radius: 1rem; padding: 1rem 1.2rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
     }
-
-    .horario-row:last-child { border-bottom: none; }
-    .horario-dia { font-weight: 600; color: rgba(255,255,255,0.8); font-size: 0.9rem; }
-    .horario-hora { font-size: 0.85rem; color: var(--naranja); font-weight: 600; }
-    .horario-cerrado { color: rgba(255,255,255,0.3); font-size: 0.85rem; }
-
-    .contacto-cards { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
-
-    .contacto-card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 1rem;
-      padding: 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      text-decoration: none;
-      transition: background 0.2s, border-color 0.2s;
+    .contact-card-icon {
+      width: 42px; height: 42px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
+    .contact-card-icon.wa { background: #25D366; }
+    .contact-card-icon.ig { background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+    .contact-card-icon.maps { background: #4285F4; }
+    .contact-card-info h4 { font-size: 0.82rem; font-weight: 700; color: var(--negro); }
+    .contact-card-info p { font-size: 0.78rem; color: var(--gris-medio); }
+    .contact-card a { color: inherit; text-decoration: none; }
+    .horarios-mapa { border-radius: 1.5rem; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+    .horarios-mapa iframe { width: 100%; height: 420px; border: none; display: block; }
 
-    .contacto-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); }
-
-    .contacto-card-icon {
-      width: 44px; height: 44px; min-width: 44px;
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
+    /* ── WA FLOTANTE ── */
+    .wa-float {
+      position: fixed; bottom: 1.75rem; right: 1.75rem; z-index: 200;
+      width: 58px; height: 58px; border-radius: 50%;
+      background: #25D366; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+      text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
     }
-
-    .icon-wa { background: rgba(37,211,102,0.15); }
-    .icon-ig { background: rgba(225,48,108,0.12); }
-    .icon-map { background: rgba(245,158,11,0.15); }
-
-    .contacto-card h4 { font-size: 0.85rem; font-weight: 700; color: var(--blanco); margin-bottom: 0.15rem; }
-    .contacto-card p { font-size: 0.78rem; color: rgba(255,255,255,0.45); }
-
-    .mapa-embed { border-radius: 1.25rem; overflow: hidden; height: 260px; margin-top: 1.5rem; }
-    .mapa-embed iframe { width: 100%; height: 100%; border: none; filter: grayscale(20%) contrast(1.05); }
+    .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.6); }
 
     /* ── FOOTER ── */
     footer {
-      background: #0A0A0A;
-      color: rgba(255,255,255,0.4);
-      text-align: center;
-      padding: 2.5rem 1.5rem;
-      font-size: 0.82rem;
+      background: var(--negro); color: rgba(255,255,255,0.5);
+      padding: 3rem 2rem; text-align: center;
     }
-
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
     .footer-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      color: white;
-      margin-bottom: 0.5rem;
+      font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700;
+      color: var(--blanco); margin-bottom: 0.5rem;
     }
+    .footer-tagline { font-size: 0.83rem; margin-bottom: 1.5rem; }
+    .footer-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .footer-links a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--amber); }
+    .footer-copy { font-size: 0.73rem; color: rgba(255,255,255,0.3); }
 
-    .footer-logo strong { color: var(--naranja); }
-
-    .footer-links {
-      display: flex;
-      gap: 1.5rem;
-      justify-content: center;
-      margin: 1rem 0;
-      flex-wrap: wrap;
-    }
-
-    .footer-links a {
-      color: rgba(255,255,255,0.4);
-      text-decoration: none;
-      font-size: 0.8rem;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover { color: var(--naranja); }
-
-    footer strong { color: var(--naranja); }
-
-    /* ── WA FLOAT ── */
-    .wa-float {
-      position: fixed;
-      bottom: 1.5rem; right: 1.5rem;
-      z-index: 200;
-      background: #25D366;
-      color: white;
-      width: 58px; height: 58px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      text-decoration: none;
-      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .wa-float svg { width: 30px; height: 30px; fill: white; }
-    .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.5); }
-
-    /* ── RESPONSIVE UTILS ── */
-    @media (max-width: 480px) {
-      .hero-stats { gap: 1.5rem; }
-      .hero-stat span { font-size: 1.5rem; }
-      .valores { grid-template-columns: 1fr; }
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .nosotros-grid, .sintacc-inner, .catering-inner, .pedido-inner, .horarios-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .nosotros-badge { right: 0.5rem; bottom: -1rem; }
+      .productos-grid { grid-template-columns: repeat(2, 1fr); }
+      .resenas-grid { grid-template-columns: 1fr 1fr; }
+      .galeria-grid { grid-template-columns: repeat(2, 1fr); }
+      .galeria-grid .g-tall, .galeria-grid .g-wide { grid-row: span 1; grid-column: span 1; }
       .form-row { grid-template-columns: 1fr; }
+      nav { padding: 0.9rem 1.25rem; }
+    }
+    @media (max-width: 580px) {
+      .strip { gap: 1.2rem; }
+      .productos-grid { grid-template-columns: 1fr; }
+      .resenas-grid { grid-template-columns: 1fr; }
+      .galeria-grid { grid-template-columns: 1fr 1fr; gap: 0.4rem; }
+      .hero h1 { font-size: 2.5rem; }
+      .section { padding: 4rem 1.25rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <a href="#inicio" class="nav-logo">
-      <div class="nav-logo-icon">🌾</div>
-      <span class="nav-logo-text">Bruzzone</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="#carta">Carta</a></li>
-      <li><a href="#galeria">Galería</a></li>
-      <li><a href="#resenas">Reseñas</a></li>
-      <li><a href="#catering">Catering</a></li>
-      <li><a href="#pedido">Pedidos</a></li>
-      <li><a href="#horarios">Horarios</a></li>
-      <li>
-        <a href="https://wa.me/5491153379763?text=Hola%20Bruzzone!%20Quiero%20hacer%20un%20pedido%20%F0%9F%8D%9E" target="_blank" class="nav-wa">
-          <svg viewBox="0 0 24 24" fill="white" width="13" height="13"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Pedir por WhatsApp
-        </a>
-      </li>
-    </ul>
-    <button class="hamburger" id="hamburger" aria-label="Menú">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
+<!-- ── NAV ── -->
+<nav id="navbar">
+  <a href="#inicio" class="nav-logo" aria-label="Bruzzone inicio">
+    <img src="https://instagram.feze8-2.fna.fbcdn.net/v/t51.82787-19/539641655_18040944827660628_5716843044503423657_n.jpg" alt="Bruzzone logo"
+         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+    <span class="nav-logo-icon" style="display:none; width:38px;height:38px;background:var(--amber);border-radius:50%;align-items:center;justify-content:center;font-size:18px;">🌾</span>
+    <span class="nav-logo-text">Bruzzone</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#productos">Productos</a></li>
+    <li><a href="#galeria">Galería</a></li>
+    <li><a href="#catering">Catering</a></li>
+    <li><a href="#horarios">Horarios</a></li>
+    <li><a href="#pedido" class="nav-cta">Hacer pedido</a></li>
+  </ul>
+  <button class="hamburger" id="hamburgerBtn" aria-label="Menú" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
 
-  <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#carta" onclick="closeMobileMenu()">Carta</a>
-    <a href="#galeria" onclick="closeMobileMenu()">Galería</a>
-    <a href="#resenas" onclick="closeMobileMenu()">Reseñas</a>
-    <a href="#catering" onclick="closeMobileMenu()">Catering</a>
-    <a href="#pedido" onclick="closeMobileMenu()">Pedidos</a>
-    <a href="#horarios" onclick="closeMobileMenu()">Horarios</a>
-    <a href="https://wa.me/5491153379763?text=Hola%20Bruzzone!%20Quiero%20hacer%20un%20pedido%20%F0%9F%8D%9E" target="_blank" class="mobile-wa">
-      <svg viewBox="0 0 24 24" fill="white" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Pedir por WhatsApp
+<!-- ── MENÚ MOBILE ── -->
+<div class="mobile-menu" id="mobileMenu" role="navigation">
+  <a href="#nosotros" onclick="closeMobileMenu()">Nosotros</a>
+  <a href="#productos" onclick="closeMobileMenu()">Productos</a>
+  <a href="#galeria" onclick="closeMobileMenu()">Galería</a>
+  <a href="#catering" onclick="closeMobileMenu()">Catering</a>
+  <a href="#horarios" onclick="closeMobileMenu()">Horarios</a>
+  <a href="https://wa.me/5491153379763?text=Hola%20Bruzzone!%20Quiero%20hacer%20un%20pedido%20🥐" target="_blank" rel="noopener" class="mobile-menu-wa" onclick="closeMobileMenu()">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Hacer pedido
+  </a>
+</div>
+
+<!-- ── HERO ── -->
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">📍 Méndez 206, Glew · Desde 2018</div>
+    <h1>Cocinamos con<br/><em>amor</em> cada día</h1>
+    <p class="hero-sub">Medialunas, tortas artesanales, alfajores y mucho más.<br/>La mejor panadería de zona sur.</p>
+    <div class="hero-btns">
+      <a href="#productos" class="btn-hero-primary">Ver productos</a>
+      <a href="#pedido" class="btn-hero-outline">Hacer un pedido</a>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <span>Scroll</span>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</section>
+
+<!-- ── STRIP ── -->
+<div class="strip">
+  <div class="strip-item"><span>🥐</span> Hecho artesanalmente cada día</div>
+  <div class="strip-item"><span>🌾</span> Línea Sin TACC disponible</div>
+  <div class="strip-item"><span>📦</span> Catering para eventos</div>
+  <div class="strip-item"><span>⭐</span> +8.300 clientes en Instagram</div>
+</div>
+
+<!-- ── NOSOTROS ── -->
+<section class="nosotros section" id="nosotros">
+  <div class="section-inner nosotros-grid">
+    <div class="nosotros-img fade-up">
+      <!-- Foto: interior de panadería con vidriera y productos -->
+      <img src="https://images.unsplash.com/photo-1517433367423-c7e5b0f35086?w=800&q=80&auto=format"
+           alt="Interior de Bruzzone Panadería — vidriera con productos artesanales" loading="lazy" />
+      <div class="nosotros-badge">
+        <strong>+6 años</strong>
+        endulzando Glew
+      </div>
+    </div>
+    <div class="nosotros-text fade-up fade-up-delay-2">
+      <p class="section-label">Nuestra historia</p>
+      <h2 class="section-title">Una familia,<br/>una panadería</h2>
+      <p>Bruzzone nació del sueño de traer a Glew el sabor de la panadería artesanal de verdad: la que se hace con tiempo, con manos que saben y con el mismo amor de siempre.</p>
+      <p>Cada mañana, desde antes de las 7, nuestro equipo elabora las medialunas, las tortas, el pan y los alfajores que vas a encontrar en la vidriera. Sin atajos ni conservantes: todo fresco, todo del día.</p>
+      <div class="nosotros-features">
+        <div class="nosotros-feat">Elaboración artesanal, sin conservantes</div>
+        <div class="nosotros-feat">Línea completa Sin TACC</div>
+        <div class="nosotros-feat">Ingredientes de primera calidad</div>
+        <div class="nosotros-feat">Pedidos especiales y catering para eventos</div>
+        <div class="nosotros-feat">Atención personalizada, como en familia</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRODUCTOS ── -->
+<section class="productos section" id="productos">
+  <div class="section-inner">
+    <div class="productos-header fade-up">
+      <p class="section-label">Lo que hacemos</p>
+      <h2 class="section-title">Nuestros productos</h2>
+      <p class="section-desc">De la vidriera a tu mesa. Todo elaborado con harina, manteca, huevos y mucho amor.</p>
+    </div>
+    <div class="productos-grid">
+
+      <!-- Medialunas & Facturas — foto de medialunas/croissants dorados -->
+      <div class="producto-card fade-up fade-up-delay-1">
+        <div class="producto-img">
+          <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=700&q=80&auto=format"
+               alt="Medialunas y facturas artesanales recién horneadas" loading="lazy" />
+        </div>
+        <div class="producto-body">
+          <span class="producto-tag">⭐ Lo más pedido</span>
+          <h3>Medialunas & Facturas</h3>
+          <p>Doradas, hojaldradas y recién salidas del horno. De manteca, de grasa, vigilantes, cañoncitos, palmeritas y mucho más. La vidriera de siempre.</p>
+        </div>
+      </div>
+
+      <!-- Tortas Artesanales — foto de torta de chocolate con frutillas -->
+      <div class="producto-card fade-up fade-up-delay-2">
+        <div class="producto-img">
+          <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=700&q=80&auto=format"
+               alt="Torta artesanal de chocolate con frutillas y crema" loading="lazy" />
+        </div>
+        <div class="producto-body">
+          <span class="producto-tag">Confitería</span>
+          <h3>Tortas Artesanales</h3>
+          <p>Torta de chocolate con frutillas, torta de crema y mermelada, torta de limón, selva negra y más. Personalizadas para tu cumpleaños o evento.</p>
+        </div>
+      </div>
+
+      <!-- Pan Artesanal — foto de panes de campo/campo -->
+      <div class="producto-card fade-up fade-up-delay-3">
+        <div class="producto-img">
+          <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=700&q=80&auto=format"
+               alt="Pan artesanal de campo recién horneado" loading="lazy" />
+        </div>
+        <div class="producto-body">
+          <span class="producto-tag">Panadería</span>
+          <h3>Pan Artesanal</h3>
+          <p>Pan de campo, pan francés, pan de leche, pan árabe, pan de molde y más. Masa madre y fermentación lenta para un sabor auténtico.</p>
+        </div>
+      </div>
+
+      <!-- Alfajores — foto de alfajores de chocolate -->
+      <div class="producto-card fade-up fade-up-delay-1">
+        <div class="producto-img">
+          <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=700&q=80&auto=format"
+               alt="Alfajores artesanales de chocolate bañados" loading="lazy" />
+        </div>
+        <div class="producto-body">
+          <span class="producto-tag">Especialidad</span>
+          <h3>Alfajores Artesanales</h3>
+          <p>Alfajores de maicena con dulce de leche, bañados en chocolate. También de coco, de chocolate amargo y la versión Sin TACC. Hechos en el local.</p>
+        </div>
+      </div>
+
+      <!-- Productos Salados — foto de empanadas artesanales -->
+      <div class="producto-card fade-up fade-up-delay-2">
+        <div class="producto-img">
+          <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=700&q=80&auto=format"
+               alt="Productos salados — tarta, empanadas, sandwiches de miga" loading="lazy" />
+        </div>
+        <div class="producto-body">
+          <span class="producto-tag">Salados</span>
+          <h3>Productos Salados</h3>
+          <p>Medialunas de jamón y queso, tartas, empanadas, sandwiches de miga y otras delicias saladas. Ideal para reuniones y desayunos de trabajo.</p>
+        </div>
+      </div>
+
+      <!-- Sin TACC — foto de pan sin gluten, miga abierta -->
+      <div class="producto-card fade-up fade-up-delay-3">
+        <div class="producto-img">
+          <img src="https://images.unsplash.com/photo-1598373182133-52452f7691ef?w=700&q=80&auto=format"
+               alt="Productos Sin TACC — pan y facturas aptas para celíacos" loading="lazy" />
+        </div>
+        <div class="producto-body">
+          <span class="producto-tag">🌿 Línea especial</span>
+          <h3>Línea Sin TACC</h3>
+          <p>Pan, facturas, alfajores y tortas aptos para celíacos. Elaborados con harinas sin gluten, en zona de producción diferenciada para evitar contaminación cruzada.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── GALERÍA ── -->
+<section class="galeria" id="galeria">
+  <div class="galeria-header fade-up">
+    <p class="section-label" style="color:var(--amber)">Instagram @bruzzone_panaderia</p>
+    <h2 class="section-title light">De nuestra vidriera</h2>
+  </div>
+  <div class="galeria-grid">
+
+    <!-- Foto 1 tall: Medialunas en vidriera -->
+    <div class="galeria-item g-tall fade-up">
+      <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&q=80&auto=format"
+           alt="Medialunas recién salidas del horno" loading="lazy" />
+      <div class="galeria-caption"><span>Medialunas recién salidas del horno</span></div>
+    </div>
+
+    <!-- Foto 2: Torta chocolate con frutillas -->
+    <div class="galeria-item fade-up fade-up-delay-1">
+      <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500&q=80&auto=format"
+           alt="Torta de chocolate con frutillas" loading="lazy" />
+      <div class="galeria-caption"><span>Torta de chocolate con frutillas</span></div>
+    </div>
+
+    <!-- Foto 3: Torta de crema y capas -->
+    <div class="galeria-item fade-up fade-up-delay-2">
+      <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=500&q=80&auto=format"
+           alt="Torta de crema y mermelada — capas artesanales" loading="lazy" />
+      <div class="galeria-caption"><span>Torta de crema y mermelada — capas artesanales</span></div>
+    </div>
+
+    <!-- Foto 4 wide: Facturas surtidas en bandeja -->
+    <div class="galeria-item g-wide fade-up fade-up-delay-1">
+      <img src="https://images.unsplash.com/photo-1530610476181-d83430b64dcd?w=900&q=80&auto=format"
+           alt="Facturas surtidas del día — vigilantes, cañoncitos, palmeritas" loading="lazy" />
+      <div class="galeria-caption"><span>Facturas surtidas del día</span></div>
+    </div>
+
+    <!-- Foto 5: Alfajores artesanales -->
+    <div class="galeria-item fade-up fade-up-delay-2">
+      <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=500&q=80&auto=format"
+           alt="Alfajores artesanales de chocolate" loading="lazy" />
+      <div class="galeria-caption"><span>Alfajores artesanales de chocolate</span></div>
+    </div>
+
+    <!-- Foto 6 tall: Pan artesanal de campo -->
+    <div class="galeria-item g-tall fade-up fade-up-delay-1">
+      <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&q=80&auto=format"
+           alt="Pan artesanal de campo — horneado fresco" loading="lazy" />
+      <div class="galeria-caption"><span>Pan artesanal de campo</span></div>
+    </div>
+
+    <!-- Foto 7: Catering para eventos -->
+    <div class="galeria-item fade-up fade-up-delay-3">
+      <img src="https://images.unsplash.com/photo-1530062845289-9109b2c9c868?w=500&q=80&auto=format"
+           alt="Catering para eventos — bocaditos y mesa dulce" loading="lazy" />
+      <div class="galeria-caption"><span>Catering para eventos y casamientos</span></div>
+    </div>
+
+    <!-- Foto 8: Sin TACC -->
+    <div class="galeria-item fade-up fade-up-delay-4">
+      <img src="https://images.unsplash.com/photo-1598373182133-52452f7691ef?w=500&q=80&auto=format"
+           alt="Línea Sin TACC — aptos para celíacos" loading="lazy" />
+      <div class="galeria-caption"><span>Línea Sin TACC — aptos celíacos</span></div>
+    </div>
+
+  </div>
+  <div class="galeria-ig">
+    <a href="https://www.instagram.com/bruzzone_panaderia" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      Ver más en @bruzzone_panaderia
     </a>
   </div>
+</section>
 
-  <!-- HERO -->
-  <section class="hero" id="inicio">
-    <div class="hero-content">
-      <div class="hero-badge">🌾 Panadería & Confitería · Glew, Bs As</div>
-      <div class="hero-logo">
-        <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M30 8C30 8 20 15 20 28C20 38 25 44 30 46C35 44 40 38 40 28C40 15 30 8 30 8Z" fill="#111" fill-opacity="0.6"/>
-          <ellipse cx="30" cy="46" rx="10" ry="4" fill="#111" fill-opacity="0.4"/>
-          <path d="M22 20 Q30 14 38 20" stroke="#111" stroke-width="1.5" fill="none" stroke-opacity="0.5"/>
-          <circle cx="30" cy="30" r="5" fill="#111" fill-opacity="0.5"/>
-        </svg>
-      </div>
-      <h1><span>Bruzzone</span></h1>
-      <p class="hero-sub">Panadería &amp; Confitería</p>
-      <p class="hero-desc">Cocinamos en familia y con mucho amor.<br/>Lo mejor en productos artesanales, dulces y salados — en el corazón de Glew.</p>
-      <div class="hero-btns">
-        <a href="#carta" class="btn-primary">🍞 Ver nuestra carta</a>
-        <a href="https://wa.me/5491153379763?text=Hola!%20Vi%20la%20web%20de%20Bruzzone%20y%20quiero%20hacer%20un%20pedido%20%F0%9F%8D%9E" target="_blank" class="btn-outline">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Pedir ahora
-        </a>
-      </div>
-      <div class="hero-stats">
-        <div class="hero-stat"><span>+380</span><p>Reseñas en Google</p></div>
-        <div class="hero-stat"><span>4.7★</span><p>Calificación</p></div>
-        <div class="hero-stat"><span>+8K</span><p>Seguidores IG</p></div>
-      </div>
+<!-- ── RESEÑAS ── -->
+<section class="resenas section" id="resenas">
+  <div class="section-inner">
+    <div class="resenas-header fade-up">
+      <p class="section-label">Lo que dicen</p>
+      <h2 class="section-title">Clientes satisfechos</h2>
+      <p class="section-desc" style="margin:0 auto">Comentarios reales de nuestra comunidad en Instagram.</p>
     </div>
-  </section>
-
-  <!-- NOSOTROS -->
-  <section class="nosotros">
-    <div class="container">
-      <div class="nosotros-inner">
-        <div class="nosotros-text fade-up">
-          <p class="section-label">Nuestra historia</p>
-          <h2 class="section-title">Hechos con amor,<br/>listos para vos</h2>
-          <p>En Bruzzone creemos que el pan y la pastelería artesanal son mucho más que alimentos — son recuerdos, momentos y tradición familiar. Cada producto que sale de nuestro horno está hecho con ingredientes seleccionados y el cuidado de siempre.</p>
-          <p>Nos encontrás en Méndez 206, Glew, de martes a domingo. Y para los que nos siguen desde hace años: el amor con que cocinamos nunca cambió.</p>
-          <div class="valores">
-            <div class="valor fade-up fade-up-delay-1"><div class="valor-icon">🌾</div><div><h4>Artesanal</h4><p>Elaboración propia, sin apuros</p></div></div>
-            <div class="valor fade-up fade-up-delay-2"><div class="valor-icon">👨‍👩‍👧</div><div><h4>Familiar</h4><p>Negocio de familia, atención personal</p></div></div>
-            <div class="valor fade-up fade-up-delay-3"><div class="valor-icon">🚚</div><div><h4>Delivery</h4><p>Llevamos hasta tu puerta</p></div></div>
-            <div class="valor fade-up fade-up-delay-4"><div class="valor-icon">💳</div><div><h4>Todos los medios</h4><p>Efectivo y tarjeta</p></div></div>
-          </div>
-        </div>
-        <div class="nosotros-img fade-up fade-up-delay-2">
-          <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=700&q=80" alt="Interior panadería Bruzzone" loading="lazy" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CARTA -->
-  <section class="carta" id="carta">
-    <div class="container">
-      <div class="carta-header fade-up">
-        <p class="section-label">Nuestra carta</p>
-        <h2 class="section-title">Dulce, salado y sin TACC</h2>
-        <p class="section-desc">Todos elaborados en el local, con los mejores ingredientes. Hay algo para cada momento del día.</p>
-      </div>
-      <div class="productos-grid">
-        <div class="producto-card fade-up fade-up-delay-1">
-          <div class="producto-img"><img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80" alt="Tarta de Ricotta" loading="lazy" /></div>
-          <div class="producto-body"><span class="producto-tag tag-dulce">🍰 Dulce</span><h3>Tarta de Ricotta</h3><p>Masa casera, relleno cremoso de ricotta. Una de las más pedidas del local.</p></div>
-        </div>
-        <div class="producto-card fade-up fade-up-delay-2">
-          <div class="producto-img"><img src="https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=600&q=80" alt="Cheesecake de Pistacho" loading="lazy" /></div>
-          <div class="producto-body"><span class="producto-tag tag-dulce">🍰 Dulce</span><h3>Cheesecake de Pistacho</h3><p>Cremoso, suave y con ese sabor único que ya tiene sus fanáticos.</p></div>
-        </div>
-        <div class="producto-card fade-up fade-up-delay-3">
-          <div class="producto-img"><img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&q=80" alt="Medialunas y Facturas" loading="lazy" /></div>
-          <div class="producto-body"><span class="producto-tag tag-dulce">🥐 Dulce</span><h3>Medialunas &amp; Facturas</h3><p>Hojaldradas, bien mantecosas, recién salidas del horno desde las 7 AM.</p></div>
-        </div>
-        <div class="producto-card fade-up fade-up-delay-1">
-          <div class="producto-img"><img src="https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?w=600&q=80" alt="Empanadas caseras" loading="lazy" /></div>
-          <div class="producto-body"><span class="producto-tag tag-salado">🥟 Salado</span><h3>Empanadas Caseras</h3><p>De carne, jamón y queso, verdura. Hechas en el día, perfectas para llevar.</p></div>
-        </div>
-        <div class="producto-card fade-up fade-up-delay-2">
-          <div class="producto-img"><img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&q=80" alt="Sándwiches de Miga" loading="lazy" /></div>
-          <div class="producto-body"><span class="producto-tag tag-salado">🥪 Salado</span><h3>Sándwiches de Miga</h3><p>Con pan propio, frescos y variados. Ideales para reuniones o el trabajo.</p></div>
-        </div>
-        <div class="producto-card fade-up fade-up-delay-3">
-          <div class="producto-img"><img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80" alt="Tartas saladas" loading="lazy" /></div>
-          <div class="producto-body"><span class="producto-tag tag-salado">🥧 Salado</span><h3>Tartas Saladas</h3><p>Pascualina, jamón y queso, zucchini. Caseras, con masa propia.</p></div>
-        </div>
-        <div class="producto-card fade-up fade-up-delay-1">
-          <div class="producto-img"><img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=600&q=80" alt="Fideos Sin TACC" loading="lazy" /></div>
-          <div class="producto-body"><span class="producto-tag tag-sintacc">🌿 Sin TACC</span><h3>Fideos &amp; Sorrentinos SIN TACC</h3><p>Aptos para celíacos. Elaborados sin gluten, con el mismo sabor de siempre.</p></div>
-        </div>
-        <div class="producto-card fade-up fade-up-delay-2">
-          <div class="producto-img"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&q=80" alt="Pan Sin TACC" loading="lazy" /></div>
-          <div class="producto-body"><span class="producto-tag tag-sintacc">🌿 Sin TACC</span><h3>Panificados Sin TACC</h3><p>Pan de mesa, productos de panadería aptos celíacos. Preguntanos por el menú.</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- GALERÍA -->
-  <section class="galeria" id="galeria">
-    <div class="container">
-      <div class="galeria-header fade-up">
-        <p class="section-label">Nuestro trabajo</p>
-        <h2 class="section-title">Cada producto,<br/>hecho con orgullo</h2>
-        <p class="section-desc">Una pequeña muestra de lo que encontrás todos los días en el local.</p>
-      </div>
-      <div class="galeria-grid">
-        <div class="galeria-item fade-up fade-up-delay-1">
-          <img src="https://images.unsplash.com/photo-1587668178277-295251f900ce?w=900&q=80" alt="Torta artesanal Bruzzone" loading="lazy" />
-          <div class="overlay"><span class="overlay-icon">🍰</span></div>
-        </div>
-        <div class="galeria-item fade-up fade-up-delay-2">
-          <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=500&q=80" alt="Medialunas frescas" loading="lazy" />
-          <div class="overlay"><span class="overlay-icon">🥐</span></div>
-        </div>
-        <div class="galeria-item fade-up fade-up-delay-3">
-          <img src="https://images.unsplash.com/photo-1549931319-a545dcf3bc7c?w=500&q=80" alt="Pan artesanal" loading="lazy" />
-          <div class="overlay"><span class="overlay-icon">🍞</span></div>
-        </div>
-        <div class="galeria-item fade-up fade-up-delay-2">
-          <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=500&q=80" alt="Pastelería" loading="lazy" />
-          <div class="overlay"><span class="overlay-icon">🧁</span></div>
-        </div>
-        <div class="galeria-item fade-up fade-up-delay-3">
-          <img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=900&q=80" alt="Vitrina de confitería" loading="lazy" />
-          <div class="overlay"><span class="overlay-icon">✨</span></div>
-        </div>
-      </div>
-      <div class="galeria-cta fade-up">
-        <a href="https://instagram.com/bruzzone_panaderia" target="_blank" class="btn-ig">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          Ver más en @bruzzone_panaderia
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- RESEÑAS -->
-  <section class="resenas" id="resenas">
-    <div class="container">
-      <div class="resenas-header fade-up">
-        <p class="section-label">Lo que dicen nuestros clientes</p>
-        <h2 class="section-title">+380 reseñas en Google</h2>
-        <p class="section-desc">La opinión de quienes nos eligen todos los días.</p>
-      </div>
-      <div class="resenas-grid">
-        <div class="resena-card fade-up fade-up-delay-1">
-          <div class="estrellas">
-            <span class="estrella">★</span><span class="estrella">★</span><span class="estrella">★</span><span class="estrella">★</span><span class="estrella">★</span>
-          </div>
-          <p class="resena-texto">Hace años que vengo a Bruzzone y nunca me decepcionan. La tarta de ricotta es lo mejor que probé en la zona. El servicio siempre muy amable y los productos recién hechos. 100% recomendable.</p>
-          <div class="resena-autor">
-            <div class="autor-avatar" style="background: #E84393;">M</div>
-            <div>
-              <p class="autor-nombre">María G.</p>
-              <p class="autor-fecha">hace 2 semanas · Google</p>
-            </div>
-          </div>
-        </div>
-        <div class="resena-card fade-up fade-up-delay-2">
-          <div class="estrellas">
-            <span class="estrella">★</span><span class="estrella">★</span><span class="estrella">★</span><span class="estrella">★</span><span class="estrella">★</span>
-          </div>
-          <p class="resena-texto">El cheesecake de pistacho es una locura. Lo pedí para una reunión y todos me preguntaron dónde lo había comprado. Ya son clientes fijos también. Los sándwiches de miga fresquísimos.</p>
-          <div class="resena-autor">
-            <div class="autor-avatar" style="background: #3B82F6;">C</div>
-            <div>
-              <p class="autor-nombre">Carlos R.</p>
-              <p class="autor-fecha">hace 1 mes · Google</p>
-            </div>
-          </div>
-        </div>
-        <div class="resena-card fade-up fade-up-delay-3">
-          <div class="estrellas">
-            <span class="estrella">★</span><span class="estrella">★</span><span class="estrella">★</span><span class="estrella">★</span><span class="estrella">★</span>
-          </div>
-          <p class="resena-texto">Como celíaca, encontrar un lugar que realmente ofrezca SIN TACC con buen sabor no es fácil. Los fideos y sorrentinos son excelentes. Se nota que lo hacen con cuidado y no como "producto de descarte".</p>
-          <div class="resena-autor">
-            <div class="autor-avatar" style="background: #8B5CF6;">V</div>
-            <div>
-              <p class="autor-nombre">Valentina P.</p>
-              <p class="autor-fecha">hace 3 semanas · Google</p>
-            </div>
-          </div>
-        </div>
-        <div class="resena-card fade-up fade-up-delay-4">
-          <div class="estrellas">
-            <span class="estrella">★</span><span class="estrella">★</span><span class="estrella">★</span><span class="estrella">★</span><span class="estrella">★</span>
-          </div>
-          <p class="resena-texto">Contratamos el catering de Bruzzone para el bautismo de mi hijo y fue un éxito total. Vinieron a tiempo, la presentación impecable y los sandwiches volaron. Ya los tenemos guardados para el cumple.</p>
-          <div class="resena-autor">
-            <div class="autor-avatar" style="background: #10B981;">L</div>
-            <div>
-              <p class="autor-nombre">Lucas M.</p>
-              <p class="autor-fecha">hace 2 meses · Google</p>
-            </div>
+    <div class="resenas-grid">
+      <div class="resena-card fade-up fade-up-delay-1">
+        <div class="resena-stars">★★★★★</div>
+        <p class="resena-texto">"La mejor panadería de la historia. Las medialunas son una locura, no podés comer solo una. ¡Los mejores de zona sur sin ninguna duda!"</p>
+        <div class="resena-autor">
+          <div class="resena-avatar">MP</div>
+          <div class="resena-autor-info">
+            <strong>@mikypitrau</strong>
+            <span>Glew · Instagram</span>
           </div>
         </div>
       </div>
-      <div class="resenas-footer fade-up">
-        <div class="google-rating">
-          <span class="google-score">4.7</span>
-          <div class="google-stars">
-            <div class="estrellas">
-              <span class="estrella">★</span><span class="estrella">★</span><span class="estrella">★</span><span class="estrella">★</span><span class="estrella" style="color:#D1D5DB; position:relative; overflow:hidden;"><span style="position:absolute;left:0;width:70%;overflow:hidden;color:#F59E0B;">★</span></span>
-            </div>
-            <small>Basado en +380 reseñas de Google</small>
+      <div class="resena-card fade-up fade-up-delay-2">
+        <div class="resena-stars">★★★★★</div>
+        <p class="resena-texto">"La mejor panadería de zona sur. Tiene todo lo que buscás y más. La atención es increíble, te tratan como en familia. ¡Los recomiendo a todos!"</p>
+        <div class="resena-autor">
+          <div class="resena-avatar">AD</div>
+          <div class="resena-autor-info">
+            <strong>@adii.13_ok</strong>
+            <span>Glew · Instagram</span>
           </div>
-          <div class="google-logo">
-            <svg viewBox="0 0 24 24" width="20" height="20"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-            <span>Google Reviews</span>
+        </div>
+      </div>
+      <div class="resena-card fade-up fade-up-delay-3">
+        <div class="resena-stars">★★★★★</div>
+        <p class="resena-texto">"¡Las más ricas de Glew!!! Si buscás algo rico, vení a Bruzzone. No te pierdas en probar todas las exquisiteces que tienen. ¡Espectacular todo!"</p>
+        <div class="resena-autor">
+          <div class="resena-avatar">EC</div>
+          <div class="resena-autor-info">
+            <strong>@elba_carnovale</strong>
+            <span>Glew · Instagram</span>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- SIN TACC -->
-  <section class="sintacc" id="sintacc">
-    <div class="container">
-      <div class="sintacc-inner">
-        <div class="sintacc-text fade-up">
-          <p class="section-label">Sección especial</p>
-          <h2 class="section-title">Somos aptos<br/>celíacos 🌿</h2>
-          <p>En Bruzzone entendemos que comer rico no debería ser un privilegio. Por eso desarrollamos una línea de productos SIN TACC que no sacrifica nada en sabor.</p>
-          <div class="sintacc-items">
-            <div class="sintacc-item"><span>🍝</span><p>Fideos frescos sin TACC</p></div>
-            <div class="sintacc-item"><span>🥟</span><p>Sorrentinos aptos celíacos</p></div>
-            <div class="sintacc-item"><span>🍞</span><p>Pan y panificados sin gluten</p></div>
-            <div class="sintacc-item"><span>🎂</span><p>Pastelería sin TACC (consultar)</p></div>
-          </div>
-          <div class="sintacc-badge">🌿 Línea SIN TACC disponible</div>
-        </div>
-        <div class="sintacc-img fade-up fade-up-delay-2">
-          <img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=600&q=80" alt="Productos sin TACC" loading="lazy" />
-        </div>
+<!-- ── SIN TACC ── -->
+<section class="sintacc" id="sintacc">
+  <div class="sintacc-inner">
+    <div class="sintacc-img fade-up">
+      <!-- Foto: pan/productos sin gluten, miga abierta -->
+      <img src="https://images.unsplash.com/photo-1598373182133-52452f7691ef?w=800&q=80&auto=format"
+           alt="Pan artesanal Sin TACC — apto para celíacos" loading="lazy" />
+    </div>
+    <div class="sintacc-text fade-up fade-up-delay-2">
+      <p class="section-label">Para todos</p>
+      <h2 class="section-title light">Línea<br/>Sin TACC</h2>
+      <p>Porque la celaquía no debería privarte de disfrutar una buena medialuna o una torta artesanal. Desarrollamos una línea completa con harinas sin gluten para que todos puedan disfrutar Bruzzone.</p>
+      <div class="sintacc-items">
+        <div class="sintacc-item">Medialunas y facturas Sin TACC</div>
+        <div class="sintacc-item">Pan de campo y pan de molde aptos celíacos</div>
+        <div class="sintacc-item">Alfajores de maicena Sin TACC</div>
+        <div class="sintacc-item">Tortas y budines para celíacos</div>
+        <div class="sintacc-item">Producción diferenciada, sin contaminación cruzada</div>
+      </div>
+      <a href="https://wa.me/5491153379763?text=Hola%20Bruzzone!%20Quiero%20consultar%20por%20productos%20Sin%20TACC%20🌿" target="_blank" rel="noopener" class="btn-wa-green">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Consultar disponibilidad Sin TACC
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── CATERING ── -->
+<section class="catering section" id="catering">
+  <div class="catering-inner section-inner">
+    <div class="catering-text fade-up">
+      <p class="section-label">Para tu evento</p>
+      <h2 class="section-title">Catering<br/>personalizado</h2>
+      <p>¿Tenés un casamiento, cumpleaños, bautismo o reunión de empresa? Nos encargamos de la mesa dulce y salada. Desde una docena de medialunas hasta una mesa completa para 200 personas.</p>
+      <p>Trabajamos con anticipación para asegurarte la mejor calidad y que todo esté listo en tiempo y forma para tu evento.</p>
+      <div class="catering-features">
+        <div class="catering-feat">Casamientos, cumpleaños y bautismos</div>
+        <div class="catering-feat">Reuniones de empresa y eventos corporativos</div>
+        <div class="catering-feat">Encuentros religiosos y comunitarios</div>
+        <div class="catering-feat">Mesa dulce y salada personalizable</div>
+        <div class="catering-feat">Variedad completa incluyendo opción Sin TACC</div>
+      </div>
+      <a href="#pedido" class="btn-primary" style="margin-top:1.8rem;">📋 Solicitar presupuesto</a>
+    </div>
+    <div class="catering-img fade-up fade-up-delay-2">
+      <!-- Foto: mesa de catering con bocaditos y productos -->
+      <img src="https://images.unsplash.com/photo-1530062845289-9109b2c9c868?w=800&q=80&auto=format"
+           alt="Mesa de catering Bruzzone — cumpleaños, casamientos, eventos" loading="lazy" />
+    </div>
+  </div>
+</section>
+
+<!-- ── PEDIDO ── -->
+<section class="pedido" id="pedido">
+  <div class="pedido-inner">
+    <div class="pedido-text fade-up">
+      <p class="section-label">Pedí con anticipación</p>
+      <h2 class="section-title light">Pedido<br/>anticipado</h2>
+      <p>Completá el formulario y te enviamos confirmación por WhatsApp. Ideal para tortas de cumpleaños, catering y pedidos especiales.</p>
+      <p>Para tortas con decoración personalizada, pedimos al menos 48hs de anticipación.</p>
+      <div class="pedido-beneficios">
+        <div class="pedido-bene"><div class="pedido-bene-icon">⚡</div><span>Confirmación por WhatsApp en el día</span></div>
+        <div class="pedido-bene"><div class="pedido-bene-icon">📅</div><span>Reservá tu fecha, sin estrés</span></div>
+        <div class="pedido-bene"><div class="pedido-bene-icon">🎂</div><span>Tortas personalizadas a medida</span></div>
+        <div class="pedido-bene"><div class="pedido-bene-icon">🌿</div><span>Indicá si necesitás Sin TACC</span></div>
+        <div class="pedido-bene"><div class="pedido-bene-icon">🚚</div><span>Retiro en local · Méndez 206, Glew</span></div>
       </div>
     </div>
-  </section>
-
-  <!-- CATERING -->
-  <section class="catering" id="catering">
-    <div class="container">
-      <div class="catering-inner fade-up">
-        <div class="catering-text">
-          <p class="section-label" style="color:var(--naranja)">Para tus eventos</p>
-          <h2 class="section-title">Catering<br/>personalizado</h2>
-          <p>¿Tenés un evento, reunión o celebración? Nos encargamos de todo. Desde una docena de medialunas hasta un catering completo para cientos de personas.</p>
-          <div class="catering-features">
-            <div class="catering-feat">Cumpleaños, casamientos y bautismos</div>
-            <div class="catering-feat">Reuniones de empresa y eventos corporativos</div>
-            <div class="catering-feat">Encuentros religiosos y comunitarios</div>
-            <div class="catering-feat">Pedidos especiales con anticipación</div>
-            <div class="catering-feat">Menú personalizable y variedad SIN TACC</div>
-          </div>
-          <a href="#pedido" class="btn-primary" style="margin-top:1.8rem; display:inline-flex;">📋 Hacer pedido anticipado</a>
+    <div class="pedido-form fade-up fade-up-delay-2">
+      <p class="form-title">Hacé tu pedido 🛒</p>
+      <div class="form-group">
+        <label>Tu nombre</label>
+        <input type="text" id="f-nombre" placeholder="Ej: María González" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Teléfono / WhatsApp</label>
+          <input type="tel" id="f-tel" placeholder="+54 9 11 ..." />
         </div>
-        <div class="catering-img">
-          <img src="https://images.unsplash.com/photo-1530062845289-9109b2c9c868?w=700&q=80" alt="Catering Bruzzone" loading="lazy" />
+        <div class="form-group">
+          <label>Fecha de entrega</label>
+          <input type="date" id="f-fecha" />
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- PEDIDO ANTICIPADO -->
-  <section class="pedido" id="pedido">
-    <div class="container">
-      <div class="pedido-inner">
-        <div class="pedido-text fade-up">
-          <p class="section-label">Sin llamadas, sin complicaciones</p>
-          <h2 class="section-title">Pedido<br/>anticipado</h2>
-          <p>Completá el formulario y te mandamos confirmación por WhatsApp. Ideal para eventos, pedidos especiales o grandes cantidades.</p>
-          <div class="pedido-beneficios">
-            <div class="pedido-bene"><div class="pedido-bene-icon">⚡</div><span>Confirmación inmediata por WhatsApp</span></div>
-            <div class="pedido-bene"><div class="pedido-bene-icon">📅</div><span>Reservá con anticipación, sin estrés</span></div>
-            <div class="pedido-bene"><div class="pedido-bene-icon">🎂</div><span>Tortas y pedidos especiales a medida</span></div>
-            <div class="pedido-bene"><div class="pedido-bene-icon">🌿</div><span>Podés indicar si necesitás Sin TACC</span></div>
-            <div class="pedido-bene"><div class="pedido-bene-icon">🚚</div><span>Retiro en local o delivery a domicilio</span></div>
-          </div>
-        </div>
-        <div class="pedido-form fade-up fade-up-delay-2">
-          <p class="form-title">Hacé tu pedido 🛒</p>
-          <div class="form-group">
-            <label>Tu nombre</label>
-            <input type="text" id="f-nombre" placeholder="Ej: María García" />
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Teléfono / WhatsApp</label>
-              <input type="tel" id="f-tel" placeholder="+54 11 ..." />
-            </div>
-            <div class="form-group">
-              <label>Fecha de entrega</label>
-              <input type="date" id="f-fecha" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label>¿Qué querés pedir?</label>
-            <select id="f-categoria">
-              <option value="">Seleccioná una categoría</option>
-              <option value="Torta personalizada">🎂 Torta personalizada</option>
-              <option value="Catering para evento">🎉 Catering para evento</option>
-              <option value="Sándwiches de miga">🥪 Sándwiches de miga</option>
-              <option value="Empanadas">🥟 Empanadas</option>
-              <option value="Tartas y tortas saladas">🥧 Tartas y tortas saladas</option>
-              <option value="Productos Sin TACC">🌿 Productos Sin TACC</option>
-              <option value="Medialunas y facturería">🥐 Medialunas y facturería</option>
-              <option value="Otro pedido especial">✨ Otro pedido especial</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Detalles del pedido</label>
-            <textarea id="f-detalle" placeholder="Contanos más: cantidad, sabores, si es para un evento, alergias, etc."></textarea>
-          </div>
-          <div class="form-group">
-            <label>¿Cómo lo recibís?</label>
-            <select id="f-entrega">
-              <option value="Retiro en el local">🏪 Retiro en el local (Méndez 206)</option>
-              <option value="Delivery a domicilio">🚚 Delivery a domicilio</option>
-            </select>
-          </div>
-          <button class="btn-form-wa" onclick="enviarPedido()">
-            <svg viewBox="0 0 24 24" fill="white" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            Enviar pedido por WhatsApp
-          </button>
-          <p class="form-nota">Te responderemos en menos de 24hs para confirmar disponibilidad.</p>
-        </div>
+      <div class="form-group">
+        <label>¿Qué necesitás?</label>
+        <select id="f-tipo">
+          <option value="">— Seleccioná —</option>
+          <option value="Torta de cumpleaños personalizada">🎂 Torta de cumpleaños personalizada</option>
+          <option value="Torta para evento o catering">🎉 Torta para evento o catering</option>
+          <option value="Pedido de facturas y medialunas">🥐 Pedido de facturas y medialunas</option>
+          <option value="Alfajores para regalo o evento">🍫 Alfajores para regalo o evento</option>
+          <option value="Catering completo para evento">🍽️ Catering completo para evento</option>
+          <option value="Pedido Sin TACC">🌿 Pedido línea Sin TACC</option>
+          <option value="Otro pedido especial">✨ Otro pedido especial</option>
+        </select>
       </div>
+      <div class="form-group">
+        <label>Detalles del pedido</label>
+        <textarea id="f-detalles" placeholder="Contanos qué necesitás: cantidad, sabor, decoración, cantidad de personas, etc."></textarea>
+      </div>
+      <button class="btn-form-wa" onclick="enviarPedido()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Enviar pedido por WhatsApp
+      </button>
+      <p class="form-nota">Te confirmamos disponibilidad en menos de 24hs.</p>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- HORARIOS Y CONTACTO -->
-  <section class="horarios" id="horarios">
-    <div class="container">
-      <div class="horarios-inner">
-        <div class="fade-up">
-          <p class="section-label">Cuándo encontrarnos</p>
-          <h2 class="section-title">Horarios<br/>de atención</h2>
-          <div class="horario-tabla">
-            <div class="horario-row"><span class="horario-dia">Lunes</span><span class="horario-cerrado">Cerrado</span></div>
-            <div class="horario-row"><span class="horario-dia">Martes a Sábado</span><span class="horario-hora">7:00 – 20:00</span></div>
-            <div class="horario-row"><span class="horario-dia">Domingo</span><span class="horario-hora">7:00 – 13:30 · 16:00 – 19:00</span></div>
+<!-- ── HORARIOS ── -->
+<section class="horarios" id="horarios">
+  <div class="horarios-inner section-inner">
+    <div class="horarios-text fade-up">
+      <p class="section-label">Dónde encontrarnos</p>
+      <h2 class="section-title">Horarios<br/>y ubicación</h2>
+      <table class="horario-tabla">
+        <tr><td>Lunes</td><td>Cerrado</td></tr>
+        <tr><td>Martes a Sábado</td><td>7:00 – 20:00 hs</td></tr>
+        <tr><td>Domingo (mañana)</td><td>7:00 – 13:30 hs</td></tr>
+        <tr><td>Domingo (tarde)</td><td>16:00 – 19:00 hs</td></tr>
+      </table>
+      <div class="contact-cards">
+        <div class="contact-card">
+          <div class="contact-card-icon wa">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           </div>
-          <div style="margin-top:1.5rem; padding:1rem 1.2rem; background:rgba(245,158,11,0.1); border-radius:0.75rem; border-left: 3px solid var(--naranja);">
-            <p style="font-size:0.85rem; color:rgba(255,255,255,0.65);">📍 <strong style="color:white;">Gervasio Méndez 206</strong>, Glew, Buenos Aires</p>
-          </div>
-          <div class="mapa-embed">
-            <iframe src="https://maps.google.com/maps?q=Gervasio+Mendez+206,+Glew,+Buenos+Aires,+Argentina&output=embed&z=16" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación Bruzzone Panadería"></iframe>
-          </div>
-        </div>
-        <div class="fade-up fade-up-delay-2">
-          <p class="section-label">Cómo contactarnos</p>
-          <h2 class="section-title">Estamos<br/>para vos</h2>
-          <div class="contacto-cards">
-            <a href="https://wa.me/5491153379763?text=Hola%20Bruzzone!%20Quiero%20hacer%20un%20pedido%20%F0%9F%8D%9E" target="_blank" class="contacto-card">
-              <div class="contacto-card-icon icon-wa">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-              </div>
-              <div><h4>WhatsApp</h4><p>+54 9 11 5337-9763 · Pedidos y consultas</p></div>
-            </a>
-            <a href="https://instagram.com/bruzzone_panaderia" target="_blank" class="contacto-card">
-              <div class="contacto-card-icon icon-ig">
-                <svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
-                  <defs><linearGradient id="ig2" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f09433"/><stop offset="25%" stop-color="#e6683c"/><stop offset="50%" stop-color="#dc2743"/><stop offset="75%" stop-color="#cc2366"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs>
-                  <path fill="url(#ig2)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                </svg>
-              </div>
-              <div><h4>Instagram</h4><p>@bruzzone_panaderia · +8.000 seguidores</p></div>
-            </a>
-            <a href="https://maps.google.com/?q=Gervasio+Méndez+206+Glew+Buenos+Aires" target="_blank" class="contacto-card">
-              <div class="contacto-card-icon icon-map">
-                <svg viewBox="0 0 24 24" width="22" height="22" fill="#F59E0B"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-              </div>
-              <div><h4>Cómo llegar</h4><p>Gervasio Méndez 206, Glew, Bs As</p></div>
+          <div class="contact-card-info">
+            <a href="https://wa.me/5491153379763" target="_blank" rel="noopener">
+              <h4>WhatsApp</h4>
+              <p>+54 9 11 5337-9763 · Pedidos y consultas</p>
             </a>
           </div>
         </div>
+        <div class="contact-card">
+          <div class="contact-card-icon ig">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </div>
+          <div class="contact-card-info">
+            <a href="https://www.instagram.com/bruzzone_panaderia" target="_blank" rel="noopener">
+              <h4>Instagram</h4>
+              <p>@bruzzone_panaderia · 8.300+ seguidores</p>
+            </a>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-icon maps">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          </div>
+          <div class="contact-card-info">
+            <h4>Dirección</h4>
+            <p>Gervasio Méndez 206, Glew, Buenos Aires</p>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
+    <div class="horarios-mapa fade-up fade-up-delay-2">
+      <iframe
+        src="https://maps.google.com/maps?q=Gervasio+Méndez+206+Glew+Buenos+Aires&output=embed"
+        title="Ubicación Bruzzone Panadería — Méndez 206, Glew"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <p class="footer-logo"><strong>Bruzzone</strong> · Panadería &amp; Confitería</p>
-    <p>Gervasio Méndez 206 · Glew, Buenos Aires</p>
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Bruzzone</div>
+    <p class="footer-tagline">Panadería & Confitería Artesanal · Glew, Buenos Aires</p>
     <div class="footer-links">
-      <a href="#carta">Carta</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#productos">Productos</a>
       <a href="#galeria">Galería</a>
-      <a href="#resenas">Reseñas</a>
       <a href="#catering">Catering</a>
-      <a href="#pedido">Pedidos</a>
       <a href="#horarios">Horarios</a>
-      <a href="https://instagram.com/bruzzone_panaderia" target="_blank">Instagram</a>
+      <a href="#pedido">Pedidos</a>
+      <a href="https://www.instagram.com/bruzzone_panaderia" target="_blank" rel="noopener">Instagram</a>
     </div>
-    <p style="margin-top:0.5rem; font-size:0.75rem;">© 2025 Bruzzone Panadería &amp; Confitería · Glew, Buenos Aires</p>
-  </footer>
+    <p class="footer-copy">© 2025 Bruzzone Panadería & Confitería · Gervasio Méndez 206, Glew</p>
+  </div>
+</footer>
 
-  <!-- WhatsApp flotante -->
-  <a href="https://wa.me/5491153379763?text=Hola%20Bruzzone!%20Quiero%20hacer%20un%20pedido%20%F0%9F%8D%9E" target="_blank" class="wa-float" title="Pedir por WhatsApp">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-    </svg>
-  </a>
+<!-- ── WA FLOTANTE ── -->
+<a href="https://wa.me/5491153379763?text=Hola%20Bruzzone!%20Quiero%20hacer%20un%20pedido%20🥐" target="_blank" rel="noopener" class="wa-float" aria-label="Contactar por WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
 
-  <script>
-    // ── HAMBURGER ──
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
+<script>
+// ── NAV SCROLL ──
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
 
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('open');
-      mobileMenu.classList.toggle('open');
-      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-    });
+// ── HAMBURGER ──
+const btn = document.getElementById('hamburgerBtn');
+const menu = document.getElementById('mobileMenu');
+btn.addEventListener('click', () => {
+  const isOpen = menu.classList.toggle('open');
+  btn.classList.toggle('open', isOpen);
+  btn.setAttribute('aria-expanded', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+});
+function closeMobileMenu() {
+  menu.classList.remove('open');
+  btn.classList.remove('open');
+  btn.setAttribute('aria-expanded', false);
+  document.body.style.overflow = '';
+}
 
-    function closeMobileMenu() {
-      hamburger.classList.remove('open');
-      mobileMenu.classList.remove('open');
-      document.body.style.overflow = '';
-    }
+// ── SCROLL ANIMATIONS ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-    // ── SCROLL ANIMATIONS ──
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+// ── FORMULARIO → WHATSAPP ──
+function enviarPedido() {
+  const nombre = document.getElementById('f-nombre').value.trim();
+  const tel = document.getElementById('f-tel').value.trim();
+  const fecha = document.getElementById('f-fecha').value;
+  const tipo = document.getElementById('f-tipo').value;
+  const detalles = document.getElementById('f-detalles').value.trim();
+  if (!nombre || !tipo) { alert('Por favor completá tu nombre y el tipo de pedido.'); return; }
+  const fechaStr = fecha ? new Date(fecha + 'T12:00:00').toLocaleDateString('es-AR', { weekday:'long', day:'numeric', month:'long' }) : 'a confirmar';
+  const msg = [
+    `Hola Bruzzone! 👋 Quiero hacer un pedido anticipado.`,
+    ``,
+    `👤 *Nombre:* ${nombre}`,
+    tel ? `📱 *Teléfono:* ${tel}` : '',
+    `📦 *Pedido:* ${tipo}`,
+    `📅 *Fecha de entrega:* ${fechaStr}`,
+    detalles ? `📝 *Detalles:* ${detalles}` : '',
+    ``,
+    `¡Gracias! 🥐`
+  ].filter(Boolean).join('\n');
+  window.open(`https://wa.me/5491153379763?text=${encodeURIComponent(msg)}`, '_blank');
+}
 
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-    // ── FORMULARIO DE PEDIDO → WHATSAPP ──
-    function enviarPedido() {
-      const nombre   = document.getElementById('f-nombre').value.trim();
-      const tel      = document.getElementById('f-tel').value.trim();
-      const fecha    = document.getElementById('f-fecha').value;
-      const categoria = document.getElementById('f-categoria').value;
-      const detalle  = document.getElementById('f-detalle').value.trim();
-      const entrega  = document.getElementById('f-entrega').value;
-
-      if (!nombre || !categoria) {
-        alert('Por favor completá tu nombre y qué querés pedir.');
-        return;
-      }
-
-      const fechaFormateada = fecha
-        ? new Date(fecha + 'T12:00:00').toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' })
-        : 'a confirmar';
-
-      const msg = [
-        `Hola Bruzzone! 👋 Quiero hacer un pedido anticipado.`,
-        ``,
-        `👤 *Nombre:* ${nombre}`,
-        tel ? `📱 *Teléfono:* ${tel}` : '',
-        `📦 *Pedido:* ${categoria}`,
-        `📅 *Fecha de entrega:* ${fechaFormateada}`,
-        `🏪 *Entrega:* ${entrega}`,
-        detalle ? `\n📝 *Detalles:* ${detalle}` : '',
-        ``,
-        `Quedo a la espera de confirmación. ¡Gracias!`
-      ].filter(Boolean).join('\n');
-
-      window.open(`https://wa.me/5491153379763?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-
-    // Setear fecha mínima en el form (hoy)
-    const hoy = new Date().toISOString().split('T')[0];
-    document.getElementById('f-fecha').min = hoy;
-  </script>
-
+// Fecha mínima = mañana
+const fi = document.getElementById('f-fecha');
+if (fi) { const d = new Date(); d.setDate(d.getDate()+1); fi.min = d.toISOString().split('T')[0]; }
+</script>
 </body>
 </html>
