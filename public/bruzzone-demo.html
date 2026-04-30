@@ -184,14 +184,26 @@
       100% { transform: translateX(-50%) translateY(0);    opacity: 0.5; }
     }
 
-    /* ── STRIP / STATS ── */
+    /* ── STRIP TICKER ── */
     .strip {
       background: var(--negro); color: var(--blanco);
-      display: flex; align-items: center; justify-content: center;
-      gap: 3rem; padding: 1.2rem 2rem; flex-wrap: wrap;
+      overflow: hidden; padding: 0.9rem 0;
+      border-top: 1px solid rgba(245,158,11,0.15);
+      border-bottom: 1px solid rgba(245,158,11,0.15);
     }
-    .strip-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.82rem; letter-spacing: 0.06em; }
+    .strip-track {
+      display: flex; align-items: center; gap: 3rem;
+      width: max-content;
+      animation: ticker 22s linear infinite;
+    }
+    .strip:hover .strip-track { animation-play-state: paused; }
+    @keyframes ticker {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .strip-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.82rem; letter-spacing: 0.06em; white-space: nowrap; flex-shrink: 0; }
     .strip-item span:first-child { color: var(--amber); font-size: 1rem; }
+    .strip-sep { color: rgba(245,158,11,0.4); font-size: 1.1rem; flex-shrink: 0; }
 
     /* ── SECTION UTIL ── */
     .section { padding: 6rem 2rem; }
@@ -518,9 +530,6 @@
       nav { padding: 0.9rem 1.25rem; }
     }
     @media (max-width: 580px) {
-      .strip { gap: 1.2rem; padding: 0.9rem 1rem; flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-      .strip::-webkit-scrollbar { display: none; }
-      .strip-item { flex-shrink: 0; }
       .productos-grid { grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
       .producto-body { padding: 0.9rem; }
       .producto-body h3 { font-size: 1rem; }
@@ -608,11 +617,25 @@
 </section>
 
 <!-- ── STRIP ── -->
-<div class="strip">
-  <div class="strip-item"><span>🥐</span> Hecho artesanalmente cada día</div>
-  <div class="strip-item"><span>⭐</span> +8.300 clientes en Instagram</div>
-  <div class="strip-item"><span>📦</span> Catering para eventos</div>
-  <div class="strip-item"><span>📍</span> Méndez 206, Glew</div>
+<div class="strip" aria-hidden="true">
+  <div class="strip-track">
+    <div class="strip-item"><span>🥐</span> Hecho artesanalmente cada día</div>
+    <span class="strip-sep">✦</span>
+    <div class="strip-item"><span>⭐</span> +8.300 clientes en Instagram</div>
+    <span class="strip-sep">✦</span>
+    <div class="strip-item"><span>📦</span> Catering para eventos</div>
+    <span class="strip-sep">✦</span>
+    <div class="strip-item"><span>📍</span> Méndez 206, Glew</div>
+    <span class="strip-sep">✦</span>
+    <div class="strip-item"><span>🥐</span> Hecho artesanalmente cada día</div>
+    <span class="strip-sep">✦</span>
+    <div class="strip-item"><span>⭐</span> +8.300 clientes en Instagram</div>
+    <span class="strip-sep">✦</span>
+    <div class="strip-item"><span>📦</span> Catering para eventos</div>
+    <span class="strip-sep">✦</span>
+    <div class="strip-item"><span>📍</span> Méndez 206, Glew</div>
+    <span class="strip-sep">✦</span>
+  </div>
 </div>
 
 <!-- ── NOSOTROS ── -->
