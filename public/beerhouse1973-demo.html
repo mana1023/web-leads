@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1973 Beer House | Cervecería & Resto — Glew, Buenos Aires</title>
+
+  <meta name="description" content="1973 Beer House en Glew. Cervecería artesanal, parrilla, shows en vivo y área de juegos. Viernes a domingo desde las 20hs. Reservá tu mesa." />
+  <meta name="keywords" content="cervecería Glew, bar Glew, shows en vivo Glew, parrilla Glew, beer house Glew, 1973 Glew, cerveza artesanal Buenos Aires" />
+  <link rel="canonical" href="https://1973beerhouse.com.ar/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="1973 Beer House | Cervecería & Resto — Glew" />
+  <meta property="og:description" content="El lugar más auténtico de Glew. Birras, parrilla y shows en vivo. Una experiencia única en el sur del Gran Buenos Aires." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1436076863939-06870fe779c2?w=1200&q=80" />
+  <meta property="og:url" content="https://1973beerhouse.com.ar/" />
+  <meta property="og:locale" content="es_AR" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BarOrPub",
+    "name": "1973 Beer House",
+    "image": "https://images.unsplash.com/photo-1436076863939-06870fe779c2?w=800",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Av. Hipólito Yrigoyen 22314",
+      "addressLocality": "Glew",
+      "addressRegion": "Buenos Aires",
+      "addressCountry": "AR"
+    },
+    "telephone": "+541153960260",
+    "url": "https://1973beerhouse.com.ar",
+    "openingHours": ["Fr 20:00-03:00", "Sa 20:00-03:00", "Su 12:00-23:00"],
+    "servesCuisine": "Cervecería, Parrilla, Americana",
+    "priceRange": "$$",
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.7", "reviewCount": "289" }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --oro: #C9A84C;
+      --oro-dark: #A07830;
+      --oro-light: #F0D080;
+      --negro: #0D0B08;
+      --sepia: #1A1410;
+      --marron: #2A2018;
+      --marron-medio: #3D3020;
+      --crema: #F5EDD8;
+      --crema-dark: #E8D8B4;
+      --texto: #C8B89A;
+      --blanco: #FFFFFF;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--negro); color: var(--crema); line-height: 1.6; overflow-x: hidden; }
+
+    /* ── ANIMACIONES ── */
+    .fade-up { opacity: 0; transform: translateY(36px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up-delay-1 { transition-delay: 0.12s; }
+    .fade-up-delay-2 { transition-delay: 0.24s; }
+    .fade-up-delay-3 { transition-delay: 0.36s; }
+    .fade-up-delay-4 { transition-delay: 0.48s; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2.5rem;
+      background: rgba(13,11,8,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      transition: padding 0.3s;
+    }
+    nav.scrolled { padding: 0.6rem 2.5rem; border-bottom-color: rgba(201,168,76,0.3); }
+    .nav-logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+    .nav-logo-emblem {
+      width: 42px; height: 42px; border-radius: 50%;
+      border: 2px solid var(--oro); display: flex; flex-direction: column;
+      align-items: center; justify-content: center; line-height: 1;
+    }
+    .nav-logo-year { font-family: 'Bebas Neue', sans-serif; font-size: 0.65rem; color: var(--oro); letter-spacing: 0.1em; }
+    .nav-logo-icon-inner { font-size: 1.1rem; }
+    .nav-logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.12em; color: var(--crema); }
+    .nav-logo-text span { color: var(--oro); }
+    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+    .nav-links a { color: rgba(200,184,154,0.65); text-decoration: none; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--oro); }
+    .nav-cta {
+      background: var(--oro); color: var(--negro) !important;
+      padding: 0.5rem 1.2rem; border-radius: 4px; font-weight: 700 !important;
+    }
+    .nav-cta:hover { background: var(--oro-dark) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--crema); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; z-index: 99;
+      background: rgba(13,11,8,0.99); flex-direction: column;
+      align-items: center; justify-content: center; gap: 2.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem; color: var(--crema); text-decoration: none; letter-spacing: 0.08em; transition: color 0.2s; }
+    .mobile-menu a:hover { color: var(--oro); }
+    .mobile-menu-wa {
+      display: flex; align-items: center; gap: 0.7rem;
+      background: #25D366; color: white; font-size: 1rem; font-weight: 700;
+      text-decoration: none; padding: 0.9rem 2.2rem; border-radius: 50px;
+      font-family: 'Inter', sans-serif; font-size: 0.9rem;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; height: 100vh; min-height: 650px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1436076863939-06870fe779c2?w=1920&q=85&auto=format');
+      background-size: cover; background-position: center 50%;
+      filter: brightness(0.3) sepia(0.4);
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(13,11,8,0.2) 0%, rgba(13,11,8,0.85) 100%);
+    }
+    .hero-grain {
+      position: absolute; inset: 0; opacity: 0.08; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    }
+    .hero-content {
+      position: relative; z-index: 2; text-align: center;
+      padding: 0 1.5rem; max-width: 800px;
+    }
+    .hero-year {
+      font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem;
+      letter-spacing: 0.5em; color: var(--oro); margin-bottom: 1.2rem;
+      display: flex; align-items: center; justify-content: center; gap: 1rem;
+    }
+    .hero-year::before, .hero-year::after {
+      content: ''; flex: 1; max-width: 80px; height: 1px; background: var(--oro); opacity: 0.5;
+    }
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 12vw, 9rem);
+      color: var(--crema); line-height: 0.9;
+      margin-bottom: 0.5rem; letter-spacing: 0.06em;
+    }
+    .hero h1 .accent { color: var(--oro); display: block; font-size: 0.45em; letter-spacing: 0.3em; margin-top: 0.5rem; }
+    .hero-divider { width: 60px; height: 2px; background: var(--oro); margin: 1.5rem auto; }
+    .hero-sub {
+      font-family: 'Libre Baskerville', serif; font-style: italic;
+      font-size: 1.05rem; color: var(--texto); margin-bottom: 2.5rem; line-height: 1.8;
+    }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-oro {
+      background: var(--oro); color: var(--negro); font-weight: 700;
+      font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.95rem 2.4rem; border-radius: 4px; text-decoration: none;
+      transition: background 0.2s, transform 0.2s; font-family: 'Inter', sans-serif;
+    }
+    .btn-oro:hover { background: var(--oro-dark); transform: translateY(-2px); }
+    .btn-outline-oro {
+      border: 1.5px solid rgba(201,168,76,0.5); color: var(--oro);
+      font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.95rem 2.4rem; border-radius: 4px; text-decoration: none;
+      transition: border-color 0.2s, transform 0.2s; font-family: 'Inter', sans-serif;
+    }
+    .btn-outline-oro:hover { border-color: var(--oro); transform: translateY(-2px); }
+    .hero-scroll {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.2em; font-size: 0.75rem;
+      color: rgba(200,184,154,0.4); z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      animation: bounce 2.5s infinite;
+    }
+    @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+
+    /* ── STAMP STRIP ── */
+    .stamp-strip {
+      background: var(--sepia); border-top: 1px solid rgba(201,168,76,0.2); border-bottom: 1px solid rgba(201,168,76,0.2);
+      display: flex; align-items: center; justify-content: center;
+      gap: 3rem; padding: 1rem 2rem; flex-wrap: wrap;
+    }
+    .stamp-item { display: flex; align-items: center; gap: 0.7rem; }
+    .stamp-icon { font-size: 1.2rem; }
+    .stamp-text { font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; letter-spacing: 0.1em; color: var(--texto); }
+    .stamp-sep { color: var(--oro); opacity: 0.3; font-size: 1.2rem; }
+
+    /* ── SECTION ── */
+    .section { padding: 6rem 2rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-family: 'Bebas Neue', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--oro); margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      color: var(--crema); line-height: 1.0; margin-bottom: 1rem; letter-spacing: 0.04em;
+    }
+    .section-desc { color: var(--texto); font-size: 0.95rem; max-width: 520px; line-height: 1.8; }
+
+    /* ── CARTA / MENU ── */
+    .menu-section { background: var(--sepia); }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+    .menu-card {
+      border: 1px solid rgba(201,168,76,0.15); border-radius: 12px;
+      overflow: hidden; background: var(--marron);
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .menu-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-4px); }
+    .menu-card-img { height: 190px; overflow: hidden; position: relative; }
+    .menu-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; filter: sepia(0.1); }
+    .menu-card:hover .menu-card-img img { transform: scale(1.06); }
+    .menu-card-body { padding: 1.4rem; }
+    .menu-card-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.05em; color: var(--crema); margin-bottom: 0.4rem; }
+    .menu-card-desc { font-size: 0.82rem; color: var(--texto); line-height: 1.55; margin-bottom: 1rem; }
+    .menu-card-footer { display: flex; align-items: center; justify-content: space-between; }
+    .menu-card-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--oro); letter-spacing: 0.04em; }
+    .menu-card-tag {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.25rem 0.7rem; border-radius: 50px;
+      border: 1px solid rgba(201,168,76,0.3); color: var(--oro);
+    }
+
+    /* ── SHOWS ── */
+    .shows-section { position: relative; overflow: hidden; }
+    .shows-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1920&q=80&auto=format');
+      background-size: cover; background-position: center;
+      filter: brightness(0.25) sepia(0.5);
+    }
+    .shows-overlay { position: absolute; inset: 0; background: rgba(13,11,8,0.75); }
+    .shows-content { position: relative; z-index: 2; }
+    .shows-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .show-dates { display: flex; flex-direction: column; gap: 1.2rem; }
+    .show-date-card {
+      background: rgba(13,11,8,0.7); border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 12px; padding: 1.4rem 1.8rem;
+      display: flex; align-items: center; gap: 1.5rem;
+      backdrop-filter: blur(8px);
+      transition: border-color 0.3s;
+    }
+    .show-date-card:hover { border-color: rgba(201,168,76,0.5); }
+    .show-date-day { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--oro); line-height: 1; min-width: 50px; }
+    .show-date-info {}
+    .show-date-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.06em; color: var(--crema); }
+    .show-date-detail { font-size: 0.78rem; color: var(--texto); margin-top: 0.2rem; }
+    .shows-cta { text-align: center; }
+    .shows-cta-icon { font-size: 4rem; margin-bottom: 1rem; }
+    .shows-cta h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; color: var(--crema); letter-spacing: 0.06em; margin-bottom: 0.8rem; }
+    .shows-cta p { font-family: 'Libre Baskerville', serif; font-style: italic; color: var(--texto); font-size: 0.95rem; line-height: 1.7; margin-bottom: 2rem; }
+    .btn-wa {
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      background: #25D366; color: white; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.04em;
+      padding: 1rem 2.2rem; border-radius: 50px; text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-wa:hover { background: #1ebe5a; transform: translateY(-2px); }
+
+    /* ── GALERIA ── */
+    .gallery-section { background: var(--sepia); }
+    .gallery-masonry { columns: 4; column-gap: 0.8rem; }
+    .gallery-item { break-inside: avoid; margin-bottom: 0.8rem; border-radius: 10px; overflow: hidden; position: relative; }
+    .gallery-item img { width: 100%; display: block; filter: sepia(0.1) brightness(0.9); transition: filter 0.3s, transform 0.4s; }
+    .gallery-item:hover img { filter: sepia(0) brightness(1); transform: scale(1.03); }
+    .gallery-overlay {
+      position: absolute; inset: 0; background: rgba(201,168,76,0);
+      transition: background 0.3s; display: flex; align-items: center; justify-content: center;
+    }
+    .gallery-item:hover .gallery-overlay { background: rgba(201,168,76,0.1); }
+
+    /* ── REVIEWS ── */
+    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+    .review-card {
+      background: var(--sepia); border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 12px; padding: 1.8rem;
+      transition: border-color 0.3s;
+    }
+    .review-card:hover { border-color: rgba(201,168,76,0.3); }
+    .review-quote { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: var(--oro); opacity: 0.4; line-height: 1; margin-bottom: 0.5rem; }
+    .review-text { font-family: 'Libre Baskerville', serif; font-style: italic; font-size: 0.88rem; color: var(--texto); line-height: 1.7; margin-bottom: 1.2rem; }
+    .review-stars { color: var(--oro); font-size: 0.8rem; letter-spacing: 0.1em; margin-bottom: 1rem; }
+    .review-author { display: flex; align-items: center; gap: 0.8rem; }
+    .review-avatar {
+      width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+      background: var(--marron); border: 1px solid rgba(201,168,76,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif; font-size: 1rem; color: var(--oro);
+    }
+    .review-name { font-weight: 600; font-size: 0.85rem; color: var(--crema); }
+    .review-date { font-size: 0.72rem; color: var(--texto); }
+
+    /* ── INFO ── */
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .info-map-placeholder {
+      height: 380px; background: var(--sepia); border-radius: 16px;
+      border: 1px solid rgba(201,168,76,0.2);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 1rem;
+    }
+    .info-map-placeholder span { font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; letter-spacing: 0.2em; color: var(--texto); }
+    .info-details { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
+    .info-detail { display: flex; align-items: flex-start; gap: 1rem; }
+    .info-detail-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .info-detail-content {}
+    .info-detail-label { font-family: 'Bebas Neue', sans-serif; font-size: 0.78rem; letter-spacing: 0.15em; color: var(--oro); margin-bottom: 0.3rem; }
+    .info-detail-value { font-size: 0.9rem; color: var(--texto); line-height: 1.5; }
+
+    /* ── CTA FINAL ── */
+    .cta-section {
+      background: var(--marron); border-top: 1px solid rgba(201,168,76,0.2);
+      padding: 5.5rem 2rem; text-align: center;
+    }
+    .cta-emblem { font-size: 3rem; margin-bottom: 1rem; }
+    .cta-section h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 7vw, 5rem); color: var(--crema); letter-spacing: 0.06em; margin-bottom: 0.8rem; }
+    .cta-section p { font-family: 'Libre Baskerville', serif; font-style: italic; color: var(--texto); margin-bottom: 2.5rem; font-size: 1rem; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--negro); border-top: 1px solid rgba(201,168,76,0.15);
+      padding: 4rem 2rem 2rem;
+    }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.12em; color: var(--crema); margin-bottom: 0.6rem; }
+    .footer-logo span { color: var(--oro); }
+    .footer-tagline { font-size: 0.85rem; color: var(--texto); line-height: 1.6; margin-bottom: 1.2rem; }
+    .footer-socials { display: flex; gap: 0.8rem; }
+    .footer-social {
+      width: 36px; height: 36px; border-radius: 6px;
+      border: 1px solid rgba(201,168,76,0.2); display: flex; align-items: center; justify-content: center;
+      text-decoration: none; font-size: 1rem; transition: border-color 0.2s, background 0.2s;
+    }
+    .footer-social:hover { border-color: var(--oro); background: rgba(201,168,76,0.1); }
+    .footer-col-title { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.12em; color: var(--oro); margin-bottom: 1rem; font-size: 0.9rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-links a { color: var(--texto); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--oro); }
+    .footer-bottom { border-top: 1px solid rgba(201,168,76,0.1); padding-top: 1.5rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+    .footer-copy { font-size: 0.78rem; color: rgba(200,184,154,0.4); }
+
+    /* ── FLOAT WA ── */
+    .float-wa {
+      position: fixed; bottom: 1.8rem; right: 1.8rem; z-index: 200;
+      background: #25D366; width: 58px; height: 58px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4); text-decoration: none;
+      transition: transform 0.2s;
+    }
+    .float-wa:hover { transform: scale(1.1); }
+    .float-wa svg { width: 28px; height: 28px; fill: white; }
+
+    /* ── MOBILE STICKY BAR ── */
+    .mobile-wa-bar {
+      display: none;
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 300;
+      background: #25D366; padding: 0.9rem 1.5rem;
+      align-items: center; justify-content: center; gap: 0.7rem;
+      text-decoration: none; color: white; font-weight: 700; font-size: 1rem;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.4); font-family: 'Inter', sans-serif;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0.8rem 1.2rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; width: 44px; height: 44px; justify-content: center; align-items: center; }
+      .shows-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .info-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .gallery-masonry { columns: 2; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .section { padding: 4rem 1.2rem; }
+      .hero h1 { font-size: clamp(3.5rem, 14vw, 7rem); }
+      body { padding-bottom: 64px; }
+      .mobile-wa-bar { display: flex; }
+      .float-wa { bottom: 5rem; }
+    }
+    @media (max-width: 580px) {
+      .hero h1 { font-size: 3.2rem; line-height: 0.95; }
+      .hero-year { font-size: 0.75rem; letter-spacing: 0.3em; }
+      .hero-btns { flex-direction: column; align-items: stretch; gap: 0.8rem; }
+      .btn-oro, .btn-outline-oro { text-align: center; padding: 1rem 1.5rem; }
+      .stamp-strip { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding: 0.8rem 1rem; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+      .stamp-strip::-webkit-scrollbar { display: none; }
+      .stamp-item { flex-shrink: 0; }
+      .stamp-sep { display: none; }
+      .menu-grid { grid-template-columns: 1fr; }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .section { padding: 3.5rem 1rem; }
+      .section-title { font-size: 2.2rem; }
+      .show-date-card { padding: 1rem 1.2rem; gap: 1rem; }
+      .show-date-day { font-size: 2rem; min-width: 40px; }
+      .gallery-masonry { columns: 2; column-gap: 0.5rem; }
+      .footer-bottom { flex-direction: column; gap: 0.4rem; text-align: center; }
+      .cta-section { padding: 4rem 1.2rem; }
+      .cta-btns { flex-direction: column; align-items: stretch; gap: 0.8rem; }
+      .cta-btns a { text-align: center; }
+    }
+    @media (max-width: 390px) {
+      .hero h1 { font-size: 2.8rem; }
+      nav { padding: 0.7rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-emblem">
+      <span class="nav-logo-year">1973</span>
+      <span class="nav-logo-icon-inner">🍺</span>
+    </div>
+    <span class="nav-logo-text">BEER <span>HOUSE</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#carta">Carta</a></li>
+    <li><a href="#shows">Shows</a></li>
+    <li><a href="#galeria">Galería</a></li>
+    <li><a href="#info">Ubicación</a></li>
+    <li><a href="https://wa.me/541153960260?text=Hola%201973%20Beer%20House!%20Quiero%20reservar%20una%20mesa%20%F0%9F%8D%BA" target="_blank" class="nav-cta">Reservar Mesa</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#carta" onclick="closeMobile()">Carta</a>
+  <a href="#shows" onclick="closeMobile()">Shows</a>
+  <a href="#galeria" onclick="closeMobile()">Galería</a>
+  <a href="#info" onclick="closeMobile()">Ubicación</a>
+  <a href="https://wa.me/541153960260?text=Hola%201973%20Beer%20House!%20Quiero%20reservar%20%F0%9F%8D%BA" class="mobile-menu-wa" target="_blank">
+    💬 Reservar por WhatsApp
+  </a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-content">
+    <div class="hero-year fade-up">DESDE · 2021 · GLEW</div>
+    <h1 class="fade-up fade-up-delay-1">
+      BEER
+      <br>HOUSE
+      <span class="accent">· 1973 ·</span>
+    </h1>
+    <div class="hero-divider fade-up fade-up-delay-2"></div>
+    <p class="hero-sub fade-up fade-up-delay-3">
+      Birras artesanales, parrilla a fuego vivo y shows en vivo.<br>El lugar donde el sur del GBA se junta.
+    </p>
+    <div class="hero-btns fade-up fade-up-delay-4">
+      <a href="#carta" class="btn-oro">🍺 Ver la Carta</a>
+      <a href="https://wa.me/541153960260?text=Hola%201973%20Beer%20House!%20Quiero%20reservar%20una%20mesa%20%F0%9F%8D%BA" class="btn-outline-oro" target="_blank">Reservar Mesa</a>
+    </div>
+  </div>
+  <div class="hero-scroll">SCROLL ↓</div>
+</section>
+
+<!-- STAMP STRIP -->
+<div class="stamp-strip">
+  <div class="stamp-item"><span class="stamp-icon">🍺</span><span class="stamp-text">Birras Artesanales</span></div>
+  <span class="stamp-sep">✦</span>
+  <div class="stamp-item"><span class="stamp-icon">🔥</span><span class="stamp-text">Parrilla a Fuego</span></div>
+  <span class="stamp-sep">✦</span>
+  <div class="stamp-item"><span class="stamp-icon">🎸</span><span class="stamp-text">Shows en Vivo</span></div>
+  <span class="stamp-sep">✦</span>
+  <div class="stamp-item"><span class="stamp-icon">🎮</span><span class="stamp-text">Sector Infantil</span></div>
+  <span class="stamp-sep">✦</span>
+  <div class="stamp-item"><span class="stamp-icon">📱</span><span class="stamp-text">Menú QR Digital</span></div>
+</div>
+
+<!-- CARTA -->
+<section class="section menu-section" id="carta">
+  <div class="section-inner">
+    <div class="fade-up" style="margin-bottom:2.5rem;">
+      <p class="section-label">Lo que servimos</p>
+      <h2 class="section-title">Nuestra Carta</h2>
+      <p class="section-desc">Birras nacionales e importadas, cortes de parrilla y snacks de bar preparados al momento.</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-card fade-up">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1532634733-cae1395e440f?w=600&q=80&auto=format" alt="Birras Artesanales" loading="lazy" />
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Birras Artesanales</div>
+          <div class="menu-card-desc">Selección rotativa de cervezas artesanales en pinta, jarra y litro. Rubias, rojas, negras y de temporada.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">Desde $3.500</div>
+            <span class="menu-card-tag">★ Estrella</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up fade-up-delay-1">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80&auto=format" alt="Parrilla" loading="lazy" />
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Parrilla 1973</div>
+          <div class="menu-card-desc">Asado al palo, vacío, chorizo y morcilla a la parrilla. Achuras y mollejas a pedido. Con guarnición incluida.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">Desde $9.800</div>
+            <span class="menu-card-tag">🔥 Fuego</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up fade-up-delay-2">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80&auto=format" alt="Hamburguesas" loading="lazy" />
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Burgers House</div>
+          <div class="menu-card-desc">Hamburguesas de 200g con papas rústicas. Con cheddar, bacon, lechuga, tomate y salsa de la casa. Para los hambrientos.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">$7.500</div>
+            <span class="menu-card-tag">Clásico</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up fade-up-delay-3">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=600&q=80&auto=format" alt="Picadas" loading="lazy" />
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Picadas 1973</div>
+          <div class="menu-card-desc">Tabla con fiambres, quesos, aceitunas, pickles y tostadas. Ideal para compartir mientras llega la parrilla.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">$8.200</div>
+            <span class="menu-card-tag">Para Compartir</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1546171753-97d7676e4602?w=600&q=80&auto=format" alt="Cocteles" loading="lazy" />
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Cócteles y Tragos</div>
+          <div class="menu-card-desc">Campari, fernet con cola, aperol spritz y tragos de autor. La barra trabaja toda la noche para vos.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">Desde $4.500</div>
+            <span class="menu-card-tag">Barra</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up fade-up-delay-1">
+        <div class="menu-card-img">
+          <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&q=80&auto=format" alt="Postres" loading="lazy" />
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Postres Caseros</div>
+          <div class="menu-card-desc">Volcán de chocolate, panqueques con dulce de leche y helado, cheesecake del día. El broche perfecto.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">$4.200</div>
+            <span class="menu-card-tag">Casa</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:2.5rem;" class="fade-up">
+      <a href="https://wa.me/541153960260?text=Hola!%20Quisiera%20el%20men%C3%BA%20completo%20de%201973%20Beer%20House%20%F0%9F%8D%BA" class="btn-wa" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Ver Menú Completo por WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWS -->
+<section class="section shows-section" id="shows">
+  <div class="shows-bg"></div>
+  <div class="shows-overlay"></div>
+  <div class="section-inner shows-content">
+    <div class="fade-up" style="margin-bottom:2.5rem; text-align:center;">
+      <p class="section-label" style="text-align:center;">Entretenimiento</p>
+      <h2 class="section-title" style="text-align:center; color:var(--crema);">Shows en Vivo</h2>
+      <p class="section-desc" style="text-align:center; margin:0 auto; max-width:480px; color:var(--texto);">Cada fin de semana, artistas en vivo para que la noche no pare. Música, cerveza y buena gente.</p>
+    </div>
+    <div class="shows-grid">
+      <div class="show-dates">
+        <div class="show-date-card fade-up">
+          <div class="show-date-day">VIE</div>
+          <div class="show-date-info">
+            <div class="show-date-name">Noche de Blues & Rock</div>
+            <div class="show-date-detail">Bandas en vivo · Desde las 21:30hs · Sin cargo adicional</div>
+          </div>
+        </div>
+        <div class="show-date-card fade-up fade-up-delay-1">
+          <div class="show-date-day">SÁB</div>
+          <div class="show-date-info">
+            <div class="show-date-name">Show Central de la Semana</div>
+            <div class="show-date-detail">Artista invitado · Desde las 22hs · Reserva tu mesa</div>
+          </div>
+        </div>
+        <div class="show-date-card fade-up fade-up-delay-2">
+          <div class="show-date-day">DOM</div>
+          <div class="show-date-info">
+            <div class="show-date-name">Asado & Folk Familiar</div>
+            <div class="show-date-detail">Música en vivo + sector infantil · Desde las 12hs</div>
+          </div>
+        </div>
+      </div>
+      <div class="shows-cta fade-up fade-up-delay-3">
+        <div class="shows-cta-icon">🎸</div>
+        <h3>¿Venís el finde?</h3>
+        <p>Reservá tu mesa con anticipación. Los fines de semana se llenan rápido. Capacidad limitada para los shows.</p>
+        <a href="https://wa.me/541153960260?text=Hola%201973%20Beer%20House!%20Quiero%20reservar%20mesa%20para%20el%20show%20%F0%9F%8D%BA" class="btn-wa" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Reservar Mesa
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section class="section gallery-section" id="galeria">
+  <div class="section-inner">
+    <div class="fade-up" style="margin-bottom:2.5rem;">
+      <p class="section-label">Nuestra Atmósfera</p>
+      <h2 class="section-title">El Ambiente</h2>
+    </div>
+    <div class="gallery-masonry fade-up">
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1436076863939-06870fe779c2?w=600&q=80&auto=format" alt="Bar" loading="lazy" />
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1532634733-cae1395e440f?w=600&q=80&auto=format" alt="Birras" loading="lazy" />
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&q=80&auto=format" alt="Show" loading="lazy" />
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80&auto=format" alt="Parrilla" loading="lazy" />
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1574966739987-65adbf049fe2?w=600&q=80&auto=format" alt="Noche" loading="lazy" />
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=600&q=80&auto=format" alt="Mesa" loading="lazy" />
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1546171753-97d7676e4602?w=600&q=80&auto=format" alt="Coctelería" loading="lazy" />
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80&auto=format" alt="Comida" loading="lazy" />
+        <div class="gallery-overlay"></div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:2rem;" class="fade-up">
+      <a href="https://www.instagram.com/beerhouse.1973/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.6rem;color:var(--texto);text-decoration:none;font-size:0.85rem;transition:color 0.2s;" onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color='#C8B89A'">
+        📸 Seguinos en @beerhouse.1973
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section" id="resenas">
+  <div class="section-inner">
+    <div class="fade-up" style="margin-bottom:2.5rem;">
+      <p class="section-label">Lo que dicen</p>
+      <h2 class="section-title">Reseñas</h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card fade-up">
+        <div class="review-quote">"</div>
+        <p class="review-text">El lugar tiene una onda increíble. Fuimos el sábado con el show en vivo y no nos quisimos ir. La birra artesanal roja es la mejor que tomé en mucho tiempo.</p>
+        <div class="review-stars">★★★★★</div>
+        <div class="review-author">
+          <div class="review-avatar">L</div>
+          <div>
+            <div class="review-name">Lucas D.</div>
+            <div class="review-date">Hace 3 semanas</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card fade-up fade-up-delay-1">
+        <div class="review-quote">"</div>
+        <p class="review-text">Fuimos en familia el domingo. Los chicos estuvieron en el sector de juegos mientras los grandes disfrutamos el asado y la música. Un plan completo y accesible.</p>
+        <div class="review-stars">★★★★★</div>
+        <div class="review-author">
+          <div class="review-avatar">S</div>
+          <div>
+            <div class="review-name">Sandra P.</div>
+            <div class="review-date">Hace 1 mes</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card fade-up fade-up-delay-2">
+        <div class="review-quote">"</div>
+        <p class="review-text">La parrilla es de verdad. Nada de congelado, todo fresco. El vacío con papas rústicas te deja sin palabras. Y el ambiente de la noche con el show en vivo, top total.</p>
+        <div class="review-stars">★★★★★</div>
+        <div class="review-author">
+          <div class="review-avatar">R</div>
+          <div>
+            <div class="review-name">Roberto K.</div>
+            <div class="review-date">Hace 2 semanas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFO / UBICACION -->
+<section class="section" style="background:var(--sepia);" id="info">
+  <div class="section-inner">
+    <div class="info-grid">
+      <div class="fade-up">
+        <p class="section-label">Dónde estamos</p>
+        <h2 class="section-title">Ubicación & Horarios</h2>
+        <div class="info-details">
+          <div class="info-detail">
+            <span class="info-detail-icon">📍</span>
+            <div class="info-detail-content">
+              <div class="info-detail-label">Dirección</div>
+              <div class="info-detail-value">Av. Hipólito Yrigoyen 22314<br>B1856 Glew, Prov. de Buenos Aires</div>
+            </div>
+          </div>
+          <div class="info-detail">
+            <span class="info-detail-icon">🕐</span>
+            <div class="info-detail-content">
+              <div class="info-detail-label">Horarios</div>
+              <div class="info-detail-value">Viernes y Sábados: 20hs – 3hs<br>Domingos: 12hs – 23hs</div>
+            </div>
+          </div>
+          <div class="info-detail">
+            <span class="info-detail-icon">📞</span>
+            <div class="info-detail-content">
+              <div class="info-detail-label">Reservas y Contacto</div>
+              <div class="info-detail-value">011 15-3596-0260<br>También por WhatsApp</div>
+            </div>
+          </div>
+          <div class="info-detail">
+            <span class="info-detail-icon">🚗</span>
+            <div class="info-detail-content">
+              <div class="info-detail-label">Estacionamiento</div>
+              <div class="info-detail-value">Estacionamiento propio y calle. Zona de fácil acceso desde la Autopista Buenos Aires – La Plata.</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:2rem;">
+          <a href="https://wa.me/541153960260?text=Hola!%20Quiero%20reservar%20mesa%20en%201973%20Beer%20House%20%F0%9F%8D%BA" class="btn-wa" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Reservar Ahora
+          </a>
+        </div>
+      </div>
+      <div class="info-map-placeholder fade-up fade-up-delay-2">
+        <span style="font-size:3rem;">🗺️</span>
+        <span>Av. Hipólito Yrigoyen 22314</span>
+        <span style="font-size:0.78rem; color:rgba(200,184,154,0.4);">Glew, Buenos Aires</span>
+        <a href="https://maps.google.com/?q=Av.+Hipólito+Yrigoyen+22314+Glew+Buenos+Aires" target="_blank" rel="noopener" style="margin-top:0.5rem;display:inline-flex;align-items:center;gap:0.5rem;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);color:var(--oro);padding:0.5rem 1.2rem;border-radius:6px;text-decoration:none;font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;">
+          Ver en Maps →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-section">
+  <div class="cta-emblem fade-up">🍺</div>
+  <h2 class="fade-up fade-up-delay-1">EL FINDE QUE SE VIENE</h2>
+  <p class="fade-up fade-up-delay-2">No esperés más. Reservá tu mesa antes de que se llene.</p>
+  <div class="cta-btns fade-up fade-up-delay-3">
+    <a href="https://wa.me/541153960260?text=Hola%201973%20Beer%20House!%20Quiero%20reservar%20una%20mesa%20%F0%9F%8D%BA" class="btn-wa" target="_blank">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Reservar por WhatsApp
+    </a>
+    <a href="#carta" class="btn-outline-oro">Ver la Carta</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">1973 <span>BEER HOUSE</span></div>
+        <p class="footer-tagline">Cervecería, parrilla y shows en vivo en el corazón de Glew. El lugar donde el sur se junta a brindar.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/beerhouse.1973/" class="footer-social" target="_blank" rel="noopener" aria-label="Instagram">📸</a>
+          <a href="https://www.facebook.com/BeerHouseGlew/" class="footer-social" target="_blank" rel="noopener" aria-label="Facebook">👥</a>
+          <a href="https://wa.me/541153960260" class="footer-social" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Menú</div>
+        <ul class="footer-links">
+          <li><a href="#carta">Birras Artesanales</a></li>
+          <li><a href="#carta">Parrilla</a></li>
+          <li><a href="#carta">Hamburguesas</a></li>
+          <li><a href="#carta">Coctelería</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Info</div>
+        <ul class="footer-links">
+          <li><a href="#shows">Shows en Vivo</a></li>
+          <li><a href="#info">Ubicación</a></li>
+          <li><a href="#info">Horarios</a></li>
+          <li><a href="https://wa.me/541153960260">Reservas</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 1973 Beer House. Av. Hipólito Yrigoyen 22314, Glew.</div>
+      <div class="footer-copy">El sur tiene su lugar 🍺</div>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING WA -->
+<a href="https://wa.me/541153960260?text=Hola%201973%20Beer%20House!%20Quiero%20reservar%20una%20mesa%20%F0%9F%8D%BA" class="float-wa" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  function closeMobile() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
+<!-- MOBILE STICKY WA BAR -->
+<a href="https://wa.me/541153960260?text=Hola%201973%20Beer%20House!%20Quiero%20reservar%20una%20mesa%20%F0%9F%8D%BA" class="mobile-wa-bar" target="_blank" rel="noopener">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  🍺 Reservar Mesa por WhatsApp
+</a>
+</body>
+</html>
