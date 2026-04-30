@@ -184,16 +184,26 @@
     }
     @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
 
-    /* ── STAMP STRIP ── */
+    /* ── STAMP STRIP (TICKER) ── */
     .stamp-strip {
-      background: var(--sepia); border-top: 1px solid rgba(201,168,76,0.2); border-bottom: 1px solid rgba(201,168,76,0.2);
-      display: flex; align-items: center; justify-content: center;
-      gap: 3rem; padding: 1rem 2rem; flex-wrap: wrap;
+      background: var(--sepia);
+      border-top: 1px solid rgba(201,168,76,0.2); border-bottom: 1px solid rgba(201,168,76,0.2);
+      overflow: hidden; padding: 0.85rem 0;
     }
-    .stamp-item { display: flex; align-items: center; gap: 0.7rem; }
+    .stamp-track {
+      display: flex; align-items: center; gap: 2.5rem;
+      width: max-content;
+      animation: stampTicker 26s linear infinite;
+    }
+    .stamp-strip:hover .stamp-track { animation-play-state: paused; }
+    @keyframes stampTicker {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .stamp-item { display: flex; align-items: center; gap: 0.7rem; flex-shrink: 0; white-space: nowrap; }
     .stamp-icon { font-size: 1.2rem; }
     .stamp-text { font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; letter-spacing: 0.1em; color: var(--texto); }
-    .stamp-sep { color: var(--oro); opacity: 0.3; font-size: 1.2rem; }
+    .stamp-sep { color: var(--oro); opacity: 0.4; font-size: 1.1rem; flex-shrink: 0; }
 
     /* ── SECTION ── */
     .section { padding: 6rem 2rem; }
@@ -302,54 +312,113 @@
     .review-date { font-size: 0.72rem; color: var(--texto); }
 
     /* ── INFO ── */
-    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-    .info-map-placeholder {
-      height: 380px; background: var(--sepia); border-radius: 16px;
-      border: 1px solid rgba(201,168,76,0.2);
-      display: flex; align-items: center; justify-content: center;
-      flex-direction: column; gap: 1rem;
+    .info-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .info-horario-table { width: 100%; margin-top: 1.5rem; }
+    .info-horario-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.85rem 0; border-bottom: 1px solid rgba(201,168,76,0.08);
     }
-    .info-map-placeholder span { font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; letter-spacing: 0.2em; color: var(--texto); }
-    .info-details { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
-    .info-detail { display: flex; align-items: flex-start; gap: 1rem; }
-    .info-detail-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
-    .info-detail-content {}
-    .info-detail-label { font-family: 'Bebas Neue', sans-serif; font-size: 0.78rem; letter-spacing: 0.15em; color: var(--oro); margin-bottom: 0.3rem; }
-    .info-detail-value { font-size: 0.9rem; color: var(--texto); line-height: 1.5; }
+    .info-horario-row:last-child { border-bottom: none; }
+    .info-horario-dia { font-size: 0.88rem; color: var(--texto); }
+    .info-horario-hora { font-weight: 700; color: var(--oro-light); font-size: 0.9rem; font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.08em; }
+    .info-contact-cards { display: flex; flex-direction: column; gap: 0.9rem; margin-top: 2.5rem; }
+    .info-contact-card {
+      display: flex; align-items: center; gap: 1rem;
+      background: var(--marron); border: 1px solid rgba(201,168,76,0.12);
+      border-radius: 12px; padding: 1rem 1.2rem;
+      text-decoration: none; transition: border-color 0.25s, transform 0.25s;
+    }
+    .info-contact-card:hover { border-color: rgba(201,168,76,0.4); transform: translateX(4px); }
+    .info-contact-icon {
+      width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .info-contact-icon.wa { background: #25D366; }
+    .info-contact-icon.ig { background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#bc1888); }
+    .info-contact-icon.fb { background: #1877F2; }
+    .info-contact-icon.loc { background: var(--marron-medio); border: 1px solid rgba(201,168,76,0.25); }
+    .info-contact-title { font-weight: 700; color: var(--crema); font-size: 0.88rem; }
+    .info-contact-sub { font-size: 0.76rem; color: var(--texto); margin-top: 0.1rem; }
+    .info-map-box {
+      border-radius: 16px; overflow: hidden;
+      border: 1px solid rgba(201,168,76,0.15);
+      background: var(--marron);
+    }
+    .info-map-img {
+      width: 100%; height: 260px; object-fit: cover;
+      filter: sepia(0.5) brightness(0.75);
+    }
+    .info-map-footer {
+      padding: 1.2rem 1.4rem; display: flex; align-items: center; justify-content: space-between;
+    }
+    .info-map-address { font-size: 0.82rem; color: var(--texto); line-height: 1.45; }
+    .info-map-address strong { display: block; color: var(--crema); font-size: 0.88rem; margin-bottom: 0.15rem; }
 
     /* ── CTA FINAL ── */
     .cta-section {
-      background: var(--marron); border-top: 1px solid rgba(201,168,76,0.2);
-      padding: 5.5rem 2rem; text-align: center;
+      position: relative; padding: 8rem 2rem; text-align: center; overflow: hidden;
     }
-    .cta-emblem { font-size: 3rem; margin-bottom: 1rem; }
-    .cta-section h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 7vw, 5rem); color: var(--crema); letter-spacing: 0.06em; margin-bottom: 0.8rem; }
-    .cta-section p { font-family: 'Libre Baskerville', serif; font-style: italic; color: var(--texto); margin-bottom: 2.5rem; font-size: 1rem; }
+    .cta-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1574966739987-65adbf049fe2?w=1600&q=80&auto=format');
+      background-size: cover; background-position: center;
+      filter: brightness(0.18) sepia(0.5);
+    }
+    .cta-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(13,11,8,0.75) 0%, rgba(201,168,76,0.12) 100%);
+    }
+    .cta-content { position: relative; z-index: 2; max-width: 660px; margin: 0 auto; }
+    .cta-label {
+      font-family: 'Bebas Neue', sans-serif; font-size: 0.8rem; letter-spacing: 0.35em;
+      color: var(--oro); margin-bottom: 1rem; display: block;
+    }
+    .cta-divider { width: 50px; height: 1px; background: var(--oro); margin: 1.2rem auto; opacity: 0.5; }
+    .cta-section h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.8rem, 8vw, 5.5rem); color: var(--crema); letter-spacing: 0.06em; line-height: 0.95; margin-bottom: 1.2rem; }
+    .cta-section h2 span { color: var(--oro); }
+    .cta-section p { font-family: 'Libre Baskerville', serif; font-style: italic; color: var(--texto); margin-bottom: 2.5rem; font-size: 1rem; line-height: 1.75; }
     .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-oro-solid {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--oro); color: var(--negro); font-weight: 700;
+      font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 1rem 2.4rem; border-radius: 4px; text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-oro-solid:hover { background: var(--oro-dark); transform: translateY(-2px); }
 
     /* ── FOOTER ── */
     footer {
-      background: var(--negro); border-top: 1px solid rgba(201,168,76,0.15);
-      padding: 4rem 2rem 2rem;
+      background: #060402; border-top: 1px solid rgba(201,168,76,0.15);
+      padding: 3.5rem 2rem 2rem;
     }
     .footer-inner { max-width: 1100px; margin: 0 auto; }
-    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
-    .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.12em; color: var(--crema); margin-bottom: 0.6rem; }
+    .footer-top {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1.5rem;
+      padding-bottom: 2rem; border-bottom: 1px solid rgba(201,168,76,0.1);
+      margin-bottom: 2rem;
+    }
+    .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.12em; color: var(--crema); }
     .footer-logo span { color: var(--oro); }
-    .footer-tagline { font-size: 0.85rem; color: var(--texto); line-height: 1.6; margin-bottom: 1.2rem; }
-    .footer-socials { display: flex; gap: 0.8rem; }
+    .footer-socials { display: flex; gap: 0.75rem; }
     .footer-social {
-      width: 36px; height: 36px; border-radius: 6px;
+      width: 40px; height: 40px; border-radius: 8px;
       border: 1px solid rgba(201,168,76,0.2); display: flex; align-items: center; justify-content: center;
-      text-decoration: none; font-size: 1rem; transition: border-color 0.2s, background 0.2s;
+      text-decoration: none; transition: border-color 0.2s, background 0.2s;
     }
     .footer-social:hover { border-color: var(--oro); background: rgba(201,168,76,0.1); }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 2.5rem; }
+    .footer-tagline { font-size: 0.85rem; color: var(--texto); line-height: 1.7; max-width: 300px; }
     .footer-col-title { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.12em; color: var(--oro); margin-bottom: 1rem; font-size: 0.9rem; }
-    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
-    .footer-links a { color: var(--texto); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+    .footer-links a { color: var(--texto); text-decoration: none; font-size: 0.83rem; transition: color 0.2s; }
     .footer-links a:hover { color: var(--oro); }
-    .footer-bottom { border-top: 1px solid rgba(201,168,76,0.1); padding-top: 1.5rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
-    .footer-copy { font-size: 0.78rem; color: rgba(200,184,154,0.4); }
+    .footer-bottom {
+      border-top: 1px solid rgba(201,168,76,0.08); padding-top: 1.5rem;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
+    }
+    .footer-copy { font-size: 0.75rem; color: rgba(200,184,154,0.35); }
 
     /* ── FLOAT WA ── */
     .float-wa {
@@ -378,39 +447,36 @@
       .nav-links { display: none; }
       .hamburger { display: flex; width: 44px; height: 44px; justify-content: center; align-items: center; }
       .shows-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .info-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .info-wrap { grid-template-columns: 1fr; gap: 2rem; }
       .gallery-masonry { columns: 2; }
-      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
       .section { padding: 4rem 1.2rem; }
       .hero h1 { font-size: clamp(3.5rem, 14vw, 7rem); }
-      body { padding-bottom: 64px; }
-      .mobile-wa-bar { display: flex; }
-      .float-wa { bottom: 5rem; }
     }
     @media (max-width: 580px) {
       .hero h1 { font-size: 3.2rem; line-height: 0.95; }
       .hero-year { font-size: 0.75rem; letter-spacing: 0.3em; }
       .hero-btns { flex-direction: column; align-items: stretch; gap: 0.8rem; }
       .btn-oro, .btn-outline-oro { text-align: center; padding: 1rem 1.5rem; }
-      .stamp-strip { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding: 0.8rem 1rem; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-      .stamp-strip::-webkit-scrollbar { display: none; }
-      .stamp-item { flex-shrink: 0; }
-      .stamp-sep { display: none; }
-      .menu-grid { grid-template-columns: 1fr; }
+      .menu-grid { grid-template-columns: repeat(2, 1fr); gap: 0.9rem; }
+      .menu-card-body { padding: 1rem; }
+      .menu-card-name { font-size: 1.1rem; }
+      .menu-card-desc { font-size: 0.78rem; }
       .reviews-grid { grid-template-columns: 1fr; }
       .section { padding: 3.5rem 1rem; }
       .section-title { font-size: 2.2rem; }
       .show-date-card { padding: 1rem 1.2rem; gap: 1rem; }
       .show-date-day { font-size: 2rem; min-width: 40px; }
       .gallery-masonry { columns: 2; column-gap: 0.5rem; }
-      .footer-bottom { flex-direction: column; gap: 0.4rem; text-align: center; }
-      .cta-section { padding: 4rem 1.2rem; }
+      .cta-section { padding: 5rem 1.5rem; }
       .cta-btns { flex-direction: column; align-items: stretch; gap: 0.8rem; }
       .cta-btns a { text-align: center; }
+      .footer-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 390px) {
       .hero h1 { font-size: 2.8rem; }
       nav { padding: 0.7rem 1rem; }
+      .menu-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -443,7 +509,8 @@
   <a href="#galeria" onclick="closeMobile()">Galería</a>
   <a href="#info" onclick="closeMobile()">Ubicación</a>
   <a href="https://wa.me/541153960260?text=Hola%201973%20Beer%20House!%20Quiero%20reservar%20%F0%9F%8D%BA" class="mobile-menu-wa" target="_blank">
-    💬 Reservar por WhatsApp
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Reservar por WhatsApp
   </a>
 </div>
 
@@ -471,17 +538,30 @@
   <div class="hero-scroll">SCROLL ↓</div>
 </section>
 
-<!-- STAMP STRIP -->
-<div class="stamp-strip">
-  <div class="stamp-item"><span class="stamp-icon">🍺</span><span class="stamp-text">Birras Artesanales</span></div>
-  <span class="stamp-sep">✦</span>
-  <div class="stamp-item"><span class="stamp-icon">🔥</span><span class="stamp-text">Parrilla a Fuego</span></div>
-  <span class="stamp-sep">✦</span>
-  <div class="stamp-item"><span class="stamp-icon">🎸</span><span class="stamp-text">Shows en Vivo</span></div>
-  <span class="stamp-sep">✦</span>
-  <div class="stamp-item"><span class="stamp-icon">🎮</span><span class="stamp-text">Sector Infantil</span></div>
-  <span class="stamp-sep">✦</span>
-  <div class="stamp-item"><span class="stamp-icon">📱</span><span class="stamp-text">Menú QR Digital</span></div>
+<!-- STAMP STRIP TICKER -->
+<div class="stamp-strip" aria-hidden="true">
+  <div class="stamp-track">
+    <div class="stamp-item"><span class="stamp-icon">🍺</span><span class="stamp-text">Birras Artesanales</span></div>
+    <span class="stamp-sep">✦</span>
+    <div class="stamp-item"><span class="stamp-icon">🔥</span><span class="stamp-text">Parrilla a Fuego</span></div>
+    <span class="stamp-sep">✦</span>
+    <div class="stamp-item"><span class="stamp-icon">🎸</span><span class="stamp-text">Shows en Vivo</span></div>
+    <span class="stamp-sep">✦</span>
+    <div class="stamp-item"><span class="stamp-icon">🎮</span><span class="stamp-text">Sector Infantil</span></div>
+    <span class="stamp-sep">✦</span>
+    <div class="stamp-item"><span class="stamp-icon">🎵</span><span class="stamp-text">Viernes · Sábados · Domingos</span></div>
+    <span class="stamp-sep">✦</span>
+    <div class="stamp-item"><span class="stamp-icon">🍺</span><span class="stamp-text">Birras Artesanales</span></div>
+    <span class="stamp-sep">✦</span>
+    <div class="stamp-item"><span class="stamp-icon">🔥</span><span class="stamp-text">Parrilla a Fuego</span></div>
+    <span class="stamp-sep">✦</span>
+    <div class="stamp-item"><span class="stamp-icon">🎸</span><span class="stamp-text">Shows en Vivo</span></div>
+    <span class="stamp-sep">✦</span>
+    <div class="stamp-item"><span class="stamp-icon">🎮</span><span class="stamp-text">Sector Infantil</span></div>
+    <span class="stamp-sep">✦</span>
+    <div class="stamp-item"><span class="stamp-icon">🎵</span><span class="stamp-text">Viernes · Sábados · Domingos</span></div>
+    <span class="stamp-sep">✦</span>
+  </div>
 </div>
 
 <!-- CARTA -->
@@ -671,7 +751,7 @@
     </div>
     <div style="text-align:center; margin-top:2rem;" class="fade-up">
       <a href="https://www.instagram.com/beerhouse.1973/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.6rem;color:var(--texto);text-decoration:none;font-size:0.85rem;transition:color 0.2s;" onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color='#C8B89A'">
-        📸 Seguinos en @beerhouse.1973
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg> Seguinos en @beerhouse.1973
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
     </div>
@@ -729,91 +809,140 @@
 <!-- INFO / UBICACION -->
 <section class="section" style="background:var(--sepia);" id="info">
   <div class="section-inner">
-    <div class="info-grid">
+    <div class="fade-up" style="margin-bottom:3rem;">
+      <p class="section-label">Dónde estamos</p>
+      <h2 class="section-title">Ubicación & Horarios</h2>
+    </div>
+    <div class="info-wrap">
+
+      <!-- Horarios + contacto -->
       <div class="fade-up">
-        <p class="section-label">Dónde estamos</p>
-        <h2 class="section-title">Ubicación & Horarios</h2>
-        <div class="info-details">
-          <div class="info-detail">
-            <span class="info-detail-icon">📍</span>
-            <div class="info-detail-content">
-              <div class="info-detail-label">Dirección</div>
-              <div class="info-detail-value">Av. Hipólito Yrigoyen 22314<br>B1856 Glew, Prov. de Buenos Aires</div>
-            </div>
+        <p style="font-family:'Bebas Neue',sans-serif;font-size:0.75rem;letter-spacing:0.2em;color:var(--oro);margin-bottom:0.5rem;">APERTURA SEMANAL</p>
+        <div class="info-horario-table">
+          <div class="info-horario-row">
+            <span class="info-horario-dia">Lunes a Jueves</span>
+            <span class="info-horario-hora" style="color:rgba(200,184,154,0.3);">Cerrado</span>
           </div>
-          <div class="info-detail">
-            <span class="info-detail-icon">🕐</span>
-            <div class="info-detail-content">
-              <div class="info-detail-label">Horarios</div>
-              <div class="info-detail-value">Viernes y Sábados: 20hs – 3hs<br>Domingos: 12hs – 23hs</div>
-            </div>
+          <div class="info-horario-row">
+            <span class="info-horario-dia">Viernes</span>
+            <span class="info-horario-hora">20:00 – 03:00 hs</span>
           </div>
-          <div class="info-detail">
-            <span class="info-detail-icon">📞</span>
-            <div class="info-detail-content">
-              <div class="info-detail-label">Reservas y Contacto</div>
-              <div class="info-detail-value">011 15-3596-0260<br>También por WhatsApp</div>
-            </div>
+          <div class="info-horario-row">
+            <span class="info-horario-dia">Sábado</span>
+            <span class="info-horario-hora">20:00 – 03:00 hs</span>
           </div>
-          <div class="info-detail">
-            <span class="info-detail-icon">🚗</span>
-            <div class="info-detail-content">
-              <div class="info-detail-label">Estacionamiento</div>
-              <div class="info-detail-value">Estacionamiento propio y calle. Zona de fácil acceso desde la Autopista Buenos Aires – La Plata.</div>
+          <div class="info-horario-row">
+            <span class="info-horario-dia">Domingo</span>
+            <span class="info-horario-hora">12:00 – 23:00 hs</span>
+          </div>
+        </div>
+
+        <div class="info-contact-cards">
+          <a href="https://wa.me/541153960260?text=Hola%201973%20Beer%20House!%20Quiero%20reservar%20mesa%20%F0%9F%8D%BA" class="info-contact-card" target="_blank" rel="noopener">
+            <div class="info-contact-icon wa">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </div>
+            <div>
+              <div class="info-contact-title">WhatsApp — Reservas</div>
+              <div class="info-contact-sub">011 15-3596-0260 · Respondemos rápido 🍺</div>
+            </div>
+          </a>
+          <a href="https://www.instagram.com/beerhouse.1973/" class="info-contact-card" target="_blank" rel="noopener">
+            <div class="info-contact-icon ig">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </div>
+            <div>
+              <div class="info-contact-title">@beerhouse.1973</div>
+              <div class="info-contact-sub">~9.500 seguidores · Instagram</div>
+            </div>
+          </a>
+          <a href="https://www.facebook.com/BeerHouseGlew/" class="info-contact-card" target="_blank" rel="noopener">
+            <div class="info-contact-icon fb">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </div>
+            <div>
+              <div class="info-contact-title">BeerHouseGlew</div>
+              <div class="info-contact-sub">Facebook · Seguinos</div>
+            </div>
+          </a>
+          <div class="info-contact-card" style="cursor:default;">
+            <div class="info-contact-icon loc">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <div class="info-contact-title">Av. Hipólito Yrigoyen 22314</div>
+              <div class="info-contact-sub">Glew, Prov. de Buenos Aires · Con estacionamiento</div>
             </div>
           </div>
         </div>
-        <div style="margin-top:2rem;">
-          <a href="https://wa.me/541153960260?text=Hola!%20Quiero%20reservar%20mesa%20en%201973%20Beer%20House%20%F0%9F%8D%BA" class="btn-wa" target="_blank" rel="noopener">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            Reservar Ahora
+      </div>
+
+      <!-- Mapa / foto -->
+      <div class="info-map-box fade-up fade-up-delay-2">
+        <img class="info-map-img" src="https://images.unsplash.com/photo-1436076863939-06870fe779c2?w=800&q=80&auto=format" alt="1973 Beer House — Glew" loading="lazy" />
+        <div class="info-map-footer">
+          <div class="info-map-address">
+            <strong>1973 Beer House</strong>
+            Av. Hipólito Yrigoyen 22314, Glew
+          </div>
+          <a href="https://maps.google.com/?q=Av.+Hipólito+Yrigoyen+22314+Glew+Buenos+Aires" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.4rem;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);color:var(--oro);padding:0.5rem 1rem;border-radius:6px;text-decoration:none;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;">
+            Ver en Maps →
           </a>
         </div>
       </div>
-      <div class="info-map-placeholder fade-up fade-up-delay-2">
-        <span style="font-size:3rem;">🗺️</span>
-        <span>Av. Hipólito Yrigoyen 22314</span>
-        <span style="font-size:0.78rem; color:rgba(200,184,154,0.4);">Glew, Buenos Aires</span>
-        <a href="https://maps.google.com/?q=Av.+Hipólito+Yrigoyen+22314+Glew+Buenos+Aires" target="_blank" rel="noopener" style="margin-top:0.5rem;display:inline-flex;align-items:center;gap:0.5rem;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);color:var(--oro);padding:0.5rem 1.2rem;border-radius:6px;text-decoration:none;font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;">
-          Ver en Maps →
-        </a>
-      </div>
+
     </div>
   </div>
 </section>
 
 <!-- CTA FINAL -->
 <section class="cta-section">
-  <div class="cta-emblem fade-up">🍺</div>
-  <h2 class="fade-up fade-up-delay-1">EL FINDE QUE SE VIENE</h2>
-  <p class="fade-up fade-up-delay-2">No esperés más. Reservá tu mesa antes de que se llene.</p>
-  <div class="cta-btns fade-up fade-up-delay-3">
-    <a href="https://wa.me/541153960260?text=Hola%201973%20Beer%20House!%20Quiero%20reservar%20una%20mesa%20%F0%9F%8D%BA" class="btn-wa" target="_blank">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Reservar por WhatsApp
-    </a>
-    <a href="#carta" class="btn-outline-oro">Ver la Carta</a>
+  <div class="cta-bg"></div>
+  <div class="cta-overlay"></div>
+  <div class="cta-content">
+    <span class="cta-label fade-up">· 1973 · Glew · Buenos Aires ·</span>
+    <h2 class="fade-up fade-up-delay-1">EL FINDE<br/><span>QUE SE VIENE</span></h2>
+    <div class="cta-divider"></div>
+    <p class="fade-up fade-up-delay-2">No esperés más. Los fines de semana se llenan rápido. Reservá tu mesa, llegá con hambre y disfrutá la noche.</p>
+    <div class="cta-btns fade-up fade-up-delay-3">
+      <a href="https://wa.me/541153960260?text=Hola%201973%20Beer%20House!%20Quiero%20reservar%20una%20mesa%20%F0%9F%8D%BA" class="btn-wa" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Reservar por WhatsApp
+      </a>
+      <a href="https://www.instagram.com/beerhouse.1973/" class="btn-outline-oro" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.55rem;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        Ver en Instagram
+      </a>
+    </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-logo">1973 <span>BEER HOUSE</span></div>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/beerhouse.1973/" class="footer-social" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white" opacity="0.8"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/BeerHouseGlew/" class="footer-social" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white" opacity="0.8"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="https://wa.me/541153960260" class="footer-social" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white" opacity="0.8"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
+      </div>
+    </div>
     <div class="footer-grid">
       <div>
-        <div class="footer-logo">1973 <span>BEER HOUSE</span></div>
-        <p class="footer-tagline">Cervecería, parrilla y shows en vivo en el corazón de Glew. El lugar donde el sur se junta a brindar.</p>
-        <div class="footer-socials">
-          <a href="https://www.instagram.com/beerhouse.1973/" class="footer-social" target="_blank" rel="noopener" aria-label="Instagram">📸</a>
-          <a href="https://www.facebook.com/BeerHouseGlew/" class="footer-social" target="_blank" rel="noopener" aria-label="Facebook">👥</a>
-          <a href="https://wa.me/541153960260" class="footer-social" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
-        </div>
+        <p class="footer-tagline">Cervecería, parrilla y shows en vivo en el corazón de Glew. El lugar donde el sur se junta a brindar desde el primer brindis.</p>
       </div>
       <div>
-        <div class="footer-col-title">Menú</div>
+        <div class="footer-col-title">Carta</div>
         <ul class="footer-links">
           <li><a href="#carta">Birras Artesanales</a></li>
-          <li><a href="#carta">Parrilla</a></li>
+          <li><a href="#carta">Parrilla 1973</a></li>
           <li><a href="#carta">Hamburguesas</a></li>
           <li><a href="#carta">Coctelería</a></li>
         </ul>
@@ -822,14 +951,14 @@
         <div class="footer-col-title">Info</div>
         <ul class="footer-links">
           <li><a href="#shows">Shows en Vivo</a></li>
+          <li><a href="#galeria">Galería</a></li>
           <li><a href="#info">Ubicación</a></li>
-          <li><a href="#info">Horarios</a></li>
           <li><a href="https://wa.me/541153960260">Reservas</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="footer-copy">© 2026 1973 Beer House. Av. Hipólito Yrigoyen 22314, Glew.</div>
+      <div class="footer-copy">© 2026 1973 Beer House · Av. Hipólito Yrigoyen 22314, Glew</div>
       <div class="footer-copy">El sur tiene su lugar 🍺</div>
     </div>
   </div>
