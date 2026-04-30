@@ -126,9 +126,9 @@
     }
     .hero-bg {
       position: absolute; inset: 0;
-      background-image: url('https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=1920&q=85&auto=format');
-      background-size: cover; background-position: center 40%;
-      filter: brightness(0.45);
+      background-image: url('https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=1920&q=85&auto=format');
+      background-size: cover; background-position: center 50%;
+      filter: brightness(0.42);
     }
     .hero-overlay {
       position: absolute; inset: 0;
@@ -533,7 +533,10 @@
       .strip { gap: 1.2rem; padding: 0.9rem 1rem; flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
       .strip::-webkit-scrollbar { display: none; }
       .strip-item { flex-shrink: 0; }
-      .productos-grid { grid-template-columns: 1fr; }
+      .productos-grid { grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
+      .producto-body { padding: 0.9rem; }
+      .producto-body h3 { font-size: 1rem; }
+      .producto-body p { font-size: 0.78rem; }
       .resenas-grid { grid-template-columns: 1fr; }
       .galeria-grid { grid-template-columns: 1fr 1fr; gap: 0.4rem; }
       .hero h1 { font-size: 2.6rem; line-height: 1.1; }
@@ -554,6 +557,10 @@
       .hero-badge { font-size: 0.65rem; padding: 0.3rem 0.8rem; }
       nav { padding: 0.8rem 1rem; }
       .section { padding: 3rem 1rem; }
+      .productos-grid { gap: 0.6rem; }
+      .producto-body { padding: 0.75rem; }
+      .producto-body h3 { font-size: 0.92rem; }
+      .producto-tag { font-size: 0.6rem; }
     }
   </style>
 </head>
@@ -615,9 +622,9 @@
 <!-- ── STRIP ── -->
 <div class="strip">
   <div class="strip-item"><span>🥐</span> Hecho artesanalmente cada día</div>
-  <div class="strip-item"><span>🌾</span> Línea Sin TACC disponible</div>
-  <div class="strip-item"><span>📦</span> Catering para eventos</div>
   <div class="strip-item"><span>⭐</span> +8.300 clientes en Instagram</div>
+  <div class="strip-item"><span>📦</span> Catering para eventos</div>
+  <div class="strip-item"><span>📍</span> Méndez 206, Glew</div>
 </div>
 
 <!-- ── NOSOTROS ── -->
@@ -639,7 +646,6 @@
       <p>Cada mañana, desde antes de las 7, nuestro equipo elabora las medialunas, las tortas, el pan y los alfajores que vas a encontrar en la vidriera. Sin atajos ni conservantes: todo fresco, todo del día.</p>
       <div class="nosotros-features">
         <div class="nosotros-feat">Elaboración artesanal, sin conservantes</div>
-        <div class="nosotros-feat">Línea completa Sin TACC</div>
         <div class="nosotros-feat">Ingredientes de primera calidad</div>
         <div class="nosotros-feat">Pedidos especiales y catering para eventos</div>
         <div class="nosotros-feat">Atención personalizada, como en familia</div>
@@ -723,16 +729,16 @@
         </div>
       </div>
 
-      <!-- Sin TACC — foto de pan sin gluten, miga abierta -->
+      <!-- Regalos & Cajas — foto de caja regalo con productos artesanales -->
       <div class="producto-card fade-up fade-up-delay-3">
         <div class="producto-img">
-          <img src="https://images.unsplash.com/photo-1598373182133-52452f7691ef?w=700&q=80&auto=format"
-               alt="Productos Sin TACC — pan y facturas aptas para celíacos" loading="lazy" />
+          <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=700&q=80&auto=format"
+               alt="Cajas regalo y regalos artesanales Bruzzone" loading="lazy" />
         </div>
         <div class="producto-body">
-          <span class="producto-tag">🌿 Línea especial</span>
-          <h3>Línea Sin TACC</h3>
-          <p>Pan, facturas, alfajores y tortas aptos para celíacos. Elaborados con harinas sin gluten, en zona de producción diferenciada para evitar contaminación cruzada.</p>
+          <span class="producto-tag">🎁 Ideal para regalar</span>
+          <h3>Cajas & Regalos</h3>
+          <p>Cajas armadas con lo mejor de la vidriera: alfajores, medialunas, budines y tortas. Perfectas para cumpleaños, fiestas o cualquier ocasión especial.</p>
         </div>
       </div>
 
@@ -898,8 +904,8 @@
         <div class="catering-feat">Casamientos, cumpleaños y bautismos</div>
         <div class="catering-feat">Reuniones de empresa y eventos corporativos</div>
         <div class="catering-feat">Encuentros religiosos y comunitarios</div>
-        <div class="catering-feat">Mesa dulce y salada personalizable</div>
-        <div class="catering-feat">Variedad completa incluyendo opción Sin TACC</div>
+        <div class="catering-feat">Mesa dulce y salada completamente personalizable</div>
+        <div class="catering-feat">Entrega puntual con embalaje profesional</div>
       </div>
       <a href="#pedido" class="btn-primary" style="margin-top:1.8rem;">📋 Solicitar presupuesto</a>
     </div>
