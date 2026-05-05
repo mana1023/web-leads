@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smash Burgers | Delivery Buenos Aires · Zona Norte y Oeste</title>
+
+  <meta name="description" content="Smash Burgers — la smash burger perfecta con delivery en Buenos Aires zona norte y oeste. Jueves a domingo desde las 20hs. ¡Pedí ahora por WhatsApp!" />
+  <meta name="keywords" content="smash burger delivery Buenos Aires, smash burger zona norte, hamburguesa delivery Buenos Aires, smash burgers argentina" />
+  <link rel="canonical" href="https://smashburgers.com.ar/" />
+  <meta property="og:type" content="restaurant" />
+  <meta property="og:title" content="Smash Burgers | Delivery Buenos Aires" />
+  <meta property="og:description" content="La smash burger perfecta. Delivery zona norte/oeste. Jueves a domingo desde las 20hs." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1596560548464-f010549b84d7?w=1200&q=80" />
+  <meta property="og:url" content="https://smashburgers.com.ar/" />
+  <meta property="og:locale" content="es_AR" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FoodEstablishment",
+    "name": "Smash Burgers",
+    "image": "https://images.unsplash.com/photo-1596560548464-f010549b84d7?w=800",
+    "description": "Smash burgers auténticas con delivery en Buenos Aires zona norte y oeste desde 2019.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Buenos Aires",
+      "addressRegion": "Buenos Aires",
+      "addressCountry": "AR"
+    },
+    "telephone": "+5491126869545",
+    "url": "https://smashburgers.com.ar",
+    "openingHours": ["Th 19:00-23:00", "Fr 19:00-23:00", "Sa 19:00-23:00", "Su 19:00-23:00"],
+    "servesCuisine": "Hamburguesas, Americana",
+    "priceRange": "$$",
+    "foundingDate": "2019",
+    "sameAs": ["https://instagram.com/smashhamburguesas"],
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "1240" }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --negro: #050505;
+      --amarillo: #F5C518;
+      --amarillo-dark: #D4A800;
+      --rojo: #CC2936;
+      --gris: #111111;
+      --gris-medio: #1C1C1C;
+      --gris-light: #777;
+      --blanco: #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--negro);
+      color: var(--blanco);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── ANIMACIONES ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up-delay-1 { transition-delay: 0.1s; }
+    .fade-up-delay-2 { transition-delay: 0.2s; }
+    .fade-up-delay-3 { transition-delay: 0.3s; }
+    .fade-up-delay-4 { transition-delay: 0.4s; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.5rem;
+      background: rgba(5,5,5,0.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 2px solid var(--amarillo);
+      transition: padding 0.3s;
+    }
+    nav.scrolled { padding: 0.65rem 1.5rem; }
+
+    .nav-logo {
+      font-family: 'Black Han Sans', sans-serif;
+      font-size: 1.75rem;
+      letter-spacing: 0.08em;
+      color: var(--amarillo);
+      text-decoration: none;
+      line-height: 1;
+    }
+    .nav-logo span { color: var(--rojo); }
+
+    .nav-links {
+      display: none;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--amarillo); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-cta {
+      display: none;
+      background: var(--amarillo);
+      color: var(--negro);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.5rem 1.1rem;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--amarillo-dark); }
+
+    .hamburger {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .hamburger span {
+      display: block;
+      width: 26px;
+      height: 2px;
+      background: var(--blanco);
+      transition: all 0.3s;
+      transform-origin: center;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ── MOBILE MENU OVERLAY ── */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      z-index: 190;
+      background: var(--negro);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      padding: 2rem;
+    }
+    .mobile-menu.open { opacity: 1; pointer-events: all; }
+
+    .mobile-menu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem 1.5rem;
+      margin-bottom: 2.5rem;
+      width: 100%;
+      max-width: 320px;
+    }
+    .mobile-menu-grid a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(245,197,24,0.15);
+      transition: color 0.2s;
+    }
+    .mobile-menu-grid a:hover { color: var(--amarillo); }
+
+    .mobile-menu-cta {
+      background: var(--amarillo);
+      color: var(--negro);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+    }
+    .mobile-menu-logo {
+      font-family: 'Black Han Sans', sans-serif;
+      font-size: 2.5rem;
+      color: var(--amarillo);
+      letter-spacing: 0.06em;
+      margin-bottom: 2rem;
+    }
+    .mobile-menu-logo span { color: var(--rojo); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 1.5rem 4rem;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1596560548464-f010549b84d7?w=800&q=80&auto=format');
+      background-size: cover;
+      background-position: center 40%;
+      filter: brightness(0.28) saturate(1.1);
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(5,5,5,0.35) 0%,
+        rgba(5,5,5,0.15) 40%,
+        rgba(5,5,5,0.75) 80%,
+        rgba(5,5,5,1) 100%
+      );
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--amarillo);
+      color: var(--negro);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 2px;
+      margin-bottom: 1.25rem;
+    }
+    .hero-h1 {
+      font-family: 'Black Han Sans', sans-serif;
+      font-size: clamp(4.5rem, 20vw, 9rem);
+      line-height: 0.92;
+      letter-spacing: 0.03em;
+      color: var(--blanco);
+      margin-bottom: 0.5rem;
+    }
+    .hero-h1 .yellow { color: var(--amarillo); }
+    .hero-subtitle {
+      font-style: italic;
+      font-size: clamp(0.95rem, 3vw, 1.2rem);
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 0.8rem;
+      font-weight: 300;
+    }
+    .hero-desc {
+      font-size: clamp(0.82rem, 2.5vw, 0.95rem);
+      color: rgba(255,255,255,0.5);
+      max-width: 420px;
+      margin: 0 auto 2.25rem;
+      line-height: 1.7;
+    }
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+    .btn-primary {
+      background: var(--amarillo);
+      color: var(--negro);
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.9rem 1.8rem;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-primary:hover { background: var(--amarillo-dark); transform: translateY(-1px); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--blanco);
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.9rem 1.8rem;
+      text-decoration: none;
+      border-radius: 2px;
+      border: 1.5px solid rgba(255,255,255,0.35);
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-secondary:hover { border-color: var(--amarillo); color: var(--amarillo); transform: translateY(-1px); }
+
+    /* ── TICKER ── */
+    .ticker-wrap {
+      background: var(--amarillo);
+      overflow: hidden;
+      padding: 0.8rem 0;
+      border-top: 3px solid var(--amarillo-dark);
+      border-bottom: 3px solid var(--amarillo-dark);
+    }
+    .ticker-track {
+      display: flex;
+      white-space: nowrap;
+      animation: ticker-scroll 24s linear infinite;
+    }
+    .ticker-track:hover { animation-play-state: paused; }
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--negro);
+      padding: 0 2.5rem;
+    }
+    .ticker-dot {
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      background: var(--negro);
+      border-radius: 50%;
+      opacity: 0.4;
+    }
+    @keyframes ticker-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── SECTION COMMONS ── */
+    section { padding: 5rem 1.5rem; }
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--amarillo);
+      margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: 'Black Han Sans', sans-serif;
+      font-size: clamp(2.4rem, 8vw, 4rem);
+      line-height: 1;
+      letter-spacing: 0.03em;
+      color: var(--blanco);
+      margin-bottom: 1rem;
+    }
+    .section-title .accent { color: var(--amarillo); }
+    .section-desc {
+      font-size: 0.95rem;
+      color: var(--gris-light);
+      max-width: 540px;
+      line-height: 1.7;
+    }
+
+    /* ── MENU ── */
+    #menu { background: var(--gris); }
+    .menu-header { text-align: center; margin-bottom: 3rem; }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.25rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .menu-card {
+      background: var(--gris-medio);
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: transform 0.25s, border-color 0.25s;
+      cursor: default;
+    }
+    .menu-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--amarillo);
+    }
+    .menu-card-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.9) saturate(1.1);
+      transition: filter 0.3s, transform 0.35s;
+    }
+    .menu-card:hover .menu-card-img {
+      filter: brightness(1) saturate(1.2);
+      transform: scale(1.03);
+    }
+    .menu-card-img-wrap { overflow: hidden; }
+    .menu-card-body { padding: 1.1rem 1.1rem 1.3rem; }
+    .menu-card-name {
+      font-family: 'Black Han Sans', sans-serif;
+      font-size: 1.15rem;
+      letter-spacing: 0.04em;
+      color: var(--amarillo);
+      margin-bottom: 0.4rem;
+    }
+    .menu-card-desc {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+    }
+    .menu-card-tag {
+      display: inline-block;
+      margin-top: 0.75rem;
+      background: rgba(245,197,24,0.12);
+      border: 1px solid rgba(245,197,24,0.3);
+      color: var(--amarillo);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: 2px;
+    }
+
+    /* ── NOSOTROS ── */
+    #nosotros { background: var(--negro); }
+    .nosotros-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      align-items: center;
+    }
+    .nosotros-img-wrap { position: relative; border-radius: 4px; overflow: hidden; }
+    .nosotros-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.82) saturate(1.05);
+    }
+    .nosotros-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(245,197,24,0.12) 0%, transparent 60%);
+    }
+    .nosotros-img-badge {
+      position: absolute;
+      bottom: 1.25rem;
+      left: 1.25rem;
+      background: var(--amarillo);
+      color: var(--negro);
+      font-family: 'Black Han Sans', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.06em;
+      padding: 0.5rem 1rem;
+      border-radius: 2px;
+    }
+    .nosotros-text .section-label { margin-bottom: 0.5rem; }
+    .nosotros-text .section-title { margin-bottom: 1.25rem; }
+    .nosotros-body {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.85;
+      margin-bottom: 2rem;
+    }
+    .nosotros-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .nosotros-badge {
+      background: var(--gris-medio);
+      border: 1px solid rgba(245,197,24,0.25);
+      color: rgba(255,255,255,0.75);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      padding: 0.45rem 0.9rem;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .nosotros-badge .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--amarillo);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── REVIEWS ── */
+    #reviews { background: var(--gris); }
+    .reviews-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .reviews-rating-big {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .rating-number {
+      font-family: 'Black Han Sans', sans-serif;
+      font-size: clamp(3rem, 8vw, 4.5rem);
+      color: var(--amarillo);
+      line-height: 1;
+    }
+    .rating-stars-big {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .stars-row { display: flex; gap: 3px; }
+    .star {
+      width: 18px;
+      height: 18px;
+      fill: var(--amarillo);
+    }
+    .rating-count {
+      font-size: 0.78rem;
+      color: var(--gris-light);
+      font-weight: 500;
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .review-card {
+      background: var(--gris-medio);
+      border-radius: 4px;
+      padding: 1.5rem;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: border-color 0.25s;
+    }
+    .review-card:hover { border-color: rgba(245,197,24,0.3); }
+    .review-stars { display: flex; gap: 3px; margin-bottom: 0.75rem; }
+    .review-star { width: 14px; height: 14px; fill: var(--amarillo); }
+    .review-text {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.75;
+      font-style: italic;
+      margin-bottom: 1.1rem;
+    }
+    .review-author {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .review-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--blanco);
+    }
+    .review-meta {
+      font-size: 0.72rem;
+      color: var(--gris-light);
+    }
+    .review-platform {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amarillo);
+      background: rgba(245,197,24,0.1);
+      padding: 0.2rem 0.5rem;
+      border-radius: 2px;
+    }
+
+    /* ── HORARIOS & CONTACTO ── */
+    #horarios { background: var(--negro); }
+    .horarios-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .horarios-left {}
+    .horarios-left .section-title { margin-bottom: 1.5rem; }
+    .schedule-table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; }
+    .schedule-table td {
+      padding: 0.7rem 0;
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.65);
+    }
+    .schedule-table td:first-child {
+      font-weight: 700;
+      color: var(--blanco);
+      width: 44%;
+    }
+    .schedule-table td:last-child { color: rgba(255,255,255,0.5); font-size: 0.82rem; }
+    .schedule-table tr.active td { color: var(--amarillo); }
+    .schedule-table tr.active td:first-child { color: var(--amarillo); }
+
+    .contact-cards { display: flex; flex-direction: column; gap: 0.75rem; }
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--gris-medio);
+      border-radius: 4px;
+      padding: 1rem 1.25rem;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .contact-card:hover { border-color: var(--amarillo); transform: translateX(4px); }
+    .contact-card-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-card-icon.wa { background: rgba(37,211,102,0.15); }
+    .contact-card-icon.ig { background: rgba(225,48,108,0.15); }
+    .contact-card-icon.ph { background: rgba(245,197,24,0.15); }
+    .contact-card-icon svg { width: 22px; height: 22px; }
+    .contact-card-body {}
+    .contact-card-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gris-light);
+      margin-bottom: 0.15rem;
+    }
+    .contact-card-value {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--blanco);
+    }
+
+    .horarios-right {}
+    .pedi-box {
+      background: var(--gris-medio);
+      border-radius: 4px;
+      padding: 2rem 1.5rem;
+      border: 1px solid rgba(245,197,24,0.2);
+      text-align: center;
+    }
+    .pedi-box-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amarillo);
+      margin-bottom: 0.6rem;
+    }
+    .pedi-box-title {
+      font-family: 'Black Han Sans', sans-serif;
+      font-size: clamp(2rem, 6vw, 2.8rem);
+      line-height: 1;
+      color: var(--blanco);
+      margin-bottom: 0.75rem;
+    }
+    .pedi-box-desc {
+      font-size: 0.85rem;
+      color: var(--gris-light);
+      line-height: 1.65;
+      margin-bottom: 1.75rem;
+    }
+    .btn-wa-big {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+      background: #25D366;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 1.1rem 2rem;
+      border-radius: 4px;
+      text-decoration: none;
+      width: 100%;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-wa-big:hover { background: #1ebe5d; transform: translateY(-1px); }
+    .btn-wa-big svg { width: 22px; height: 22px; }
+    .pedi-hours {
+      margin-top: 1.25rem;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.4);
+    }
+    .pedi-hours strong { color: rgba(255,255,255,0.65); }
+
+    /* ── CTA FINAL ── */
+    #cta-final {
+      position: relative;
+      padding: 6rem 1.5rem;
+      text-align: center;
+      overflow: hidden;
+    }
+    .cta-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&q=80&auto=format');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.18) saturate(1);
+    }
+    .cta-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(5,5,5,0.6), rgba(5,5,5,0.82));
+    }
+    .cta-content {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .cta-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--amarillo);
+      margin-bottom: 1rem;
+    }
+    .cta-headline {
+      font-family: 'Black Han Sans', sans-serif;
+      font-size: clamp(2.8rem, 10vw, 5.5rem);
+      line-height: 0.95;
+      color: var(--blanco);
+      margin-bottom: 1.5rem;
+    }
+    .cta-headline .acc { color: var(--amarillo); }
+    .cta-sub {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 2.5rem;
+    }
+    .cta-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+
+    /* ── FOOTER ── */
+    footer { background: var(--negro); border-top: 1px solid rgba(255,255,255,0.06); }
+    .footer-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1.5rem 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-logo {
+      font-family: 'Black Han Sans', sans-serif;
+      font-size: 1.5rem;
+      color: var(--amarillo);
+      letter-spacing: 0.06em;
+    }
+    .footer-logo span { color: var(--rojo); }
+    .footer-socials { display: flex; gap: 0.75rem; }
+    .footer-social-link {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--gris-medio);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .footer-social-link:hover { background: rgba(245,197,24,0.15); border-color: var(--amarillo); }
+    .footer-social-link svg { width: 18px; height: 18px; }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem 1.5rem;
+      padding: 2.5rem 1.5rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .footer-col-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amarillo);
+      margin-bottom: 0.9rem;
+    }
+    .footer-col p, .footer-col address {
+      font-size: 0.82rem;
+      color: var(--gris-light);
+      font-style: normal;
+      line-height: 1.75;
+    }
+    .footer-col a { color: var(--gris-light); text-decoration: none; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--amarillo); }
+    .footer-nav-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .footer-nav-links a { font-size: 0.82rem; }
+
+    .footer-bottom {
+      padding: 1.25rem 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .footer-copy {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.25);
+    }
+    .footer-made {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.2);
+    }
+    .footer-made a { color: var(--amarillo); text-decoration: none; opacity: 0.7; }
+
+    /* ── FLOATING WA ── */
+    .float-wa {
+      position: fixed;
+      bottom: 5.5rem;
+      right: 1.25rem;
+      z-index: 150;
+      width: 58px;
+      height: 58px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .float-wa:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(37,211,102,0.6); }
+    .float-wa svg { width: 30px; height: 30px; }
+
+    /* Pulse ring */
+    .float-wa::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 2px solid rgba(37,211,102,0.5);
+      animation: wa-pulse 2.2s ease-out infinite;
+    }
+    @keyframes wa-pulse {
+      0% { transform: scale(1); opacity: 0.6; }
+      70% { transform: scale(1.35); opacity: 0; }
+      100% { transform: scale(1.35); opacity: 0; }
+    }
+
+    /* ── MOBILE STICKY BAR ── */
+    .sticky-wa-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 149;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.85rem 1.5rem;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      box-shadow: 0 -2px 16px rgba(37,211,102,0.3);
+    }
+    .sticky-wa-bar svg { width: 22px; height: 22px; }
+
+    /* ── RESPONSIVE ── */
+    @media (min-width: 480px) {
+      nav { padding: 1rem 2rem; }
+      nav.scrolled { padding: 0.65rem 2rem; }
+      .float-wa { bottom: 6rem; }
+    }
+
+    @media (min-width: 640px) {
+      .reviews-grid { grid-template-columns: 1fr 1fr; }
+      .horarios-inner { grid-template-columns: 1fr 1fr; }
+      .nosotros-inner { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: repeat(4, 1fr); }
+      .sticky-wa-bar { display: none; }
+      .float-wa { bottom: 1.5rem; }
+    }
+
+    @media (min-width: 768px) {
+      section { padding: 6rem 2.5rem; }
+      nav { padding: 1.1rem 3rem; }
+      nav.scrolled { padding: 0.7rem 3rem; }
+      .nav-links { display: flex; }
+      .nav-cta { display: inline-block; }
+      .hamburger { display: none; }
+      .reviews-grid { grid-template-columns: repeat(3, 1fr); }
+      .footer-top { padding: 1.5rem 3rem; }
+      .footer-grid { padding: 3rem 3rem 2.5rem; }
+      .footer-bottom { padding: 1.25rem 3rem; }
+    }
+
+    @media (max-width: 580px) {
+      .menu-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 380px) {
+      .menu-grid { grid-template-columns: 1fr; }
+      .hero-h1 { font-size: clamp(3.5rem, 22vw, 5rem); }
+    }
+    @media (min-width: 768px) {
+      .menu-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* Divider accent line */
+    .accent-line {
+      width: 40px;
+      height: 3px;
+      background: var(--amarillo);
+      margin: 1rem 0 1.5rem;
+    }
+    .accent-line.center { margin: 1rem auto 1.5rem; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     NAV
+═══════════════════════════════════════ -->
+<nav id="main-nav">
+  <a href="#hero" class="nav-logo">SMASH<span>.</span></a>
+
+  <ul class="nav-links">
+    <li><a href="#menu">Menú</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#reviews">Reseñas</a></li>
+    <li><a href="#horarios">Horarios</a></li>
+  </ul>
+
+  <div class="nav-right">
+    <a href="https://wa.me/5491126869545?text=Hola!%20Quiero%20hacer%20un%20pedido%20🍔" class="nav-cta" target="_blank" rel="noopener">Pedir ahora</a>
+    <button class="hamburger" id="hamburger-btn" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     MOBILE MENU OVERLAY
+═══════════════════════════════════════ -->
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menú de navegación">
+  <div class="mobile-menu-logo">SMASH<span>.</span></div>
+  <div class="mobile-menu-grid">
+    <a href="#menu" class="mobile-link">Menú</a>
+    <a href="#nosotros" class="mobile-link">Nosotros</a>
+    <a href="#reviews" class="mobile-link">Reseñas</a>
+    <a href="#horarios" class="mobile-link">Horarios</a>
+    <a href="https://instagram.com/smashhamburguesas" class="mobile-link" target="_blank" rel="noopener">Instagram</a>
+    <a href="tel:+5491126869545" class="mobile-link">Llamar</a>
+  </div>
+  <a href="https://wa.me/5491126869545?text=Hola!%20Quiero%20hacer%20un%20pedido%20🍔" class="mobile-menu-cta" target="_blank" rel="noopener">
+    Pedir por WhatsApp
+  </a>
+</div>
+
+<!-- ═══════════════════════════════════════
+     HERO
+═══════════════════════════════════════ -->
+<section id="hero" class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge fade-up">Desde 2019 · Buenos Aires</div>
+    <h1 class="hero-h1 fade-up fade-up-delay-1">
+      <span class="yellow">SMASH</span><br>BURGERS
+    </h1>
+    <p class="hero-subtitle fade-up fade-up-delay-2">Smash Burgers · Delivery · Buenos Aires</p>
+    <p class="hero-desc fade-up fade-up-delay-3">
+      Prensado en plancha bien caliente, cheese fundido al punto,<br>pan brioche tostado. Sin vueltas.
+    </p>
+    <div class="hero-ctas fade-up fade-up-delay-4">
+      <a href="https://wa.me/5491126869545?text=Hola!%20Quiero%20hacer%20un%20pedido%20🍔" class="btn-primary" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Pedir ahora
+      </a>
+      <a href="#menu" class="btn-secondary">
+        Ver menú
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     TICKER
+═══════════════════════════════════════ -->
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item">🔥 Smash auténtico</span>
+    <span class="ticker-dot"></span>
+    <span class="ticker-item">🧀 Cheese fundido</span>
+    <span class="ticker-dot"></span>
+    <span class="ticker-item">🛵 Delivery Jue-Dom</span>
+    <span class="ticker-dot"></span>
+    <span class="ticker-item">⚡ Desde 2019</span>
+    <span class="ticker-dot"></span>
+    <span class="ticker-item">🥩 Prensado en plancha</span>
+    <span class="ticker-dot"></span>
+    <!-- duplicado para loop infinito -->
+    <span class="ticker-item">🔥 Smash auténtico</span>
+    <span class="ticker-dot"></span>
+    <span class="ticker-item">🧀 Cheese fundido</span>
+    <span class="ticker-dot"></span>
+    <span class="ticker-item">🛵 Delivery Jue-Dom</span>
+    <span class="ticker-dot"></span>
+    <span class="ticker-item">⚡ Desde 2019</span>
+    <span class="ticker-dot"></span>
+    <span class="ticker-item">🥩 Prensado en plancha</span>
+    <span class="ticker-dot"></span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     MENU
+═══════════════════════════════════════ -->
+<section id="menu">
+  <div class="menu-header">
+    <p class="section-label fade-up">Nuestras hamburguesas</p>
+    <h2 class="section-title fade-up fade-up-delay-1">EL <span class="accent">MENÚ</span></h2>
+    <div class="accent-line center fade-up fade-up-delay-2"></div>
+    <p class="section-desc fade-up fade-up-delay-3" style="margin:0 auto;">Seis burgers, todas smash. Todas perfectas.</p>
+  </div>
+
+  <div class="menu-grid">
+
+    <!-- 1 -->
+    <article class="menu-card fade-up">
+      <div class="menu-card-img-wrap">
+        <img class="menu-card-img" src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&q=80&auto=format" alt="The Smash" loading="lazy" />
+      </div>
+      <div class="menu-card-body">
+        <h3 class="menu-card-name">The Smash</h3>
+        <p class="menu-card-desc">El clásico. Medallón prensado 180g, doble american cheese, pickles, cebolla, mostaza y kétchup. Perfección simple.</p>
+        <span class="menu-card-tag">El original</span>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="menu-card fade-up fade-up-delay-1">
+      <div class="menu-card-img-wrap">
+        <img class="menu-card-img" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80&auto=format" alt="Double Smash" loading="lazy" />
+      </div>
+      <div class="menu-card-body">
+        <h3 class="menu-card-name">Double Smash</h3>
+        <p class="menu-card-desc">Doble medallón 360g total, doble cheese, panceta crocante, salsa especial. Cuando uno no alcanza.</p>
+        <span class="menu-card-tag">Para hambientos</span>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="menu-card fade-up fade-up-delay-2">
+      <div class="menu-card-img-wrap">
+        <img class="menu-card-img" src="https://images.unsplash.com/photo-1586816001966-79b736744398?w=800&q=80&auto=format" alt="Crispy Smash" loading="lazy" />
+      </div>
+      <div class="menu-card-body">
+        <h3 class="menu-card-name">Crispy Smash</h3>
+        <p class="menu-card-desc">Medallón smash + pechuga crispy en el mismo pan. Lo mejor de los dos mundos.</p>
+        <span class="menu-card-tag">Combo perfecto</span>
+      </div>
+    </article>
+
+    <!-- 4 -->
+    <article class="menu-card fade-up">
+      <div class="menu-card-img-wrap">
+        <img class="menu-card-img" src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=800&q=80&auto=format" alt="BBQ Smash" loading="lazy" />
+      </div>
+      <div class="menu-card-body">
+        <h3 class="menu-card-name">BBQ Smash</h3>
+        <p class="menu-card-desc">Medallón prensado, cheddar ahumado, panceta, aros de cebolla, BBQ artesanal. El más pedido del menú.</p>
+        <span class="menu-card-tag">⭐ El más pedido</span>
+      </div>
+    </article>
+
+    <!-- 5 -->
+    <article class="menu-card fade-up fade-up-delay-1">
+      <div class="menu-card-img-wrap">
+        <img class="menu-card-img" src="https://images.unsplash.com/photo-1512152272829-e3139592d56f?w=800&q=80&auto=format" alt="Smash Junior" loading="lazy" />
+      </div>
+      <div class="menu-card-body">
+        <h3 class="menu-card-name">Smash Junior</h3>
+        <p class="menu-card-desc">Medallón 120g, cheese, pickles, kétchup. Para los que prefieren algo más liviano.</p>
+        <span class="menu-card-tag">Liviano</span>
+      </div>
+    </article>
+
+    <!-- 6 -->
+    <article class="menu-card fade-up fade-up-delay-2">
+      <div class="menu-card-img-wrap">
+        <img class="menu-card-img" src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=800&q=80&auto=format" alt="Nuclear Smash" loading="lazy" />
+      </div>
+      <div class="menu-card-body">
+        <h3 class="menu-card-name">Nuclear Smash</h3>
+        <p class="menu-card-desc">Doble medallón, doble cheese, jalapeños frescos, salsa nuclear propia. Para valientes.</p>
+        <span class="menu-card-tag">🌶 Para valientes</span>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     NOSOTROS
+═══════════════════════════════════════ -->
+<section id="nosotros">
+  <div class="nosotros-inner">
+    <div class="nosotros-img-wrap fade-up">
+      <img class="nosotros-img" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80&auto=format" alt="Cocina Smash Burgers" loading="lazy" />
+      <div class="nosotros-img-overlay"></div>
+      <div class="nosotros-img-badge">Desde 2019</div>
+    </div>
+    <div class="nosotros-text">
+      <p class="section-label fade-up">Quiénes somos</p>
+      <h2 class="section-title fade-up fade-up-delay-1">NUESTRA <span class="accent">HISTORIA</span></h2>
+      <div class="accent-line fade-up fade-up-delay-2"></div>
+      <p class="nosotros-body fade-up fade-up-delay-2">
+        Smash Burgers nació en 2019 con una misión clara: hacer la smash burger perfecta. Sin vueltas, sin experimentos raros. La técnica del prensado en plancha bien caliente, el cheese fundido al punto exacto, el pan brioche tostado. Seis años perfeccionando lo mismo. Y todavía no terminamos.
+      </p>
+      <div class="nosotros-badges fade-up fade-up-delay-3">
+        <span class="nosotros-badge"><span class="dot"></span>Desde 2019</span>
+        <span class="nosotros-badge"><span class="dot"></span>Técnica smash auténtica</span>
+        <span class="nosotros-badge"><span class="dot"></span>Delivery en tiempo</span>
+        <span class="nosotros-badge"><span class="dot"></span>Ingredientes frescos</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     REVIEWS
+═══════════════════════════════════════ -->
+<section id="reviews">
+  <div class="reviews-header">
+    <p class="section-label fade-up">Lo que dicen</p>
+    <h2 class="section-title fade-up fade-up-delay-1">RESEÑAS <span class="accent">REALES</span></h2>
+    <div class="accent-line center fade-up fade-up-delay-2"></div>
+    <div class="reviews-rating-big fade-up fade-up-delay-2">
+      <span class="rating-number">4.9</span>
+      <div class="rating-stars-big">
+        <div class="stars-row">
+          <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <span class="rating-count">+1.240 reseñas</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="reviews-grid">
+
+    <div class="review-card fade-up">
+      <div class="review-stars">
+        <svg class="review-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="review-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="review-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="review-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="review-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <p class="review-text">"Hace 3 años que pido y nunca me decepcionó. The Smash es la referencia de lo que tiene que ser una smash burger."</p>
+      <div class="review-author">
+        <div>
+          <p class="review-name">Agustín B.</p>
+          <p class="review-meta">Hace 2 semanas</p>
+        </div>
+        <span class="review-platform">Google</span>
+      </div>
+    </div>
+
+    <div class="review-card fade-up fade-up-delay-1">
+      <div class="review-stars">
+        <svg class="review-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="review-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="review-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="review-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="review-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <p class="review-text">"Llegó a tiempo, caliente y aplastada perfectamente. La BBQ Smash es mi favorita, el BBQ casero marca la diferencia."</p>
+      <div class="review-author">
+        <div>
+          <p class="review-name">Rocío L.</p>
+          <p class="review-meta">Hace 5 días</p>
+        </div>
+        <span class="review-platform">Instagram</span>
+      </div>
+    </div>
+
+    <div class="review-card fade-up fade-up-delay-2">
+      <div class="review-stars">
+        <svg class="review-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="review-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="review-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="review-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="review-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <p class="review-text">"No sabía que podía existir algo tan simple y tan bueno. El Crispy Smash es una locura. Los recomiendo 100%."</p>
+      <div class="review-author">
+        <div>
+          <p class="review-name">Tomás V.</p>
+          <p class="review-meta">Hace 1 mes</p>
+        </div>
+        <span class="review-platform">Google</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     HORARIOS & CONTACTO
+═══════════════════════════════════════ -->
+<section id="horarios">
+  <div class="horarios-inner">
+
+    <div class="horarios-left">
+      <p class="section-label fade-up">Cuándo y cómo</p>
+      <h2 class="section-title fade-up fade-up-delay-1">HORARIOS &<br><span class="accent">CONTACTO</span></h2>
+      <div class="accent-line fade-up fade-up-delay-2"></div>
+
+      <table class="schedule-table fade-up fade-up-delay-2">
+        <tbody>
+          <tr>
+            <td>Jueves</td>
+            <td>Pedidos 19:00 · Delivery 20:00</td>
+          </tr>
+          <tr>
+            <td>Viernes</td>
+            <td>Pedidos 19:00 · Delivery 20:00</td>
+          </tr>
+          <tr>
+            <td>Sábado</td>
+            <td>Pedidos 19:00 · Delivery 20:00</td>
+          </tr>
+          <tr>
+            <td>Domingo</td>
+            <td>Pedidos 19:00 · Delivery 20:00</td>
+          </tr>
+          <tr>
+            <td>Lun – Mié</td>
+            <td>Cerrado</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="contact-cards fade-up fade-up-delay-3">
+        <a href="https://wa.me/5491126869545?text=Hola!%20Quiero%20hacer%20un%20pedido%20🍔" class="contact-card" target="_blank" rel="noopener">
+          <div class="contact-card-icon wa">
+            <svg viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </div>
+          <div class="contact-card-body">
+            <p class="contact-card-label">WhatsApp</p>
+            <p class="contact-card-value">11-2686-9545</p>
+          </div>
+        </a>
+
+        <a href="https://instagram.com/smashhamburguesas" class="contact-card" target="_blank" rel="noopener">
+          <div class="contact-card-icon ig">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#E1306C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </div>
+          <div class="contact-card-body">
+            <p class="contact-card-label">Instagram</p>
+            <p class="contact-card-value">@smashhamburguesas</p>
+          </div>
+        </a>
+
+        <a href="tel:+5491126869545" class="contact-card">
+          <div class="contact-card-icon ph">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#F5C518" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.78a16 16 0 0 0 5.46 5.46l.87-.87a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
+          </div>
+          <div class="contact-card-body">
+            <p class="contact-card-label">Teléfono</p>
+            <p class="contact-card-value">11-2686-9545</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="horarios-right fade-up fade-up-delay-2">
+      <div class="pedi-box">
+        <p class="pedi-box-label">Delivery disponible</p>
+        <h3 class="pedi-box-title">PEDÍ<br>AHORA</h3>
+        <p class="pedi-box-desc">
+          Zona norte y oeste de Buenos Aires.<br>
+          Jueves a domingo · Delivery desde las 20:00hs.<br>
+          Caliente, rápido y perfectamente aplastada.
+        </p>
+        <a href="https://wa.me/5491126869545?text=Hola!%20Quiero%20hacer%20un%20pedido%20🍔" class="btn-wa-big" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Pedir por WhatsApp
+        </a>
+        <p class="pedi-hours">
+          <strong>Pedidos desde las 19:00hs</strong> · Delivery desde las 20:00hs
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CTA FINAL
+═══════════════════════════════════════ -->
+<section id="cta-final">
+  <div class="cta-bg"></div>
+  <div class="cta-overlay"></div>
+  <div class="cta-content">
+    <p class="cta-label fade-up">¿Tenés hambre?</p>
+    <h2 class="cta-headline fade-up fade-up-delay-1">
+      LA MEJOR<br><span class="acc">SMASH</span><br>TE ESPERA
+    </h2>
+    <p class="cta-sub fade-up fade-up-delay-2">Delivery a zona norte y oeste · Jueves a Domingo desde las 20hs</p>
+    <div class="cta-buttons fade-up fade-up-delay-3">
+      <a href="https://wa.me/5491126869545?text=Hola!%20Quiero%20hacer%20un%20pedido%20🍔" class="btn-primary" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Hacer pedido
+      </a>
+      <a href="https://instagram.com/smashhamburguesas" class="btn-secondary" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        @smashhamburguesas
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-logo">SMASH<span>.</span></div>
+    <div class="footer-socials">
+      <!-- Instagram SVG -->
+      <a href="https://instagram.com/smashhamburguesas" class="footer-social-link" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+      <!-- WhatsApp SVG -->
+      <a href="https://wa.me/5491126869545" class="footer-social-link" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer-grid">
+    <div class="footer-col">
+      <p class="footer-col-title">Smash Burgers</p>
+      <p>La smash burger perfecta desde 2019. Delivery en Buenos Aires zona norte y oeste. Jueves a domingo.</p>
+    </div>
+    <div class="footer-col">
+      <p class="footer-col-title">Menú</p>
+      <ul class="footer-nav-links">
+        <li><a href="#menu">The Smash</a></li>
+        <li><a href="#menu">Double Smash</a></li>
+        <li><a href="#menu">BBQ Smash</a></li>
+        <li><a href="#menu">Nuclear Smash</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-col-title">Horarios</p>
+      <address>
+        Jueves a Domingo<br>
+        Pedidos desde 19:00hs<br>
+        Delivery desde 20:00hs<br>
+        Zona norte y oeste, CABA
+      </address>
+    </div>
+    <div class="footer-col">
+      <p class="footer-col-title">Contacto</p>
+      <p>
+        <a href="https://wa.me/5491126869545">WhatsApp</a><br>
+        <a href="tel:+5491126869545">11-2686-9545</a><br>
+        <a href="https://instagram.com/smashhamburguesas" target="_blank" rel="noopener">@smashhamburguesas</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p class="footer-copy">&copy; 2025 Smash Burgers · Buenos Aires, Argentina · Desde 2019</p>
+    <p class="footer-made">Demo por <a href="#">web-leads</a></p>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════
+     FLOATING WA BUTTON
+═══════════════════════════════════════ -->
+<a href="https://wa.me/5491126869545?text=Hola!%20Quiero%20hacer%20un%20pedido%20🍔" class="float-wa" target="_blank" rel="noopener" aria-label="Pedir por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- ═══════════════════════════════════════
+     MOBILE STICKY WA BAR
+═══════════════════════════════════════ -->
+<a href="https://wa.me/5491126869545?text=Hola!%20Quiero%20hacer%20un%20pedido%20🍔" class="sticky-wa-bar" target="_blank" rel="noopener" aria-label="Pedir por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  Pedir ahora · WhatsApp
+</a>
+
+<script>
+  // ── NAV SCROLL ──
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // ── HAMBURGER / MOBILE MENU ──
+  const hamburger = document.getElementById('hamburger-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  function closeMobileMenu() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  // Close on nav link click
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', closeMobileMenu);
+  });
+
+  // Close on outside click
+  mobileMenu.addEventListener('click', (e) => {
+    if (e.target === mobileMenu) closeMobileMenu();
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMobileMenu();
+  });
+
+  // ── INTERSECTION OBSERVER (fade-up) ──
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  fadeEls.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

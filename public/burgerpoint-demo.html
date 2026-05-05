@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Burger Point | Hamburguesería Artesanal — Ituzaingó, Buenos Aires</title>
+
+  <meta name="description" content="Burger Point en Ituzaingó. Hamburguesería artesanal con medallones frescos, pan brioche propio y salsas caseras. Delivery a Ituzaingó, Castelar y Padua." />
+  <meta name="keywords" content="burger point ituzaingo, hamburguesas ituzaingo, delivery ituzaingo, hamburgueseria castelar, hamburguesas artesanales gba" />
+  <link rel="canonical" href="https://burgerpoint.com.ar/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Burger Point | Hamburguesería Artesanal — Ituzaingó" />
+  <meta property="og:description" content="Medallones frescos, pan brioche propio y salsas artesanales. Delivery en 40 min a Ituzaingó, Castelar y Padua." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1550547660-d9450f859349?w=1200&q=80&auto=format" />
+  <meta property="og:url" content="https://burgerpoint.com.ar/" />
+  <meta property="og:locale" content="es_AR" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Burger Point",
+    "image": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&q=80&auto=format",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Cnel. Quesada 1275",
+      "addressLocality": "Ituzaingó",
+      "addressRegion": "Buenos Aires",
+      "addressCountry": "AR"
+    },
+    "telephone": "+5491162118588",
+    "url": "https://burgerpoint.com.ar",
+    "sameAs": ["https://instagram.com/burger.point_"],
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Wednesday","Thursday","Friday","Saturday","Sunday","Monday"], "opens": "19:30", "closes": "23:30" }
+    ],
+    "servesCuisine": "Hamburguesas, Fast Food Artesanal",
+    "priceRange": "$$",
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "reviewCount": "612" }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --negro: #080808;
+      --rojo: #E63946;
+      --rojo-dark: #C1121F;
+      --naranja: #FF5C00;
+      --gris: #131313;
+      --gris-medio: #1E1E1E;
+      --gris-light: #888;
+      --blanco: #FFFFFF;
+      --amarillo: #FFD166;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--negro);
+      color: var(--blanco);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* ── ANIMACIONES ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up-delay-1 { transition-delay: 0.1s; }
+    .fade-up-delay-2 { transition-delay: 0.2s; }
+    .fade-up-delay-3 { transition-delay: 0.3s; }
+    .fade-up-delay-4 { transition-delay: 0.4s; }
+
+    /* ── UTILIDADES ── */
+    .section-label {
+      display: inline-block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--naranja);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.4rem, 7vw, 3.8rem);
+      line-height: 1;
+      letter-spacing: 0.02em;
+      color: var(--blanco);
+    }
+    .section-title span { color: var(--rojo); }
+    .container {
+      width: 100%;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    /* ══════════════════════════════════════════
+       1. NAV
+    ══════════════════════════════════════════ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.5rem;
+      background: rgba(8,8,8,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(230,57,70,0.18);
+      transition: padding 0.3s, background 0.3s;
+    }
+    nav.scrolled {
+      padding: 0.55rem 1.5rem;
+      background: rgba(8,8,8,0.98);
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.06em;
+      color: var(--blanco);
+      text-decoration: none;
+      line-height: 1;
+    }
+    .nav-logo span { color: var(--rojo); }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--naranja); }
+    .nav-cta {
+      background: var(--rojo) !important;
+      color: var(--blanco) !important;
+      padding: 0.45rem 1.1rem !important;
+      border-radius: 6px;
+      font-weight: 600 !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--rojo-dark) !important; }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 4px; background: none; border: none;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--blanco); border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    @media(max-width:768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* ══════════════════════════════════════════
+       2. MOBILE MENU OVERLAY
+    ══════════════════════════════════════════ */
+    .mobile-menu {
+      position: fixed; inset: 0; z-index: 190;
+      background: rgba(8,8,8,0.98);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s;
+    }
+    .mobile-menu.open { opacity: 1; pointer-events: all; }
+    .mobile-menu-links {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      width: 100%;
+      max-width: 400px;
+      padding: 0 1.5rem;
+    }
+    .mobile-menu-links li { border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .mobile-menu-links li:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.07); }
+    .mobile-menu-links a {
+      display: block;
+      padding: 1.5rem 1rem;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.7rem;
+      letter-spacing: 0.05em;
+      text-align: center;
+      transition: color 0.2s;
+    }
+    .mobile-menu-links a:hover { color: var(--naranja); }
+    .mobile-menu-wa {
+      margin-top: 2.5rem;
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: #25D366; color: var(--blanco);
+      padding: 1rem 2rem; border-radius: 50px;
+      text-decoration: none; font-weight: 700;
+      font-size: 1rem;
+    }
+
+    /* ══════════════════════════════════════════
+       3. HERO
+    ══════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background-image: url('https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&q=80&auto=format');
+      background-size: cover; background-position: center;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(8,8,8,0.72) 0%,
+        rgba(8,8,8,0.55) 40%,
+        rgba(8,8,8,0.88) 100%
+      );
+    }
+    .hero-content {
+      position: relative; z-index: 1;
+      padding: 8rem 1.25rem 6rem;
+      max-width: 720px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,57,70,0.18);
+      border: 1px solid rgba(230,57,70,0.5);
+      color: var(--amarillo);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.45rem 1.1rem;
+      border-radius: 50px;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 15vw, 7.5rem);
+      line-height: 0.92;
+      letter-spacing: 0.02em;
+      color: var(--blanco);
+      margin-bottom: 1.2rem;
+    }
+    .hero-title .fire { color: var(--rojo); }
+    .hero-title .line2 {
+      display: block;
+      -webkit-text-stroke: 1.5px rgba(255,255,255,0.5);
+      color: transparent;
+    }
+    .hero-subtitle {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.72);
+      font-weight: 400;
+      max-width: 420px;
+      margin: 0 auto 2.2rem;
+      line-height: 1.6;
+    }
+    .hero-btns {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--rojo);
+      color: var(--blanco);
+      padding: 0.9rem 2rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--rojo-dark); transform: translateY(-2px); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      border: 2px solid rgba(255,255,255,0.4);
+      color: var(--blanco);
+      padding: 0.9rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+    .btn-outline:hover {
+      border-color: var(--naranja);
+      background: rgba(255,92,0,0.12);
+      transform: translateY(-2px);
+    }
+
+    /* ══════════════════════════════════════════
+       4. TICKER
+    ══════════════════════════════════════════ */
+    .ticker-wrap {
+      background: var(--rojo);
+      overflow: hidden;
+      padding: 0.85rem 0;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: ticker-scroll 28s linear infinite;
+    }
+    .ticker-track:hover { animation-play-state: paused; }
+    .ticker-item {
+      white-space: nowrap;
+      padding: 0 2.5rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      color: var(--blanco);
+    }
+    .ticker-dot {
+      display: inline-block;
+      width: 6px; height: 6px;
+      background: var(--amarillo);
+      border-radius: 50%;
+      margin: 0 1.2rem;
+      vertical-align: middle;
+    }
+    @keyframes ticker-scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ══════════════════════════════════════════
+       5. MENU
+    ══════════════════════════════════════════ */
+    .menu-section {
+      padding: 5rem 0;
+      background: var(--gris);
+    }
+    .menu-header { text-align: center; margin-bottom: 3rem; }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .menu-card {
+      background: var(--gris-medio);
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .menu-card:hover {
+      border-color: var(--naranja);
+      transform: translateY(-5px);
+      box-shadow: 0 16px 40px rgba(255,92,0,0.18);
+    }
+    .menu-card-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s;
+    }
+    .menu-card:hover .menu-card-img { transform: scale(1.05); }
+    .menu-card-img-wrap { overflow: hidden; position: relative; }
+    .menu-card-badge {
+      position: absolute; top: 0.75rem; left: 0.75rem;
+      background: var(--rojo);
+      color: var(--blanco);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      border-radius: 4px;
+    }
+    .menu-card-body { padding: 1.1rem; }
+    .menu-card-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.04em;
+      color: var(--blanco);
+      margin-bottom: 0.4rem;
+      line-height: 1.1;
+    }
+    .menu-card-desc {
+      font-size: 0.8rem;
+      color: var(--gris-light);
+      line-height: 1.55;
+    }
+    .menu-card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 0.9rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .menu-card-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--naranja);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .menu-card-icon {
+      width: 28px; height: 28px;
+      background: rgba(230,57,70,0.15);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
+    }
+
+    @media(max-width:768px) {
+      .menu-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    }
+    @media(max-width:580px) {
+      .menu-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+      .menu-card-title { font-size: 1.15rem; }
+      .menu-card-body { padding: 0.85rem; }
+    }
+    @media(max-width:380px) {
+      .menu-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ══════════════════════════════════════════
+       6. NOSOTROS
+    ══════════════════════════════════════════ */
+    .nosotros-section {
+      padding: 5rem 0;
+      background: var(--negro);
+    }
+    .nosotros-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+    .nosotros-img-wrap {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+    .nosotros-img-wrap::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(to top, rgba(230,57,70,0.35) 0%, transparent 60%);
+    }
+    .nosotros-img {
+      width: 100%; aspect-ratio: 4/5;
+      object-fit: cover; display: block;
+    }
+    .nosotros-img-label {
+      position: absolute; bottom: 1.2rem; left: 1.2rem; z-index: 2;
+      background: var(--rojo);
+      color: var(--blanco);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      padding: 0.45rem 1rem;
+      border-radius: 6px;
+    }
+    .nosotros-text .section-title { margin-bottom: 1.25rem; }
+    .nosotros-para {
+      font-size: 0.96rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.75;
+      margin-bottom: 2rem;
+    }
+    .valores-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    .valor-badge {
+      display: flex; align-items: center; gap: 0.7rem;
+      background: var(--gris-medio);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.9);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .valor-badge:hover {
+      border-color: var(--naranja);
+      transform: translateX(4px);
+    }
+    .valor-badge-icon {
+      width: 34px; height: 34px; flex-shrink: 0;
+      background: rgba(230,57,70,0.15);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    @media(max-width:768px) {
+      .nosotros-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .nosotros-img { aspect-ratio: 3/2; }
+    }
+
+    /* ══════════════════════════════════════════
+       7. REVIEWS
+    ══════════════════════════════════════════ */
+    .reviews-section {
+      padding: 5rem 0;
+      background: var(--gris);
+    }
+    .reviews-header { text-align: center; margin-bottom: 1rem; }
+    .reviews-rating-row {
+      display: flex; align-items: center; justify-content: center; gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .rating-big {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem;
+      color: var(--amarillo);
+      line-height: 1;
+    }
+    .rating-details { text-align: left; }
+    .stars-row { display: flex; gap: 3px; margin-bottom: 0.2rem; }
+    .star {
+      width: 18px; height: 18px;
+      fill: var(--amarillo);
+    }
+    .rating-count {
+      font-size: 0.8rem;
+      color: var(--gris-light);
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .review-card {
+      background: var(--gris-medio);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px;
+      padding: 1.5rem;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .review-card:hover {
+      border-color: var(--amarillo);
+      transform: translateY(-4px);
+    }
+    .review-stars { display: flex; gap: 3px; margin-bottom: 1rem; }
+    .review-text {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.65;
+      margin-bottom: 1.2rem;
+      font-style: italic;
+    }
+    .review-footer {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .review-avatar {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--rojo), var(--naranja));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      color: var(--blanco);
+      flex-shrink: 0;
+    }
+    .review-author { font-size: 0.82rem; font-weight: 700; color: var(--blanco); }
+    .review-meta { font-size: 0.73rem; color: var(--gris-light); }
+
+    @media(max-width:768px) {
+      .reviews-grid { grid-template-columns: 1fr; gap: 1rem; }
+    }
+
+    /* ══════════════════════════════════════════
+       8. HORARIOS & CONTACTO
+    ══════════════════════════════════════════ */
+    .horarios-section {
+      padding: 5rem 0;
+      background: var(--negro);
+    }
+    .horarios-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    .horarios-left .section-title { margin-bottom: 1.5rem; }
+
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+    }
+    .schedule-table tr { border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .schedule-table tr:last-child { border-bottom: none; }
+    .schedule-table td {
+      padding: 0.85rem 0;
+      font-size: 0.9rem;
+    }
+    .schedule-table td:first-child { color: var(--gris-light); font-weight: 500; }
+    .schedule-table td:last-child { text-align: right; font-weight: 600; color: var(--blanco); }
+    .schedule-table .closed { color: var(--rojo) !important; font-weight: 600; }
+    .schedule-table .open-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    .open-dot {
+      width: 7px; height: 7px;
+      background: #25D366; border-radius: 50%;
+      animation: blink 1.6s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity: 1; } 50% { opacity: 0.3; }
+    }
+
+    .delivery-area {
+      background: rgba(255,92,0,0.1);
+      border: 1px solid rgba(255,92,0,0.3);
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 2rem;
+    }
+    .delivery-area-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--naranja);
+      margin-bottom: 0.4rem;
+    }
+    .delivery-area-text {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.8);
+      font-weight: 500;
+    }
+
+    .contact-cards { display: flex; flex-direction: column; gap: 0.75rem; }
+    .contact-card {
+      display: flex; align-items: center; gap: 1rem;
+      background: var(--gris-medio);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      text-decoration: none;
+      color: var(--blanco);
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .contact-card:hover {
+      border-color: var(--naranja);
+      transform: translateX(4px);
+    }
+    .contact-card-icon {
+      width: 42px; height: 42px; flex-shrink: 0;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .contact-card-icon.wa { background: rgba(37,211,102,0.15); }
+    .contact-card-icon.ig { background: rgba(225,48,108,0.15); }
+    .contact-card-icon.maps { background: rgba(255,92,0,0.15); }
+    .contact-card-info { flex: 1; }
+    .contact-card-title { font-weight: 700; font-size: 0.9rem; line-height: 1.2; }
+    .contact-card-sub { font-size: 0.78rem; color: var(--gris-light); margin-top: 0.15rem; }
+    .contact-card-arrow {
+      color: var(--gris-light);
+      font-size: 1.1rem;
+      transition: transform 0.2s, color 0.2s;
+    }
+    .contact-card:hover .contact-card-arrow { transform: translateX(4px); color: var(--naranja); }
+
+    .horarios-right {}
+    .pedido-box {
+      background: linear-gradient(145deg, var(--gris-medio), rgba(230,57,70,0.08));
+      border: 1px solid rgba(230,57,70,0.25);
+      border-radius: 18px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      position: sticky;
+      top: 90px;
+    }
+    .pedido-box-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .pedido-box-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      letter-spacing: 0.04em;
+      color: var(--blanco);
+      margin-bottom: 0.5rem;
+      line-height: 1.1;
+    }
+    .pedido-box-sub {
+      font-size: 0.88rem;
+      color: var(--gris-light);
+      margin-bottom: 2rem;
+      line-height: 1.55;
+    }
+    .btn-wa-big {
+      display: flex; align-items: center; justify-content: center; gap: 0.8rem;
+      width: 100%;
+      background: #25D366;
+      color: var(--blanco);
+      padding: 1.1rem 1.5rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-wa-big:hover { background: #1ebe5d; transform: translateY(-2px); }
+    .pedido-box-note {
+      margin-top: 1.2rem;
+      font-size: 0.76rem;
+      color: var(--gris-light);
+    }
+
+    @media(max-width:768px) {
+      .horarios-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .pedido-box { position: static; }
+    }
+
+    /* ══════════════════════════════════════════
+       9. CTA FINAL
+    ══════════════════════════════════════════ */
+    .cta-section {
+      position: relative;
+      padding: 6rem 1.25rem;
+      text-align: center;
+      overflow: hidden;
+    }
+    .cta-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background-image: url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80&auto=format');
+      background-size: cover; background-position: center;
+    }
+    .cta-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(8,8,8,0.92) 0%,
+        rgba(193,18,31,0.75) 50%,
+        rgba(8,8,8,0.92) 100%
+      );
+    }
+    .cta-content {
+      position: relative; z-index: 1;
+      max-width: 600px; margin: 0 auto;
+    }
+    .cta-content .section-label { color: var(--amarillo); }
+    .cta-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.8rem, 10vw, 5rem);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      color: var(--blanco);
+      margin-bottom: 1.2rem;
+    }
+    .cta-title span { color: var(--amarillo); }
+    .cta-para {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+    .cta-btns {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    }
+    .btn-wa {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: #25D366; color: var(--blanco);
+      padding: 1rem 2rem;
+      border-radius: 8px; font-weight: 700; font-size: 1rem;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-wa:hover { background: #1ebe5d; transform: translateY(-2px); }
+
+    /* ══════════════════════════════════════════
+       10. FOOTER
+    ══════════════════════════════════════════ */
+    footer {
+      background: var(--negro);
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .footer-top {
+      padding: 3rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .footer-top-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1.5rem; flex-wrap: wrap;
+    }
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.06em;
+      color: var(--blanco);
+      text-decoration: none;
+    }
+    .footer-logo span { color: var(--rojo); }
+    .footer-tagline {
+      font-size: 0.78rem;
+      color: var(--gris-light);
+      margin-top: 0.2rem;
+    }
+    .footer-socials {
+      display: flex; gap: 0.75rem;
+    }
+    .footer-social-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 42px; height: 42px;
+      border-radius: 10px;
+      background: var(--gris-medio);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--blanco);
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .footer-social-btn:hover {
+      transform: translateY(-3px);
+    }
+    .footer-social-btn.ig:hover { background: rgba(225,48,108,0.2); border-color: rgba(225,48,108,0.5); }
+    .footer-social-btn.wa:hover { background: rgba(37,211,102,0.2); border-color: rgba(37,211,102,0.5); }
+
+    .footer-main {
+      padding: 3rem 0;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 2.5rem;
+    }
+    .footer-col-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      color: var(--blanco);
+      margin-bottom: 1rem;
+    }
+    .footer-col-text {
+      font-size: 0.84rem;
+      color: var(--gris-light);
+      line-height: 1.7;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+    .footer-links a {
+      font-size: 0.84rem;
+      color: var(--gris-light);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--naranja); }
+
+    .footer-bottom {
+      padding: 1.5rem 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; flex-wrap: wrap;
+    }
+    .footer-bottom-text {
+      font-size: 0.76rem;
+      color: rgba(136,136,136,0.7);
+    }
+    .footer-bottom-text a { color: var(--rojo); text-decoration: none; }
+
+    @media(max-width:768px) {
+      .footer-main { grid-template-columns: 1fr 1fr; }
+      .footer-main > *:first-child { grid-column: 1 / -1; }
+    }
+    @media(max-width:480px) {
+      .footer-main { grid-template-columns: 1fr; }
+    }
+
+    /* ══════════════════════════════════════════
+       11. FLOATING WA BUTTON
+    ══════════════════════════════════════════ */
+    .wa-float {
+      position: fixed;
+      bottom: 5.5rem; right: 1.25rem;
+      z-index: 300;
+      width: 58px; height: 58px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 24px rgba(37,211,102,0.45);
+      text-decoration: none;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .wa-float:hover {
+      transform: scale(1.1) translateY(-3px);
+      box-shadow: 0 10px 32px rgba(37,211,102,0.55);
+    }
+    .wa-float-ping {
+      position: absolute; inset: -4px;
+      border-radius: 50%;
+      background: rgba(37,211,102,0.35);
+      animation: wa-ping 2s ease-out infinite;
+    }
+    @keyframes wa-ping {
+      0% { transform: scale(1); opacity: 0.6; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+
+    /* ══════════════════════════════════════════
+       12. MOBILE STICKY BAR
+    ══════════════════════════════════════════ */
+    .mobile-wa-bar {
+      display: none;
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 250;
+      background: #25D366;
+      padding: 0.9rem 1.5rem;
+    }
+    .mobile-wa-bar a {
+      display: flex; align-items: center; justify-content: center; gap: 0.7rem;
+      color: var(--blanco);
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      width: 100%;
+    }
+    @media(max-width:768px) {
+      .mobile-wa-bar { display: block; }
+      .wa-float { bottom: 6.5rem; }
+      body { padding-bottom: 60px; }
+    }
+
+    /* ══════════════════════════════════════════
+       SCROLLBAR
+    ══════════════════════════════════════════ */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--negro); }
+    ::-webkit-scrollbar-thumb { background: var(--rojo); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     1. FIXED NAV
+══════════════════════════════════════════ -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">BURGER<span>POINT</span></a>
+
+  <ul class="nav-links">
+    <li><a href="#menu">Menú</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#reviews">Reseñas</a></li>
+    <li><a href="#horarios">Horarios</a></li>
+    <li><a href="https://wa.me/5491162118588" target="_blank" rel="noopener" class="nav-cta">Pedir Ahora</a></li>
+  </ul>
+
+  <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     2. MOBILE MENU OVERLAY
+══════════════════════════════════════════ -->
+<div class="mobile-menu" id="mobileMenu">
+  <ul class="mobile-menu-links">
+    <li><a href="#menu" class="menu-link">Menú</a></li>
+    <li><a href="#nosotros" class="menu-link">Nosotros</a></li>
+    <li><a href="#reviews" class="menu-link">Reseñas</a></li>
+    <li><a href="#horarios" class="menu-link">Horarios</a></li>
+    <li><a href="https://instagram.com/burger.point_" target="_blank" rel="noopener" class="menu-link">Instagram</a></li>
+    <li><a href="https://wa.me/5491162118588" target="_blank" rel="noopener" class="menu-link">Contacto</a></li>
+  </ul>
+  <a href="https://wa.me/5491162118588" target="_blank" rel="noopener" class="mobile-menu-wa">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    Hacer un Pedido
+  </a>
+</div>
+
+<!-- ══════════════════════════════════════════
+     3. HERO
+══════════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content fade-up">
+    <div class="hero-badge">🍔 Ituzaingó · Castelar · Padua</div>
+    <h1 class="hero-title">
+      BURGER<br>
+      <span class="fire">POINT</span>
+      <span class="line2">ARTESANAL</span>
+    </h1>
+    <p class="hero-subtitle">
+      Medallones frescos · Pan brioche propio · Salsas artesanales.<br>
+      Hamburguesería · Ituzaingó
+    </p>
+    <div class="hero-btns">
+      <a href="#menu" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+          <rect x="9" y="3" width="6" height="4" rx="1"/>
+        </svg>
+        Ver el Menú
+      </a>
+      <a href="https://wa.me/5491162118588" target="_blank" rel="noopener" class="btn-outline">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Pedir Ahora
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     4. TICKER STRIP
+══════════════════════════════════════════ -->
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-track">
+    <!-- Set 1 -->
+    <span class="ticker-item">🔥 Delivery en 40 min</span>
+    <span class="ticker-dot"></span>
+    <span class="ticker-item">🧀 Queso fundido</span>
+    <span class="ticker-dot"></span>
+    <span class="ticker-item">🥩 Medallones frescos</span>
+    <span class="ticker-dot"></span>
+    <span class="ticker-item">🍟 Papas crocantes</span>
+    <span class="ticker-dot"></span>
+    <span class="ticker-item">⭐ La mejor de Ituzaingó</span>
+    <span class="ticker-dot"></span>
+    <!-- Set 2 — duplicado para loop seamless -->
+    <span class="ticker-item">🔥 Delivery en 40 min</span>
+    <span class="ticker-dot"></span>
+    <span class="ticker-item">🧀 Queso fundido</span>
+    <span class="ticker-dot"></span>
+    <span class="ticker-item">🥩 Medallones frescos</span>
+    <span class="ticker-dot"></span>
+    <span class="ticker-item">🍟 Papas crocantes</span>
+    <span class="ticker-dot"></span>
+    <span class="ticker-item">⭐ La mejor de Ituzaingó</span>
+    <span class="ticker-dot"></span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     5. MENÚ
+══════════════════════════════════════════ -->
+<section class="menu-section" id="menu">
+  <div class="container">
+    <div class="menu-header fade-up">
+      <span class="section-label">Nuestras Burgers</span>
+      <h2 class="section-title">El <span>Menú</span></h2>
+    </div>
+
+    <div class="menu-grid">
+
+      <!-- 1 -->
+      <div class="menu-card fade-up fade-up-delay-1">
+        <div class="menu-card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80&auto=format"
+               alt="La Signature burger" class="menu-card-img" loading="lazy" />
+          <span class="menu-card-badge">⭐ La Número Uno</span>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-title">La Signature</div>
+          <p class="menu-card-desc">Medallón 200g, doble cheddar, bacon crocante, cebolla caramelizada, salsa signature. La número uno del local.</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-tag">Clásica</span>
+            <span class="menu-card-icon">🍔</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="menu-card fade-up fade-up-delay-2">
+        <div class="menu-card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1586816001966-79b736744398?w=800&q=80&auto=format"
+               alt="La Doble Fire burger" class="menu-card-img" loading="lazy" />
+          <span class="menu-card-badge">🔥 Picante</span>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-title">La Doble Fire</div>
+          <p class="menu-card-desc">Doble medallón, doble cheddar, jalapeños frescos, salsa picante. Para los que no le temen al fuego.</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-tag">Doble</span>
+            <span class="menu-card-icon">🌶️</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="menu-card fade-up fade-up-delay-3">
+        <div class="menu-card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1596560548464-f010549b84d7?w=800&q=80&auto=format"
+               alt="La Crispy Gold burger" class="menu-card-img" loading="lazy" />
+          <span class="menu-card-badge">🐔 Pollo</span>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-title">La Crispy Gold</div>
+          <p class="menu-card-desc">Pechuga de pollo crispy en panko dorado, coleslaw fresco, pickles, mayo de limón.</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-tag">Crispy</span>
+            <span class="menu-card-icon">✨</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="menu-card fade-up fade-up-delay-1">
+        <div class="menu-card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=800&q=80&auto=format"
+               alt="La BBQ Point burger" class="menu-card-img" loading="lazy" />
+          <span class="menu-card-badge">🍖 BBQ</span>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-title">La BBQ Point</div>
+          <p class="menu-card-desc">Medallón 180g, cheddar ahumado, panceta, aros de cebolla crispy, BBQ artesanal.</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-tag">Ahumada</span>
+            <span class="menu-card-icon">🔥</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="menu-card fade-up fade-up-delay-2">
+        <div class="menu-card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1512152272829-e3139592d56f?w=800&q=80&auto=format"
+               alt="La Clásica Point burger" class="menu-card-img" loading="lazy" />
+          <span class="menu-card-badge">🏆 Clásica</span>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-title">La Clásica Point</div>
+          <p class="menu-card-desc">Medallón 160g, lechuga, tomate, pepinillos, mostaza y kétchup. Clásica y perfecta.</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-tag">Esencial</span>
+            <span class="menu-card-icon">🍅</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="menu-card fade-up fade-up-delay-3">
+        <div class="menu-card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=800&q=80&auto=format"
+               alt="La Monster burger" class="menu-card-img" loading="lazy" />
+          <span class="menu-card-badge">💀 El Reto</span>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-title">La Monster</div>
+          <p class="menu-card-desc">Triple medallón 540g, triple cheddar, triple panceta. El reto del local. ¿Te animás?</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-tag">540g</span>
+            <span class="menu-card-icon">👾</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /menu-grid -->
+
+    <div style="text-align:center; margin-top:2.5rem;" class="fade-up">
+      <a href="https://wa.me/5491162118588?text=Hola!%20Quiero%20hacer%20un%20pedido" target="_blank" rel="noopener" class="btn-primary" style="font-size:1rem; padding:1rem 2.5rem;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Hacer un Pedido por WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     6. NOSOTROS
+══════════════════════════════════════════ -->
+<section class="nosotros-section" id="nosotros">
+  <div class="container">
+    <div class="nosotros-grid">
+
+      <div class="nosotros-img-wrap fade-up">
+        <img
+          src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80&auto=format"
+          alt="Interior Burger Point Ituzaingó"
+          class="nosotros-img"
+          loading="lazy"
+        />
+        <span class="nosotros-img-label">Ituzaingó · Desde el Primer Día</span>
+      </div>
+
+      <div class="nosotros-text fade-up fade-up-delay-2">
+        <span class="section-label">Nuestra historia</span>
+        <h2 class="section-title">Quiénes <span>Somos</span></h2>
+        <p class="nosotros-para">
+          Burger Point nació con una idea simple: hacer las mejores hamburguesas de la zona. Medallones frescos cada día, pan brioche propio, salsas que preparamos nosotros. Sin congelados, sin atajos. Desde que abrimos en Ituzaingó, el punto de encuentro de los amantes de la burger.
+        </p>
+
+        <div class="valores-grid">
+          <div class="valor-badge">
+            <span class="valor-badge-icon">🍞</span>
+            Pan brioche propio
+          </div>
+          <div class="valor-badge">
+            <span class="valor-badge-icon">🥩</span>
+            Medallones frescos
+          </div>
+          <div class="valor-badge">
+            <span class="valor-badge-icon">🧄</span>
+            Salsas artesanales
+          </div>
+          <div class="valor-badge">
+            <span class="valor-badge-icon">⚡</span>
+            Delivery rápido
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     7. REVIEWS
+══════════════════════════════════════════ -->
+<section class="reviews-section" id="reviews">
+  <div class="container">
+    <div class="reviews-header fade-up">
+      <span class="section-label">Lo que dicen</span>
+      <h2 class="section-title">Nuestras <span>Reseñas</span></h2>
+    </div>
+
+    <div class="reviews-rating-row fade-up">
+      <div class="rating-big">4.8</div>
+      <div class="rating-details">
+        <div class="stars-row">
+          <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div class="rating-count">+612 reseñas verificadas</div>
+      </div>
+    </div>
+
+    <div class="reviews-grid">
+
+      <div class="review-card fade-up fade-up-delay-1">
+        <div class="review-stars">
+          <svg class="star" viewBox="0 0 24 24" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="review-text">"Pedí por WA y en 40 minutos tenía la Doble Fire en la puerta. Caliente, crocante, perfecta. La mejor de Ituzaingó sin dudas."</p>
+        <div class="review-footer">
+          <div class="review-avatar">N</div>
+          <div>
+            <div class="review-author">Nicolás P.</div>
+            <div class="review-meta">Google · Hace 4 días</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card fade-up fade-up-delay-2">
+        <div class="review-stars">
+          <svg class="star" viewBox="0 0 24 24" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="review-text">"La Signature es espectacular. Ya voy seguido y siempre está igual de buena. Eso habla de la calidad."</p>
+        <div class="review-footer">
+          <div class="review-avatar">F</div>
+          <div>
+            <div class="review-author">Florencia D.</div>
+            <div class="review-meta">Instagram · Hace 1 semana</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card fade-up fade-up-delay-3">
+        <div class="review-stars">
+          <svg class="star" viewBox="0 0 24 24" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="review-text">"Fui al local y la atención fue genial. La Monster la compartimos entre dos y fue un viaje."</p>
+        <div class="review-footer">
+          <div class="review-avatar">S</div>
+          <div>
+            <div class="review-author">Sebastián M.</div>
+            <div class="review-meta">Google · Hace 2 semanas</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     8. HORARIOS & CONTACTO
+══════════════════════════════════════════ -->
+<section class="horarios-section" id="horarios">
+  <div class="container">
+    <div class="horarios-grid">
+
+      <!-- LEFT -->
+      <div class="horarios-left fade-up">
+        <span class="section-label">Cuándo y Dónde</span>
+        <h2 class="section-title">Horarios &amp;<br><span>Contacto</span></h2>
+
+        <table class="schedule-table">
+          <tbody>
+            <tr>
+              <td>Miércoles</td>
+              <td><span class="open-badge"><span class="open-dot"></span>19:30 – 23:30</span></td>
+            </tr>
+            <tr>
+              <td>Jueves</td>
+              <td><span class="open-badge"><span class="open-dot"></span>19:30 – 23:30</span></td>
+            </tr>
+            <tr>
+              <td>Viernes</td>
+              <td><span class="open-badge"><span class="open-dot"></span>19:30 – 23:30</span></td>
+            </tr>
+            <tr>
+              <td>Sábado</td>
+              <td><span class="open-badge"><span class="open-dot"></span>19:30 – 23:30</span></td>
+            </tr>
+            <tr>
+              <td>Domingo</td>
+              <td><span class="open-badge"><span class="open-dot"></span>19:30 – 23:30</span></td>
+            </tr>
+            <tr>
+              <td>Lunes</td>
+              <td><span class="open-badge"><span class="open-dot"></span>19:30 – 23:30</span></td>
+            </tr>
+            <tr>
+              <td>Martes</td>
+              <td class="closed">Cerrado</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="delivery-area">
+          <div class="delivery-area-label">Zona de Delivery</div>
+          <div class="delivery-area-text">🛵 Ituzaingó · Castelar · Padua</div>
+        </div>
+
+        <div class="contact-cards">
+
+          <a href="https://wa.me/5491162118588" target="_blank" rel="noopener" class="contact-card">
+            <div class="contact-card-icon wa">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#25D366">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+            </div>
+            <div class="contact-card-info">
+              <div class="contact-card-title">WhatsApp</div>
+              <div class="contact-card-sub">+54 9 11 6211-8588 · Pedidos y consultas</div>
+            </div>
+            <div class="contact-card-arrow">→</div>
+          </a>
+
+          <a href="https://instagram.com/burger.point_" target="_blank" rel="noopener" class="contact-card">
+            <div class="contact-card-icon ig">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <defs>
+                  <linearGradient id="ig-grad-contact" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#F58529"/>
+                    <stop offset="50%" stop-color="#DD2A7B"/>
+                    <stop offset="100%" stop-color="#8134AF"/>
+                  </linearGradient>
+                </defs>
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="url(#ig-grad-contact)" stroke-width="2" fill="none"/>
+                <circle cx="12" cy="12" r="5" stroke="url(#ig-grad-contact)" stroke-width="2" fill="none"/>
+                <circle cx="17.5" cy="6.5" r="1.2" fill="url(#ig-grad-contact)"/>
+              </svg>
+            </div>
+            <div class="contact-card-info">
+              <div class="contact-card-title">Instagram</div>
+              <div class="contact-card-sub">@burger.point_ · 17K seguidores</div>
+            </div>
+            <div class="contact-card-arrow">→</div>
+          </a>
+
+          <a href="https://maps.google.com/?q=Cnel.+Quesada+1275+Ituzaingó+Buenos+Aires" target="_blank" rel="noopener" class="contact-card">
+            <div class="contact-card-icon maps">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF5C00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <div class="contact-card-info">
+              <div class="contact-card-title">Cnel. Quesada 1275</div>
+              <div class="contact-card-sub">Ituzaingó, Buenos Aires · Ver en Maps</div>
+            </div>
+            <div class="contact-card-arrow">→</div>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="horarios-right fade-up fade-up-delay-2">
+        <div class="pedido-box">
+          <span class="pedido-box-icon">🍔</span>
+          <div class="pedido-box-title">¿Antojo de<br>hamburguesa?</div>
+          <p class="pedido-box-sub">Delivery en 40 minutos a tu puerta.<br>Escribinos por WhatsApp y armamos tu pedido.</p>
+          <a href="https://wa.me/5491162118588?text=Hola!%20Quiero%20hacer%20un%20pedido" target="_blank" rel="noopener" class="btn-wa-big">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Hacer un Pedido
+          </a>
+          <p class="pedido-box-note">Miércoles a Lunes · 19:30 – 23:30<br>Martes cerrado</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     9. CTA FINAL
+══════════════════════════════════════════ -->
+<section class="cta-section">
+  <div class="cta-bg"></div>
+  <div class="cta-content fade-up">
+    <span class="section-label">Pedí ahora</span>
+    <h2 class="cta-title">EL SABOR<br>QUE <span>BUSCÁS</span></h2>
+    <p class="cta-para">
+      Medallones frescos, pan brioche propio y las mejores salsas de la zona.<br>
+      Delivery en 40 minutos a Ituzaingó, Castelar y Padua.
+    </p>
+    <div class="cta-btns">
+      <a href="https://wa.me/5491162118588?text=Hola!%20Quiero%20hacer%20un%20pedido" target="_blank" rel="noopener" class="btn-wa">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Pedir por WhatsApp
+      </a>
+      <a href="#menu" class="btn-outline">Ver el Menú Completo</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     10. FOOTER
+══════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+
+    <div class="footer-top">
+      <div class="footer-top-inner">
+        <div>
+          <a href="#" class="footer-logo">BURGER<span>POINT</span></a>
+          <div class="footer-tagline">Hamburguesería Artesanal · Ituzaingó, Buenos Aires</div>
+        </div>
+        <div class="footer-socials">
+          <a href="https://instagram.com/burger.point_" target="_blank" rel="noopener" class="footer-social-btn ig" aria-label="Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <defs>
+                <linearGradient id="ig-footer" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#F58529"/>
+                  <stop offset="50%" stop-color="#DD2A7B"/>
+                  <stop offset="100%" stop-color="#8134AF"/>
+                </linearGradient>
+              </defs>
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="url(#ig-footer)" stroke-width="2" fill="none"/>
+              <circle cx="12" cy="12" r="5" stroke="url(#ig-footer)" stroke-width="2" fill="none"/>
+              <circle cx="17.5" cy="6.5" r="1.2" fill="url(#ig-footer)"/>
+            </svg>
+          </a>
+          <a href="https://wa.me/5491162118588" target="_blank" rel="noopener" class="footer-social-btn wa" aria-label="WhatsApp">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-main">
+      <div>
+        <div class="footer-col-title">Burger Point</div>
+        <p class="footer-col-text">
+          Hamburguesería artesanal en Ituzaingó. Medallones frescos cada día, pan brioche propio y salsas caseras. Sin congelados, sin atajos.<br><br>
+          Cnel. Quesada 1275<br>
+          Ituzaingó, Buenos Aires
+        </p>
+      </div>
+      <div>
+        <div class="footer-col-title">Menú</div>
+        <ul class="footer-links">
+          <li><a href="#menu">La Signature</a></li>
+          <li><a href="#menu">La Doble Fire</a></li>
+          <li><a href="#menu">La Crispy Gold</a></li>
+          <li><a href="#menu">La BBQ Point</a></li>
+          <li><a href="#menu">La Clásica Point</a></li>
+          <li><a href="#menu">La Monster</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contacto</div>
+        <ul class="footer-links">
+          <li><a href="https://wa.me/5491162118588" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="https://instagram.com/burger.point_" target="_blank" rel="noopener">@burger.point_</a></li>
+          <li><a href="https://maps.google.com/?q=Cnel.+Quesada+1275+Ituzaingó" target="_blank" rel="noopener">Cómo llegar</a></li>
+        </ul>
+        <div style="margin-top:1.2rem;">
+          <div class="footer-col-title" style="font-size:0.85rem;">Delivery</div>
+          <p class="footer-col-text">Ituzaingó · Castelar · Padua</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-bottom-text">© 2025 Burger Point · Ituzaingó, Buenos Aires · Todos los derechos reservados.</p>
+      <p class="footer-bottom-text">Sitio web por <a href="#">web-leads.ar</a></p>
+    </div>
+
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════
+     11. FLOATING WA BUTTON
+══════════════════════════════════════════ -->
+<a href="https://wa.me/5491162118588?text=Hola!%20Quiero%20hacer%20un%20pedido" target="_blank" rel="noopener" class="wa-float" aria-label="Contactar por WhatsApp">
+  <span class="wa-float-ping"></span>
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<!-- ══════════════════════════════════════════
+     12. MOBILE STICKY WA BAR
+══════════════════════════════════════════ -->
+<div class="mobile-wa-bar">
+  <a href="https://wa.me/5491162118588?text=Hola!%20Quiero%20hacer%20un%20pedido" target="_blank" rel="noopener">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    Hacer un Pedido
+  </a>
+</div>
+
+<!-- ══════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════ -->
+<script>
+  // NAV SCROLL
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // HAMBURGER / MOBILE MENU
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  // Close menu on link click
+  document.querySelectorAll('.mobile-menu .menu-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // Close menu on overlay click
+  mobileMenu.addEventListener('click', (e) => {
+    if (e.target === mobileMenu) {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  });
+
+  // INTERSECTION OBSERVER — fade-up
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  fadeEls.forEach(el => observer.observe(el));
+
+  // Trigger hero immediately
+  document.querySelectorAll('.hero .fade-up').forEach(el => {
+    setTimeout(() => el.classList.add('visible'), 200);
+  });
+</script>
+
+</body>
+</html>

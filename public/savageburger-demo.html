@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Savage Burger — Hamburguesería Artesanal GBA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --negro: #060606;
+      --rojo: #CC1212;
+      --rojo-dark: #991010;
+      --rojo-light: #E63030;
+      --fuego: #FF4500;
+      --gris: #111111;
+      --gris-medio: #1C1C1C;
+      --gris-light: #666;
+      --blanco: #FFFFFF;
+      --hueso: #FFFAF8;
+      --font-title: 'Black Han Sans', sans-serif;
+      --font-body: 'Space Grotesk', sans-serif;
+      --nav-h: 64px;
+    }
+
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--negro);
+      color: var(--blanco);
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    /* ===== FADE-UP ANIMATION ===== */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-up.delay-1 { transition-delay: 0.1s; }
+    .fade-up.delay-2 { transition-delay: 0.2s; }
+    .fade-up.delay-3 { transition-delay: 0.3s; }
+    .fade-up.delay-4 { transition-delay: 0.4s; }
+    .fade-up.delay-5 { transition-delay: 0.5s; }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      background: transparent;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(6,6,6,0.97);
+      box-shadow: 0 2px 20px rgba(204,18,18,0.18);
+    }
+    .nav-logo {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+    .nav-logo .logo-savage {
+      font-family: var(--font-title);
+      font-size: 26px;
+      color: var(--blanco);
+      letter-spacing: 2px;
+    }
+    .nav-logo .logo-burger {
+      font-family: var(--font-title);
+      font-size: 11px;
+      color: var(--rojo);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: none;
+      gap: 28px;
+      align-items: center;
+    }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--blanco);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--rojo-light); }
+    .nav-links .nav-cta {
+      background: var(--rojo);
+      color: var(--blanco);
+      padding: 9px 20px;
+      border-radius: 4px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .nav-links .nav-cta:hover { background: var(--rojo-dark); transform: translateY(-1px); }
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 26px;
+      height: 2px;
+      background: var(--blanco);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    @media (min-width: 768px) {
+      nav { padding: 0 40px; }
+      .nav-links { display: flex; }
+      .hamburger { display: none; }
+      .nav-logo .logo-savage { font-size: 30px; }
+    }
+
+    /* ===== MOBILE MENU OVERLAY ===== */
+    .mobile-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(6,6,6,0.98);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .mobile-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .mobile-overlay a {
+      font-family: var(--font-title);
+      font-size: clamp(36px, 10vw, 56px);
+      color: var(--blanco);
+      letter-spacing: 2px;
+      padding: 14px 0;
+      transition: color 0.2s;
+      border-bottom: 1px solid rgba(204,18,18,0.15);
+      width: 80%;
+      text-align: center;
+    }
+    .mobile-overlay a:last-child { border-bottom: none; }
+    .mobile-overlay a:hover { color: var(--rojo-light); }
+    .mobile-overlay a.mob-cta {
+      margin-top: 20px;
+      background: var(--rojo);
+      color: var(--blanco);
+      padding: 16px 40px;
+      border-radius: 4px;
+      border: none;
+      font-size: clamp(20px, 6vw, 32px);
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: calc(var(--nav-h) + 20px) 24px 60px;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to bottom, rgba(6,6,6,0.55) 0%, rgba(153,16,16,0.32) 50%, rgba(6,6,6,0.82) 100%),
+        url('https://images.unsplash.com/photo-1586816001966-79b736744398?w=1200&q=80&auto=format');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.22);
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(204,18,18,0.18) 0%, rgba(6,6,6,0.0) 60%, rgba(255,69,0,0.08) 100%);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+    }
+    .hero-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--rojo-light);
+      border: 1px solid rgba(204,18,18,0.5);
+      padding: 6px 18px;
+      border-radius: 2px;
+      margin-bottom: 24px;
+      background: rgba(204,18,18,0.08);
+    }
+    .hero h1 {
+      font-family: var(--font-title);
+      line-height: 0.9;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+    }
+    .hero h1 .line1 {
+      display: block;
+      font-size: clamp(68px, 18vw, 130px);
+      color: var(--blanco);
+    }
+    .hero h1 .line2 {
+      display: block;
+      font-size: clamp(48px, 13vw, 96px);
+      color: var(--rojo);
+      -webkit-text-stroke: 1px var(--rojo-light);
+    }
+    .hero-sub {
+      font-size: clamp(14px, 3.5vw, 17px);
+      font-weight: 400;
+      color: rgba(255,250,248,0.75);
+      max-width: 420px;
+      margin: 0 auto 36px;
+      line-height: 1.6;
+    }
+    .hero-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+    }
+    .btn-primary {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: var(--rojo);
+      color: var(--blanco);
+      padding: 15px 32px;
+      border-radius: 4px;
+      border: 2px solid var(--rojo);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--rojo-dark);
+      border-color: var(--rojo-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(204,18,18,0.35);
+    }
+    .btn-outline {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--blanco);
+      padding: 15px 32px;
+      border-radius: 4px;
+      border: 2px solid rgba(255,250,248,0.35);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+    .btn-outline:hover {
+      border-color: var(--blanco);
+      color: var(--blanco);
+      transform: translateY(-2px);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      opacity: 0.5;
+    }
+    .hero-scroll span {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .hero-scroll .arrow {
+      width: 20px;
+      height: 20px;
+      border-right: 2px solid var(--blanco);
+      border-bottom: 2px solid var(--blanco);
+      transform: rotate(45deg);
+      animation: bounce 1.4s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: rotate(45deg) translateY(0); }
+      50% { transform: rotate(45deg) translateY(5px); }
+    }
+
+    /* ===== TICKER STRIP ===== */
+    .ticker {
+      background: var(--rojo);
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .ticker-inner {
+      display: inline-flex;
+      gap: 0;
+      animation: ticker 20s linear infinite;
+    }
+    .ticker-item {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--blanco);
+      padding: 0 28px;
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ===== SECTION COMMON ===== */
+    section { padding: 80px 20px; }
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--rojo);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--font-title);
+      font-size: clamp(36px, 9vw, 64px);
+      line-height: 1;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 15px;
+      color: var(--gris-light);
+      max-width: 500px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ===== MENU ===== */
+    #menu { background: var(--gris); }
+    .menu-header { text-align: center; margin-bottom: 48px; }
+    .menu-header .section-sub { margin-left: auto; margin-right: auto; }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    @media (min-width: 380px) {
+      .menu-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 900px) {
+      .menu-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .menu-card {
+      background: var(--gris-medio);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1.5px solid transparent;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+      cursor: default;
+    }
+    .menu-card:hover {
+      border-color: var(--rojo);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(204,18,18,0.2);
+    }
+    .menu-card-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      filter: brightness(0.88) saturate(1.1);
+      transition: filter 0.3s;
+    }
+    .menu-card:hover .menu-card-img { filter: brightness(0.95) saturate(1.2); }
+    .menu-card-body { padding: 18px 16px 20px; }
+    .menu-card-name {
+      font-family: var(--font-title);
+      font-size: 20px;
+      color: var(--blanco);
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    .menu-card-desc {
+      font-size: 13px;
+      color: var(--gris-light);
+      line-height: 1.6;
+    }
+    .menu-card-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--rojo-light);
+      border: 1px solid rgba(204,18,18,0.35);
+      padding: 3px 10px;
+      border-radius: 2px;
+      margin-top: 12px;
+    }
+
+    /* ===== NOSOTROS ===== */
+    #nosotros { background: var(--negro); }
+    .nosotros-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    @media (min-width: 768px) {
+      .nosotros-grid { grid-template-columns: 1fr 1fr; gap: 60px; }
+    }
+    .nosotros-img-wrap {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .nosotros-img-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(204,18,18,0.22) 0%, transparent 60%);
+    }
+    .nosotros-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      filter: brightness(0.75) saturate(0.9);
+    }
+    .nosotros-year {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      z-index: 1;
+      font-family: var(--font-title);
+      font-size: 56px;
+      color: var(--rojo);
+      line-height: 1;
+      opacity: 0.9;
+    }
+    .nosotros-text .section-sub { margin-bottom: 32px; }
+    .values-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .value-badge {
+      background: var(--gris-medio);
+      border: 1px solid rgba(204,18,18,0.2);
+      border-radius: 6px;
+      padding: 16px 14px;
+    }
+    .value-badge-icon {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+    .value-badge-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blanco);
+    }
+    .value-badge-sub {
+      font-size: 12px;
+      color: var(--gris-light);
+      margin-top: 2px;
+    }
+
+    /* ===== REVIEWS ===== */
+    #reviews { background: var(--gris); }
+    .reviews-header { text-align: center; margin-bottom: 48px; }
+    .reviews-rating {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .reviews-score {
+      font-family: var(--font-title);
+      font-size: 56px;
+      color: var(--blanco);
+    }
+    .reviews-stars { font-size: 22px; letter-spacing: 2px; }
+    .reviews-count { font-size: 14px; color: var(--gris-light); margin-top: 4px; }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    @media (min-width: 640px) { .reviews-grid { grid-template-columns: repeat(3, 1fr); } }
+    .review-card {
+      background: var(--gris-medio);
+      border-radius: 8px;
+      padding: 24px 20px;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .review-card:hover {
+      border-color: rgba(204,18,18,0.3);
+      transform: translateY(-2px);
+    }
+    .review-stars { font-size: 16px; letter-spacing: 2px; margin-bottom: 14px; }
+    .review-text {
+      font-size: 14px;
+      color: rgba(255,250,248,0.85);
+      line-height: 1.65;
+      margin-bottom: 18px;
+      font-style: italic;
+    }
+    .review-text::before { content: '"'; color: var(--rojo); font-size: 20px; }
+    .review-text::after { content: '"'; color: var(--rojo); font-size: 20px; }
+    .review-author {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--blanco);
+    }
+    .review-meta {
+      font-size: 12px;
+      color: var(--gris-light);
+      margin-top: 2px;
+    }
+
+    /* ===== HORARIOS & CONTACTO ===== */
+    #contacto { background: var(--negro); }
+    .contacto-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    @media (min-width: 800px) {
+      .contacto-grid { grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    }
+    .horarios-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 24px;
+    }
+    .horarios-table th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--rojo);
+      padding: 10px 0 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .horarios-table td {
+      font-size: 14px;
+      color: rgba(255,250,248,0.8);
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      vertical-align: top;
+    }
+    .horarios-table td:first-child {
+      font-weight: 600;
+      color: var(--blanco);
+      width: 40%;
+    }
+    .zona-chip {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: rgba(204,18,18,0.15);
+      color: var(--rojo-light);
+      border: 1px solid rgba(204,18,18,0.3);
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-bottom: 4px;
+    }
+    .contact-cards { margin-top: 28px; display: flex; flex-direction: column; gap: 14px; }
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--gris-medio);
+      border-radius: 8px;
+      padding: 16px 18px;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: transform 0.2s, border-color 0.2s;
+      text-decoration: none;
+      color: var(--blanco);
+    }
+    .contact-card:hover {
+      transform: translateX(4px);
+      border-color: rgba(255,255,255,0.15);
+    }
+    .contact-card-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-card-icon.wa { background: #25D366; }
+    .contact-card-icon.ig {
+      background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    }
+    .contact-card-icon svg { width: 22px; height: 22px; fill: var(--blanco); }
+    .contact-card-info-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gris-light);
+    }
+    .contact-card-info-val {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--blanco);
+    }
+    .pedido-box {
+      background: var(--gris-medio);
+      border-radius: 10px;
+      padding: 28px 24px;
+      border: 1px solid rgba(204,18,18,0.18);
+    }
+    .pedido-box-title {
+      font-family: var(--font-title);
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+    .pedido-box-sub {
+      font-size: 14px;
+      color: var(--gris-light);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    .pedido-btns { display: flex; flex-direction: column; gap: 14px; }
+    .btn-wa {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 15px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+      text-decoration: none;
+    }
+    .btn-wa svg { width: 20px; height: 20px; fill: currentColor; flex-shrink: 0; }
+    .btn-wa-solid {
+      background: #25D366;
+      color: var(--negro);
+      border: 2px solid #25D366;
+    }
+    .btn-wa-solid:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(37,211,102,0.3);
+    }
+    .btn-wa-outline {
+      background: transparent;
+      color: #25D366;
+      border: 2px solid #25D366;
+    }
+    .btn-wa-outline:hover {
+      background: rgba(37,211,102,0.08);
+      transform: translateY(-2px);
+    }
+
+    /* ===== CTA FINAL ===== */
+    #cta-final {
+      position: relative;
+      padding: 100px 24px;
+      text-align: center;
+      overflow: hidden;
+    }
+    .cta-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to bottom, rgba(6,6,6,0.82) 0%, rgba(153,16,16,0.35) 50%, rgba(6,6,6,0.88) 100%),
+        url('https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=1200&q=80&auto=format');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.2);
+      z-index: 0;
+    }
+    .cta-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(204,18,18,0.2) 0%, transparent 70%, rgba(255,69,0,0.12) 100%);
+      z-index: 1;
+    }
+    .cta-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .cta-content .section-label { justify-content: center; display: flex; }
+    .cta-title {
+      font-family: var(--font-title);
+      font-size: clamp(44px, 12vw, 88px);
+      line-height: 0.95;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      color: var(--blanco);
+    }
+    .cta-title span { color: var(--rojo-light); }
+    .cta-sub {
+      font-size: 16px;
+      color: rgba(255,250,248,0.7);
+      max-width: 380px;
+      margin: 0 auto 36px;
+      line-height: 1.6;
+    }
+    .cta-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+    }
+    .btn-wa-hero {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 16px 32px;
+      border-radius: 6px;
+      cursor: pointer;
+      background: #25D366;
+      color: var(--negro);
+      border: 2px solid #25D366;
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+    }
+    .btn-wa-hero svg { width: 22px; height: 22px; fill: currentColor; flex-shrink: 0; }
+    .btn-wa-hero:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(37,211,102,0.3);
+    }
+
+    /* ===== FOOTER ===== */
+    footer { background: var(--negro); border-top: 1px solid rgba(255,255,255,0.06); }
+    .footer-top {
+      padding: 48px 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 36px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    @media (min-width: 640px) {
+      .footer-top { grid-template-columns: 2fr 1fr 1fr; }
+    }
+    .footer-brand .foot-logo-savage {
+      font-family: var(--font-title);
+      font-size: 32px;
+      color: var(--blanco);
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+    .footer-brand .foot-logo-burger {
+      font-family: var(--font-title);
+      font-size: 13px;
+      color: var(--rojo);
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .footer-brand p {
+      font-size: 13px;
+      color: var(--gris-light);
+      line-height: 1.7;
+      max-width: 260px;
+      margin-bottom: 20px;
+    }
+    .footer-socials {
+      display: flex;
+      gap: 10px;
+    }
+    .footer-social-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: transparent;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+      text-decoration: none;
+    }
+    .footer-social-btn svg { width: 18px; height: 18px; fill: var(--gris-light); transition: fill 0.2s; }
+    .footer-social-btn:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.25); transform: translateY(-2px); }
+    .footer-social-btn:hover svg { fill: var(--blanco); }
+    .footer-col-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--rojo);
+      margin-bottom: 16px;
+    }
+    .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul a {
+      font-size: 14px;
+      color: var(--gris-light);
+      transition: color 0.2s;
+    }
+    .footer-col ul a:hover { color: var(--blanco); }
+    .footer-bottom {
+      padding: 20px;
+      text-align: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .footer-bottom p {
+      font-size: 12px;
+      color: rgba(102,102,102,0.7);
+    }
+    .footer-bottom span { color: var(--rojo); }
+
+    /* ===== FLOATING WA BUTTON ===== */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 20px;
+      z-index: 900;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+    }
+    .wa-float svg { width: 28px; height: 28px; fill: var(--blanco); }
+    .wa-float:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(37,211,102,0.55); }
+    /* On mobile push up to clear sticky bar */
+    @media (max-width: 767px) {
+      .wa-float { bottom: 80px; }
+    }
+
+    /* ===== MOBILE STICKY WA BAR ===== */
+    .wa-sticky-bar {
+      display: flex;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 899;
+      background: #25D366;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 15px 20px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--negro);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .wa-sticky-bar:hover { background: #1fb958; }
+    .wa-sticky-bar svg { width: 22px; height: 22px; fill: var(--negro); }
+    @media (min-width: 768px) {
+      .wa-sticky-bar { display: none; }
+    }
+
+    /* ===== UTILITY ===== */
+    .divider {
+      width: 48px;
+      height: 3px;
+      background: var(--rojo);
+      border-radius: 2px;
+      margin-bottom: 24px;
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--negro); }
+    ::-webkit-scrollbar-thumb { background: var(--rojo-dark); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+  <!-- ===== 1. FIXED NAV ===== -->
+  <nav id="main-nav">
+    <a href="#hero" class="nav-logo" aria-label="Savage Burger - Inicio">
+      <span class="logo-savage">SAVAGE</span>
+      <span class="logo-burger">BURGER</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#menu">Menú</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#reviews">Reseñas</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+      <li><a href="https://wa.me/5491100000000?text=Hola%20Savage%20Burger!%20Quiero%20hacer%20un%20pedido" target="_blank" rel="noopener" class="nav-cta">Pedir ahora</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger-btn" aria-label="Abrir menú" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- ===== 2. MOBILE MENU OVERLAY ===== -->
+  <div class="mobile-overlay" id="mobile-overlay" aria-hidden="true">
+    <a href="#menu" class="mob-link">Menú</a>
+    <a href="#nosotros" class="mob-link">Nosotros</a>
+    <a href="#reviews" class="mob-link">Reseñas</a>
+    <a href="#contacto" class="mob-link">Contacto</a>
+    <a href="https://wa.me/5491100000000?text=Hola%20Savage%20Burger!%20Quiero%20hacer%20un%20pedido" target="_blank" rel="noopener" class="mob-cta">Pedir por WA</a>
+  </div>
+
+  <!-- ===== 3. HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge fade-up">Morón Sur · González Catán · Desde 2020</div>
+      <h1 class="fade-up delay-1">
+        <span class="line1">SAVAGE</span>
+        <span class="line2">BURGER</span>
+      </h1>
+      <p class="hero-sub fade-up delay-2">
+        Hamburguesería artesanal. Medallones frescos, salsas propias y cero atajos.<br>
+        Pedís por WhatsApp y llega caliente.
+      </p>
+      <div class="hero-btns fade-up delay-3">
+        <a href="https://wa.me/5491100000000?text=Hola%20Savage%20Burger!%20Quiero%20hacer%20un%20pedido" target="_blank" rel="noopener" class="btn-primary">Pedir ahora</a>
+        <a href="#menu" class="btn-outline">Ver menú</a>
+      </div>
+    </div>
+    <div class="hero-scroll" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="arrow"></div>
+    </div>
+  </section>
+
+  <!-- ===== 4. TICKER STRIP ===== -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-inner">
+      <span class="ticker-item">🔥 Morón Sur</span>
+      <span class="ticker-item">🔥 González Catán</span>
+      <span class="ticker-item">💀 Medallones frescos</span>
+      <span class="ticker-item">🥩 Pedís por WA</span>
+      <span class="ticker-item">⚡ Savage desde 2020</span>
+      <span class="ticker-item">🔥 Morón Sur</span>
+      <span class="ticker-item">🔥 González Catán</span>
+      <span class="ticker-item">💀 Medallones frescos</span>
+      <span class="ticker-item">🥩 Pedís por WA</span>
+      <span class="ticker-item">⚡ Savage desde 2020</span>
+    </div>
+  </div>
+
+  <!-- ===== 5. MENU ===== -->
+  <section id="menu">
+    <div class="section-inner">
+      <div class="menu-header">
+        <p class="section-label fade-up">La carta</p>
+        <h2 class="section-title fade-up delay-1">NUESTRAS BURGERS</h2>
+        <div class="divider fade-up delay-1" style="margin: 0 auto 16px;"></div>
+        <p class="section-sub fade-up delay-2">Cada burger tiene nombre, tiene historia y tiene razón de existir. Elige la tuya y pedí por WhatsApp.</p>
+      </div>
+      <div class="menu-grid">
+
+        <div class="menu-card fade-up">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80&auto=format" alt="La Savage" loading="lazy" />
+          <div class="menu-card-body">
+            <p class="menu-card-name">La Savage</p>
+            <p class="menu-card-desc">Medallón 200g prensado, doble cheddar fundido, panceta ahumada, salsa savage. La que le da nombre al local.</p>
+            <span class="menu-card-tag">La Clásica</span>
+          </div>
+        </div>
+
+        <div class="menu-card fade-up delay-1">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&q=80&auto=format" alt="La Brutal" loading="lazy" />
+          <div class="menu-card-body">
+            <p class="menu-card-name">La Brutal</p>
+            <p class="menu-card-desc">Doble medallón 400g, triple cheddar, doble panceta, cebolla caramelizada. Sin piedad.</p>
+            <span class="menu-card-tag">Best Seller</span>
+          </div>
+        </div>
+
+        <div class="menu-card fade-up delay-2">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=800&q=80&auto=format" alt="La Crispy Savage" loading="lazy" />
+          <div class="menu-card-body">
+            <p class="menu-card-name">La Crispy Savage</p>
+            <p class="menu-card-desc">Pollo crispy rebozado, jalapeños, coleslaw picante, salsa de chipotle. Crocante y con fuego.</p>
+            <span class="menu-card-tag">Con Fuego</span>
+          </div>
+        </div>
+
+        <div class="menu-card fade-up">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1596560548464-f010549b84d7?w=800&q=80&auto=format" alt="La BBQ Skull" loading="lazy" />
+          <div class="menu-card-body">
+            <p class="menu-card-name">La BBQ Skull</p>
+            <p class="menu-card-desc">Medallón 180g, cheddar ahumado, tiras de panceta, aros de cebolla crispy, BBQ intensa y dulce.</p>
+            <span class="menu-card-tag">Ahumada</span>
+          </div>
+        </div>
+
+        <div class="menu-card fade-up delay-1">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1512152272829-e3139592d56f?w=800&q=80&auto=format" alt="La Rookie" loading="lazy" />
+          <div class="menu-card-body">
+            <p class="menu-card-name">La Rookie</p>
+            <p class="menu-card-desc">Medallón 150g, lechuga, tomate, pepinillos, mostaza. Para los que recién empiezan.</p>
+            <span class="menu-card-tag">Para Empezar</span>
+          </div>
+        </div>
+
+        <div class="menu-card fade-up delay-2">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1528736235302-52922df5c122?w=800&q=80&auto=format" alt="La Nuclear" loading="lazy" />
+          <div class="menu-card-body">
+            <p class="menu-card-name">La Nuclear</p>
+            <p class="menu-card-desc">Triple medallón 540g, jalapeños, salsa nuclear devastadora. Solo si te animás.</p>
+            <span class="menu-card-tag" style="border-color: rgba(255,69,0,0.5); color: var(--fuego);">💀 Solo valientes</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 6. NOSOTROS ===== -->
+  <section id="nosotros">
+    <div class="section-inner">
+      <div class="nosotros-grid">
+        <div class="nosotros-img-wrap fade-up">
+          <img class="nosotros-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80&auto=format" alt="Cocina Savage Burger" loading="lazy" />
+          <div class="nosotros-year">2020</div>
+        </div>
+        <div class="nosotros-text">
+          <p class="section-label fade-up">Nuestra historia</p>
+          <h2 class="section-title fade-up delay-1">QUIÉNES<br>SOMOS</h2>
+          <div class="divider fade-up delay-1"></div>
+          <p class="section-sub fade-up delay-2">
+            Savage Burger nació en 2020 con una sola regla: no bajar la guardia. Medallones frescos prensados en plancha, salsas que hacemos nosotros, sin congelados y sin atajos. Desde Morón Sur hasta González Catán, somos la burger que no se olvida. Pedís por WA, llega caliente.
+          </p>
+          <div class="values-grid fade-up delay-3">
+            <div class="value-badge">
+              <div class="value-badge-icon">📅</div>
+              <div class="value-badge-text">Desde 2020</div>
+              <div class="value-badge-sub">4 años en la calle</div>
+            </div>
+            <div class="value-badge">
+              <div class="value-badge-icon">🥩</div>
+              <div class="value-badge-text">Medallones frescos</div>
+              <div class="value-badge-sub">Sin congelados</div>
+            </div>
+            <div class="value-badge">
+              <div class="value-badge-icon">📍</div>
+              <div class="value-badge-text">2 zonas</div>
+              <div class="value-badge-sub">Morón Sur · Catán</div>
+            </div>
+            <div class="value-badge">
+              <div class="value-badge-icon">📲</div>
+              <div class="value-badge-text">Pedís y llega</div>
+              <div class="value-badge-sub">Solo por WhatsApp</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 7. REVIEWS ===== -->
+  <section id="reviews">
+    <div class="section-inner">
+      <div class="reviews-header">
+        <p class="section-label fade-up">Lo que dicen</p>
+        <div class="reviews-rating fade-up delay-1">
+          <span class="reviews-score">4.9</span>
+          <span class="reviews-stars">★★★★★</span>
+        </div>
+        <p class="reviews-count fade-up delay-1">+531 reseñas en Google e Instagram</p>
+      </div>
+      <div class="reviews-grid">
+
+        <div class="review-card fade-up">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">La Brutal llegó caliente y aplastada perfectamente. 400 gramos de cheddar y panceta. Una locura. Los mejores de Morón.</p>
+          <p class="review-author">Leandro B.</p>
+          <p class="review-meta">Google · Hace 4 días</p>
+        </div>
+
+        <div class="review-card fade-up delay-1">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">Savage es otra categoría. La BBQ Skull tiene una salsa que no probé en ningún otro lado. Siempre pido de acá.</p>
+          <p class="review-author">Vanesa R.</p>
+          <p class="review-meta">Instagram · Hace 1 semana</p>
+        </div>
+
+        <div class="review-card fade-up delay-2">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">Fui de Catán y me lo mandaron sin problema. La Crispy Savage con chipotle es un vicio enorme. Muy recomendado.</p>
+          <p class="review-author">Rodrigo S.</p>
+          <p class="review-meta">Google · Hace 2 semanas</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 8. HORARIOS & CONTACTO ===== -->
+  <section id="contacto">
+    <div class="section-inner">
+      <div class="contacto-grid">
+        <div>
+          <p class="section-label fade-up">Horarios y zonas</p>
+          <h2 class="section-title fade-up delay-1">DÓNDE<br>ESTAMOS</h2>
+          <div class="divider fade-up delay-1"></div>
+          <table class="horarios-table fade-up delay-2">
+            <thead>
+              <tr>
+                <th>Días</th>
+                <th>Morón Sur</th>
+                <th>Glez. Catán</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Martes a Viernes</td>
+                <td><span class="zona-chip">Abierto</span><br>Desde las 19:30hs</td>
+                <td><span class="zona-chip">Abierto</span><br>Desde las 19:30hs</td>
+              </tr>
+              <tr>
+                <td>Sábados y Domingos</td>
+                <td><span class="zona-chip">Abierto</span><br>Desde las 19:30hs</td>
+                <td><span class="zona-chip">Abierto</span><br>Desde las 19:30hs</td>
+              </tr>
+              <tr>
+                <td>Lunes</td>
+                <td style="color: var(--gris-light);">Cerrado</td>
+                <td style="color: var(--gris-light);">Cerrado</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="contact-cards fade-up delay-3">
+            <a href="https://wa.me/5491100000000" target="_blank" rel="noopener" class="contact-card">
+              <div class="contact-card-icon wa">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+              </div>
+              <div>
+                <div class="contact-card-info-label">WhatsApp · Pedidos</div>
+                <div class="contact-card-info-val">+54 9 11 0000-0000</div>
+              </div>
+            </a>
+            <a href="https://instagram.com/savageburger_" target="_blank" rel="noopener" class="contact-card">
+              <div class="contact-card-icon ig">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                </svg>
+              </div>
+              <div>
+                <div class="contact-card-info-label">Instagram · 8K seguidores</div>
+                <div class="contact-card-info-val">@savageburger_</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="fade-up delay-2">
+          <div class="pedido-box">
+            <p class="section-label">Elegí tu zona y pedí</p>
+            <p class="pedido-box-title">Pedir por<br>WhatsApp</p>
+            <p class="pedido-box-sub">
+              Hacemos delivery en Morón Sur y González Catán. Elegí tu zona y mandanos un mensaje — te respondemos rápido.
+            </p>
+            <div class="pedido-btns">
+              <a href="https://wa.me/5491100000000?text=Hola%20Savage%20Burger!%20Quiero%20hacer%20un%20pedido%20en%20Mor%C3%B3n%20Sur" target="_blank" rel="noopener" class="btn-wa btn-wa-solid">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                Morón Sur — Pedir
+              </a>
+              <a href="https://wa.me/5491100000000?text=Hola%20Savage%20Burger!%20Quiero%20hacer%20un%20pedido%20en%20Gonz%C3%A1lez%20Cat%C3%A1n" target="_blank" rel="noopener" class="btn-wa btn-wa-outline">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                González Catán — Pedir
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 9. CTA FINAL ===== -->
+  <section id="cta-final">
+    <div class="cta-bg"></div>
+    <div class="cta-overlay"></div>
+    <div class="cta-content">
+      <p class="section-label fade-up">No te quedes con las ganas</p>
+      <h2 class="cta-title fade-up delay-1">¿CUÁNDO<br><span>PEDÍS?</span></h2>
+      <p class="cta-sub fade-up delay-2">Martes a Domingo desde las 19:30hs. Delivery en Morón Sur y González Catán. Solo por WhatsApp.</p>
+      <div class="cta-btns fade-up delay-3">
+        <a href="https://wa.me/5491100000000?text=Hola%20Savage%20Burger!%20Quiero%20hacer%20un%20pedido" target="_blank" rel="noopener" class="btn-wa-hero">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Pedir ahora
+        </a>
+        <a href="https://instagram.com/savageburger_" target="_blank" rel="noopener" class="btn-outline">Ver en Instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 10. FOOTER ===== -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand fade-up">
+        <p class="foot-logo-savage">SAVAGE</p>
+        <p class="foot-logo-burger">BURGER</p>
+        <p>Hamburguesería artesanal desde 2020. Morón Sur y González Catán. Medallones frescos, salsas propias, sin atajos.</p>
+        <div class="footer-socials">
+          <a href="https://instagram.com/savageburger_" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+            </svg>
+          </a>
+          <a href="https://wa.me/5491100000000" target="_blank" rel="noopener" class="footer-social-btn" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col fade-up delay-1">
+        <p class="footer-col-title">Menú</p>
+        <ul>
+          <li><a href="#menu">La Savage</a></li>
+          <li><a href="#menu">La Brutal</a></li>
+          <li><a href="#menu">La Crispy Savage</a></li>
+          <li><a href="#menu">La BBQ Skull</a></li>
+          <li><a href="#menu">La Rookie</a></li>
+          <li><a href="#menu">La Nuclear</a></li>
+        </ul>
+      </div>
+      <div class="footer-col fade-up delay-2">
+        <p class="footer-col-title">Info</p>
+        <ul>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#contacto">Horarios</a></li>
+          <li><a href="#contacto">Zonas de delivery</a></li>
+          <li><a href="https://instagram.com/savageburger_" target="_blank" rel="noopener">@savageburger_</a></li>
+          <li><a href="https://wa.me/5491100000000" target="_blank" rel="noopener">Pedir por WA</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 <span>Savage Burger</span> — Hamburguesería Artesanal · Morón Sur · González Catán · Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- ===== 11. FLOATING WA BUTTON ===== -->
+  <a href="https://wa.me/5491100000000?text=Hola%20Savage%20Burger!%20Quiero%20hacer%20un%20pedido" target="_blank" rel="noopener" class="wa-float" aria-label="Pedir por WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- ===== 12. MOBILE STICKY WA BAR ===== -->
+  <a href="https://wa.me/5491100000000?text=Hola%20Savage%20Burger!%20Quiero%20hacer%20un%20pedido" target="_blank" rel="noopener" class="wa-sticky-bar" aria-label="Pedir por WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    Pedir por WhatsApp
+  </a>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    // Nav scroll class
+    const nav = document.getElementById('main-nav');
+    const scrollThreshold = 60;
+    function handleNavScroll() {
+      if (window.scrollY > scrollThreshold) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }
+    window.addEventListener('scroll', handleNavScroll, { passive: true });
+    handleNavScroll();
+
+    // Hamburger / mobile overlay toggle
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mobileOverlay = document.getElementById('mobile-overlay');
+    const mobLinks = mobileOverlay.querySelectorAll('a');
+
+    function openMenu() {
+      hamburgerBtn.classList.add('active');
+      hamburgerBtn.setAttribute('aria-expanded', 'true');
+      mobileOverlay.classList.add('open');
+      mobileOverlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      hamburgerBtn.classList.remove('active');
+      hamburgerBtn.setAttribute('aria-expanded', 'false');
+      mobileOverlay.classList.remove('open');
+      mobileOverlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    hamburgerBtn.addEventListener('click', () => {
+      if (mobileOverlay.classList.contains('open')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    mobLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        closeMenu();
+      });
+    });
+
+    // Close on ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileOverlay.classList.contains('open')) {
+        closeMenu();
+      }
+    });
+
+    // IntersectionObserver for fade-up animations
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    fadeEls.forEach(el => observer.observe(el));
+
+    // Trigger hero elements immediately (they're in view on load)
+    document.querySelectorAll('.hero .fade-up, .hero-badge').forEach(el => {
+      setTimeout(() => el.classList.add('visible'), 100);
+    });
+  </script>
+</body>
+</html>
