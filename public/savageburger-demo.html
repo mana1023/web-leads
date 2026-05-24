@@ -446,30 +446,36 @@
 
     .menu-card-footer {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
       margin-top: 14px;
-      gap: 8px;
+      gap: 10px;
     }
     .btn-pedir {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
+      gap: 7px;
       background: #25D366;
       color: #000;
       font-family: var(--font-body);
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      padding: 8px 14px;
-      border-radius: 4px;
+      padding: 11px 14px;
+      border-radius: 6px;
       text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-      white-space: nowrap;
+      width: 100%;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 12px rgba(37,211,102,0.3);
     }
-    .btn-pedir:hover { background: #1ebe5d; transform: translateY(-1px); }
-    .btn-pedir svg { width: 15px; height: 15px; fill: #000; flex-shrink: 0; }
+    .btn-pedir:hover { background: #1ebe5d; transform: translateY(-1px); box-shadow: 0 6px 18px rgba(37,211,102,0.45); }
+    .btn-pedir:active { transform: scale(0.97); }
+    .btn-pedir svg { width: 17px; height: 17px; fill: #000; flex-shrink: 0; }
+    @media (min-width: 900px) {
+      .menu-card-footer { flex-direction: row; align-items: center; justify-content: space-between; }
+      .btn-pedir { width: auto; padding: 9px 16px; }
+    }
 
     /* ===== NOSOTROS ===== */
     #nosotros { background: var(--negro); }
