@@ -36,16 +36,31 @@ export default function LeadCard({ lead, onUpdate, onDelete }: Props) {
     setGuardandoNotas(false)
   }
 
-  const buildWhatsappUrl = () => {
+  const buildWaPhone = () => {
     if (!lead.telefono) return null
-    const phone = lead.telefono.replace(/\D/g, '')
-    const nombre = settings.nombre || 'un programador web'
-    const agencia = settings.agencia ? ` — ${settings.agencia}` : ''
-    const msg = `Hola ${lead.nombre} 👋 Soy ${nombre}${agencia}, programador web freelance. Vi que todavia no tenes tu propia pagina web y me gustaria ayudarte con eso.\n\nCreo sitios modernos, rapidos y personalizados:\n✔ Diseno profesional desde cero\n✔ Adaptado para celulares 📱\n✔ Optimizado para atraer clientes\n✔ Precio accesible y entrega rapida\n\nTe paso una propuesta sin compromiso 🙂 Tenes un momento para hablar?`
+    const p = lead.telefono.replace(/\D/g, '')
+    const normalized = p.startsWith('0') ? p.slice(1) : p
+    return normalized.startsWith('54') ? normalized : `54${normalized}`
+  }
+
+  const buildMsg1Url = () => {
+    const phone = buildWaPhone()
+    if (!phone) return null
+    return `https://wa.me/${phone}?text=${encodeURIComponent('Hola, ¿cómo están? 👋')}`
+  }
+
+  const buildMsg2Url = () => {
+    const phone = buildWaPhone()
+    if (!phone) return null
+    const nombre = settings.nombre || 'Lautaro'
+    const link = (settings as any).linkPortfolio || 'https://mana-dev.vercel.app'
+    const msg = `Soy ${nombre}, programador y desarrollador web 💻\n\nTrabajo con locales como ${lead.nombre} armando sistemas que ahorran tiempo: página web, WhatsApp con IA, tienda online, control de stock y caja, turnos online y más.\n\nPueden ver los trabajos que hago acá 👇\n${link}\n\n¿Les interesa que charlemos? Sin compromiso 🙂`
     return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`
   }
 
-  const whatsappUrl = buildWhatsappUrl()
+  const msg1Url = buildMsg1Url()
+  const msg2Url = buildMsg2Url()
+  const whatsappUrl = msg2Url
 
   return (
     <div className={`bg-white rounded-2xl shadow-sm border overflow-hidden transition-all ${
@@ -79,18 +94,31 @@ export default function LeadCard({ lead, onUpdate, onDelete }: Props) {
             <>
               <a
                 href={`tel:${lead.telefono}`}
-                className="flex-1 flex items-center justify-center gap-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm py-2 rounded-xl transition-colors"
+                className="flex items-center justify-center gap-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm py-2 px-3 rounded-xl transition-colors"
+                title="Llamar"
               >
-                <Phone size={14} /> Llamar
+                <Phone size={14} />
               </a>
-              {whatsappUrl && (
+              {msg1Url && (
                 <a
-                  href={whatsappUrl}
+                  href={msg1Url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-1.5 bg-green-100 hover:bg-green-200 text-green-700 text-sm py-2 rounded-xl transition-colors"
+                  title="Mensaje 1 — Apertura: 'Hola, ¿cómo están?'"
+                  className="flex-1 flex items-center justify-center gap-1 bg-green-100 hover:bg-green-200 text-green-700 text-xs py-2 rounded-xl transition-colors font-semibold"
                 >
-                  💬 WhatsApp
+                  💬 Msg 1
+                </a>
+              )}
+              {msg2Url && (
+                <a
+                  href={msg2Url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Mensaje 2 — Pitch con portfolio"
+                  className="flex-1 flex items-center justify-center gap-1 bg-blue-100 hover:bg-blue-200 text-blue-700 text-xs py-2 rounded-xl transition-colors font-semibold"
+                >
+                  📋 Msg 2
                 </a>
               )}
             </>

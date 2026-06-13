@@ -95,18 +95,29 @@ function CategoriaSection({
                   <>
                     <a
                       href={`tel:${r.telefono}`}
-                      className="flex-1 flex items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs py-2 rounded-xl transition-colors font-medium"
+                      className="flex items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs py-2 px-3 rounded-xl transition-colors font-medium"
+                      title="Llamar"
                     >
-                      📞 Llamar
+                      📞
+                    </a>
+                    <a
+                      href={`https://wa.me/${r.telefono.replace(/\D/g,'')}?text=${encodeURIComponent('Hola, ¿cómo están? 👋')}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="Mensaje 1 — Apertura"
+                      className="flex-1 flex items-center justify-center gap-1 bg-green-100 hover:bg-green-200 text-green-700 text-xs py-2 rounded-xl transition-colors font-semibold"
+                    >
+                      💬 Msg 1
                     </a>
                     {onWhatsApp(r) && (
                       <a
                         href={onWhatsApp(r)!}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 flex items-center justify-center gap-1 bg-green-100 hover:bg-green-200 text-green-700 text-xs py-2 rounded-xl transition-colors font-medium"
+                        title="Mensaje 2 — Pitch con portfolio"
+                        className="flex-1 flex items-center justify-center gap-1 bg-blue-100 hover:bg-blue-200 text-blue-700 text-xs py-2 rounded-xl transition-colors font-semibold"
                       >
-                        💬 WhatsApp
+                        📋 Msg 2
                       </a>
                     )}
                   </>
@@ -212,9 +223,9 @@ export default function BuscarPage() {
   const whatsappUrl = (r: Resultado): string | null => {
     if (!r.telefono) return null
     const phone = r.telefono.replace(/\D/g, '')
-    const nombre = settings.nombre || 'un programador web'
-    const agencia = settings.agencia ? ` — ${settings.agencia}` : ''
-    const msg = `Hola ${r.nombre} 👋 Soy ${nombre}${agencia}, programador web freelance. Vi que todavia no tenes tu propia pagina web y me gustaria ayudarte con eso.\n\nCreo sitios modernos, rapidos y personalizados:\n✔ Diseno profesional desde cero\n✔ Adaptado para celulares 📱\n✔ Optimizado para atraer clientes\n✔ Precio accesible y entrega rapida\n\nTe paso una propuesta sin compromiso 🙂 Tenes un momento para hablar?`
+    const nombre = (settings as any).nombre || 'Lautaro'
+    const link = (settings as any).linkPortfolio || 'https://mana-dev.vercel.app'
+    const msg = `Soy ${nombre}, programador y desarrollador web 💻\n\nTrabajo con locales como ${r.nombre} armando sistemas que ahorran tiempo: página web, WhatsApp con IA, tienda online, control de stock y caja, turnos online y más.\n\nPueden ver los trabajos que hago acá 👇\n${link}\n\n¿Les interesa que charlemos? Sin compromiso 🙂`
     return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`
   }
 
