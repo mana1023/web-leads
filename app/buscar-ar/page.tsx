@@ -1,7 +1,6 @@
 'use client'
-import { useState, useCallback } from 'react'
-import { Loader2, Search, RefreshCw, Plus, Check, Filter, Star } from 'lucide-react'
-import { getSettings } from '@/components/SettingsModal'
+import { useState, useEffect, useCallback } from 'react'
+import { Loader2, RefreshCw, Plus, Check, Star, SlidersHorizontal } from 'lucide-react'
 
 interface Resultado {
   place_id: string
@@ -19,99 +18,65 @@ interface Resultado {
   need_score: number
 }
 
-const CIUDADES = [
-  'Buenos Aires (CABA)',
-  'Zona Norte GBA',
-  'Zona Sur GBA',
-  'Zona Oeste GBA',
-  'Córdoba',
-  'Rosario',
-  'Mendoza',
-  'La Plata',
-  'Tucumán',
-  'Mar del Plata',
-  'Salta',
-  'Santa Fe',
-  'San Juan',
-  'Neuquén',
-  'Bahía Blanca',
-  'Corrientes',
-  'Resistencia',
-  'Posadas',
-  'Paraná',
-  'Río Cuarto',
-]
+function getSettingsLocal() {
+  if (typeof window === 'undefined') return { nombre: 'Lautaro', linkPortfolio: 'https://mana-dev.vercel.app' }
+  try {
+    const s = JSON.parse(localStorage.getItem('wl_settings') || '{}')
+    return {
+      nombre: s.nombre || 'Lautaro',
+      linkPortfolio: s.linkPortfolio || 'https://mana-dev.vercel.app',
+    }
+  } catch { return { nombre: 'Lautaro', linkPortfolio: 'https://mana-dev.vercel.app' } }
+}
 
-const RUBROS = [
-  // Gastronomía
-  { grupo: '🍕 Gastronomía', items: ['Restaurantes', 'Pizzerías', 'Cafeterías', 'Bares', 'Panaderías', 'Heladerías', 'Delivery de comida'] },
-  // Belleza
-  { grupo: '💅 Belleza', items: ['Peluquerías', 'Salones de belleza', 'Manicuría y nail art', 'Spa', 'Estéticas'] },
-  // Salud
-  { grupo: '🏥 Salud', items: ['Médicos y clínicas', 'Dentistas', 'Kinesiólogos', 'Veterinarias', 'Farmacias', 'Psicólogos'] },
-  // Fitness
-  { grupo: '💪 Deporte', items: ['Gimnasios', 'Centros de yoga', 'Academias de artes marciales'] },
-  // Comercio
-  { grupo: '🛍️ Comercio', items: ['Tiendas de ropa', 'Calzado', 'Joyerías', 'Mueblerías', 'Ferreterías', 'Electrodomésticos', 'Ópticas', 'Librerías'] },
-  // Servicios
-  { grupo: '🔧 Servicios', items: ['Talleres mecánicos', 'Electricistas', 'Plomeros', 'Inmobiliarias', 'Contadores', 'Estudios jurídicos', 'Agencias de viaje'] },
-  // Otros
-  { grupo: '📦 Otros', items: ['Hoteles y hospedajes', 'Colegios y academias', 'Supermercados', 'Concesionarias'] },
-]
-
-const TODOS_RUBROS = RUBROS.flatMap(g => g.items)
+function buildPhone(raw: string | null): string | null {
+  if (!raw) return null
+  const p = raw.replace(/\D/g, '')
+  const norm = p.startsWith('0') ? p.slice(1) : p
+  return norm.startsWith('54') ? norm : `54${norm}`
+}
 
 function scoreColor(s: number) {
-  if (s >= 70) return 'bg-green-100 text-green-800'
-  if (s >= 45) return 'bg-yellow-100 text-yellow-800'
-  return 'bg-gray-100 text-gray-600'
+  if (s >= 70) return 'bg-green-100 text-green-800 border-green-200'
+  if (s >= 45) return 'bg-amber-100 text-amber-800 border-amber-200'
+  return 'bg-gray-100 text-gray-500 border-gray-200'
 }
 
-function buildMsg1(): string {
-  return `Hola, ¿cómo están? 👋`
-}
-
-function buildMsg2(nombre: string, linkPortfolio: string, nombreDev: string): string {
-  return `Soy ${nombreDev || 'Lautaro'}, programador y desarrollador web 💻
-
-Trabajo con locales como ${nombre} armando sistemas que ahorran tiempo: página web profesional, WhatsApp automático con IA, tienda online, control de stock y caja, turnos online y más.
-
-Pueden ver los trabajos que hago acá 👇
-${linkPortfolio || 'https://mana-dev.vercel.app'}
-
-¿Les interesa que charlemos? Sin compromiso 🙂`
-}
-
-interface CardProps {
+function LeadCard({
+  r,
+  guardado,
+  guardando,
+  onGuardar,
+}: {
   r: Resultado
   guardado: boolean
   guardando: boolean
   onGuardar: () => void
-  settings: { nombre: string; agencia: string; linkPortfolio: string }
-}
-
-function LeadArCard({ r, guardado, guardando, onGuardar, settings }: CardProps) {
-  const phone = r.telefono?.replace(/\D/g, '') ?? ''
+}) {
+  const settings = getSettingsLocal()
+  const phone = buildPhone(r.telefono)
 
   const wa1 = phone
-    ? `https://wa.me/54${phone.startsWith('0') ? phone.slice(1) : phone}?text=${encodeURIComponent(buildMsg1())}`
+    ? `https://wa.me/${phone}?text=${encodeURIComponent('Hola, ¿cómo están? 👋')}`
     : null
 
   const wa2 = phone
-    ? `https://wa.me/54${phone.startsWith('0') ? phone.slice(1) : phone}?text=${encodeURIComponent(buildMsg2(r.nombre, settings.linkPortfolio, settings.nombre))}`
+    ? `https://wa.me/${phone}?text=${encodeURIComponent(
+        `Soy ${settings.nombre}, programador y desarrollador web 💻\n\nTrabajo con locales como ${r.nombre} armando sistemas que ahorran tiempo: página web, WhatsApp con IA, tienda online, control de stock y caja, turnos online y más.\n\nPueden ver los trabajos que hago acá 👇\n${settings.linkPortfolio}\n\n¿Les interesa que charlemos? Sin compromiso 🙂`
+      )}`
     : null
 
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-      {/* Header */}
-      <div className="p-4 space-y-2">
+      <div className="p-4 space-y-2.5">
+        {/* Header */}
         <div className="flex items-start justify-between gap-2">
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-1.5 flex-wrap">
               <h3 className="font-semibold text-gray-900 text-sm leading-tight">{r.nombre}</h3>
               {!r.tiene_web && (
-                <span className="text-xs bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded-md font-semibold shrink-0">
-                  Sin web ✓
+                <span className="text-[10px] bg-orange-100 text-orange-700 border border-orange-200 px-1.5 py-0.5 rounded font-bold shrink-0">
+                  SIN WEB
                 </span>
               )}
             </div>
@@ -120,16 +85,16 @@ function LeadArCard({ r, guardado, guardando, onGuardar, settings }: CardProps) 
               <p className="text-xs text-gray-400 truncate mt-0.5">📍 {r.direccion}</p>
             )}
           </div>
-          <span className={`text-xs font-bold px-2 py-1 rounded-lg shrink-0 ${scoreColor(r.need_score)}`}>
+          <div className={`text-xs font-bold px-2 py-1 rounded-lg border shrink-0 ${scoreColor(r.need_score)}`}>
             {r.need_score}pts
-          </span>
+          </div>
         </div>
 
         {/* Rating */}
         {r.rating != null && (
           <div className="flex items-center gap-1 text-xs text-gray-500">
-            <Star size={11} className="fill-amber-400 text-amber-400" />
-            <span className="font-medium">{r.rating.toFixed(1)}</span>
+            <Star size={11} className="fill-amber-400 text-amber-400 shrink-0" />
+            <span className="font-semibold">{r.rating.toFixed(1)}</span>
             <span className="text-gray-400">({r.total_ratings} reseñas)</span>
             {r.total_ratings >= 100 && <span className="text-green-600 font-semibold">· Muy establecido</span>}
             {r.total_ratings >= 50 && r.total_ratings < 100 && <span className="text-blue-600 font-semibold">· Establecido</span>}
@@ -138,44 +103,37 @@ function LeadArCard({ r, guardado, guardando, onGuardar, settings }: CardProps) 
 
         {/* Propuesta */}
         <div className="bg-blue-50 rounded-xl p-2.5">
-          <p className="text-xs font-semibold text-blue-800">💡 Podés ofrecerle:</p>
-          <p className="text-sm font-medium text-blue-900 mt-0.5">{r.tipo_web_sugerida}</p>
-          <p className="text-xs text-blue-700 mt-0.5 leading-relaxed">{r.descripcion_propuesta}</p>
+          <p className="text-xs font-semibold text-blue-800">💡 {r.tipo_web_sugerida}</p>
+          <p className="text-xs text-blue-600 mt-0.5 leading-relaxed">{r.descripcion_propuesta}</p>
         </div>
 
-        {/* Botones WhatsApp */}
+        {/* Mensajes WA */}
         {phone ? (
-          <div className="space-y-2">
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Mensajes WhatsApp</p>
-            <div className="grid grid-cols-2 gap-2">
-              <a
-                href={wa1!}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-col items-center justify-center gap-0.5 bg-green-50 hover:bg-green-100 border border-green-200 text-green-800 text-xs py-2.5 px-2 rounded-xl transition-colors font-medium text-center"
-              >
-                <span className="text-base leading-none">💬</span>
-                <span className="font-bold">Msg 1 — Apertura</span>
-                <span className="text-green-600 font-normal text-[10px]">"Hola, ¿cómo están?"</span>
-              </a>
-              <a
-                href={wa2!}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-col items-center justify-center gap-0.5 bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-800 text-xs py-2.5 px-2 rounded-xl transition-colors font-medium text-center"
-              >
-                <span className="text-base leading-none">📋</span>
-                <span className="font-bold">Msg 2 — Pitch</span>
-                <span className="text-blue-600 font-normal text-[10px]">Después de que respondan</span>
-              </a>
-            </div>
-            <p className="text-[10px] text-gray-400 text-center">
-              Mandá Msg 1 primero → esperá respuesta → mandá Msg 2
-            </p>
+          <div className="grid grid-cols-2 gap-2">
+            <a
+              href={wa1!}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center justify-center gap-0.5 bg-green-50 hover:bg-green-100 border border-green-200 text-green-800 py-2.5 rounded-xl transition-colors text-center"
+            >
+              <span className="text-base leading-none">💬</span>
+              <span className="text-[11px] font-bold">Msg 1 — Apertura</span>
+              <span className="text-[10px] text-green-600">"Hola, ¿cómo están?"</span>
+            </a>
+            <a
+              href={wa2!}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center justify-center gap-0.5 bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-800 py-2.5 rounded-xl transition-colors text-center"
+            >
+              <span className="text-base leading-none">📋</span>
+              <span className="text-[11px] font-bold">Msg 2 — Pitch</span>
+              <span className="text-[10px] text-blue-600">Después que responden</span>
+            </a>
           </div>
         ) : (
-          <div className="bg-amber-50 border border-amber-100 rounded-xl p-2.5 text-xs text-amber-700">
-            ⚠️ Sin teléfono disponible — buscalo en Google Maps por el nombre
+          <div className="bg-amber-50 border border-amber-100 rounded-xl p-2 text-xs text-amber-700 text-center">
+            Sin teléfono — buscalo en Google Maps
           </div>
         )}
 
@@ -183,10 +141,10 @@ function LeadArCard({ r, guardado, guardando, onGuardar, settings }: CardProps) 
         <button
           onClick={onGuardar}
           disabled={guardado || guardando}
-          className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-xl font-medium text-xs transition-colors ${
+          className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-xl font-medium text-xs transition-all active:scale-95 ${
             guardado
               ? 'bg-green-100 text-green-700 cursor-default'
-              : 'bg-gray-900 hover:bg-gray-700 text-white active:scale-95'
+              : 'bg-gray-900 hover:bg-gray-700 text-white'
           }`}
         >
           {guardado ? (
@@ -203,55 +161,37 @@ function LeadArCard({ r, guardado, guardando, onGuardar, settings }: CardProps) 
 }
 
 export default function BuscarArPage() {
-  const [ciudad, setCiudad] = useState('Buenos Aires (CABA)')
-  const [rubro, setRubro] = useState('Restaurantes')
-  const [soloSinWeb, setSoloSinWeb] = useState(true)
-  const [minResenas, setMinResenas] = useState(15)
-  const [mostrarFiltros, setMostrarFiltros] = useState(false)
-
   const [resultados, setResultados] = useState<Resultado[]>([])
   const [buscando, setBuscando] = useState(false)
   const [error, setError] = useState('')
-  const [buscado, setBuscado] = useState(false)
-
   const [guardados, setGuardados] = useState<Set<string>>(new Set())
   const [guardando, setGuardando] = useState<Set<string>>(new Set())
-
-  const settings = (() => {
-    if (typeof window === 'undefined') return { nombre: 'Lautaro', agencia: '', linkPortfolio: 'https://mana-dev.vercel.app' }
-    try {
-      const s = JSON.parse(localStorage.getItem('wl_settings') || '{}')
-      return { nombre: s.nombre || 'Lautaro', agencia: s.agencia || '', linkPortfolio: s.linkPortfolio || 'https://mana-dev.vercel.app' }
-    } catch { return { nombre: 'Lautaro', agencia: '', linkPortfolio: 'https://mana-dev.vercel.app' } }
-  })()
+  const [soloSinWeb, setSoloSinWeb] = useState(true)
+  const [mostrarFiltros, setMostrarFiltros] = useState(false)
 
   const buscar = useCallback(async () => {
     setError('')
     setBuscando(true)
     setResultados([])
-    setBuscado(false)
-
-    // Limpiar ciudad para query: sacar paréntesis
-    const ciudadQuery = ciudad.replace(/\(.*\)/g, '').replace(/GBA/g, '').trim()
-
     try {
       const params = new URLSearchParams({
-        ciudad: ciudadQuery,
-        rubro,
+        auto: '1',
         sinweb: soloSinWeb ? '1' : '0',
-        minresenas: String(minResenas),
+        minresenas: '15',
       })
       const res = await fetch(`/api/buscar-ar?${params}`)
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Error al buscar')
       setResultados(data.results || [])
-      setBuscado(true)
     } catch (e: any) {
       setError(e.message)
     } finally {
       setBuscando(false)
     }
-  }, [ciudad, rubro, soloSinWeb, minResenas])
+  }, [soloSinWeb])
+
+  // Auto-buscar al abrir
+  useEffect(() => { buscar() }, [buscar])
 
   const guardarLead = async (r: Resultado) => {
     setGuardando(prev => new Set([...prev, r.place_id]))
@@ -280,145 +220,87 @@ export default function BuscarArPage() {
   }
 
   const sinWeb = resultados.filter(r => !r.tiene_web).length
-  const conWeb = resultados.filter(r => r.tiene_web).length
 
   return (
     <div className="py-4 space-y-3">
+
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="font-bold text-gray-900 text-lg">🇦🇷 Buscar en Argentina</h2>
-          <p className="text-xs text-gray-400">Encontrá clientes en cualquier ciudad</p>
+          <h2 className="font-bold text-gray-900 text-lg">🇦🇷 Mejores oportunidades</h2>
+          <p className="text-xs text-gray-400">
+            {buscando
+              ? 'Buscando en toda Argentina...'
+              : resultados.length > 0
+              ? `${resultados.length} negocios encontrados · ${sinWeb} sin web`
+              : error ? '' : ''}
+          </p>
         </div>
-        <button
-          onClick={() => setMostrarFiltros(v => !v)}
-          className={`p-2.5 rounded-xl transition-colors ${mostrarFiltros ? 'bg-blue-600 text-white' : 'bg-blue-50 text-blue-700 hover:bg-blue-100'}`}
-          title="Filtros"
-        >
-          <Filter size={18} />
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setMostrarFiltros(v => !v)}
+            className={`p-2.5 rounded-xl transition-colors ${mostrarFiltros ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+          >
+            <SlidersHorizontal size={16} />
+          </button>
+          <button
+            onClick={buscar}
+            disabled={buscando}
+            className="p-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 transition-colors disabled:opacity-40"
+          >
+            {buscando ? <Loader2 size={16} className="animate-spin" /> : <RefreshCw size={16} />}
+          </button>
+        </div>
       </div>
 
-      {/* Panel de búsqueda */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 space-y-3">
-        {/* Ciudad */}
-        <div>
-          <label className="text-xs font-semibold text-gray-500 block mb-1.5">CIUDAD</label>
-          <select
-            value={ciudad}
-            onChange={e => setCiudad(e.target.value)}
-            className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-          >
-            {CIUDADES.map(c => <option key={c}>{c}</option>)}
-          </select>
-        </div>
-
-        {/* Rubro */}
-        <div>
-          <label className="text-xs font-semibold text-gray-500 block mb-1.5">RUBRO</label>
-          <select
-            value={rubro}
-            onChange={e => setRubro(e.target.value)}
-            className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-          >
-            {RUBROS.map(g => (
-              <optgroup key={g.grupo} label={g.grupo}>
-                {g.items.map(i => <option key={i}>{i}</option>)}
-              </optgroup>
-            ))}
-          </select>
-        </div>
-
-        {/* Filtros extra */}
-        {mostrarFiltros && (
-          <div className="space-y-3 pt-1 border-t border-gray-100">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-700">Solo negocios sin web</p>
-                <p className="text-xs text-gray-400">Mayor oportunidad de venta</p>
-              </div>
-              <button
-                onClick={() => setSoloSinWeb(v => !v)}
-                className={`relative w-11 h-6 rounded-full transition-colors ${soloSinWeb ? 'bg-blue-600' : 'bg-gray-200'}`}
-              >
-                <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all ${soloSinWeb ? 'left-5' : 'left-0.5'}`} />
-              </button>
-            </div>
+      {/* Filtro rápido (colapsable) */}
+      {mostrarFiltros && (
+        <div className="bg-white rounded-2xl border border-gray-100 p-4">
+          <div className="flex items-center justify-between">
             <div>
-              <label className="text-xs font-semibold text-gray-500 block mb-1.5">MÍNIMO DE RESEÑAS (calidad)</label>
-              <select
-                value={minResenas}
-                onChange={e => setMinResenas(Number(e.target.value))}
-                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-              >
-                <option value={10}>10+ reseñas (más resultados)</option>
-                <option value={15}>15+ reseñas (recomendado)</option>
-                <option value={30}>30+ reseñas (más establecidos)</option>
-                <option value={50}>50+ reseñas (solo top negocios)</option>
-              </select>
+              <p className="text-sm font-semibold text-gray-800">Solo negocios sin web</p>
+              <p className="text-xs text-gray-400">Mayor oportunidad de venta directa</p>
             </div>
+            <button
+              onClick={() => setSoloSinWeb(v => !v)}
+              className={`relative w-11 h-6 rounded-full transition-colors ${soloSinWeb ? 'bg-blue-600' : 'bg-gray-200'}`}
+            >
+              <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all ${soloSinWeb ? 'left-5' : 'left-0.5'}`} />
+            </button>
           </div>
-        )}
-
-        {/* Botón buscar */}
-        <button
-          onClick={buscar}
-          disabled={buscando}
-          className="w-full flex items-center justify-center gap-2 bg-blue-700 hover:bg-blue-800 disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-colors text-sm active:scale-95"
-        >
-          {buscando
-            ? <><Loader2 size={16} className="animate-spin" /> Buscando en {ciudad.split('(')[0].trim()}...</>
-            : <><Search size={16} /> Buscar {rubro} en {ciudad.split('(')[0].trim()}</>
-          }
-        </button>
-      </div>
-
-      {/* Cómo usar los mensajes */}
-      {!buscado && !buscando && (
-        <div className="bg-gradient-to-br from-green-50 to-blue-50 rounded-2xl border border-green-100 p-4 space-y-2">
-          <p className="text-sm font-bold text-gray-800">💬 Cómo usar los 2 mensajes</p>
-          <div className="space-y-2">
-            <div className="flex gap-2.5 items-start">
-              <span className="bg-green-600 text-white text-xs font-bold px-2 py-0.5 rounded-full shrink-0 mt-0.5">1</span>
-              <div>
-                <p className="text-xs font-semibold text-gray-700">Mandás Msg 1 — Apertura casual</p>
-                <p className="text-xs text-gray-500 italic">"Hola, ¿cómo están? 👋"</p>
-                <p className="text-xs text-gray-400">Simple, humano. Espera que respondan (casi siempre lo hacen).</p>
-              </div>
-            </div>
-            <div className="flex gap-2.5 items-start">
-              <span className="bg-blue-600 text-white text-xs font-bold px-2 py-0.5 rounded-full shrink-0 mt-0.5">2</span>
-              <div>
-                <p className="text-xs font-semibold text-gray-700">Cuando responden → Msg 2 — Pitch</p>
-                <p className="text-xs text-gray-400">Te presentás, explicás lo que hacés y mandás el link de tu portfolio. Mucho mayor conversión.</p>
-              </div>
-            </div>
-          </div>
+          <button
+            onClick={buscar}
+            disabled={buscando}
+            className="mt-3 w-full py-2.5 bg-blue-700 hover:bg-blue-800 disabled:opacity-50 text-white text-sm font-semibold rounded-xl transition-colors"
+          >
+            Aplicar y buscar de nuevo
+          </button>
         </div>
       )}
 
       {/* Error */}
       {error && (
-        <div className="bg-red-50 border border-red-100 rounded-2xl p-4 space-y-2">
-          <p className="text-sm text-red-600 font-medium">Error al buscar</p>
-          <p className="text-xs text-red-500">{error}</p>
+        <div className="bg-red-50 border border-red-100 rounded-2xl p-4 space-y-2 text-center">
+          <p className="text-sm text-red-600 font-medium">{error}</p>
           <button onClick={buscar} className="text-xs text-red-700 font-semibold underline">Reintentar</button>
         </div>
       )}
 
-      {/* Loading skeleton */}
+      {/* Skeleton loading */}
       {buscando && (
         <div className="space-y-3">
-          {[1, 2, 3].map(i => (
+          {[1, 2, 3, 4, 5].map(i => (
             <div key={i} className="bg-white rounded-2xl border border-gray-100 p-4 space-y-3 animate-pulse">
-              <div className="flex justify-between">
+              <div className="flex justify-between gap-2">
                 <div className="space-y-1.5 flex-1">
                   <div className="h-4 bg-gray-200 rounded w-2/3" />
                   <div className="h-3 bg-gray-100 rounded w-1/3" />
+                  <div className="h-3 bg-gray-100 rounded w-1/2" />
                 </div>
-                <div className="h-6 bg-gray-100 rounded w-12" />
+                <div className="h-7 w-12 bg-gray-100 rounded-lg shrink-0" />
               </div>
-              <div className="h-16 bg-blue-50 rounded-xl" />
+              <div className="h-3 bg-gray-100 rounded w-1/4" />
+              <div className="h-14 bg-blue-50 rounded-xl" />
               <div className="grid grid-cols-2 gap-2">
                 <div className="h-14 bg-green-50 rounded-xl" />
                 <div className="h-14 bg-blue-50 rounded-xl" />
@@ -430,56 +312,39 @@ export default function BuscarArPage() {
       )}
 
       {/* Resultados */}
-      {!buscando && buscado && (
-        <>
-          {/* Stats */}
-          <div className="flex gap-2">
-            <div className="flex-1 bg-white rounded-xl border border-gray-100 px-3 py-2 text-center">
-              <p className="text-lg font-bold text-gray-900">{resultados.length}</p>
-              <p className="text-xs text-gray-400">encontrados</p>
-            </div>
-            <div className="flex-1 bg-orange-50 rounded-xl border border-orange-100 px-3 py-2 text-center">
-              <p className="text-lg font-bold text-orange-700">{sinWeb}</p>
-              <p className="text-xs text-orange-500">sin web</p>
-            </div>
-            <div className="flex-1 bg-blue-50 rounded-xl border border-blue-100 px-3 py-2 text-center">
-              <p className="text-lg font-bold text-blue-700">{conWeb}</p>
-              <p className="text-xs text-blue-400">con web</p>
-            </div>
-          </div>
+      {!buscando && resultados.length > 0 && (
+        <div className="space-y-3">
+          {resultados.map(r => (
+            <LeadCard
+              key={r.place_id}
+              r={r}
+              guardado={guardados.has(r.place_id)}
+              guardando={guardando.has(r.place_id)}
+              onGuardar={() => guardarLead(r)}
+            />
+          ))}
 
-          {resultados.length === 0 ? (
-            <div className="py-12 text-center text-gray-400 space-y-2">
-              <p className="text-4xl">🔍</p>
-              <p className="font-semibold text-gray-600">Sin resultados para estos filtros</p>
-              <p className="text-sm">Probá bajar el mínimo de reseñas o desactivar "solo sin web"</p>
-              <button onClick={() => setMostrarFiltros(true)} className="text-sm text-blue-600 font-semibold underline">
-                Abrir filtros
-              </button>
-            </div>
-          ) : (
-            <div className="space-y-3">
-              {resultados.map(r => (
-                <LeadArCard
-                  key={r.place_id}
-                  r={r}
-                  guardado={guardados.has(r.place_id)}
-                  guardando={guardando.has(r.place_id)}
-                  onGuardar={() => guardarLead(r)}
-                  settings={settings}
-                />
-              ))}
+          <button
+            onClick={buscar}
+            className="w-full flex items-center justify-center gap-2 py-3 bg-white border border-gray-200 rounded-2xl text-sm text-gray-600 font-medium hover:bg-gray-50 transition-colors active:scale-95"
+          >
+            <RefreshCw size={14} /> Buscar nuevas oportunidades
+          </button>
+        </div>
+      )}
 
-              {/* Buscar más */}
-              <button
-                onClick={buscar}
-                className="w-full flex items-center justify-center gap-2 py-3 bg-white border border-gray-200 rounded-2xl text-sm text-gray-600 font-medium hover:bg-gray-50 transition-colors"
-              >
-                <RefreshCw size={15} /> Buscar de nuevo en {ciudad.split('(')[0].trim()}
-              </button>
-            </div>
-          )}
-        </>
+      {/* Empty */}
+      {!buscando && !error && resultados.length === 0 && (
+        <div className="py-16 text-center space-y-3">
+          <p className="text-4xl">🔍</p>
+          <p className="font-semibold text-gray-700">Sin resultados con estos filtros</p>
+          <button
+            onClick={() => { setSoloSinWeb(false); buscar() }}
+            className="text-sm text-blue-600 font-semibold underline"
+          >
+            Ver todos (con y sin web)
+          </button>
+        </div>
       )}
     </div>
   )
