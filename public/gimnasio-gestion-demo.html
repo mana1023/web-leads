@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<!--
+  DEMO · SISTEMA DE GESTIÓN para gimnasio (socios + cuotas + accesos).
+  El dolor AR: se pierde plata con las cuotas vencidas. El sistema las flaggea
+  y manda recordatorio por WhatsApp para recuperarlas.
+  Reemplazá "Gimnasio Iron", precios y datos por los del cliente real.
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema de Gestión · Gimnasio — Socios, Cuotas y Accesos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#F1F3F7; --sidebar:#111725; --sidebar2:#1B2334; --sidebar-line:#2A3346;
+      --acc:#3B82F6; --acc-d:#2563EB; --ink:#161A22; --muted:#68707F;
+      --card:#FFFFFF; --line:#E6E9EF; --green:#17A25B; --green-bg:#E6F6EE;
+      --red:#E0483C; --red-bg:#FBE9E7; --amber:#E0A63E; --amber-bg:#FBF1DC;
+      --blue-bg:#E7F0FE;
+      --fh:'Sora',system-ui,sans-serif; --fb:'Inter',system-ui,sans-serif;
+      --tr:.2s ease; --sh:0 10px 30px -18px rgba(20,30,60,.4);
+    }
+    body{font-family:var(--fb);background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none} button{font-family:inherit;cursor:pointer;border:none;background:none}
+    .app{display:flex;min-height:100vh}
+    .side{width:250px;background:var(--sidebar);color:#AEB6C6;flex:none;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+    .brand{padding:1.4rem 1.4rem 1.1rem;display:flex;align-items:center;gap:.7rem;border-bottom:1px solid var(--sidebar-line)}
+    .brand .pole{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--acc),#7CA9F7);display:grid;place-items:center;font-size:1.1rem}
+    .brand b{font-family:var(--fh);font-weight:800;color:#fff;font-size:1.02rem;line-height:1.1;display:block}
+    .brand small{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+    .navlbl{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:#5A6373;padding:1.2rem 1.4rem .4rem}
+    .nav{display:flex;flex-direction:column;gap:2px;padding:0 .7rem}
+    .nav button{display:flex;align-items:center;gap:.75rem;width:100%;text-align:left;padding:.7rem .8rem;border-radius:10px;color:#AEB6C6;font-size:.9rem;font-weight:500;transition:var(--tr)}
+    .nav button .ic{width:20px;text-align:center;font-size:1rem}
+    .nav button:hover{background:var(--sidebar2);color:#fff}
+    .nav button.active{background:linear-gradient(90deg,var(--acc),var(--acc-d));color:#fff;font-weight:600}
+    .side-foot{margin-top:auto;padding:1rem 1.4rem;border-top:1px solid var(--sidebar-line);font-size:.72rem;color:#5A6373}
+    .side-foot b{color:#AEB6C6;font-weight:600}
+    .main{flex:1;min-width:0;display:flex;flex-direction:column}
+    .topbar{background:var(--card);border-bottom:1px solid var(--line);padding:1rem 1.6rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;position:sticky;top:0;z-index:20}
+    .topbar h1{font-family:var(--fh);font-weight:700;font-size:1.15rem}
+    .topbar .date{font-size:.8rem;color:var(--muted)}
+    .top-actions{display:flex;align-items:center;gap:.6rem}
+    .pill-wa{display:inline-flex;align-items:center;gap:.4rem;background:var(--green-bg);color:#0f7a43;padding:.5rem .8rem;border-radius:999px;font-size:.78rem;font-weight:600}
+    .pill-wa .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(23,162,91,.2)}
+    .btn{display:inline-flex;align-items:center;gap:.45rem;padding:.6rem 1rem;border-radius:10px;font-weight:600;font-size:.85rem;transition:var(--tr)}
+    .btn-acc{background:var(--acc);color:#fff}.btn-acc:hover{background:var(--acc-d)}
+    .content{padding:1.6rem;flex:1}
+    .panel{display:none;animation:fade .3s ease}.panel.show{display:block}
+    @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+    .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.1rem 1.2rem}
+    .stat .t{display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:var(--muted);font-weight:500}
+    .stat .v{font-family:var(--fh);font-weight:700;font-size:1.7rem;margin-top:.35rem;letter-spacing:-.02em}
+    .stat .chip{font-size:.7rem;font-weight:600;padding:.15rem .5rem;border-radius:999px;margin-left:auto}
+    .chip-g{background:var(--green-bg);color:#0f7a43}.chip-r{background:var(--red-bg);color:#b23a25}.chip-a{background:var(--amber-bg);color:#95701c}
+    .stat.acc{background:linear-gradient(135deg,#1B2334,#111725);color:#fff;border:none}
+    .stat.acc .t{color:#AEB6C6}.stat.acc .v{color:var(--acc)}
+    .stat.danger .v{color:var(--red)}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+    .card-h{padding:1rem 1.2rem;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .card-h h2{font-family:var(--fh);font-weight:600;font-size:1rem}
+    .card-h .sub{font-size:.78rem;color:var(--muted)}
+    table{width:100%;border-collapse:collapse}
+    th{text-align:left;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:.7rem 1.2rem;border-bottom:1px solid var(--line)}
+    td{padding:.75rem 1.2rem;border-bottom:1px solid var(--line);font-size:.88rem;vertical-align:middle}
+    tr:last-child td{border-bottom:none}
+    .cli{display:flex;align-items:center;gap:.65rem}
+    .av{width:34px;height:34px;border-radius:50%;background:var(--blue-bg);color:var(--acc-d);display:grid;place-items:center;font-weight:700;font-size:.8rem;flex:none}
+    .precio{font-family:var(--fh);font-weight:600}
+    .estado{font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:999px;white-space:nowrap}
+    .e-ok{background:var(--green-bg);color:#0f7a43}.e-vence{background:var(--amber-bg);color:#95701c}.e-venc{background:var(--red-bg);color:#b23a25}
+    .rowact{display:flex;gap:.4rem;justify-content:flex-end}
+    .mini{font-size:.74rem;font-weight:600;padding:.35rem .6rem;border-radius:8px;transition:var(--tr);white-space:nowrap}
+    .mini-ok{background:var(--ink);color:#fff}.mini-ok:hover{background:#000}
+    .mini-wa{background:var(--green-bg);color:#0f7a43}.mini-wa:hover{background:#d4efe0}
+    .done{color:var(--muted);font-size:.78rem;font-weight:600}
+    .banner{background:linear-gradient(120deg,var(--blue-bg),#fff);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:14px;padding:1rem 1.2rem;margin-bottom:1.4rem;font-size:.9rem}
+    .banner b{color:var(--acc-d)}
+    .banner.warn{background:linear-gradient(120deg,var(--red-bg),#fff);border-left-color:var(--red)}.banner.warn b{color:#b23a25}
+    .caja-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:1.2rem}
+    .metodos{display:flex;flex-direction:column;gap:.8rem}
+    .metodo{display:flex;align-items:center;gap:.8rem;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:.9rem 1.1rem}
+    .metodo .mi{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-size:1.1rem}
+    .metodo b{font-family:var(--fh);margin-left:auto;font-weight:700}
+    .total-big{background:linear-gradient(135deg,#111725,#232d42);color:#fff;border-radius:16px;padding:1.4rem;text-align:center}
+    .total-big .l{font-size:.78rem;color:#AEB6C6;letter-spacing:.05em}
+    .total-big .n{font-family:var(--fh);font-weight:800;font-size:2.2rem;color:var(--acc);margin-top:.3rem;letter-spacing:-.02em}
+    .serv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    .serv{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.1rem}
+    .serv h3{font-family:var(--fh);font-weight:600;font-size:1rem}
+    .serv .p{font-family:var(--fh);font-weight:800;font-size:1.5rem;color:var(--acc-d);margin-top:.4rem}
+    .serv .d{font-size:.8rem;color:var(--muted);margin-top:.2rem}
+    .occ{height:12px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:.5rem}
+    .occ b{display:block;height:100%;background:linear-gradient(90deg,var(--acc),#7CA9F7)}
+    .grid-ag{min-width:720px;display:grid;grid-template-columns:60px repeat(6,1fr)}
+    .gcell{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:.4rem;min-height:50px;font-size:.78rem}
+    .ghead{font-family:var(--fh);font-weight:600;font-size:.8rem;text-align:center;padding:.6rem;background:#FAFBFC}
+    .gtime{font-size:.72rem;color:var(--muted);text-align:right;padding-right:.6rem}
+    .turno{border-radius:8px;padding:.35rem .5rem;font-size:.72rem;font-weight:600;line-height:1.2}
+    .t-blue{background:var(--blue-bg);color:var(--acc-d)}.t-green{background:var(--green-bg);color:#0f7a43}.t-amber{background:var(--amber-bg);color:#95701c}
+    .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--ink);color:#fff;padding:.8rem 1.3rem;border-radius:12px;font-size:.88rem;font-weight:500;opacity:0;transition:.3s ease;z-index:99;box-shadow:var(--sh)}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .burger{display:none}
+    @media(max-width:880px){
+      .side{position:fixed;left:0;top:0;z-index:60;transform:translateX(-100%);transition:transform var(--tr);box-shadow:var(--sh)}
+      .side.open{transform:none}
+      .burger{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--bg)}
+      .stats{grid-template-columns:repeat(2,1fr)}.caja-grid{grid-template-columns:1fr}.serv-grid{grid-template-columns:1fr}
+      .scrim{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:55;display:none}.scrim.show{display:block}
+    }
+    @media(max-width:520px){.stats{grid-template-columns:1fr 1fr}.hide-sm{display:none}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="side" id="side">
+      <div class="brand"><span class="pole">💪</span><span><b>Gimnasio Iron</b><small>Sistema de gestión</small></span></div>
+      <div class="navlbl">Operación</div>
+      <nav class="nav" id="nav">
+        <button data-p="socios" class="active"><span class="ic">👥</span> Socios</button>
+        <button data-p="cobros"><span class="ic">💵</span> Cobros y caja</button>
+        <button data-p="accesos"><span class="ic">🚪</span> Accesos de hoy</button>
+        <button data-p="clases"><span class="ic">🗓️</span> Clases</button>
+        <button data-p="planes"><span class="ic">🏷️</span> Planes y precios</button>
+      </nav>
+      <div class="side-foot"><b>Demo interactiva</b><br>Cobrá una cuota vencida y mirá cómo baja la deuda y sube la caja.</div>
+    </aside>
+    <div class="scrim" id="scrim"></div>
+
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;gap:.8rem">
+          <button class="burger" id="burger">☰</button>
+          <div><h1 id="ptitle">Socios</h1><div class="date" id="fecha">—</div></div>
+        </div>
+        <div class="top-actions">
+          <span class="pill-wa hide-sm"><span class="dot"></span> Aviso de vencimiento por WhatsApp</span>
+          <button class="btn btn-acc">+ Nuevo socio</button>
+        </div>
+      </div>
+
+      <div class="content">
+        <!-- SOCIOS -->
+        <section class="panel show" id="p-socios">
+          <div class="stats">
+            <div class="stat"><div class="t">👥 Socios activos</div><div class="v">148</div></div>
+            <div class="stat"><div class="t">✅ Al día <span class="chip chip-g" id="pctOk">131</span></div><div class="v" id="cOk">131</div></div>
+            <div class="stat"><div class="t">⏰ Vencen esta semana <span class="chip chip-a">avisar</span></div><div class="v">9</div></div>
+            <div class="stat danger"><div class="t">🔴 Cuotas vencidas <span class="chip chip-r">$ por cobrar</span></div><div class="v" id="cDeuda">$ 144.000</div></div>
+          </div>
+
+          <div class="banner warn">🔴 <b>Estás dejando $ 144.000 sobre la mesa</b> en cuotas vencidas. El sistema te los marca y le manda un WhatsApp al socio para que renueve — así los recuperás sin perseguir a nadie.</div>
+
+          <div class="card">
+            <div class="card-h"><div><h2>Socios</h2><div class="sub">Cobrá la cuota o mandá el aviso de vencimiento</div></div></div>
+            <div style="overflow-x:auto">
+            <table id="tSocios">
+              <thead><tr><th>Socio</th><th>Plan</th><th>Vencimiento</th><th>Cuota</th><th>Estado</th><th></th></tr></thead>
+              <tbody>
+                <tr data-cuota="18000"><td><div class="cli"><span class="av">ML</span> Matías López</div></td><td>Mensual</td><td>Vencida hace 8 días</td><td class="precio">$ 18.000</td><td><span class="estado e-venc">Vencida</span></td><td><div class="rowact"><button class="mini mini-wa">💬 Avisar</button><button class="mini mini-ok" onclick="cobrar(this)">Cobrar cuota</button></div></td></tr>
+                <tr data-cuota="22000"><td><div class="cli"><span class="av">CF</span> Carla Fernández</div></td><td>Full</td><td>Vencida hace 5 días</td><td class="precio">$ 22.000</td><td><span class="estado e-venc">Vencida</span></td><td><div class="rowact"><button class="mini mini-wa">💬 Avisar</button><button class="mini mini-ok" onclick="cobrar(this)">Cobrar cuota</button></div></td></tr>
+                <tr data-cuota="25000"><td><div class="cli"><span class="av">JM</span> Javier Moreno</div></td><td>Pase libre</td><td>Vencida hace 3 días</td><td class="precio">$ 25.000</td><td><span class="estado e-venc">Vencida</span></td><td><div class="rowact"><button class="mini mini-wa">💬 Avisar</button><button class="mini mini-ok" onclick="cobrar(this)">Cobrar cuota</button></div></td></tr>
+                <tr data-cuota="18000"><td><div class="cli"><span class="av">SA</span> Sofía Aguirre</div></td><td>Mensual</td><td>Vence en 2 días</td><td class="precio">$ 18.000</td><td><span class="estado e-vence">Vence pronto</span></td><td><div class="rowact"><button class="mini mini-wa">💬 Avisar</button><button class="mini mini-ok" onclick="cobrar(this)">Cobrar cuota</button></div></td></tr>
+                <tr data-cuota="14000"><td><div class="cli"><span class="av">NF</span> Nahuel Frías</div></td><td>Estudiante</td><td>Vence en 4 días</td><td class="precio">$ 14.000</td><td><span class="estado e-vence">Vence pronto</span></td><td><div class="rowact"><button class="mini mini-wa">💬 Avisar</button><button class="mini mini-ok" onclick="cobrar(this)">Cobrar cuota</button></div></td></tr>
+                <tr><td><div class="cli"><span class="av">VP</span> Valentina Paz</div></td><td>Full</td><td>Al día · vence 25/08</td><td class="precio">$ 22.000</td><td><span class="estado e-ok">Al día</span></td><td><div class="rowact"><span class="done">✓ Pagó</span></div></td></tr>
+                <tr><td><div class="cli"><span class="av">GT</span> Gonzalo Torres</div></td><td>Mensual</td><td>Al día · vence 28/08</td><td class="precio">$ 18.000</td><td><span class="estado e-ok">Al día</span></td><td><div class="rowact"><span class="done">✓ Pagó</span></div></td></tr>
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- COBROS -->
+        <section class="panel" id="p-cobros">
+          <div class="banner">💵 <b>Caja del día.</b> Cada cuota cobrada entra acá automático, separada por método. Cierre claro y sin planilla de Excel.</div>
+          <div class="caja-grid">
+            <div class="card">
+              <div class="card-h"><div><h2>Cobros de hoy</h2><div class="sub">Cuotas y pagos</div></div></div>
+              <div style="overflow-x:auto">
+              <table id="tCaja">
+                <thead><tr><th>Hora</th><th>Socio</th><th>Plan</th><th>Método</th><th>Monto</th></tr></thead>
+                <tbody>
+                  <tr><td class="precio">09:10</td><td>Gonzalo Torres</td><td>Mensual</td><td>Efectivo</td><td class="precio">$ 18.000</td></tr>
+                  <tr><td class="precio">10:25</td><td>Valentina Paz</td><td>Full</td><td>Mercado Pago</td><td class="precio">$ 22.000</td></tr>
+                </tbody>
+              </table>
+              </div>
+            </div>
+            <div>
+              <div class="total-big"><div class="l">Cobrado hoy</div><div class="n" id="cajaTotal">$ 40.000</div></div>
+              <div class="metodos" style="margin-top:1.2rem">
+                <div class="metodo"><span class="mi" style="background:var(--green-bg)">💵</span> Efectivo <b id="mEf">$ 18.000</b></div>
+                <div class="metodo"><span class="mi" style="background:var(--blue-bg)">📱</span> Mercado Pago <b id="mMp">$ 22.000</b></div>
+                <div class="metodo"><span class="mi" style="background:var(--amber-bg)">💳</span> Débito <b id="mDb">$ 0</b></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ACCESOS -->
+        <section class="panel" id="p-accesos">
+          <div class="banner">🚪 <b>Control de accesos.</b> Cada socio entra con su código o huella; si tiene la cuota vencida, el sistema lo avisa en la puerta.</div>
+          <div class="stats" style="grid-template-columns:repeat(3,1fr)">
+            <div class="stat"><div class="t">🚪 Ingresos hoy</div><div class="v">86</div></div>
+            <div class="stat acc"><div class="t">🏋️ En el gym ahora</div><div class="v">32</div></div>
+            <div class="stat"><div class="t">📈 Pico del día</div><div class="v">19 hs</div></div>
+          </div>
+          <div class="card" style="margin-bottom:1.2rem">
+            <div class="card-h"><div><h2>Ocupación actual</h2><div class="sub">32 / 60 personas</div></div><b class="precio" style="color:var(--acc-d)">53%</b></div>
+            <div style="padding:1rem 1.2rem"><div class="occ"><b style="width:53%"></b></div></div>
+          </div>
+          <div class="card">
+            <div class="card-h"><div><h2>Últimos ingresos</h2></div></div>
+            <div style="overflow-x:auto">
+            <table>
+              <thead><tr><th>Hora</th><th>Socio</th><th>Plan</th><th>Estado cuota</th></tr></thead>
+              <tbody>
+                <tr><td class="precio">18:42</td><td>Gonzalo Torres</td><td>Mensual</td><td><span class="estado e-ok">Al día</span></td></tr>
+                <tr><td class="precio">18:39</td><td>Valentina Paz</td><td>Full</td><td><span class="estado e-ok">Al día</span></td></tr>
+                <tr><td class="precio">18:35</td><td>Matías López</td><td>Mensual</td><td><span class="estado e-venc">Vencida — avisar</span></td></tr>
+                <tr><td class="precio">18:31</td><td>Sofía Aguirre</td><td>Mensual</td><td><span class="estado e-vence">Vence en 2 días</span></td></tr>
+                <tr><td class="precio">18:22</td><td>Nahuel Frías</td><td>Estudiante</td><td><span class="estado e-ok">Al día</span></td></tr>
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- CLASES -->
+        <section class="panel" id="p-clases">
+          <div class="banner">🗓️ Grilla de clases con cupos. El socio reserva desde la app y vos ves cuántos lugares quedan.</div>
+          <div class="card" style="overflow-x:auto">
+            <div class="grid-ag">
+              <div class="gcell ghead"></div><div class="gcell ghead">Lun</div><div class="gcell ghead">Mar</div><div class="gcell ghead">Mié</div><div class="gcell ghead">Jue</div><div class="gcell ghead">Vie</div><div class="gcell ghead">Sáb</div>
+              <div class="gcell gtime">09hs</div><div class="gcell"><div class="turno t-blue">Funcional</div></div><div class="gcell"><div class="turno t-green">Spinning</div></div><div class="gcell"><div class="turno t-blue">Funcional</div></div><div class="gcell"><div class="turno t-green">Spinning</div></div><div class="gcell"><div class="turno t-blue">Funcional</div></div><div class="gcell"><div class="turno t-amber">Cross</div></div>
+              <div class="gcell gtime">18hs</div><div class="gcell"><div class="turno t-amber">Cross · 3 cupos</div></div><div class="gcell"><div class="turno t-blue">Funcional</div></div><div class="gcell"><div class="turno t-amber">Cross · lleno</div></div><div class="gcell"><div class="turno t-blue">Funcional</div></div><div class="gcell"><div class="turno t-green">Spinning</div></div><div class="gcell"></div>
+              <div class="gcell gtime">20hs</div><div class="gcell"><div class="turno t-green">Spinning</div></div><div class="gcell"><div class="turno t-amber">Cross</div></div><div class="gcell"><div class="turno t-green">Spinning</div></div><div class="gcell"><div class="turno t-amber">Cross · 5 cupos</div></div><div class="gcell"><div class="turno t-blue">Funcional</div></div><div class="gcell"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PLANES -->
+        <section class="panel" id="p-planes">
+          <div class="banner">🏷️ Los planes que ve el socio y con los que se calcula la cuota. Los actualizás cuando cambian los precios.</div>
+          <div class="serv-grid">
+            <div class="serv"><h3>Mensual</h3><div class="p">$ 18.000</div><div class="d">Musculación · acceso libre en el horario del gym</div></div>
+            <div class="serv"><h3>Full</h3><div class="p">$ 22.000</div><div class="d">Musculación + todas las clases</div></div>
+            <div class="serv"><h3>Pase libre</h3><div class="p">$ 25.000</div><div class="d">Acceso 24 hs + clases + invitados</div></div>
+            <div class="serv"><h3>Trimestral</h3><div class="p">$ 45.000</div><div class="d">3 meses de musculación (ahorrás 1 cuota)</div></div>
+            <div class="serv"><h3>Estudiante</h3><div class="p">$ 14.000</div><div class="d">Con credencial · lun a vie hasta 17 hs</div></div>
+            <div class="serv"><h3>Pareja</h3><div class="p">$ 30.000</div><div class="d">Dos socios · musculación mensual</div></div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">✓ Cuota cobrada</div>
+
+  <script>
+    const dias=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+    const meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    const d=new Date();
+    document.getElementById('fecha').textContent=`${dias[d.getDay()]} ${d.getDate()} de ${meses[d.getMonth()]}`;
+
+    const titles={socios:'Socios',cobros:'Cobros y caja',accesos:'Accesos de hoy',clases:'Clases',planes:'Planes y precios'};
+    document.querySelectorAll('#nav button').forEach(b=>{
+      b.addEventListener('click',()=>{
+        document.querySelectorAll('#nav button').forEach(x=>x.classList.remove('active'));
+        b.classList.add('active');
+        const p=b.dataset.p;
+        document.querySelectorAll('.panel').forEach(x=>x.classList.remove('show'));
+        document.getElementById('p-'+p).classList.add('show');
+        document.getElementById('ptitle').textContent=titles[p];
+        closeSide();
+      });
+    });
+
+    let total=40000, ef=18000, mp=22000, db=0, ok=131, deuda=144000;
+    const fmt=n=>'$ '+n.toLocaleString('es-AR');
+
+    function cobrar(btn){
+      const tr=btn.closest('tr');
+      const cuota=parseInt(tr.dataset.cuota);
+      const eraVencida=tr.querySelector('.estado').classList.contains('e-venc');
+      const metodos=[['Efectivo','ef'],['Mercado Pago','mp'],['Débito','db']];
+      const m=metodos[Math.floor(Math.random()*metodos.length)];
+      tr.querySelector('.estado').outerHTML='<span class="estado e-ok">Al día</span>';
+      tr.querySelector('.rowact').innerHTML='<span class="done">✓ Pagó</span>';
+      total+=cuota; if(m[1]==='ef')ef+=cuota; else if(m[1]==='mp')mp+=cuota; else db+=cuota;
+      ok++;
+      document.getElementById('cOk').textContent=ok;
+      document.getElementById('pctOk').textContent=ok;
+      document.getElementById('cajaTotal').textContent=fmt(total);
+      document.getElementById('mEf').textContent=fmt(ef);
+      document.getElementById('mMp').textContent=fmt(mp);
+      document.getElementById('mDb').textContent=fmt(db);
+      if(eraVencida){ deuda-=cuota; document.getElementById('cDeuda').textContent=fmt(Math.max(deuda,0)); }
+      const cli=tr.querySelector('.cli').textContent.trim();
+      const plan=tr.children[1].textContent;
+      const row=document.createElement('tr');
+      row.innerHTML=`<td class="precio">ahora</td><td>${cli}</td><td>${plan}</td><td>${m[0]}</td><td class="precio">${fmt(cuota)}</td>`;
+      document.querySelector('#tCaja tbody').appendChild(row);
+      toast(`✓ ${cli} · ${fmt(cuota)} cobrado (${m[0]})`);
+    }
+    window.cobrar=cobrar;
+
+    let tt;
+    function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2200)}
+    document.addEventListener('click',e=>{
+      if(e.target.classList.contains('mini-wa')){
+        const cli=e.target.closest('tr').querySelector('.cli').textContent.trim();
+        toast(`💬 Aviso de vencimiento enviado a ${cli}`);
+      }
+    });
+
+    const side=document.getElementById('side'),scrim=document.getElementById('scrim');
+    function closeSide(){side.classList.remove('open');scrim.classList.remove('show')}
+    document.getElementById('burger').addEventListener('click',()=>{side.classList.add('open');scrim.classList.add('show')});
+    scrim.addEventListener('click',closeSide);
+  </script>
+</body>
+</html>
