@@ -2,8 +2,10 @@
 import { useState, useEffect } from 'react'
 import { Lead, LeadEstado } from '@/types/lead'
 import EstadoBadge from './EstadoBadge'
-import { Phone, Globe, ChevronDown, ChevronUp, Trash2 } from 'lucide-react'
-import { getSettings } from './SettingsModal'
+import { Phone, Globe, ChevronDown, ChevronUp, Trash2, Eye, Bell, BellOff } from 'lucide-react'
+import { getSettings, UserSettings } from './SettingsModal'
+import { construirMensajes } from '@/lib/mensajes'
+import { getDemoMatch, getDemoUrl } from '@/lib/demos'
 
 const ESTADOS: LeadEstado[] = ['nuevo', 'contactado', 'en_proceso', 'vendido', 'descartado']
 const ESTADO_LABELS: Record<LeadEstado, string> = {
@@ -20,11 +22,30 @@ interface Props {
   onDelete: (id: string) => void
 }
 
+// Devuelve el estado de un seguimiento respecto a hoy.
+function estadoSeguimiento(iso: string | null): { texto: string; clase: string } | null {
+  if (!iso) return null
+  const hoy = new Date(); hoy.setHours(0, 0, 0, 0)
+  const dia = new Date(iso); dia.setHours(0, 0, 0, 0)
+  const diff = Math.round((dia.getTime() - hoy.getTime()) / 86400000)
+  if (diff < 0) return { texto: `Atrasado ${-diff}d`, clase: 'bg-red-100 text-red-700 border-red-200' }
+  if (diff === 0) return { texto: 'Recontactar hoy', clase: 'bg-amber-100 text-amber-800 border-amber-200' }
+  if (diff === 1) return { texto: 'Seguimiento mañana', clase: 'bg-blue-50 text-blue-700 border-blue-200' }
+  return { texto: `Seguir en ${diff}d`, clase: 'bg-gray-100 text-gray-500 border-gray-200' }
+}
+
+function isoEnDias(dias: number): string {
+  const d = new Date()
+  d.setDate(d.getDate() + dias)
+  d.setHours(9, 0, 0, 0) // 9am del día objetivo
+  return d.toISOString()
+}
+
 export default function LeadCard({ lead, onUpdate, onDelete }: Props) {
   const [expandido, setExpandido] = useState(false)
   const [notas, setNotas] = useState(lead.notas || '')
   const [guardandoNotas, setGuardandoNotas] = useState(false)
-  const [settings, setSettings] = useState({ nombre: '', agencia: '' })
+  const [settings, setSettings] = useState<UserSettings>({ nombre: '', agencia: '', linkPortfolio: '', demoBaseUrl: '' })
 
   useEffect(() => {
     setSettings(getSettings())
@@ -36,36 +57,32 @@ export default function LeadCard({ lead, onUpdate, onDelete }: Props) {
     setGuardandoNotas(false)
   }
 
-  const buildWaPhone = () => {
-    if (!lead.telefono) return null
-    const p = lead.telefono.replace(/\D/g, '')
-    const normalized = p.startsWith('0') ? p.slice(1) : p
-    return normalized.startsWith('54') ? normalized : `54${normalized}`
+  // Programar seguimiento: fija la fecha y registra el contacto.
+  const programar = (dias: number) => {
+    onUpdate(lead.id, {
+      proximo_seguimiento: isoEnDias(dias),
+      ultimo_contacto: new Date().toISOString(),
+      intentos: (lead.intentos || 0) + 1,
+      estado: lead.estado === 'nuevo' ? 'contactado' : lead.estado,
+    })
   }
 
-  const buildMsg1Url = () => {
-    const phone = buildWaPhone()
-    if (!phone) return null
-    return `https://wa.me/${phone}?text=${encodeURIComponent('Hola, ¿cómo están? 👋')}`
-  }
+  const limpiarSeguimiento = () => onUpdate(lead.id, { proximo_seguimiento: null })
 
-  const buildMsg2Url = () => {
-    const phone = buildWaPhone()
-    if (!phone) return null
-    const nombre = settings.nombre || 'Lautaro'
-    const link = (settings as any).linkPortfolio || 'https://mana-dev.vercel.app'
-    const msg = `Soy ${nombre}, programador y desarrollador web 💻\n\nTrabajo con locales como ${lead.nombre} armando sistemas que ahorran tiempo: página web, WhatsApp con IA, tienda online, control de stock y caja, turnos online y más.\n\nPueden ver los trabajos que hago acá 👇\n${link}\n\n¿Les interesa que charlemos? Sin compromiso 🙂`
-    return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`
-  }
-
-  const msg1Url = buildMsg1Url()
-  const msg2Url = buildMsg2Url()
-  const whatsappUrl = msg2Url
+  const mensajes = construirMensajes(
+    { nombre: lead.nombre, telefono: lead.telefono, categoria: lead.categoria },
+    { nombre: settings.nombre, linkPortfolio: settings.linkPortfolio, demoBaseUrl: settings.demoBaseUrl },
+  )
+  const msg = (k: string) => mensajes.find(m => m.key === k)
+  const demoMatch = getDemoMatch(lead.nombre, lead.categoria)
+  const demoUrl = getDemoUrl(demoMatch, settings.demoBaseUrl)
+  const seg = estadoSeguimiento(lead.proximo_seguimiento)
 
   return (
     <div className={`bg-white rounded-2xl shadow-sm border overflow-hidden transition-all ${
       lead.estado === 'vendido' ? 'border-green-200' :
       lead.estado === 'descartado' ? 'border-gray-200 opacity-60' :
+      seg?.texto.startsWith('Atrasado') || seg?.texto === 'Recontactar hoy' ? 'border-amber-200' :
       'border-gray-100'
     }`}>
       {/* Header */}
@@ -81,11 +98,29 @@ export default function LeadCard({ lead, onUpdate, onDelete }: Props) {
           <EstadoBadge estado={lead.estado} />
         </div>
 
+        {/* Badge de seguimiento */}
+        {seg && (
+          <div className={`inline-flex items-center gap-1 mt-2 text-[11px] font-semibold px-2 py-0.5 rounded-full border ${seg.clase}`}>
+            <Bell size={11} /> {seg.texto}
+            {lead.intentos > 0 && <span className="opacity-70">· {lead.intentos}º intento</span>}
+          </div>
+        )}
+
         {/* Propuesta */}
         <div className="mt-3 bg-blue-50 rounded-xl p-3">
           <p className="text-xs font-semibold text-blue-800">💡 Propuesta:</p>
           <p className="text-sm font-medium text-blue-900 mt-0.5">{lead.tipo_web_sugerida}</p>
           <p className="text-xs text-blue-700 mt-1">{lead.descripcion_propuesta}</p>
+          {demoUrl && (
+            <a
+              href={demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 mt-2 text-xs font-semibold text-blue-700 bg-white border border-blue-200 hover:bg-blue-100 px-2.5 py-1.5 rounded-lg transition-colors"
+            >
+              <Eye size={13} /> Ver demo del rubro
+            </a>
+          )}
         </div>
 
         {/* Acciones rápidas */}
@@ -99,9 +134,9 @@ export default function LeadCard({ lead, onUpdate, onDelete }: Props) {
               >
                 <Phone size={14} />
               </a>
-              {msg1Url && (
+              {msg('apertura')?.url && (
                 <a
-                  href={msg1Url}
+                  href={msg('apertura')!.url!}
                   target="_blank"
                   rel="noopener noreferrer"
                   title="Mensaje 1 — Apertura: 'Hola, ¿cómo están?'"
@@ -110,12 +145,12 @@ export default function LeadCard({ lead, onUpdate, onDelete }: Props) {
                   💬 Msg 1
                 </a>
               )}
-              {msg2Url && (
+              {msg('pitch')?.url && (
                 <a
-                  href={msg2Url}
+                  href={msg('pitch')!.url!}
                   target="_blank"
                   rel="noopener noreferrer"
-                  title="Mensaje 2 — Pitch con portfolio"
+                  title="Mensaje 2 — Pitch con demo del rubro"
                   className="flex-1 flex items-center justify-center gap-1 bg-blue-100 hover:bg-blue-200 text-blue-700 text-xs py-2 rounded-xl transition-colors font-semibold"
                 >
                   📋 Msg 2
@@ -144,7 +179,53 @@ export default function LeadCard({ lead, onUpdate, onDelete }: Props) {
 
       {/* Panel expandido */}
       {expandido && (
-        <div className="border-t border-gray-100 p-4 space-y-3 bg-gray-50">
+        <div className="border-t border-gray-100 p-4 space-y-4 bg-gray-50">
+          {/* Mensajes de seguimiento */}
+          {lead.telefono && (
+            <div>
+              <p className="text-xs font-semibold text-gray-500 mb-2">MENSAJES DE SEGUIMIENTO</p>
+              <div className="grid grid-cols-2 gap-2">
+                {msg('seguimiento')?.url && (
+                  <a
+                    href={msg('seguimiento')!.url!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center gap-0.5 bg-white border border-green-200 hover:bg-green-50 text-green-700 py-2 rounded-xl transition-colors text-center"
+                  >
+                    <span className="text-[11px] font-bold">💬 Msg 3</span>
+                    <span className="text-[10px] text-green-600">A los 2-3 días</span>
+                  </a>
+                )}
+                {msg('ultima')?.url && (
+                  <a
+                    href={msg('ultima')!.url!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center gap-0.5 bg-white border border-purple-200 hover:bg-purple-50 text-purple-700 py-2 rounded-xl transition-colors text-center"
+                  >
+                    <span className="text-[11px] font-bold">🙌 Msg 4</span>
+                    <span className="text-[10px] text-purple-600">Cierre, a la semana</span>
+                  </a>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Programar seguimiento */}
+          <div>
+            <p className="text-xs font-semibold text-gray-500 mb-2">PROGRAMAR SEGUIMIENTO</p>
+            <div className="flex flex-wrap gap-1.5">
+              <button onClick={() => programar(1)} className="text-xs px-3 py-1.5 rounded-full border bg-white text-gray-600 border-gray-200 hover:border-blue-400 hover:text-blue-600 transition-colors">Mañana</button>
+              <button onClick={() => programar(3)} className="text-xs px-3 py-1.5 rounded-full border bg-white text-gray-600 border-gray-200 hover:border-blue-400 hover:text-blue-600 transition-colors">En 3 días</button>
+              <button onClick={() => programar(7)} className="text-xs px-3 py-1.5 rounded-full border bg-white text-gray-600 border-gray-200 hover:border-blue-400 hover:text-blue-600 transition-colors">En 1 semana</button>
+              {lead.proximo_seguimiento && (
+                <button onClick={limpiarSeguimiento} className="flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border bg-white text-gray-400 border-gray-200 hover:text-red-500 transition-colors">
+                  <BellOff size={12} /> Quitar
+                </button>
+              )}
+            </div>
+          </div>
+
           {/* Cambiar estado */}
           <div>
             <p className="text-xs font-semibold text-gray-500 mb-2">MOVER A</p>

@@ -13,6 +13,10 @@ export interface Lead {
   estado: LeadEstado
   notas: string | null
   google_place_id: string | null
+  // Seguimiento
+  proximo_seguimiento: string | null   // ISO date/timestamp: cuándo recontactar
+  ultimo_contacto: string | null       // ISO: última vez que le escribiste
+  intentos: number                     // cuántas veces lo contactaste
   created_at: string
   updated_at: string
 }

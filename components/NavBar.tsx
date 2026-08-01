@@ -6,11 +6,12 @@ import SettingsModal from './SettingsModal'
 import { Settings } from 'lucide-react'
 
 const TABS: { href: string; emoji: string; label: string }[] = [
-  { href: '/buscar',    emoji: '🔍', label: 'Zona' },
-  { href: '/buscar-ar', emoji: '🇦🇷', label: 'Argentina' },
-  { href: '/',          emoji: '⏳', label: 'Pendientes' },
-  { href: '/en-proceso',emoji: '🤝', label: 'En proceso' },
-  { href: '/vendidos',  emoji: '✅', label: 'Vendidos' },
+  { href: '/buscar',      emoji: '🔍', label: 'Zona' },
+  { href: '/buscar-ar',   emoji: '🇦🇷', label: 'Argentina' },
+  { href: '/',            emoji: '⏳', label: 'Pendientes' },
+  { href: '/seguimientos',emoji: '🔔', label: 'Hoy' },
+  { href: '/en-proceso',  emoji: '🤝', label: 'Proceso' },
+  { href: '/vendidos',    emoji: '✅', label: 'Vendidos' },
 ]
 
 export default function NavBar() {

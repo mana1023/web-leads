@@ -1,7 +1,9 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
-import { Loader2, RefreshCw, Plus, Check, ChevronDown, ChevronUp } from 'lucide-react'
-import { getSettings } from '@/components/SettingsModal'
+import { Loader2, RefreshCw, Plus, Check, ChevronDown, ChevronUp, Eye } from 'lucide-react'
+import { getSettings, UserSettings } from '@/components/SettingsModal'
+import { construirMensajes } from '@/lib/mensajes'
+import { getDemoMatch, getDemoUrl } from '@/lib/demos'
 
 interface Resultado {
   place_id: string
@@ -32,6 +34,7 @@ function CategoriaSection({
   guardando,
   onGuardar,
   onWhatsApp,
+  demoBase,
 }: {
   categoria: string
   leads: Resultado[]
@@ -39,6 +42,7 @@ function CategoriaSection({
   guardando: Set<string>
   onGuardar: (r: Resultado) => void
   onWhatsApp: (r: Resultado) => string | null
+  demoBase: string
 }) {
   const [expandido, setExpandido] = useState(true)
 
@@ -87,6 +91,16 @@ function CategoriaSection({
                 <p className="text-sm font-medium text-blue-900 mt-0.5">{r.tipo_web_sugerida}</p>
                 <p className="text-xs text-blue-700 mt-0.5">{r.descripcion_propuesta}</p>
                 <p className="text-xs font-bold text-blue-800 mt-1">💰 {r.precio_estimado}</p>
+                {getDemoUrl(getDemoMatch(r.nombre, r.categoria), demoBase) && (
+                  <a
+                    href={getDemoUrl(getDemoMatch(r.nombre, r.categoria), demoBase)!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 mt-2 text-xs font-semibold text-blue-700 bg-white border border-blue-200 hover:bg-blue-100 px-2.5 py-1.5 rounded-lg transition-colors"
+                  >
+                    <Eye size={13} /> Ver demo del rubro
+                  </a>
+                )}
               </div>
 
               {/* Acciones */}
@@ -155,7 +169,7 @@ export default function BuscarPage() {
   const [error, setError] = useState('')
   const [guardados, setGuardados] = useState<Set<string>>(new Set())
   const [guardando, setGuardando] = useState<Set<string>>(new Set())
-  const [settings, setSettings] = useState({ nombre: '', agencia: '' })
+  const [settings, setSettings] = useState<UserSettings>({ nombre: '', agencia: '', linkPortfolio: '', demoBaseUrl: '' })
 
   useEffect(() => {
     setSettings(getSettings())
@@ -221,12 +235,11 @@ export default function BuscarPage() {
   }
 
   const whatsappUrl = (r: Resultado): string | null => {
-    if (!r.telefono) return null
-    const phone = r.telefono.replace(/\D/g, '')
-    const nombre = (settings as any).nombre || 'Lautaro'
-    const link = (settings as any).linkPortfolio || 'https://mana-dev.vercel.app'
-    const msg = `Soy ${nombre}, programador y desarrollador web 💻\n\nTrabajo con locales como ${r.nombre} armando sistemas que ahorran tiempo: página web, WhatsApp con IA, tienda online, control de stock y caja, turnos online y más.\n\nPueden ver los trabajos que hago acá 👇\n${link}\n\n¿Les interesa que charlemos? Sin compromiso 🙂`
-    return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`
+    const mensajes = construirMensajes(
+      { nombre: r.nombre, telefono: r.telefono ?? null, categoria: r.categoria },
+      { nombre: settings.nombre, linkPortfolio: settings.linkPortfolio, demoBaseUrl: settings.demoBaseUrl },
+    )
+    return mensajes.find(m => m.key === 'pitch')?.url ?? null
   }
 
   // Agrupar por categoria (ya vienen ordenados por distancia)
@@ -307,6 +320,7 @@ export default function BuscarPage() {
               guardando={guardando}
               onGuardar={guardarLead}
               onWhatsApp={whatsappUrl}
+              demoBase={settings.demoBaseUrl}
             />
           ))}
         </div>

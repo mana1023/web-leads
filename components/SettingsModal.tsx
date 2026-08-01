@@ -11,19 +11,28 @@ export interface UserSettings {
   nombre: string
   agencia: string
   linkPortfolio: string
+  demoBaseUrl: string
+}
+
+// Por defecto las demos se sirven desde el MISMO dominio donde corre la app
+// (viven en /public). Así funciona sin configurar nada, tanto en local como
+// en producción. Se puede sobreescribir en Ajustes si las hospedás aparte.
+function defaultDemoBase(): string {
+  return typeof window !== 'undefined' ? window.location.origin : ''
 }
 
 export function getSettings(): UserSettings {
-  if (typeof window === 'undefined') return { nombre: '', agencia: '', linkPortfolio: 'https://mana-dev.vercel.app' }
+  if (typeof window === 'undefined') return { nombre: '', agencia: '', linkPortfolio: 'https://mana-dev.vercel.app', demoBaseUrl: '' }
   try {
     const s = JSON.parse(localStorage.getItem('wl_settings') || '{}')
     return {
       nombre: s.nombre || '',
       agencia: s.agencia || '',
       linkPortfolio: s.linkPortfolio || 'https://mana-dev.vercel.app',
+      demoBaseUrl: s.demoBaseUrl || defaultDemoBase(),
     }
   } catch {
-    return { nombre: '', agencia: '', linkPortfolio: 'https://mana-dev.vercel.app' }
+    return { nombre: '', agencia: '', linkPortfolio: 'https://mana-dev.vercel.app', demoBaseUrl: defaultDemoBase() }
   }
 }
 
@@ -31,6 +40,7 @@ export default function SettingsModal({ open, onClose }: Props) {
   const [nombre, setNombre] = useState('')
   const [agencia, setAgencia] = useState('')
   const [linkPortfolio, setLinkPortfolio] = useState('https://mana-dev.vercel.app')
+  const [demoBaseUrl, setDemoBaseUrl] = useState('')
   const [guardado, setGuardado] = useState(false)
 
   useEffect(() => {
@@ -39,12 +49,13 @@ export default function SettingsModal({ open, onClose }: Props) {
       setNombre(s.nombre)
       setAgencia(s.agencia)
       setLinkPortfolio(s.linkPortfolio)
+      setDemoBaseUrl(s.demoBaseUrl)
       setGuardado(false)
     }
   }, [open])
 
   const guardar = () => {
-    localStorage.setItem('wl_settings', JSON.stringify({ nombre, agencia, linkPortfolio }))
+    localStorage.setItem('wl_settings', JSON.stringify({ nombre, agencia, linkPortfolio, demoBaseUrl }))
     setGuardado(true)
     setTimeout(onClose, 800)
   }
@@ -102,6 +113,20 @@ export default function SettingsModal({ open, onClose }: Props) {
             />
             <p className="text-xs text-gray-400 mt-1">Este link se incluye en el Mensaje 2 (pitch)</p>
           </div>
+          <div>
+            <label className="text-xs font-semibold text-gray-500 block mb-1">
+              DOMINIO DE LAS DEMOS{' '}
+              <span className="font-normal text-gray-400">(donde subís las páginas de ejemplo)</span>
+            </label>
+            <input
+              type="url"
+              value={demoBaseUrl}
+              onChange={e => setDemoBaseUrl(e.target.value)}
+              placeholder={defaultDemoBase()}
+              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <p className="text-xs text-gray-400 mt-1">Por defecto usa este mismo sitio. La app elige sola la demo del rubro: {(demoBaseUrl || defaultDemoBase())}/rubro-demo.html</p>
+          </div>
         </div>
 
         {/* Preview de mensajes */}
@@ -113,8 +138,9 @@ export default function SettingsModal({ open, onClose }: Props) {
           </div>
           <div className="bg-blue-50 border border-blue-100 rounded-xl p-3">
             <p className="text-xs font-bold text-blue-800 mb-1">📋 Mensaje 2 — Pitch (después de que responden)</p>
-            <p className="text-xs text-blue-700 italic whitespace-pre-line">{`Soy ${nombreMostrado}, programador y desarrollador web 💻\n\nTrabajo con locales armando sistemas que ahorran tiempo: página web, WhatsApp con IA, tienda online, control de stock y caja, turnos online y más.\n\nPueden ver los trabajos que hago acá 👇\n${linkPortfolio || 'https://mana-dev.vercel.app'}\n\n¿Les interesa que charlemos? Sin compromiso 🙂`}</p>
+            <p className="text-xs text-blue-700 italic whitespace-pre-line">{`Soy ${nombreMostrado}, programador y desarrollador web 💻\n\nTrabajo con locales armando sistemas que ahorran tiempo: página web, WhatsApp con IA, tienda online, control de stock y caja, turnos online y más.\n\nJusto armé un ejemplo de cómo les podría quedar la página 👇\n${demoBaseUrl || defaultDemoBase()}/[demo-del-rubro].html\n\nY acá pueden ver más trabajos míos:\n${linkPortfolio || 'https://mana-dev.vercel.app'}\n\n¿Les interesa que charlemos? Sin compromiso 🙂`}</p>
           </div>
+          <p className="text-[11px] text-gray-400">La app elige sola la demo según el rubro del negocio. También hay Msg 3 (seguimiento) y Msg 4 (cierre) en cada lead.</p>
         </div>
 
         <button

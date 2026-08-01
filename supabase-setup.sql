@@ -14,6 +14,9 @@ CREATE TABLE IF NOT EXISTS leads (
   estado TEXT DEFAULT 'nuevo' CHECK (estado IN ('nuevo','contactado','en_proceso','vendido','descartado')),
   notas TEXT,
   google_place_id TEXT UNIQUE,
+  proximo_seguimiento TIMESTAMPTZ,
+  ultimo_contacto TIMESTAMPTZ,
+  intentos INTEGER DEFAULT 0,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -21,6 +24,7 @@ CREATE TABLE IF NOT EXISTS leads (
 -- Índices para búsquedas rápidas
 CREATE INDEX IF NOT EXISTS leads_estado_idx ON leads(estado);
 CREATE INDEX IF NOT EXISTS leads_created_at_idx ON leads(created_at DESC);
+CREATE INDEX IF NOT EXISTS leads_proximo_seguimiento_idx ON leads(proximo_seguimiento) WHERE proximo_seguimiento IS NOT NULL;
 
 -- Row Level Security (RLS) - dejarlo público por ahora para uso personal
 ALTER TABLE leads ENABLE ROW LEVEL SECURITY;

@@ -1,6 +1,8 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
-import { Loader2, RefreshCw, Plus, Check, Star, SlidersHorizontal } from 'lucide-react'
+import { Loader2, RefreshCw, Plus, Check, Star, SlidersHorizontal, Eye } from 'lucide-react'
+import { construirMensajes } from '@/lib/mensajes'
+import { getDemoMatch, getDemoUrl } from '@/lib/demos'
 
 interface Resultado {
   place_id: string
@@ -19,21 +21,16 @@ interface Resultado {
 }
 
 function getSettingsLocal() {
-  if (typeof window === 'undefined') return { nombre: 'Lautaro', linkPortfolio: 'https://mana-dev.vercel.app' }
+  if (typeof window === 'undefined') return { nombre: 'Lautaro', linkPortfolio: 'https://mana-dev.vercel.app', demoBaseUrl: '' }
+  const origin = window.location.origin
   try {
     const s = JSON.parse(localStorage.getItem('wl_settings') || '{}')
     return {
       nombre: s.nombre || 'Lautaro',
       linkPortfolio: s.linkPortfolio || 'https://mana-dev.vercel.app',
+      demoBaseUrl: s.demoBaseUrl || origin,
     }
-  } catch { return { nombre: 'Lautaro', linkPortfolio: 'https://mana-dev.vercel.app' } }
-}
-
-function buildPhone(raw: string | null): string | null {
-  if (!raw) return null
-  const p = raw.replace(/\D/g, '')
-  const norm = p.startsWith('0') ? p.slice(1) : p
-  return norm.startsWith('54') ? norm : `54${norm}`
+  } catch { return { nombre: 'Lautaro', linkPortfolio: 'https://mana-dev.vercel.app', demoBaseUrl: origin } }
 }
 
 function scoreColor(s: number) {
@@ -54,17 +51,14 @@ function LeadCard({
   onGuardar: () => void
 }) {
   const settings = getSettingsLocal()
-  const phone = buildPhone(r.telefono)
-
-  const wa1 = phone
-    ? `https://wa.me/${phone}?text=${encodeURIComponent('Hola, ¿cómo están? 👋')}`
-    : null
-
-  const wa2 = phone
-    ? `https://wa.me/${phone}?text=${encodeURIComponent(
-        `Soy ${settings.nombre}, programador y desarrollador web 💻\n\nTrabajo con locales como ${r.nombre} armando sistemas que ahorran tiempo: página web, WhatsApp con IA, tienda online, control de stock y caja, turnos online y más.\n\nPueden ver los trabajos que hago acá 👇\n${settings.linkPortfolio}\n\n¿Les interesa que charlemos? Sin compromiso 🙂`
-      )}`
-    : null
+  const mensajes = construirMensajes(
+    { nombre: r.nombre, telefono: r.telefono, categoria: r.categoria },
+    settings,
+  )
+  const wa1 = mensajes.find(m => m.key === 'apertura')?.url ?? null
+  const wa2 = mensajes.find(m => m.key === 'pitch')?.url ?? null
+  const hasPhone = !!wa2
+  const demoUrl = getDemoUrl(getDemoMatch(r.nombre, r.categoria), settings.demoBaseUrl)
 
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
@@ -105,10 +99,20 @@ function LeadCard({
         <div className="bg-blue-50 rounded-xl p-2.5">
           <p className="text-xs font-semibold text-blue-800">💡 {r.tipo_web_sugerida}</p>
           <p className="text-xs text-blue-600 mt-0.5 leading-relaxed">{r.descripcion_propuesta}</p>
+          {demoUrl && (
+            <a
+              href={demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 mt-2 text-xs font-semibold text-blue-700 bg-white border border-blue-200 hover:bg-blue-100 px-2.5 py-1.5 rounded-lg transition-colors"
+            >
+              <Eye size={13} /> Ver demo del rubro
+            </a>
+          )}
         </div>
 
         {/* Mensajes WA */}
-        {phone ? (
+        {hasPhone ? (
           <div className="grid grid-cols-2 gap-2">
             <a
               href={wa1!}

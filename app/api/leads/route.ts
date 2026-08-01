@@ -4,14 +4,27 @@ import { supabase } from '@/lib/supabase'
 export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl
   const estado = searchParams.get('estado') || 'todos'
+  const seguimiento = searchParams.get('seguimiento')
 
-  let query = supabase
-    .from('leads')
-    .select('*')
-    .order('created_at', { ascending: false })
+  let query
 
-  if (estado !== 'todos') {
-    query = query.eq('estado', estado)
+  if (seguimiento === 'pendiente') {
+    // Cola de "recontactar hoy": seguimiento vencido, sin cerrar aún.
+    query = supabase
+      .from('leads')
+      .select('*')
+      .lte('proximo_seguimiento', new Date().toISOString())
+      .not('estado', 'in', '("vendido","descartado")')
+      .order('proximo_seguimiento', { ascending: true })
+  } else {
+    query = supabase
+      .from('leads')
+      .select('*')
+      .order('created_at', { ascending: false })
+
+    if (estado !== 'todos') {
+      query = query.eq('estado', estado)
+    }
   }
 
   const { data, error } = await query
