@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Dorita — Parrilla Argentina · Palermo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── RESET & BASE ──────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #070504;
+      --card:        #121010;
+      --ember:       #C03020;
+      --ember-dark:  #901810;
+      --orange:      #E06020;
+      --cream:       #F0E8D8;
+      --cream-dim:   #C8B89A;
+      --white:       #FFFFFF;
+      --font-head:   'Bebas Neue', Impact, sans-serif;
+      --font-body:   'Inter', system-ui, sans-serif;
+      --radius:      10px;
+      --tr:          0.3s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--cream);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    img { display: block; width: 100%; object-fit: cover; }
+    a   { color: inherit; text-decoration: none; }
+
+    /* ── SCROLL PROGRESS ─────────────────────────────────────────────── */
+    #progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--ember), var(--orange));
+      z-index: 9999;
+      transition: width 0.1s linear;
+    }
+
+    /* ── FADE-UP ──────────────────────────────────────────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up.d1 { transition-delay: 0.1s; }
+    .fade-up.d2 { transition-delay: 0.2s; }
+    .fade-up.d3 { transition-delay: 0.3s; }
+    .fade-up.d4 { transition-delay: 0.4s; }
+    .fade-up.d5 { transition-delay: 0.5s; }
+
+    /* ── ANNOUNCEMENT BAR ────────────────────────────────────────────── */
+    .announce {
+      background: var(--ember);
+      text-align: center;
+      padding: 9px 1rem;
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--white);
+      position: relative;
+      z-index: 800;
+    }
+
+    /* ── NAV ─────────────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 35px;
+      left: 0; right: 0;
+      z-index: 900;
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background var(--tr), backdrop-filter var(--tr), top var(--tr);
+    }
+    nav.scrolled {
+      top: 0;
+      background: rgba(7,5,4,0.94);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(192,48,32,0.25);
+    }
+
+    .nav-logo {
+      font-family: var(--font-head);
+      font-size: 1.9rem;
+      letter-spacing: 0.05em;
+      color: var(--cream);
+      line-height: 1;
+    }
+    .nav-logo span { color: var(--ember); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+      transition: color var(--tr);
+    }
+    .nav-links a:hover { color: var(--cream); }
+
+    .nav-cta {
+      background: var(--ember);
+      color: var(--white) !important;
+      padding: 0.55rem 1.3rem;
+      border-radius: 4px;
+      font-size: 0.72rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.12em !important;
+      text-transform: uppercase !important;
+      transition: background var(--tr), transform var(--tr) !important;
+    }
+    .nav-cta:hover { background: var(--ember-dark) !important; transform: translateY(-1px); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--cream);
+      border-radius: 2px;
+      transition: var(--tr);
+    }
+
+    @media (max-width: 820px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 64px; left: 0; right: 0;
+        background: rgba(7,5,4,0.97);
+        padding: 1.5rem 2rem;
+        gap: 1.2rem;
+        border-bottom: 1px solid rgba(192,48,32,0.3);
+      }
+      .hamburger { display: flex; }
+      .nav-cta { display: none; }
+    }
+
+    /* ── HERO ────────────────────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.squarespace-cdn.com/content/v1/66c3e4f24c5b5e4084fca1ec/d585e3f8-2034-4e6d-b05c-879591525867/la-dorita-parrilla-argentina-buenos+aires+%2821%29.jpg');
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.05);
+      transition: transform 8s ease-out;
+    }
+    .hero-bg.loaded { transform: scale(1); }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(7,5,4,0.82) 0%,
+        rgba(120,24,16,0.45) 50%,
+        rgba(7,5,4,0.88) 100%
+      );
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 1.5rem;
+      max-width: 900px;
+    }
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 1rem;
+    }
+    .hero-title {
+      font-family: var(--font-head);
+      font-size: clamp(5rem, 14vw, 11rem);
+      line-height: 0.9;
+      color: var(--cream);
+      letter-spacing: 0.02em;
+      text-shadow: 0 4px 40px rgba(192,48,32,0.5);
+    }
+    .hero-subtitle {
+      font-family: var(--font-head);
+      font-size: clamp(1.5rem, 4vw, 2.8rem);
+      letter-spacing: 0.22em;
+      color: var(--ember);
+      margin-top: 0.3rem;
+      margin-bottom: 2rem;
+    }
+    .hero-pills {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 2.2rem;
+    }
+    .hero-pill {
+      background: rgba(240,232,216,0.1);
+      border: 1px solid rgba(240,232,216,0.25);
+      backdrop-filter: blur(8px);
+      color: var(--cream);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.45rem 1rem;
+      border-radius: 50px;
+    }
+    .hero-pill.fire {
+      background: rgba(192,48,32,0.25);
+      border-color: var(--ember);
+      color: #FFB090;
+    }
+    .hero-rating {
+      background: rgba(192,48,32,0.85);
+      color: var(--white);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.45rem 1rem;
+      border-radius: 50px;
+    }
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--ember);
+      color: var(--white);
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      border-radius: 4px;
+      border: 2px solid var(--ember);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--tr), box-shadow var(--tr);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -75%;
+      width: 50%; height: 200%;
+      background: rgba(255,255,255,0.18);
+      transform: skewX(-20deg);
+      transition: left 0.5s ease;
+    }
+    .btn-primary:hover::before { left: 130%; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(192,48,32,0.5); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--cream);
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      border-radius: 4px;
+      border: 2px solid rgba(240,232,216,0.4);
+      cursor: pointer;
+      transition: border-color var(--tr), color var(--tr), transform var(--tr);
+    }
+    .btn-outline:hover {
+      border-color: var(--cream);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0.6;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    .hero-scroll span {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+    }
+    .hero-scroll svg { width: 18px; height: 18px; fill: var(--cream-dim); }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ── STATS STRIP ─────────────────────────────────────────────────── */
+    #stats {
+      background: var(--ember);
+      padding: 3rem 1.5rem;
+    }
+    .stats-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      text-align: center;
+    }
+    .stat-item { padding: 0.5rem; }
+    .stat-number {
+      font-family: var(--font-head);
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      color: var(--white);
+      line-height: 1;
+      letter-spacing: 0.03em;
+    }
+    .stat-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      margin-top: 0.4rem;
+    }
+    .stat-divider {
+      width: 1px;
+      background: rgba(255,255,255,0.2);
+      align-self: stretch;
+    }
+    @media (max-width: 640px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-divider { display: none; }
+    }
+
+    /* ── MARQUEE ─────────────────────────────────────────────────────── */
+    .marquee-wrap {
+      background: var(--card);
+      padding: 1rem 0;
+      overflow: hidden;
+      border-top: 1px solid rgba(192,48,32,0.2);
+      border-bottom: 1px solid rgba(192,48,32,0.2);
+    }
+    .marquee-track {
+      display: flex;
+      white-space: nowrap;
+      animation: marquee 28s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 0 1.2rem;
+      font-family: var(--font-head);
+      font-size: 1rem;
+      letter-spacing: 0.12em;
+      color: var(--cream-dim);
+    }
+    .marquee-item .sep { color: var(--ember); font-size: 0.8rem; }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── SECTIONS COMMON ─────────────────────────────────────────────── */
+    section { padding: 6rem 1.5rem; }
+    .container { max-width: 1160px; margin: 0 auto; }
+
+    .label-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ember);
+      border-left: 3px solid var(--ember);
+      padding-left: 0.7rem;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      color: var(--cream);
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+    .section-title em { color: var(--ember); font-style: normal; }
+    .ember-line {
+      width: 52px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--ember), var(--orange));
+      margin: 1.4rem 0;
+    }
+
+    /* ── SOBRE LA DORITA ─────────────────────────────────────────────── */
+    #sobre {
+      background: var(--bg);
+    }
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .sobre-quote-card {
+      background: var(--ember);
+      padding: 2.5rem;
+      border-radius: var(--radius);
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .sobre-quote-card::before {
+      content: '"';
+      position: absolute;
+      top: -1rem;
+      left: 1rem;
+      font-family: var(--font-head);
+      font-size: 8rem;
+      color: rgba(255,255,255,0.12);
+      line-height: 1;
+    }
+    .quote-text {
+      font-family: var(--font-head);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      color: var(--white);
+      letter-spacing: 0.06em;
+      line-height: 1.1;
+      position: relative;
+      z-index: 1;
+    }
+    .quote-author {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      margin-top: 1.2rem;
+    }
+    .sobre-body p {
+      color: var(--cream-dim);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .sobre-body p strong { color: var(--cream); }
+    .sobre-img-wrap {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 4/5;
+    }
+    .sobre-img-wrap img {
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .sobre-img-wrap:hover img { transform: scale(1.04); }
+    .sobre-img-badge {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: var(--ember);
+      color: var(--white);
+      font-family: var(--font-head);
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      padding: 0.6rem 1.2rem;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 860px) {
+      .sobre-grid { grid-template-columns: 1fr; gap: 3rem; }
+    }
+
+    /* ── CARTA / PLATOS ──────────────────────────────────────────────── */
+    #carta {
+      background: var(--card);
+    }
+    .carta-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .platos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .plato-card {
+      background: var(--bg);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(192,48,32,0.12);
+      transition: transform var(--tr), box-shadow var(--tr), border-color var(--tr);
+    }
+    .plato-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(192,48,32,0.25);
+      border-color: rgba(192,48,32,0.4);
+    }
+    .plato-img {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      position: relative;
+    }
+    .plato-img img {
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .plato-card:hover .plato-img img { transform: scale(1.07); }
+    .plato-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(7,5,4,0.7) 0%, transparent 50%);
+    }
+    .plato-badge {
+      position: absolute;
+      top: 0.8rem;
+      left: 0.8rem;
+      background: var(--ember);
+      color: var(--white);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      border-radius: 3px;
+    }
+    .plato-body {
+      padding: 1.3rem;
+    }
+    .plato-name {
+      font-family: var(--font-head);
+      font-size: 1.4rem;
+      letter-spacing: 0.05em;
+      color: var(--cream);
+      margin-bottom: 0.4rem;
+    }
+    .plato-desc {
+      font-size: 0.82rem;
+      color: var(--cream-dim);
+      line-height: 1.65;
+    }
+    .plato-sep {
+      color: var(--ember);
+      margin: 0 0.3rem;
+    }
+
+    @media (max-width: 900px) {
+      .platos-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 580px) {
+      .platos-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── GALERÍA ─────────────────────────────────────────────────────── */
+    #galeria {
+      background: var(--bg);
+      padding-bottom: 4rem;
+    }
+    .galeria-header { text-align: center; margin-bottom: 2.5rem; }
+    .galeria-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: 260px 260px;
+      gap: 8px;
+      max-width: 1160px;
+      margin: 0 auto;
+    }
+    .gal-item {
+      overflow: hidden;
+      border-radius: 6px;
+      position: relative;
+      cursor: pointer;
+    }
+    .gal-item:nth-child(1) { grid-column: span 5; grid-row: span 2; }
+    .gal-item:nth-child(2) { grid-column: span 4; }
+    .gal-item:nth-child(3) { grid-column: span 3; }
+    .gal-item:nth-child(4) { grid-column: span 3; }
+    .gal-item:nth-child(5) { grid-column: span 4; }
+    .gal-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .gal-item:hover img { transform: scale(1.08); }
+    .gal-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(192,48,32,0.6), rgba(224,96,32,0.4));
+      opacity: 0;
+      transition: opacity var(--tr);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .gal-overlay span {
+      font-size: 2rem;
+    }
+    .gal-item:hover .gal-overlay { opacity: 1; }
+
+    @media (max-width: 768px) {
+      .galeria-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+      .gal-item:nth-child(1),
+      .gal-item:nth-child(2),
+      .gal-item:nth-child(3),
+      .gal-item:nth-child(4),
+      .gal-item:nth-child(5) {
+        grid-column: span 1;
+        grid-row: span 1;
+        height: 200px;
+      }
+    }
+
+    /* ── MADRID SECTION ──────────────────────────────────────────────── */
+    #madrid {
+      background: linear-gradient(135deg, #0E0808 0%, #1A0808 50%, #0E0808 100%);
+      border-top: 1px solid rgba(192,48,32,0.3);
+      border-bottom: 1px solid rgba(192,48,32,0.3);
+      text-align: center;
+    }
+    .madrid-inner { max-width: 720px; margin: 0 auto; }
+    .madrid-flag {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+    }
+    .madrid-title {
+      font-family: var(--font-head);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      color: var(--cream);
+      letter-spacing: 0.06em;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+    .madrid-title em { color: var(--ember); font-style: normal; }
+    .madrid-body {
+      color: var(--cream-dim);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+    .madrid-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--ember);
+      color: var(--white);
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+    }
+
+    /* ── RESEÑAS ─────────────────────────────────────────────────────── */
+    #resenas {
+      background: var(--card);
+    }
+    .resenas-header { text-align: center; margin-bottom: 3rem; }
+    .resenas-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .resena-card {
+      background: var(--bg);
+      border: 1px solid rgba(192,48,32,0.15);
+      border-radius: var(--radius);
+      padding: 2rem;
+      transition: border-color var(--tr), transform var(--tr);
+    }
+    .resena-card:hover {
+      border-color: rgba(192,48,32,0.4);
+      transform: translateY(-4px);
+    }
+    .resena-stars {
+      color: var(--orange);
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+    .resena-text {
+      font-size: 0.9rem;
+      color: var(--cream-dim);
+      line-height: 1.75;
+      margin-bottom: 1.4rem;
+      font-style: italic;
+    }
+    .resena-author {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ember);
+    }
+    .resena-source {
+      font-size: 0.68rem;
+      color: rgba(200,184,154,0.5);
+      margin-top: 0.2rem;
+    }
+
+    @media (max-width: 768px) {
+      .resenas-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── SUCURSALES ──────────────────────────────────────────────────── */
+    #sucursales {
+      background: var(--bg);
+    }
+    .sucursales-header { text-align: center; margin-bottom: 3rem; }
+    .sucursales-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .sucursal-card {
+      background: var(--card);
+      border: 1px solid rgba(192,48,32,0.2);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color var(--tr);
+    }
+    .sucursal-card:hover { border-color: var(--ember); }
+    .sucursal-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: linear-gradient(to bottom, var(--ember), var(--orange));
+    }
+    .sucursal-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ember);
+      margin-bottom: 0.8rem;
+    }
+    .sucursal-name {
+      font-family: var(--font-head);
+      font-size: 1.6rem;
+      color: var(--cream);
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+    }
+    .sucursal-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .sucursal-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      font-size: 0.88rem;
+      color: var(--cream-dim);
+    }
+    .sucursal-icon { color: var(--ember); font-size: 1rem; min-width: 20px; }
+    .sucursal-row a { color: var(--cream-dim); transition: color var(--tr); }
+    .sucursal-row a:hover { color: var(--ember); }
+    .hours-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.2rem 0.8rem;
+      margin-top: 0.3rem;
+    }
+    .hours-day { font-weight: 600; color: var(--cream); font-size: 0.82rem; }
+    .hours-time { color: var(--cream-dim); font-size: 0.82rem; }
+
+    @media (max-width: 640px) {
+      .sucursales-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── CONTACTO ────────────────────────────────────────────────────── */
+    #contacto {
+      background: var(--card);
+    }
+    .contacto-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    .map-embed {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(192,48,32,0.2);
+    }
+    .map-embed iframe {
+      width: 100%;
+      height: 360px;
+      border: none;
+      display: block;
+    }
+    .contacto-info { padding-top: 1rem; }
+    .contacto-info .label-tag { margin-bottom: 1rem; }
+    .contacto-info .section-title { margin-bottom: 1.5rem; }
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .contact-link-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--bg);
+      border: 1px solid rgba(192,48,32,0.15);
+      border-radius: var(--radius);
+      padding: 1rem 1.4rem;
+      transition: border-color var(--tr), transform var(--tr);
+    }
+    .contact-link-item:hover {
+      border-color: var(--ember);
+      transform: translateX(4px);
+    }
+    .contact-link-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .contact-link-icon.wa { background: rgba(37,211,102,0.2); }
+    .contact-link-icon.ig { background: rgba(192,48,32,0.2); }
+    .contact-link-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+    }
+    .contact-link-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--cream);
+    }
+
+    @media (max-width: 768px) {
+      .contacto-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── CTA FINAL ───────────────────────────────────────────────────── */
+    #cta-final {
+      background: linear-gradient(135deg, #0A0202 0%, #1A0505 40%, #200808 100%);
+      text-align: center;
+      padding: 7rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    #cta-final::before {
+      content: '🔥';
+      position: absolute;
+      font-size: 18rem;
+      opacity: 0.04;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .cta-final-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--ember);
+      margin-bottom: 1.5rem;
+    }
+    .cta-final-title {
+      font-family: var(--font-head);
+      font-size: clamp(3.5rem, 9vw, 7rem);
+      color: var(--cream);
+      letter-spacing: 0.04em;
+      line-height: 0.95;
+      margin-bottom: 1.5rem;
+    }
+    .cta-final-sub {
+      font-size: 1.1rem;
+      color: var(--cream-dim);
+      margin-bottom: 3rem;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta-final-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ── FOOTER ──────────────────────────────────────────────────────── */
+    footer {
+      background: #040302;
+      padding: 3rem 1.5rem;
+      border-top: 1px solid rgba(192,48,32,0.2);
+    }
+    .footer-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem;
+    }
+    .footer-brand .nav-logo { font-size: 2.2rem; margin-bottom: 0.8rem; }
+    .footer-brand p {
+      font-size: 0.82rem;
+      color: rgba(200,184,154,0.5);
+      max-width: 240px;
+      line-height: 1.7;
+    }
+    .footer-col-title {
+      font-family: var(--font-head);
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      color: var(--ember);
+      margin-bottom: 1rem;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li {
+      font-size: 0.82rem;
+      color: rgba(200,184,154,0.6);
+      margin-bottom: 0.5rem;
+    }
+    .footer-col ul li a { transition: color var(--tr); }
+    .footer-col ul li a:hover { color: var(--cream); }
+    .footer-bottom {
+      max-width: 1160px;
+      margin: 2rem auto 0;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .footer-copy {
+      font-size: 0.72rem;
+      color: rgba(200,184,154,0.35);
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 768px) {
+      .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+
+    /* ── FLOATING BUTTONS ────────────────────────────────────────────── */
+    .float-btns {
+      position: fixed;
+      bottom: 2rem;
+      right: 1.5rem;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .float-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+      transition: transform var(--tr), box-shadow var(--tr);
+      text-decoration: none;
+    }
+    .float-btn:hover { transform: scale(1.12); box-shadow: 0 8px 28px rgba(0,0,0,0.5); }
+    .float-wa { background: #25D366; }
+    .float-ig { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+  </style>
+</head>
+<body>
+
+  <!-- SCROLL PROGRESS -->
+  <div id="progress-bar"></div>
+
+  <!-- ANNOUNCEMENT BAR -->
+  <div class="announce">
+    🔥 ABIERTO HOY DESDE LAS 12 &nbsp;◆&nbsp; PALERMO HOLLYWOOD & PALERMO &nbsp;◆&nbsp; TAMBIÉN EN MADRID 🌍
+  </div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-logo">LA <span>DORITA</span></div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#sobre">La Parrilla</a></li>
+      <li><a href="#carta">La Carta</a></li>
+      <li><a href="#sucursales">Ubicaciones</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+      <li><a href="https://wa.me/5401147765653" target="_blank" class="nav-cta">Reservar ahora</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg" id="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow fade-up">🥩 Parrilla Argentina &nbsp;◆&nbsp; Palermo, Buenos Aires</p>
+      <h1 class="hero-title fade-up d1">LA DORITA</h1>
+      <p class="hero-subtitle fade-up d2">PARRILLA ARGENTINA</p>
+      <div class="hero-pills fade-up d3">
+        <span class="hero-pill">Palermo Hollywood</span>
+        <span class="hero-pill">Palermo Soho</span>
+        <span class="hero-pill fire">🔥 Desde 2002</span>
+        <span class="hero-pill">También en Madrid 🌍</span>
+        <span class="hero-rating">4.4 ★ &nbsp;1000+ Reseñas</span>
+      </div>
+      <div class="hero-btns fade-up d4">
+        <a href="https://wa.me/5401147765653" target="_blank" class="btn-primary">
+          📱 Reservar ahora
+        </a>
+        <a href="#carta" class="btn-outline">Ver la carta</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <svg viewBox="0 0 24 24"><path d="M12 16l-6-6h12z"/></svg>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <section id="stats">
+    <div class="stats-grid">
+      <div class="stat-item fade-up">
+        <div class="stat-number" data-target="2002" data-prefix="">2002</div>
+        <div class="stat-label">Fundado</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item fade-up d1">
+        <div class="stat-number" data-target="2" data-suffix="">2</div>
+        <div class="stat-label">Sucursales en BA</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item fade-up d2">
+        <div class="stat-number" data-target="34800" data-display="34.8K">34.8K</div>
+        <div class="stat-label">Seguidores Instagram</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item fade-up d3">
+        <div class="stat-number" data-target="20" data-suffix="+">+20</div>
+        <div class="stat-label">Años de Fuego</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track" id="marquee-track">
+      <div class="marquee-item">Vacío <span class="sep">🔥</span> Bife de Lomo <span class="sep">🔥</span> Choricampo <span class="sep">🔥</span> Asado de Tira <span class="sep">🔥</span> Provoleta <span class="sep">🔥</span> Empanadas de Carne <span class="sep">🔥</span> Vinos Argentinos <span class="sep">🔥</span> La Calidad No Es Negociable <span class="sep">🔥</span> Vacío <span class="sep">🔥</span> Bife de Lomo <span class="sep">🔥</span> Choricampo <span class="sep">🔥</span> Asado de Tira <span class="sep">🔥</span> Provoleta <span class="sep">🔥</span> Empanadas de Carne <span class="sep">🔥</span> Vinos Argentinos <span class="sep">🔥</span> La Calidad No Es Negociable <span class="sep">🔥</span></div>
+      <div class="marquee-item" aria-hidden="true">Vacío <span class="sep">🔥</span> Bife de Lomo <span class="sep">🔥</span> Choricampo <span class="sep">🔥</span> Asado de Tira <span class="sep">🔥</span> Provoleta <span class="sep">🔥</span> Empanadas de Carne <span class="sep">🔥</span> Vinos Argentinos <span class="sep">🔥</span> La Calidad No Es Negociable <span class="sep">🔥</span> Vacío <span class="sep">🔥</span> Bife de Lomo <span class="sep">🔥</span> Choricampo <span class="sep">🔥</span> Asado de Tira <span class="sep">🔥</span> Provoleta <span class="sep">🔥</span> Empanadas de Carne <span class="sep">🔥</span> Vinos Argentinos <span class="sep">🔥</span> La Calidad No Es Negociable <span class="sep">🔥</span></div>
+    </div>
+  </div>
+
+  <!-- SOBRE LA DORITA -->
+  <section id="sobre">
+    <div class="container">
+      <div class="sobre-grid">
+        <div class="sobre-text fade-up">
+          <div class="label-tag">La Historia</div>
+          <h2 class="section-title">SOBRE LA<br><em>DORITA</em></h2>
+          <div class="ember-line"></div>
+          <div class="sobre-quote-card">
+            <p class="quote-text">LA CALIDAD NO ES NEGOCIABLE.</p>
+            <p class="quote-author">— Sebastián Vallés, Fundador · 2002</p>
+          </div>
+          <div class="sobre-body">
+            <p>En <strong>2002</strong>, Sebastián Vallés abrió las puertas de La Dorita en <strong>Palermo Hollywood</strong> con una convicción que no tenía margen para la duda: los mejores ingredientes, porciones generosas, y precios que tiene sentido pagar.</p>
+            <p>Dos décadas después, esa apuesta se convirtió en <strong>referente obligado de la parrilla porteña</strong>. Hoy con dos sucursales en Buenos Aires y presencia en <strong>Madrid, España</strong>, La Dorita cruza fronteras sin perder ni un gramo de identidad.</p>
+            <p>Cada corte, cada brasa, cada empanada — todo habla del mismo compromiso que fundó esta parrilla. <strong>La calidad no es negociable desde 2002.</strong></p>
+          </div>
+        </div>
+        <div class="fade-up d2">
+          <div class="sobre-img-wrap">
+            <img
+              src="https://images.squarespace-cdn.com/content/v1/66c3e4f24c5b5e4084fca1ec/7a8a9380-aa24-429b-bc1e-b109e3a653ea/la-dorita-parrilla-argentina-buenos+aires+%286%29.jpg"
+              alt="La Dorita — Parrilla Argentina"
+              loading="lazy"
+            />
+            <div class="sobre-img-badge">PALERMO · DESDE 2002</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LA CARTA -->
+  <section id="carta">
+    <div class="container">
+      <div class="carta-header fade-up">
+        <div class="label-tag">Nuestros Platos</div>
+        <h2 class="section-title">LA <em>CARTA</em></h2>
+        <div class="ember-line" style="margin: 1.2rem auto;"></div>
+        <p style="color: var(--cream-dim); max-width: 500px; margin: 0 auto; font-size: 0.92rem;">Los cortes que nos hicieron famosos. Ingredientes de primera, fuego honesto, y el tamaño que merece la ocasión.</p>
+      </div>
+      <div class="platos-grid">
+
+        <div class="plato-card fade-up">
+          <div class="plato-img">
+            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=85" alt="Vacío" loading="lazy" />
+            <div class="plato-img-overlay"></div>
+            <span class="plato-badge">⭐ El Clásico</span>
+          </div>
+          <div class="plato-body">
+            <h3 class="plato-name">VACÍO</h3>
+            <p class="plato-desc">El corte que nos define. Tierno, jugoso, con esa costra perfecta que solo da la parrilla de verdad. <span class="plato-sep">◆</span> Cocción a punto.</p>
+          </div>
+        </div>
+
+        <div class="plato-card fade-up d1">
+          <div class="plato-img">
+            <img src="https://images.unsplash.com/photo-1558030006-450675393462?w=1200&q=85" alt="Bife de Lomo" loading="lazy" />
+            <div class="plato-img-overlay"></div>
+            <span class="plato-badge">Premium</span>
+          </div>
+          <div class="plato-body">
+            <h3 class="plato-name">BIFE DE LOMO</h3>
+            <p class="plato-desc">El corte más noble de la res. Magro, suave como manteca y con ese sabor que no necesita nada más. <span class="plato-sep">◆</span> Puro lomo argentino.</p>
+          </div>
+        </div>
+
+        <div class="plato-card fade-up d2">
+          <div class="plato-img">
+            <img src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=800&q=85" alt="Choricampo" loading="lazy" />
+            <div class="plato-img-overlay"></div>
+            <span class="plato-badge">🔥 Favorito</span>
+          </div>
+          <div class="plato-body">
+            <h3 class="plato-name">CHORICAMPO</h3>
+            <p class="plato-desc">Chorizo criollo jugoso, al punto de brasa. Perfecto como entrada o como plato principal para el que sabe. <span class="plato-sep">◆</span> Con pan casero.</p>
+          </div>
+        </div>
+
+        <div class="plato-card fade-up d1">
+          <div class="plato-img">
+            <img src="https://images.unsplash.com/photo-1558030006-450675393462?w=1200&q=85" alt="Asado de Tira Especial" loading="lazy" style="object-position: center 40%;" />
+            <div class="plato-img-overlay"></div>
+            <span class="plato-badge">Especial</span>
+          </div>
+          <div class="plato-body">
+            <h3 class="plato-name">ASADO DE TIRA ESPECIAL</h3>
+            <p class="plato-desc">Tira ancha, cocción lenta, costillas que se desprenden solas. El asado de tira como debe ser. <span class="plato-sep">◆</span> Para compartir.</p>
+          </div>
+        </div>
+
+        <div class="plato-card fade-up d2">
+          <div class="plato-img">
+            <img src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=800&q=85" alt="Provoleta" loading="lazy" style="object-position: center 30%;" />
+            <div class="plato-img-overlay"></div>
+            <span class="plato-badge">Entrada</span>
+          </div>
+          <div class="plato-body">
+            <h3 class="plato-name">PROVOLETA</h3>
+            <p class="plato-desc">Queso provolone derretido a la parrilla con orégano y ají molido. Costra dorada por fuera, cremosa por dentro. <span class="plato-sep">◆</span> Clásico porteño.</p>
+          </div>
+        </div>
+
+        <div class="plato-card fade-up d3">
+          <div class="plato-img">
+            <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=800&q=85" alt="Empanadas de Carne" loading="lazy" />
+            <div class="plato-img-overlay"></div>
+            <span class="plato-badge">Caseras</span>
+          </div>
+          <div class="plato-body">
+            <h3 class="plato-name">EMPANADAS DE CARNE</h3>
+            <p class="plato-desc">Masa hecha en casa, relleno generoso con carne cortada a cuchillo, huevo y aceitunas. Crujientes y honestas. <span class="plato-sep">◆</span> Docena o media.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERÍA -->
+  <section id="galeria">
+    <div class="galeria-header fade-up">
+      <div class="label-tag" style="margin: 0 auto 0.8rem;">La Dorita en Fotos</div>
+      <h2 class="section-title">GALERÍA</h2>
+    </div>
+    <div class="galeria-grid">
+      <div class="gal-item fade-up">
+        <img src="https://images.squarespace-cdn.com/content/v1/66c3e4f24c5b5e4084fca1ec/d585e3f8-2034-4e6d-b05c-879591525867/la-dorita-parrilla-argentina-buenos+aires+%2821%29.jpg" alt="La Dorita Parrilla" loading="lazy" />
+        <div class="gal-overlay"><span>🔥</span></div>
+      </div>
+      <div class="gal-item fade-up d1">
+        <img src="https://images.squarespace-cdn.com/content/v1/66c3e4f24c5b5e4084fca1ec/7a8a9380-aa24-429b-bc1e-b109e3a653ea/la-dorita-parrilla-argentina-buenos+aires+%286%29.jpg" alt="La Dorita comida" loading="lazy" />
+        <div class="gal-overlay"><span>🥩</span></div>
+      </div>
+      <div class="gal-item fade-up d2">
+        <img src="https://images.unsplash.com/photo-1558030006-450675393462?w=1200&q=85" alt="Parrilla fuego" loading="lazy" />
+        <div class="gal-overlay"><span>🔥</span></div>
+      </div>
+      <div class="gal-item fade-up d3">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=85" alt="Carne a la parrilla" loading="lazy" />
+        <div class="gal-overlay"><span>🥩</span></div>
+      </div>
+      <div class="gal-item fade-up d4">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=85" alt="Interior restaurante" loading="lazy" />
+        <div class="gal-overlay"><span>✨</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MADRID SECTION -->
+  <section id="madrid">
+    <div class="madrid-inner fade-up">
+      <div class="madrid-flag">🇦🇷 &nbsp;✈️ &nbsp;🇪🇸</div>
+      <h2 class="madrid-title">DE PALERMO<br>A <em>MADRID.</em></h2>
+      <p class="madrid-body">
+        Lo que nació en Palermo Hollywood en 2002 cruzó el Atlántico. La Dorita llegó a Madrid trayendo consigo el fuego, los cortes, la identidad y la misma obsesión por la calidad que la hizo famosa en Buenos Aires.<br><br>
+        Porque la buena parrilla argentina no tiene fronteras — y España lo sabe.
+      </p>
+      <div class="madrid-badge">
+        🌍 &nbsp; La Dorita · Madrid, España
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEÑAS -->
+  <section id="resenas">
+    <div class="container">
+      <div class="resenas-header fade-up">
+        <div class="label-tag">Lo Que Dicen</div>
+        <h2 class="section-title">RESEÑAS</h2>
+        <div class="ember-line" style="margin: 1.2rem auto;"></div>
+      </div>
+      <div class="resenas-grid">
+        <div class="resena-card fade-up">
+          <div class="resena-stars">★★★★★</div>
+          <p class="resena-text">"La mejor parrilla de Palermo sin dudas. El vacío es una obra de arte — tierno, jugoso, con esa costra perfecta. Las porciones son enormes y los precios muy sensatos. Volvería mil veces."</p>
+          <div class="resena-author">María J.</div>
+          <div class="resena-source">Google Reviews · Palermo Hollywood</div>
+        </div>
+        <div class="resena-card fade-up d1">
+          <div class="resena-stars">★★★★★</div>
+          <p class="resena-text">"Llevé a unos amigos que vinieron de Madrid y quedaron impresionados. Dijeron que La Dorita de allá está igual de buena — increíble lograr esa consistencia. El choricampo: impresionante."</p>
+          <div class="resena-author">Carlos M.</div>
+          <div class="resena-source">Google Reviews · Palermo</div>
+        </div>
+        <div class="resena-card fade-up d2">
+          <div class="resena-stars">★★★★☆</div>
+          <p class="resena-text">"El ambiente, la atención, la carne — todo en su punto. La provoleta llegó perfecta, burbujeante y dorada. El asado de tira especial para dos personas es para cuatro. Generosidad real."</p>
+          <div class="resena-author">Luciana P.</div>
+          <div class="resena-source">Google Reviews · Palermo Hollywood</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUCURSALES & HORARIOS -->
+  <section id="sucursales">
+    <div class="container">
+      <div class="sucursales-header fade-up">
+        <div class="label-tag">Dónde Encontrarnos</div>
+        <h2 class="section-title">SUCURSALES</h2>
+        <div class="ember-line" style="margin: 1.2rem auto;"></div>
+      </div>
+      <div class="sucursales-grid">
+
+        <div class="sucursal-card fade-up">
+          <div class="sucursal-tag">Sucursal Principal</div>
+          <h3 class="sucursal-name">PALERMO HOLLYWOOD</h3>
+          <div class="sucursal-info">
+            <div class="sucursal-row">
+              <span class="sucursal-icon">📍</span>
+              <span>Humboldt 1892, Palermo Hollywood, CABA</span>
+            </div>
+            <div class="sucursal-row">
+              <span class="sucursal-icon">📞</span>
+              <a href="tel:01147765653">011 4776-5653</a>
+            </div>
+            <div class="sucursal-row">
+              <span class="sucursal-icon">💬</span>
+              <a href="https://wa.me/5401147765653" target="_blank">WhatsApp: +54 011 4776-5653</a>
+            </div>
+            <div class="sucursal-row">
+              <span class="sucursal-icon">🕐</span>
+              <div class="hours-grid">
+                <span class="hours-day">Dom – Jue</span>
+                <span class="hours-time">12:00 – 00:00 hs</span>
+                <span class="hours-day">Vie – Sáb</span>
+                <span class="hours-time">12:00 – 01:00 hs</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sucursal-card fade-up d1">
+          <div class="sucursal-tag">Segunda Sucursal</div>
+          <h3 class="sucursal-name">PALERMO</h3>
+          <div class="sucursal-info">
+            <div class="sucursal-row">
+              <span class="sucursal-icon">📍</span>
+              <span>Bulnes 2593, Palermo, CABA</span>
+            </div>
+            <div class="sucursal-row">
+              <span class="sucursal-icon">📞</span>
+              <span>Consultar por WhatsApp</span>
+            </div>
+            <div class="sucursal-row">
+              <span class="sucursal-icon">💬</span>
+              <a href="https://wa.me/5401147765653" target="_blank">WhatsApp: +54 011 4776-5653</a>
+            </div>
+            <div class="sucursal-row">
+              <span class="sucursal-icon">🕐</span>
+              <div class="hours-grid">
+                <span class="hours-day">Dom – Jue</span>
+                <span class="hours-time">12:00 – 00:00 hs</span>
+                <span class="hours-day">Vie – Sáb</span>
+                <span class="hours-time">12:00 – 01:00 hs</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <div class="container">
+      <div class="contacto-grid">
+        <div class="map-embed fade-up">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.1!2d-58.4350!3d-34.5870!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb58b0b1e0001%3A0x0!2sHumboldt+1892%2C+Palermo%2C+Buenos+Aires!5e0!3m2!1ses!2sar!4v1700000000000"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="La Dorita - Humboldt 1892, Palermo Hollywood"
+          ></iframe>
+        </div>
+        <div class="contacto-info fade-up d1">
+          <div class="label-tag">Contacto</div>
+          <h2 class="section-title">HABLEMOS<br><em>HOY.</em></h2>
+          <div class="ember-line"></div>
+          <div class="contact-links">
+            <a href="https://wa.me/5401147765653" target="_blank" class="contact-link-item">
+              <div class="contact-link-icon wa">📱</div>
+              <div>
+                <div class="contact-link-label">WhatsApp — Reservas</div>
+                <div class="contact-link-value">+54 011 4776-5653</div>
+              </div>
+            </a>
+            <a href="https://instagram.com/ladoritaparrilla" target="_blank" class="contact-link-item">
+              <div class="contact-link-icon ig">📸</div>
+              <div>
+                <div class="contact-link-label">Instagram</div>
+                <div class="contact-link-value">@ladoritaparrilla</div>
+              </div>
+            </a>
+            <a href="tel:01147765653" class="contact-link-item">
+              <div class="contact-link-icon" style="background: rgba(192,48,32,0.2);">📞</div>
+              <div>
+                <div class="contact-link-label">Teléfono — Humboldt</div>
+                <div class="contact-link-value">011 4776-5653</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section id="cta-final">
+    <div class="container" style="position: relative; z-index: 1;">
+      <p class="cta-final-eyebrow fade-up">🥩 La Mejor Parrilla de Palermo</p>
+      <h2 class="cta-final-title fade-up d1">¿QUÉ<br>ESPERÁS?</h2>
+      <p class="cta-final-sub fade-up d2">La mejor carne de Palermo te espera hoy. Reservá tu mesa ahora por WhatsApp.</p>
+      <div class="cta-final-btns fade-up d3">
+        <a href="https://wa.me/5401147765653" target="_blank" class="btn-primary" style="font-size: 0.88rem; padding: 1rem 2.5rem;">
+          📱 Reservar ahora
+        </a>
+        <a href="https://instagram.com/ladoritaparrilla" target="_blank" class="btn-outline" style="font-size: 0.88rem; padding: 1rem 2.5rem;">
+          Seguinos en Instagram
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo">LA <span style="color: var(--ember);">DORITA</span></div>
+        <p>La calidad no es negociable desde 2002. Parrilla argentina en Palermo Hollywood, Palermo y Madrid.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Sucursales</div>
+        <ul>
+          <li>Humboldt 1892, Palermo Hollywood</li>
+          <li>Bulnes 2593, Palermo</li>
+          <li>Madrid, España 🌍</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Horarios</div>
+        <ul>
+          <li>Dom – Jue: 12:00 – 00:00</li>
+          <li>Vie – Sáb: 12:00 – 01:00</li>
+          <li><a href="https://instagram.com/ladoritaparrilla" target="_blank">@ladoritaparrilla</a></li>
+          <li><a href="https://wa.me/5401147765653" target="_blank">WhatsApp Reservas</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2024 La Dorita — Parrilla Argentina · La calidad no es negociable desde 2002</span>
+      <span class="footer-copy" style="color: rgba(200,184,154,0.2);">Demo creada con ❤️ para La Dorita</span>
+    </div>
+  </footer>
+
+  <!-- FLOATING BUTTONS -->
+  <div class="float-btns">
+    <a href="https://instagram.com/ladoritaparrilla" target="_blank" class="float-btn float-ig" title="Instagram">📸</a>
+    <a href="https://wa.me/5401147765653" target="_blank" class="float-btn float-wa" title="WhatsApp">💬</a>
+  </div>
+
+  <script>
+    // ── SCROLL PROGRESS ──────────────────────────────────────────────────
+    const progressBar = document.getElementById('progress-bar');
+    function updateProgress() {
+      const scrolled = window.scrollY;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (scrolled / total * 100) + '%';
+    }
+
+    // ── NAV SCROLL ───────────────────────────────────────────────────────
+    const nav = document.getElementById('nav');
+    const announce = document.querySelector('.announce');
+    function updateNav() {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }
+
+    window.addEventListener('scroll', () => {
+      updateProgress();
+      updateNav();
+    }, { passive: true });
+
+    // ── HAMBURGER ────────────────────────────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+
+    // ── HERO BG ANIMATION ────────────────────────────────────────────────
+    window.addEventListener('load', () => {
+      document.getElementById('hero-bg').classList.add('loaded');
+    });
+
+    // ── FADE-UP ON SCROLL ────────────────────────────────────────────────
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // ── ANIMATED COUNTERS ────────────────────────────────────────────────
+    function animateCounter(el, target, duration, prefix, suffix) {
+      let start = 0;
+      const startTime = performance.now();
+      function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.floor(eased * target);
+        el.textContent = (prefix || '') + current.toLocaleString('es-AR') + (suffix || '');
+        if (progress < 1) requestAnimationFrame(update);
+        else el.textContent = (prefix || '') + target.toLocaleString('es-AR') + (suffix || '');
+      }
+      requestAnimationFrame(update);
+    }
+
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const nums = entry.target.querySelectorAll('[data-target]');
+          nums.forEach(num => {
+            const target = parseInt(num.dataset.target);
+            const display = num.dataset.display;
+            if (display) {
+              // Static display value (like 34.8K)
+              setTimeout(() => { num.textContent = display; }, 200);
+            } else {
+              const prefix = num.dataset.prefix || '';
+              const suffix = num.dataset.suffix || '';
+              if (target === 2002) {
+                num.textContent = '2002';
+              } else if (target === 2) {
+                animateCounter(num, 2, 1200, '', ' Sedes');
+              } else {
+                animateCounter(num, target, 1400, prefix, suffix);
+              }
+            }
+          });
+          statsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('#stats').forEach(el => statsObserver.observe(el));
+
+    // ── SMOOTH ANCHOR LINKS ───────────────────────────────────────────────
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          navLinks.classList.remove('open');
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    // ── PARALLAX HERO ─────────────────────────────────────────────────────
+    const heroBg = document.getElementById('hero-bg');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY < window.innerHeight) {
+        heroBg.style.transform = `scale(1) translateY(${window.scrollY * 0.25}px)`;
+      }
+    }, { passive: true });
+
+    // Initial calls
+    updateProgress();
+    updateNav();
+  </script>
+</body>
+</html>

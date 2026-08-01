@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Power Gym Lomas | Gimnasio en Lomas de Zamora · Entrenamiento de Élite</title>
+  <meta name="description" content="Power Gym Lomas — el gimnasio más completo de Lomas de Zamora. Musculación, funcional, spinning y más. Empezá hoy con tu mes de prueba gratis." />
+  <meta property="og:title" content="Power Gym Lomas | Gimnasio Lomas de Zamora" />
+  <meta property="og:description" content="El gimnasio más completo de Lomas de Zamora. ¡Consultá ahora!" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&q=80" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SportsActivityLocation",
+    "name": "Power Gym Lomas",
+    "description": "Gimnasio de musculación y fitness en Lomas de Zamora con equipamiento de alta gama.",
+    "address": { "@type": "PostalAddress", "streetAddress": "Garibaldi 1537", "addressLocality": "Lomas de Zamora", "addressRegion": "Buenos Aires", "addressCountry": "AR" },
+    "telephone": "+5401167574301",
+    "openingHours": ["Mo-Fr 07:00-22:00", "Sa 08:00-20:00", "Su 09:00-14:00"],
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.7", "reviewCount": "129" }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --negro: #060606;
+      --rojo: #E8001D;
+      --rojo-dark: #B80018;
+      --rojo-glow: rgba(232,0,29,0.4);
+      --gris: #0E0E0E;
+      --gris-medio: #161616;
+      --gris-card: #1C1C1C;
+      --gris-borde: #252525;
+      --gris-claro: #888;
+      --blanco: #FFFFFF;
+      --blanco-90: rgba(255,255,255,0.88);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--negro); color: var(--blanco); line-height: 1.6; overflow-x: hidden; }
+
+    /* PROGRESS BAR */
+    #progress-bar {
+      position: fixed; top: 0; left: 0; height: 3px; z-index: 999;
+      background: linear-gradient(90deg, var(--rojo), #FF6B6B);
+      width: 0%; transition: width 0.1s;
+    }
+
+    /* FADE ANIMATIONS */
+    .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(.25,.46,.45,.94), transform 0.8s cubic-bezier(.25,.46,.45,.94); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.1s; } .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; } .delay-4 { transition-delay: 0.4s; }
+    .delay-5 { transition-delay: 0.5s; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 3px; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(6,6,6,0.92);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(232,0,29,0.3);
+      transition: all 0.3s;
+    }
+    nav.scrolled { padding: 0.75rem 2rem; background: rgba(6,6,6,0.98); }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.9rem; letter-spacing: 0.04em;
+      color: var(--blanco); text-decoration: none;
+      display: flex; align-items: center; gap: 0.1em;
+    }
+    .nav-logo span { color: var(--rojo); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: rgba(255,255,255,0.7);
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px;
+      background: var(--rojo); transform: scaleX(0); transition: transform 0.25s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-cta {
+      position: relative; overflow: hidden;
+      background: var(--rojo); color: #fff;
+      padding: 0.6rem 1.5rem; border-radius: 6px;
+      font-size: 0.8rem; font-weight: 800; text-decoration: none;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      white-space: nowrap; flex-shrink: 0;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(232,0,29,0.35);
+    }
+    .nav-cta::after {
+      content: ''; position: absolute;
+      top: -50%; left: -75%; width: 50%; height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform: skewX(-20deg);
+      animation: shimmer 3.5s infinite;
+    }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(232,0,29,0.55); }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: #fff; margin: 5px 0; transition: 0.3s; }
+
+    /* SHIMMER ANIMATION */
+    @keyframes shimmer { 0% { left: -75%; } 100% { left: 150%; } }
+
+    /* HERO */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1800&q=85') center/cover no-repeat;
+      transform: scale(1.08);
+      transition: transform 12s ease;
+    }
+    .hero-bg.loaded { transform: scale(1); }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(6,6,6,0.92) 0%, rgba(100,0,10,0.2) 50%, rgba(6,6,6,0.85) 100%);
+    }
+    .hero-grid-overlay {
+      position: absolute; inset: 0; opacity: 0.04;
+      background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center; padding: 2rem 1.5rem; max-width: 900px;
+      padding-top: 120px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(232,0,29,0.12); border: 1px solid rgba(232,0,29,0.4);
+      color: #ff6b6b; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 0.45rem 1.2rem; border-radius: 50px;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(10px);
+    }
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 12vw, 9rem);
+      line-height: 0.88; letter-spacing: 0.02em;
+      color: var(--blanco); margin-bottom: 1.5rem;
+    }
+    .hero h1 .line-rojo {
+      display: block;
+      background: linear-gradient(90deg, var(--rojo), #FF4D4D);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      color: rgba(255,255,255,0.75); margin-bottom: 3rem;
+      max-width: 580px; margin-left: auto; margin-right: auto;
+      line-height: 1.8;
+    }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    /* BUTTONS */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: linear-gradient(135deg, var(--rojo) 0%, var(--rojo-dark) 100%);
+      color: #fff; padding: 1.05rem 2.2rem; border-radius: 8px;
+      font-size: 1rem; font-weight: 800; text-decoration: none;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      transition: transform 0.25s, box-shadow 0.25s;
+      box-shadow: 0 6px 30px rgba(232,0,29,0.4);
+      position: relative; overflow: hidden;
+    }
+    .btn-primary::after {
+      content: ''; position: absolute;
+      top: -50%; left: -75%; width: 50%; height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+      transform: skewX(-20deg); animation: shimmer 3s infinite;
+    }
+    .btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 40px rgba(232,0,29,0.6); }
+    .btn-primary:active { transform: translateY(-1px); }
+
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: rgba(255,255,255,0.05); color: #fff;
+      padding: 1.05rem 2.2rem; border-radius: 8px;
+      font-size: 1rem; font-weight: 700; text-decoration: none;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      transition: background 0.25s, border-color 0.25s, transform 0.25s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.5); transform: translateY(-3px); }
+
+    /* STATS */
+    .hero-stats {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      z-index: 2;
+      background: linear-gradient(to right, rgba(232,0,29,0.15), rgba(6,6,6,0.9), rgba(232,0,29,0.15));
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(232,0,29,0.2);
+      display: flex; justify-content: center;
+    }
+    .stats-inner { display: flex; max-width: 1100px; width: 100%; }
+    .stat {
+      flex: 1; text-align: center; padding: 2rem 1rem;
+      border-right: 1px solid rgba(255,255,255,0.06);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.8rem; line-height: 1;
+      background: linear-gradient(135deg, var(--rojo), #FF6B6B);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label { font-size: 0.72rem; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.2rem; }
+
+    /* MARQUEE */
+    .marquee-section {
+      background: linear-gradient(135deg, var(--rojo-dark), var(--rojo));
+      padding: 0; overflow: hidden;
+    }
+    .marquee-track {
+      display: flex; align-items: center;
+      animation: marquee 22s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-item {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 1rem 2.5rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.9);
+    }
+    .marquee-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.5); display: inline-block; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* SECTION BASE */
+    section { padding: 6rem 1.5rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 0.72rem; font-weight: 800; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--rojo);
+      margin-bottom: 1rem;
+    }
+    .section-eyebrow::before { content: ''; display: block; width: 28px; height: 2px; background: var(--rojo); }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+      line-height: 0.95; color: var(--blanco); margin-bottom: 1.2rem;
+      letter-spacing: 0.02em;
+    }
+    .section-sub { font-size: 1rem; color: var(--gris-claro); max-width: 520px; margin-bottom: 3.5rem; line-height: 1.8; }
+
+    /* BENEFICIOS */
+    .beneficios { background: var(--gris); }
+    .bene-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: var(--gris-borde); border: 1px solid var(--gris-borde); border-radius: 16px; overflow: hidden; }
+    .bene-card {
+      background: var(--gris-card); padding: 2.5rem 1.8rem; text-align: center;
+      transition: background 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .bene-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--rojo), #FF6B6B);
+      transform: scaleX(0); transition: transform 0.35s;
+    }
+    .bene-card:hover { background: #1E1010; }
+    .bene-card:hover::before { transform: scaleX(1); }
+    .bene-icon { font-size: 2.8rem; margin-bottom: 1.2rem; display: block; }
+    .bene-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: 0.6rem; letter-spacing: -0.01em; }
+    .bene-card p { font-size: 0.85rem; color: var(--gris-claro); line-height: 1.75; }
+
+    /* SERVICIOS */
+    .servicios-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 280px); gap: 12px; }
+    .servicio-card {
+      position: relative; border-radius: 12px; overflow: hidden; cursor: default;
+      transition: transform 0.4s cubic-bezier(.25,.46,.45,.94);
+    }
+    .servicio-card:hover { transform: scale(1.02); z-index: 2; }
+    .servicio-card:first-child { grid-row: span 2; }
+    .servicio-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+    .servicio-card:hover img { transform: scale(1.08); }
+    .servicio-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(6,6,6,0.95) 0%, rgba(6,6,6,0.1) 60%);
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 1.8rem;
+    }
+    .servicio-tag {
+      display: inline-block; background: var(--rojo);
+      font-size: 0.68rem; font-weight: 800; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 0.25rem 0.7rem; border-radius: 4px;
+      margin-bottom: 0.7rem; width: fit-content;
+    }
+    .servicio-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+    .servicio-card p { font-size: 0.82rem; color: rgba(255,255,255,0.72); line-height: 1.65; }
+
+    /* HORARIOS */
+    .horarios { background: var(--gris); }
+    .horarios-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .horarios-tabla { border-radius: 14px; overflow: hidden; border: 1px solid var(--gris-borde); }
+    .horario-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 1.6rem; border-bottom: 1px solid var(--gris-borde);
+      transition: background 0.2s;
+    }
+    .horario-row:last-child { border-bottom: none; }
+    .horario-row:hover { background: rgba(232,0,29,0.05); }
+    .horario-dia { font-weight: 700; font-size: 0.95rem; }
+    .horario-hrs { color: var(--rojo); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.04em; }
+    .horarios-card {
+      background: var(--gris-card); border: 1px solid var(--gris-borde);
+      border-radius: 14px; padding: 2rem;
+    }
+    .horarios-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; margin-bottom: 1.5rem; letter-spacing: 0.04em; }
+    .horario-clase { display: flex; gap: 1rem; margin-bottom: 1.4rem; align-items: flex-start; }
+    .clase-icon {
+      width: 46px; height: 46px; border-radius: 10px;
+      background: rgba(232,0,29,0.12); border: 1px solid rgba(232,0,29,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; flex-shrink: 0;
+    }
+    .clase-info strong { color: #fff; display: block; font-size: 0.9rem; margin-bottom: 0.15rem; }
+    .clase-info p { font-size: 0.82rem; color: var(--gris-claro); }
+
+    /* PLANES */
+    .planes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; align-items: stretch; }
+    .plan-card {
+      background: var(--gris-card); border: 1px solid var(--gris-borde);
+      border-radius: 16px; padding: 2.5rem 2rem; position: relative;
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex; flex-direction: column;
+    }
+    .plan-card:hover { transform: translateY(-6px); }
+    .plan-card.destacado {
+      border-color: var(--rojo);
+      background: linear-gradient(160deg, rgba(232,0,29,0.08) 0%, var(--gris-card) 60%);
+      box-shadow: 0 0 0 1px rgba(232,0,29,0.15), 0 20px 60px rgba(232,0,29,0.15);
+    }
+    .plan-card.destacado:hover { box-shadow: 0 0 0 1px rgba(232,0,29,0.3), 0 30px 80px rgba(232,0,29,0.25); }
+    .plan-badge {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--rojo), #FF4D4D);
+      color: #fff; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 0.35rem 1.2rem; border-radius: 50px;
+      white-space: nowrap; box-shadow: 0 4px 16px rgba(232,0,29,0.4);
+    }
+    .plan-nombre { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+    .plan-precio {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem; line-height: 1; color: var(--rojo); margin-bottom: 0.2rem;
+    }
+    .plan-precio sup { font-size: 1.6rem; vertical-align: super; }
+    .plan-periodo { font-size: 0.78rem; color: var(--gris-claro); margin-bottom: 2rem; }
+    .plan-features { list-style: none; margin-bottom: 2rem; flex: 1; }
+    .plan-features li {
+      font-size: 0.88rem; padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex; gap: 0.75rem; align-items: center;
+    }
+    .plan-features li:last-child { border-bottom: none; }
+    .plan-features li .check { color: var(--rojo); font-weight: 900; font-size: 1rem; flex-shrink: 0; }
+
+    .btn-plan {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      width: 100%; text-align: center;
+      background: linear-gradient(135deg, var(--rojo), var(--rojo-dark));
+      color: #fff; padding: 1rem; border-radius: 10px;
+      font-weight: 800; text-decoration: none; font-size: 0.88rem;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(232,0,29,0.3);
+      position: relative; overflow: hidden;
+    }
+    .btn-plan::after {
+      content: ''; position: absolute;
+      top: -50%; left: -75%; width: 50%; height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      transform: skewX(-20deg); animation: shimmer 4s infinite;
+    }
+    .btn-plan:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(232,0,29,0.5); }
+    .btn-plan.outline {
+      background: transparent;
+      border: 1px solid var(--gris-borde); color: var(--blanco);
+      box-shadow: none;
+    }
+    .btn-plan.outline::after { display: none; }
+    .btn-plan.outline:hover { border-color: var(--rojo); background: rgba(232,0,29,0.06); box-shadow: none; transform: translateY(-2px); }
+
+    /* GALERIA */
+    .galeria { background: var(--gris); }
+    .galeria-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 220px);
+      gap: 10px;
+    }
+    .gal-item { overflow: hidden; border-radius: 10px; position: relative; }
+    .gal-item:first-child { grid-column: span 2; grid-row: span 2; }
+    .gal-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(.25,.46,.45,.94); }
+    .gal-item:hover img { transform: scale(1.08); }
+    .gal-overlay {
+      position: absolute; inset: 0; background: rgba(6,6,6,0);
+      transition: background 0.3s;
+    }
+    .gal-item:hover .gal-overlay { background: rgba(232,0,29,0.1); }
+
+    /* RESEÑAS */
+    .resenas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .resena-card {
+      background: var(--gris-card); border: 1px solid var(--gris-borde);
+      border-radius: 14px; padding: 2rem;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .resena-card::before {
+      content: '"'; position: absolute; top: 1rem; right: 1.5rem;
+      font-size: 5rem; line-height: 1; color: rgba(232,0,29,0.08);
+      font-family: Georgia, serif; pointer-events: none;
+    }
+    .resena-card:hover { border-color: rgba(232,0,29,0.3); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(232,0,29,0.1); }
+    .resena-stars { color: #F5C518; font-size: 1rem; margin-bottom: 0.9rem; letter-spacing: 2px; }
+    .resena-texto { font-size: 0.9rem; color: rgba(255,255,255,0.82); margin-bottom: 1.4rem; line-height: 1.8; font-style: italic; }
+    .resena-autor { display: flex; align-items: center; gap: 0.8rem; }
+    .resena-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--rojo), var(--rojo-dark));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.85rem; flex-shrink: 0;
+    }
+    .resena-nombre { font-size: 0.88rem; font-weight: 700; }
+    .resena-fecha { font-size: 0.73rem; color: var(--gris-claro); }
+
+    /* CONTACTO */
+    .contacto { background: var(--gris); }
+    .contacto-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .contacto-info h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem; margin-bottom: 2rem; letter-spacing: 0.04em; }
+    .info-item { display: flex; gap: 1.2rem; margin-bottom: 1.8rem; align-items: flex-start; }
+    .info-icon {
+      width: 48px; height: 48px; border-radius: 10px;
+      background: rgba(232,0,29,0.1); border: 1px solid rgba(232,0,29,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; flex-shrink: 0;
+    }
+    .info-item strong { display: block; font-size: 0.72rem; color: var(--gris-claro); margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    .info-item p { font-size: 0.95rem; font-weight: 500; }
+    .contacto-map { border-radius: 16px; overflow: hidden; border: 1px solid var(--gris-borde); height: 360px; }
+    .contacto-map iframe { width: 100%; height: 100%; border: none; filter: grayscale(100%) brightness(0.35) contrast(1.1); }
+
+    .btn-wa {
+      display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+      background: linear-gradient(135deg, #25D366, #1da851);
+      color: #fff; padding: 1.1rem 2rem; border-radius: 12px;
+      font-size: 1rem; font-weight: 800; text-decoration: none;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 6px 30px rgba(37,211,102,0.35);
+      margin-top: 1rem; position: relative; overflow: hidden;
+    }
+    .btn-wa::after {
+      content: ''; position: absolute;
+      top: -50%; left: -75%; width: 50%; height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform: skewX(-20deg); animation: shimmer 3.5s infinite;
+    }
+    .btn-wa:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(37,211,102,0.5); }
+
+    /* CTA FINAL */
+    .cta-final {
+      position: relative; overflow: hidden;
+      text-align: center; padding: 7rem 1.5rem;
+    }
+    .cta-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1400&q=80') center/cover no-repeat;
+    }
+    .cta-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(184,0,24,0.95) 0%, rgba(6,6,6,0.95) 100%);
+    }
+    .cta-content { position: relative; z-index: 2; }
+    .cta-final h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      margin-bottom: 1rem; line-height: 0.95; letter-spacing: 0.02em;
+    }
+    .cta-final p { font-size: 1.15rem; opacity: 0.85; margin-bottom: 2.5rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+
+    /* FOOTER */
+    footer { background: #030303; padding: 2.5rem 1.5rem; text-align: center; border-top: 1px solid var(--gris-borde); }
+    .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--blanco); letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    .footer-logo span { color: var(--rojo); }
+    footer p { font-size: 0.8rem; color: #444; margin-top: 0.3rem; }
+
+    /* WA FLOTANTE */
+    .wa-float {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 300;
+      display: flex; align-items: center; gap: 0.75rem;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: #fff; text-decoration: none; border-radius: 50px;
+      padding: 0.9rem 1.4rem;
+      box-shadow: 0 8px 30px rgba(37,211,102,0.45);
+      font-size: 0.85rem; font-weight: 800; letter-spacing: 0.04em;
+      animation: wa-pulse 3s infinite;
+      transition: transform 0.2s;
+    }
+    .wa-float svg { width: 26px; height: 26px; fill: #fff; flex-shrink: 0; }
+    .wa-float:hover { transform: scale(1.05); }
+    @keyframes wa-pulse {
+      0%, 100% { box-shadow: 0 8px 30px rgba(37,211,102,0.45); }
+      50% { box-shadow: 0 8px 50px rgba(37,211,102,0.75); }
+    }
+
+    /* MOBILE */
+    @media (max-width: 900px) {
+      .servicios-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
+      .servicio-card:first-child { grid-row: span 1; }
+      .planes-grid { grid-template-columns: 1fr; }
+      .resenas-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: block; }
+      .horarios-layout, .contacto-layout { grid-template-columns: 1fr; }
+      .galeria-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
+      .galeria-grid .gal-item:first-child { grid-column: span 2; height: 220px; }
+      .servicios-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+      .stats-inner { flex-wrap: wrap; }
+      .stat { flex: 0 0 50%; }
+      .wa-float span { display: none; }
+      .wa-float { padding: 0.9rem; border-radius: 50%; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">POWER<span>GYM</span></a>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#horarios">Horarios</a></li>
+    <li><a href="#planes">Planes</a></li>
+    <li><a href="#galeria">Galería</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="https://wa.me/5491167574301?text=Hola!+Quiero+información+sobre+el+gimnasio" class="nav-cta" target="_blank">Empezar ahora</a>
+  <button class="hamburger"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-grid-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge fade-up">⭐ 4.7 · 129 reseñas verificadas en Google</div>
+    <h1 class="fade-up delay-1">
+      POWER<br />
+      <span class="line-rojo">GYM</span><br />
+      LOMAS
+    </h1>
+    <p class="fade-up delay-2">El gimnasio más completo de Lomas de Zamora. Equipamiento de alto rendimiento, profesores certificados y un ambiente que te motiva a dar el máximo.</p>
+    <div class="hero-btns fade-up delay-3">
+      <a href="https://wa.me/5491167574301?text=Hola!+Quiero+info+sobre+membresías" class="btn-primary" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Consultar por WhatsApp
+      </a>
+      <a href="#planes" class="btn-secondary">Ver planes →</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stats-inner">
+      <div class="stat fade-up delay-1"><div class="stat-num" data-target="8">0</div><div class="stat-label">Años de experiencia</div></div>
+      <div class="stat fade-up delay-2"><div class="stat-num" data-target="500" data-suffix="+">0</div><div class="stat-label">Socios activos</div></div>
+      <div class="stat fade-up delay-3"><div class="stat-num" data-target="4.7" data-suffix="★" data-decimal="1">0</div><div class="stat-label">Calificación Google</div></div>
+      <div class="stat fade-up delay-4"><div class="stat-num" data-target="15" data-suffix="+">0</div><div class="stat-label">Disciplinas</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track" id="marquee">
+    <span class="marquee-item">🏋️ Musculación<span class="marquee-dot"></span></span>
+    <span class="marquee-item">🔥 Funcional<span class="marquee-dot"></span></span>
+    <span class="marquee-item">🚴 Spinning<span class="marquee-dot"></span></span>
+    <span class="marquee-item">🥊 Box & Kickboxing<span class="marquee-dot"></span></span>
+    <span class="marquee-item">🧘 Yoga & Pilates<span class="marquee-dot"></span></span>
+    <span class="marquee-item">🥗 Nutrición Deportiva<span class="marquee-dot"></span></span>
+    <span class="marquee-item">💪 Crossfit<span class="marquee-dot"></span></span>
+    <span class="marquee-item">🏊 Natación<span class="marquee-dot"></span></span>
+    <span class="marquee-item">🏋️ Musculación<span class="marquee-dot"></span></span>
+    <span class="marquee-item">🔥 Funcional<span class="marquee-dot"></span></span>
+    <span class="marquee-item">🚴 Spinning<span class="marquee-dot"></span></span>
+    <span class="marquee-item">🥊 Box & Kickboxing<span class="marquee-dot"></span></span>
+    <span class="marquee-item">🧘 Yoga & Pilates<span class="marquee-dot"></span></span>
+    <span class="marquee-item">🥗 Nutrición Deportiva<span class="marquee-dot"></span></span>
+    <span class="marquee-item">💪 Crossfit<span class="marquee-dot"></span></span>
+    <span class="marquee-item">🏊 Natación<span class="marquee-dot"></span></span>
+  </div>
+</div>
+
+<!-- BENEFICIOS -->
+<section class="beneficios">
+  <div class="container">
+    <div class="bene-grid">
+      <div class="bene-card fade-up"><span class="bene-icon">🏋️</span><h3>Equipamiento de élite</h3><p>Máquinas de última generación renovadas permanentemente para tu entrenamiento.</p></div>
+      <div class="bene-card fade-up delay-1"><span class="bene-icon">👨‍🏫</span><h3>Profesores certificados</h3><p>Profesionales en Educación Física con experiencia real en competencia.</p></div>
+      <div class="bene-card fade-up delay-2"><span class="bene-icon">🅿️</span><h3>Estacionamiento propio</h3><p>Cocheras disponibles para nuestros socios sin costo adicional.</p></div>
+      <div class="bene-card fade-up delay-3"><span class="bene-icon">🚿</span><h3>Vestuarios completos</h3><p>Baños y duchas con agua caliente, lockers seguros para tus pertenencias.</p></div>
+      <div class="bene-card fade-up delay-4"><span class="bene-icon">📱</span><h3>Seguimiento online</h3><p>Controlá tu progreso y accedé a tus rutinas desde el celular.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="container">
+    <span class="section-eyebrow fade-up">Lo que ofrecemos</span>
+    <h2 class="section-title fade-up">DISCIPLINAS<br />Y SERVICIOS</h2>
+    <p class="section-sub fade-up">Elegí lo que más se adapta a tus objetivos. Tenemos algo para cada nivel.</p>
+    <div class="servicios-grid">
+      <div class="servicio-card fade-up">
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80" alt="Musculación" loading="lazy" />
+        <div class="servicio-overlay"><span class="servicio-tag">Popular</span><h3>Musculación</h3><p>Sala libre con más de 200 m² y equipamiento completo para todos los grupos musculares.</p></div>
+      </div>
+      <div class="servicio-card fade-up delay-1">
+        <img src="https://images.unsplash.com/photo-1601422407692-ec4eeec1d9b3?w=600&q=80" alt="Funcional" loading="lazy" />
+        <div class="servicio-overlay"><span class="servicio-tag">Alta demanda</span><h3>Funcional</h3><p>Clases grupales con circuitos dinámicos y motivadores.</p></div>
+      </div>
+      <div class="servicio-card fade-up delay-2">
+        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80" alt="Spinning" loading="lazy" />
+        <div class="servicio-overlay"><span class="servicio-tag">Con música</span><h3>Spinning</h3><p>Bicicletas profesionales y DJ en vivo los fines de semana.</p></div>
+      </div>
+      <div class="servicio-card fade-up delay-3">
+        <img src="https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=600&q=80" alt="Boxeo" loading="lazy" />
+        <div class="servicio-overlay"><span class="servicio-tag">Nuevo</span><h3>Box & Kickboxing</h3><p>Instructores especializados. Para todos los niveles.</p></div>
+      </div>
+      <div class="servicio-card fade-up delay-4">
+        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=80" alt="Yoga" loading="lazy" />
+        <div class="servicio-overlay"><h3>Yoga & Pilates</h3><p>Relajación y fortalecimiento para equilibrar cuerpo y mente.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HORARIOS -->
+<section class="horarios" id="horarios">
+  <div class="container">
+    <span class="section-eyebrow fade-up">Siempre disponible</span>
+    <h2 class="section-title fade-up">HORARIOS DE<br />ATENCIÓN</h2>
+    <div class="horarios-layout">
+      <div class="fade-up">
+        <div class="horarios-tabla">
+          <div class="horario-row"><span class="horario-dia">Lunes a Viernes</span><span class="horario-hrs">07:00 – 22:00</span></div>
+          <div class="horario-row"><span class="horario-dia">Sábados</span><span class="horario-hrs">08:00 – 20:00</span></div>
+          <div class="horario-row"><span class="horario-dia">Domingos</span><span class="horario-hrs">09:00 – 14:00</span></div>
+          <div class="horario-row"><span class="horario-dia">Feriados</span><span class="horario-hrs">09:00 – 13:00</span></div>
+        </div>
+        <a href="https://wa.me/5491167574301?text=Hola!+Quiero+reservar+una+clase+de+prueba" class="btn-wa" target="_blank" style="margin-top:1.5rem;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Reservar clase de prueba gratis
+        </a>
+      </div>
+      <div class="horarios-card fade-up delay-2">
+        <h3>CLASES ESTA SEMANA</h3>
+        <div class="horario-clase">
+          <div class="clase-icon">🔥</div>
+          <div class="clase-info"><strong>Funcional intensivo</strong><p>Lun, Mié y Vie — 07:30 / 18:30 / 20:00 hs</p></div>
+        </div>
+        <div class="horario-clase">
+          <div class="clase-icon">🚴</div>
+          <div class="clase-info"><strong>Spinning</strong><p>Mar y Jue — 09:00 / 19:00 hs · Sáb 10:00 hs</p></div>
+        </div>
+        <div class="horario-clase">
+          <div class="clase-icon">🥊</div>
+          <div class="clase-info"><strong>Box & Kickboxing</strong><p>Lun, Mié y Sáb — 20:00 hs</p></div>
+        </div>
+        <div class="horario-clase">
+          <div class="clase-icon">🧘</div>
+          <div class="clase-info"><strong>Yoga</strong><p>Mar y Jue — 11:00 hs · Sáb 09:00 hs</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANES -->
+<section id="planes">
+  <div class="container">
+    <span class="section-eyebrow fade-up">Invertí en vos</span>
+    <h2 class="section-title fade-up">ELEGÍ TU<br />PLAN</h2>
+    <p class="section-sub fade-up">Precios accesibles, sin letra chica. Consultá por precios actualizados.</p>
+    <div class="planes-grid">
+      <div class="plan-card fade-up">
+        <div class="plan-nombre">🥉 Básico</div>
+        <div class="plan-precio"><sup>$</sup>Consultar</div>
+        <div class="plan-periodo">por mes</div>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> Sala de musculación libre</li>
+          <li><span class="check">✓</span> Lunes a Viernes</li>
+          <li><span class="check">✓</span> Vestuarios con duchas</li>
+          <li><span class="check">✓</span> 1 clase grupal/semana</li>
+        </ul>
+        <a href="https://wa.me/5491167574301?text=Hola!+Quiero+info+del+plan+básico" class="btn-plan outline" target="_blank">Consultar precio</a>
+      </div>
+      <div class="plan-card destacado fade-up delay-1">
+        <div class="plan-badge">⭐ Más elegido</div>
+        <div class="plan-nombre">🥇 Premium</div>
+        <div class="plan-precio"><sup>$</sup>Consultar</div>
+        <div class="plan-periodo">por mes — acceso total</div>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> Todo el equipamiento sin límites</li>
+          <li><span class="check">✓</span> 7 días a la semana</li>
+          <li><span class="check">✓</span> Clases grupales ilimitadas</li>
+          <li><span class="check">✓</span> Asesoría nutricional incluida</li>
+          <li><span class="check">✓</span> Seguimiento de progreso</li>
+          <li><span class="check">✓</span> Estacionamiento gratuito</li>
+        </ul>
+        <a href="https://wa.me/5491167574301?text=Hola!+Quiero+info+del+plan+Premium" class="btn-plan" target="_blank">Quiero el Premium</a>
+      </div>
+      <div class="plan-card fade-up delay-2">
+        <div class="plan-nombre">👨‍👩‍👧 Familiar</div>
+        <div class="plan-precio"><sup>$</sup>Consultar</div>
+        <div class="plan-periodo">por familia / mes</div>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> Hasta 4 personas</li>
+          <li><span class="check">✓</span> Acceso full 7 días</li>
+          <li><span class="check">✓</span> Clases grupales ilimitadas</li>
+          <li><span class="check">✓</span> Precio especial por grupo</li>
+          <li><span class="check">✓</span> Seguimiento personalizado</li>
+        </ul>
+        <a href="https://wa.me/5491167574301?text=Hola!+Quiero+info+del+plan+Familiar" class="btn-plan outline" target="_blank">Consultar precio</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section class="galeria" id="galeria">
+  <div class="container">
+    <span class="section-eyebrow fade-up">Nuestras instalaciones</span>
+    <h2 class="section-title fade-up">CONOCÉ EL<br />GIMNASIO</h2>
+    <div class="galeria-grid">
+      <div class="gal-item"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=900&q=80" alt="Sala principal" loading="lazy" /><div class="gal-overlay"></div></div>
+      <div class="gal-item"><img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80" alt="Zona de pesas" loading="lazy" /><div class="gal-overlay"></div></div>
+      <div class="gal-item"><img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=80" alt="Funcional" loading="lazy" /><div class="gal-overlay"></div></div>
+      <div class="gal-item"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80" alt="Spinning" loading="lazy" /><div class="gal-overlay"></div></div>
+      <div class="gal-item"><img src="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?w=600&q=80" alt="Cardio" loading="lazy" /><div class="gal-overlay"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEÑAS -->
+<section id="resenas">
+  <div class="container">
+    <span class="section-eyebrow fade-up">Lo que dice la gente</span>
+    <h2 class="section-title fade-up">4.7 ⭐ EN GOOGLE<br />129 RESEÑAS</h2>
+    <div class="resenas-grid" style="margin-top:2.5rem;">
+      <div class="resena-card fade-up">
+        <div class="resena-stars">★★★★★</div>
+        <p class="resena-texto">"Excelente gimnasio, precio económico, buen ambiente! Los profes están siempre atentos y te corrigen la postura. Hace 2 años que vengo y no me fui nunca a otro."</p>
+        <div class="resena-autor"><div class="resena-avatar">MG</div><div><div class="resena-nombre">Marcos G.</div><div class="resena-fecha">hace 2 meses · Google</div></div></div>
+      </div>
+      <div class="resena-card fade-up delay-1">
+        <div class="resena-stars">★★★★★</div>
+        <p class="resena-texto">"El mejor gimnasio de la zona. Máquinas siempre funcionando, limpieza impecable y los profesores son una gente bárbara. Te ayudan con la rutina sin pedirte nada extra."</p>
+        <div class="resena-autor"><div class="resena-avatar">VL</div><div><div class="resena-nombre">Valentina L.</div><div class="resena-fecha">hace 1 mes · Google</div></div></div>
+      </div>
+      <div class="resena-card fade-up delay-2">
+        <div class="resena-stars">★★★★★</div>
+        <p class="resena-texto">"Vengo al funcional de las 7:30 y salgo cargado de energía para todo el día. La profe Ani es una grosa, exigente pero justa. Lo recomiendo a cualquiera que quiera arrancar."</p>
+        <div class="resena-autor"><div class="resena-avatar">FP</div><div><div class="resena-nombre">Franco P.</div><div class="resena-fecha">hace 3 semanas · Google</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="contacto" id="contacto">
+  <div class="container">
+    <span class="section-eyebrow fade-up">Estamos cerca tuyo</span>
+    <h2 class="section-title fade-up">ENCONTRANOS</h2>
+    <div class="contacto-layout">
+      <div class="contacto-info fade-up">
+        <h3>Venís, conocés, empezás.</h3>
+        <div class="info-item">
+          <div class="info-icon">📍</div>
+          <div><strong>Dirección</strong><p>Garibaldi 1537, Lomas de Zamora</p></div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📞</div>
+          <div><strong>Teléfono</strong><p><a href="tel:01167574301" style="color:inherit;text-decoration:none">011 6757-4301</a></p></div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">🕐</div>
+          <div><strong>Horario</strong><p>Lun–Vie: 07:00–22:00 · Sáb: 08:00–20:00</p></div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📱</div>
+          <div><strong>Instagram</strong><p>@powergym.lomas</p></div>
+        </div>
+        <a href="https://wa.me/5491167574301?text=Hola!+Quiero+empezar+en+el+gym.+¿Me+podés+dar+info?" class="btn-wa" target="_blank">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Escribinos por WhatsApp
+        </a>
+      </div>
+      <div class="contacto-map fade-up delay-2">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3279.2!2d-58.4175!3d-34.7777!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDQ2JzM5LjkiUyA1OMKwMjUnMDMuMyJX!5e0!3m2!1ses!2sar!4v1234567890" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <div class="cta-bg"></div>
+  <div class="cta-overlay"></div>
+  <div class="cta-content container">
+    <h2 class="fade-up">¿TODAVÍA ESPERANDO<br />PARA EMPEZAR?</h2>
+    <p class="fade-up delay-1">Tu primer mes no te cuesta nada. Vení a conocernos sin compromiso.</p>
+    <a href="https://wa.me/5491167574301?text=Hola!+Quiero+el+mes+de+prueba+gratis" class="btn-primary fade-up delay-2" target="_blank" style="display:inline-flex;">
+      Quiero mi mes de prueba gratis
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">POWER<span>GYM</span> LOMAS</div>
+  <p>Garibaldi 1537, Lomas de Zamora · 011 6757-4301</p>
+  <p>© 2025 Power Gym Lomas · Todos los derechos reservados</p>
+</footer>
+
+<!-- WA FLOTANTE -->
+<a href="https://wa.me/5491167574301?text=Hola!+Consulto+desde+la+web" class="wa-float" target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  <span>Consultar ahora</span>
+</a>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const p = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    document.getElementById('progress-bar').style.width = p + '%';
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll animations
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  // Counter animation
+  function animateCounter(el) {
+    const target = parseFloat(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    const decimal = parseInt(el.dataset.decimal) || 0;
+    const duration = 2000;
+    const start = performance.now();
+    const step = (now) => {
+      const elapsed = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - elapsed, 3);
+      const current = target * eased;
+      el.textContent = (decimal ? current.toFixed(decimal) : Math.floor(current)) + suffix;
+      if (elapsed < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { animateCounter(e.target); counterObs.unobserve(e.target); } });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-target]').forEach(el => counterObs.observe(el));
+
+  // Hero BG
+  document.getElementById('heroBg').classList.add('loaded');
+</script>
+</body>
+</html>

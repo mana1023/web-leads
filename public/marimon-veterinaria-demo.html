@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clínica Veterinaria Marimon | Morón · Atención de excelencia para tus mascotas</title>
+  <meta name="description" content="Clínica Veterinaria Marimon en Morón. Más de 20 años cuidando mascotas con amor y profesionalismo. Consultas, cirugías, vacunación y emergencias. ¡Turno por WhatsApp!" />
+  <script type="application/ld+json">
+  { "@context":"https://schema.org","@type":"VeterinaryCare","name":"Clínica Veterinaria Marimon",
+    "address":{"@type":"PostalAddress","streetAddress":"Dr. José María Casullo 821","addressLocality":"Morón","addressRegion":"Buenos Aires","addressCountry":"AR"},
+    "telephone":"+5401146275967","openingHours":["Mo-Fr 09:00-20:00","Sa 09:00-14:00"],
+    "aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"520"} }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --verde:#1B6B45; --verde-light:#2A9060; --verde-dark:#0F3D27;
+      --verde-pale:#EEF8F2; --verde-glow:rgba(27,107,69,0.18);
+      --crema:#FAFDF8; --blanco:#FFFFFF;
+      --oscuro:#0A1A10; --texto:#1C2B20; --gris:#6B7A72; --borde:#D4E8DA;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',sans-serif;background:var(--crema);color:var(--texto);line-height:1.65;overflow-x:hidden}
+
+    #progress-bar{position:fixed;top:0;left:0;height:3px;z-index:999;background:linear-gradient(90deg,var(--verde-dark),var(--verde),var(--verde-light));width:0%;transition:width .1s}
+
+    .fade-up{opacity:0;transform:translateY(36px);transition:opacity .85s cubic-bezier(.25,.46,.45,.94),transform .85s cubic-bezier(.25,.46,.45,.94)}
+    .fade-up.visible{opacity:1;transform:translateY(0)}
+    .delay-1{transition-delay:.1s}.delay-2{transition-delay:.2s}.delay-3{transition-delay:.3s}.delay-4{transition-delay:.4s}
+
+    /* NAV */
+    nav{position:fixed;top:3px;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;background:rgba(250,253,248,.96);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--borde);box-shadow:0 2px 24px rgba(27,107,69,.07);transition:all .3s}
+    nav.scrolled{padding:.75rem 2rem;box-shadow:0 4px 32px rgba(27,107,69,.1)}
+    .nav-logo{display:flex;align-items:center;gap:.7rem;text-decoration:none}
+    .nav-logo-icon{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--verde),var(--verde-dark));display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 4px 12px var(--verde-glow)}
+    .nav-logo-text{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--verde-dark);line-height:1.2}
+    .nav-logo-text span{display:block;font-size:.68rem;font-family:'Inter',sans-serif;font-weight:400;color:var(--gris)}
+    .nav-links{display:flex;gap:2rem;list-style:none}
+    .nav-links a{text-decoration:none;color:var(--texto);font-size:.82rem;font-weight:500;transition:color .2s;position:relative}
+    .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:2px;background:var(--verde);transform:scaleX(0);transition:transform .25s}
+    .nav-links a:hover{color:var(--verde)}
+    .nav-links a:hover::after{transform:scaleX(1)}
+    .nav-cta{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--verde),var(--verde-dark));color:#fff;padding:.6rem 1.5rem;border-radius:50px;font-size:.82rem;font-weight:700;text-decoration:none;white-space:nowrap;flex-shrink:0;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 18px var(--verde-glow)}
+    .nav-cta::after{content:'';position:absolute;top:-50%;left:-75%;width:50%;height:200%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transform:skewX(-20deg);animation:shimmer 3.5s infinite}
+    .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(27,107,69,.35)}
+    .hamburger{display:none;background:none;border:none;cursor:pointer}
+    .hamburger span{display:block;width:22px;height:2px;background:var(--texto);margin:5px 0;transition:.3s}
+    @keyframes shimmer{0%{left:-75%}100%{left:150%}}
+
+    /* HERO */
+    .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:70px;overflow:hidden}
+    .hero-left{display:flex;align-items:center;padding:3rem 3rem 3rem 5vw;background:var(--crema);position:relative}
+    .hero-left::after{content:'';position:absolute;right:0;top:10%;bottom:10%;width:1px;background:linear-gradient(to bottom,transparent,var(--borde),transparent)}
+    .hero-right{position:relative;overflow:hidden}
+    .hero-right img{width:100%;height:100%;object-fit:cover;transition:transform 10s ease}
+    .hero-right-overlay{position:absolute;inset:0;background:linear-gradient(to right,var(--crema) 0%,transparent 30%)}
+    .hero-content{max-width:520px}
+    .hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--verde-pale);border:1px solid var(--borde);color:var(--verde);padding:.45rem 1.1rem;border-radius:50px;font-size:.75rem;font-weight:700;margin-bottom:1.8rem;letter-spacing:.04em}
+    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.6rem,5vw,4.2rem);font-weight:700;line-height:1.1;color:var(--oscuro);margin-bottom:1.3rem}
+    .hero h1 em{font-style:italic;background:linear-gradient(135deg,var(--verde),var(--verde-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero p{font-size:1.05rem;color:var(--gris);margin-bottom:2.5rem;line-height:1.82}
+    .hero-btns{display:flex;gap:.9rem;flex-wrap:wrap;margin-bottom:2.8rem}
+
+    /* BUTTONS */
+    .btn-verde{display:inline-flex;align-items:center;gap:.6rem;background:linear-gradient(135deg,var(--verde),var(--verde-dark));color:#fff;padding:.95rem 2rem;border-radius:50px;font-size:.92rem;font-weight:700;text-decoration:none;transition:transform .25s,box-shadow .25s;box-shadow:0 6px 24px var(--verde-glow);position:relative;overflow:hidden}
+    .btn-verde::after{content:'';position:absolute;top:-50%;left:-75%;width:50%;height:200%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transform:skewX(-20deg);animation:shimmer 3.5s infinite}
+    .btn-verde:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 12px 36px rgba(27,107,69,.35)}
+    .btn-outline-verde{display:inline-flex;align-items:center;gap:.6rem;background:transparent;color:var(--verde);padding:.95rem 2rem;border-radius:50px;font-size:.92rem;font-weight:600;text-decoration:none;border:2px solid var(--borde);transition:border-color .25s,background .25s,transform .25s}
+    .btn-outline-verde:hover{border-color:var(--verde);background:var(--verde-pale);transform:translateY(-3px)}
+
+    /* HERO STATS */
+    .hero-stats{display:flex;gap:2.5rem;flex-wrap:wrap;padding-top:2rem;border-top:1px solid var(--borde)}
+    .h-stat-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;background:linear-gradient(135deg,var(--verde),var(--verde-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+    .h-stat-label{font-size:.72rem;color:var(--gris);margin-top:.15rem}
+
+    /* MARQUEE */
+    .marquee-section{background:linear-gradient(135deg,var(--verde-dark),var(--verde));overflow:hidden}
+    .marquee-track{display:flex;animation:marquee 26s linear infinite;white-space:nowrap}
+    .marquee-item{display:inline-flex;align-items:center;gap:.5rem;padding:.95rem 2.5rem;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85);font-weight:600}
+    .marquee-sep{color:rgba(255,255,255,.35)}
+    @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+    /* SECTION */
+    section{padding:6rem 1.5rem}
+    .container{max-width:1100px;margin:0 auto}
+    .section-eyebrow{display:inline-flex;align-items:center;gap:.65rem;font-size:.72rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--verde);margin-bottom:1rem}
+    .section-eyebrow::before{content:'';width:24px;height:2px;background:var(--verde);border-radius:2px}
+    .section-title{font-family:'Playfair Display',serif;font-size:clamp(2.1rem,4.5vw,3.2rem);font-weight:700;color:var(--oscuro);margin-bottom:1rem;line-height:1.15}
+    .section-title em{font-style:italic;color:var(--verde)}
+    .section-sub{font-size:.95rem;color:var(--gris);max-width:520px;margin-bottom:3.5rem;line-height:1.82}
+
+    /* SERVICIOS */
+    .servicios{background:var(--blanco)}
+    .servicios-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--borde);border:1px solid var(--borde);border-radius:16px;overflow:hidden}
+    .servicio-card{background:var(--crema);padding:2.2rem 1.8rem;transition:background .3s,transform .3s;position:relative;overflow:hidden}
+    .servicio-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--verde),var(--verde-light));transform:scaleX(0);transition:transform .35s}
+    .servicio-card:hover{background:var(--verde-pale)}
+    .servicio-card:hover::before{transform:scaleX(1)}
+    .servicio-icon{width:54px;height:54px;border-radius:14px;background:var(--verde-pale);border:1px solid var(--borde);display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:1.2rem;transition:background .3s,box-shadow .3s}
+    .servicio-card:hover .servicio-icon{background:#fff;box-shadow:0 4px 16px var(--verde-glow)}
+    .servicio-card h3{font-size:.95rem;font-weight:800;color:var(--oscuro);margin-bottom:.45rem}
+    .servicio-card p{font-size:.83rem;color:var(--gris);line-height:1.72}
+
+    /* DR. DANIEL */
+    .doctor{background:var(--verde-dark);color:#fff;overflow:hidden;position:relative}
+    .doctor::before{content:'';position:absolute;top:-50%;right:-10%;width:600px;height:600px;border-radius:50%;background:rgba(42,144,96,.08);pointer-events:none}
+    .doctor-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+    .doctor-img{border-radius:20px;overflow:hidden;height:520px;box-shadow:0 30px 80px rgba(0,0,0,.4);position:relative}
+    .doctor-img img{width:100%;height:100%;object-fit:cover}
+    .doctor-img::after{content:'';position:absolute;inset:0;border-radius:20px;border:1px solid rgba(255,255,255,.08)}
+    .doctor-eyebrow{font-size:.72rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:1.1rem;display:flex;align-items:center;gap:.65rem}
+    .doctor-eyebrow::before{content:'';width:24px;height:2px;background:rgba(255,255,255,.3);border-radius:2px}
+    .doctor-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;line-height:1.1;margin-bottom:1.5rem}
+    .doctor-title em{font-style:italic;color:var(--verde-light)}
+    .doctor-text{font-size:.95rem;color:rgba(255,255,255,.75);line-height:1.85;margin-bottom:1.5rem}
+    .credentials{display:flex;flex-direction:column;gap:.7rem;margin-bottom:2.2rem}
+    .credential{display:flex;gap:.9rem;align-items:flex-start}
+    .cred-dot{width:8px;height:8px;border-radius:50%;background:var(--verde-light);flex-shrink:0;margin-top:6px}
+    .credential p{font-size:.88rem;color:rgba(255,255,255,.8);margin:0}
+
+    /* GALERÍA */
+    .galeria{background:var(--blanco)}
+    .galeria-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:260px 260px;gap:12px;margin-top:3rem}
+    .gal-item{overflow:hidden;border-radius:12px;position:relative}
+    .gal-item:first-child{grid-row:span 2}
+    .gal-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.25,.46,.45,.94)}
+    .gal-item:hover img{transform:scale(1.07)}
+    .gal-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(27,107,69,.15),transparent);opacity:0;transition:opacity .35s}
+    .gal-item:hover .gal-overlay{opacity:1}
+
+    /* RESEÑAS */
+    .resenas{background:var(--verde-pale)}
+    .resenas-header{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;margin-bottom:3rem}
+    .resenas-score{text-align:right}
+    .score-num{font-family:'Playfair Display',serif;font-size:4.5rem;font-weight:700;background:linear-gradient(135deg,var(--verde),var(--verde-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+    .score-label{font-size:.82rem;color:var(--gris)}
+    .resenas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+    .resena-card{background:var(--blanco);border:1px solid var(--borde);border-radius:14px;padding:2rem;box-shadow:0 2px 16px rgba(0,0,0,.04);transition:box-shadow .3s,transform .3s;position:relative;overflow:hidden}
+    .resena-card::before{content:'"';position:absolute;top:0;right:1rem;font-family:'Playfair Display',serif;font-size:7rem;line-height:1;color:rgba(27,107,69,.05);pointer-events:none}
+    .resena-card:hover{box-shadow:0 12px 40px rgba(27,107,69,.12);transform:translateY(-5px)}
+    .resena-stars{color:#F59E0B;font-size:.95rem;letter-spacing:1px;margin-bottom:.9rem}
+    .resena-texto{font-size:.89rem;color:var(--gris);font-style:italic;margin-bottom:1.3rem;line-height:1.8}
+    .resena-autor{display:flex;align-items:center;gap:.8rem}
+    .resena-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--verde-pale),var(--borde));border:2px solid var(--borde);display:flex;align-items:center;justify-content:center;font-size:.82rem;color:var(--verde);font-weight:800}
+    .resena-nombre{font-size:.87rem;font-weight:700;color:var(--oscuro)}
+    .resena-fecha{font-size:.72rem;color:var(--gris)}
+
+    /* HORARIOS */
+    .horarios{background:var(--blanco)}
+    .horarios-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;margin-top:3rem}
+    .horario-tabla{border:1px solid var(--borde);border-radius:14px;overflow:hidden}
+    .horario-row{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 1.6rem;border-bottom:1px solid var(--borde);transition:background .2s}
+    .horario-row:last-child{border-bottom:none}
+    .horario-row:hover{background:var(--verde-pale)}
+    .horario-dia{font-weight:700;font-size:.92rem;color:var(--oscuro)}
+    .horario-hora{color:var(--verde);font-size:.9rem;font-weight:700}
+    .horario-row.cerrado .horario-hora{color:var(--gris)}
+    .emergencia-box{background:linear-gradient(135deg,var(--verde-dark),var(--verde));border-radius:16px;padding:2.5rem;color:#fff;position:relative;overflow:hidden}
+    .emergencia-box::before{content:'🚨';position:absolute;right:1.5rem;top:1.5rem;font-size:4rem;opacity:.08}
+    .emergencia-box h3{font-family:'Playfair Display',serif;font-size:1.6rem;margin-bottom:1rem}
+    .emergencia-box p{font-size:.88rem;opacity:.82;margin-bottom:1.2rem;line-height:1.78}
+    .btn-emergencia{display:inline-flex;align-items:center;gap:.5rem;background:#fff;color:var(--verde-dark);padding:.85rem 1.6rem;border-radius:50px;font-size:.87rem;font-weight:800;text-decoration:none;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 16px rgba(0,0,0,.15)}
+    .btn-emergencia:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+
+    /* TURNO */
+    .turno{background:var(--verde-pale)}
+    .turno-layout{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+    .turno-pasos{list-style:none;margin-bottom:2.5rem}
+    .turno-paso{display:flex;gap:1.2rem;align-items:flex-start;padding:.85rem 0;border-bottom:1px solid var(--borde)}
+    .turno-paso:last-child{border-bottom:none}
+    .turno-num{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--verde),var(--verde-dark));color:#fff;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;flex-shrink:0;box-shadow:0 4px 12px var(--verde-glow)}
+    .turno-paso p{font-size:.9rem;color:var(--texto);padding-top:4px;line-height:1.72}
+    .turno-img{border-radius:20px;overflow:hidden;height:440px;box-shadow:0 20px 60px rgba(27,107,69,.15)}
+    .turno-img img{width:100%;height:100%;object-fit:cover}
+
+    /* CONTACTO */
+    .contacto{background:var(--blanco)}
+    .contacto-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;margin-top:3rem}
+    .contacto-card{background:var(--crema);border:1px solid var(--borde);border-radius:16px;padding:2.5rem}
+    .contacto-card h3{font-family:'Playfair Display',serif;font-size:1.9rem;color:var(--oscuro);margin-bottom:2rem;font-weight:700}
+    .info-item{display:flex;gap:1.2rem;align-items:flex-start;margin-bottom:1.8rem}
+    .info-icon{width:48px;height:48px;border-radius:12px;background:var(--verde-pale);border:1px solid var(--borde);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+    .info-item strong{display:block;font-size:.72rem;color:var(--gris);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.2rem}
+    .info-item p{font-size:.95rem;color:var(--oscuro);font-weight:500}
+    .btn-wa-verde{display:flex;align-items:center;justify-content:center;gap:.75rem;background:linear-gradient(135deg,#25D366,#1da851);color:#fff;padding:1.05rem 2rem;border-radius:50px;font-size:.9rem;font-weight:800;text-decoration:none;transition:transform .25s,box-shadow .25s;box-shadow:0 6px 24px rgba(37,211,102,.3);margin-top:1rem;position:relative;overflow:hidden}
+    .btn-wa-verde::after{content:'';position:absolute;top:-50%;left:-75%;width:50%;height:200%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transform:skewX(-20deg);animation:shimmer 3.5s infinite}
+    .btn-wa-verde:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(37,211,102,.45)}
+    .mapa{border-radius:16px;overflow:hidden;border:1px solid var(--borde);height:360px}
+    .mapa iframe{width:100%;height:100%;border:none;filter:saturate(0) brightness(1.1)}
+
+    /* CTA FINAL */
+    .cta-final{background:linear-gradient(135deg,var(--verde-dark) 0%,var(--verde) 100%);padding:7rem 1.5rem;text-align:center;color:#fff;position:relative;overflow:hidden}
+    .cta-final::before{content:'🐾';position:absolute;font-size:25rem;opacity:.03;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+    .cta-final h2{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5.5vw,4rem);margin-bottom:1rem;position:relative;z-index:2}
+    .cta-final h2 em{font-style:italic;color:rgba(255,255,255,.7)}
+    .cta-final p{font-size:1.05rem;opacity:.82;margin-bottom:2.5rem;position:relative;z-index:2;max-width:480px;margin-left:auto;margin-right:auto}
+
+    /* FOOTER */
+    footer{background:var(--oscuro);padding:2.5rem 1.5rem;text-align:center}
+    .footer-logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:rgba(255,255,255,.9);margin-bottom:.5rem}
+    footer p{font-size:.78rem;color:rgba(255,255,255,.3);margin-top:.3rem}
+
+    /* WA FLOTANTE */
+    .wa-float{position:fixed;bottom:1.5rem;right:1.5rem;z-index:300;display:flex;align-items:center;gap:.75rem;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;text-decoration:none;border-radius:50px;padding:.9rem 1.4rem;box-shadow:0 8px 30px rgba(37,211,102,.45);font-size:.85rem;font-weight:800;letter-spacing:.04em;animation:wa-pulse 3s infinite;transition:transform .2s}
+    .wa-float svg{width:26px;height:26px;fill:#fff;flex-shrink:0}
+    .wa-float:hover{transform:scale(1.05)}
+    @keyframes wa-pulse{0%,100%{box-shadow:0 8px 30px rgba(37,211,102,.45)}50%{box-shadow:0 8px 50px rgba(37,211,102,.75)}}
+
+    @media(max-width:900px){
+      .hero{grid-template-columns:1fr;grid-template-rows:auto}
+      .hero-right{height:50vw}
+      .hero-left{padding:2.5rem 1.5rem}
+      .hero-left::after{display:none}
+      .servicios-grid{grid-template-columns:repeat(2,1fr)}
+      .doctor-layout,.turno-layout,.contacto-layout,.horarios-layout{grid-template-columns:1fr}
+      .resenas-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:768px){
+      .nav-links{display:none}.hamburger{display:block}
+      .galeria-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:auto}
+      .gal-item:first-child{grid-row:span 1;height:220px}
+      .servicios-grid{grid-template-columns:1fr}
+      .wa-float span{display:none}.wa-float{padding:.9rem;border-radius:50%}
+    }
+  </style>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">🐾</div>
+    <div class="nav-logo-text">Veterinaria Marimon<span>Morón, Buenos Aires</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#equipo">El veterinario</a></li>
+    <li><a href="#horarios">Horarios</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="https://wa.me/5401146275967?text=Hola!+Quiero+pedir+un+turno" class="nav-cta" target="_blank">📅 Pedir turno</a>
+  <button class="hamburger"><span></span><span></span><span></span></button>
+</nav>
+
+<section class="hero" id="inicio">
+  <div class="hero-left">
+    <div class="hero-content">
+      <div class="hero-badge fade-up">🏅 4.8 ⭐ — 520 reseñas verificadas en Google</div>
+      <h1 class="fade-up delay-1">Tu mascota merece<br /><em>la mejor atención</em></h1>
+      <p class="fade-up delay-2">Más de 20 años cuidando perros, gatos y pequeñas mascotas en Morón. Atención personalizada, diagnóstico preciso y el trato humano que tu compañero se merece.</p>
+      <div class="hero-btns fade-up delay-3">
+        <a href="https://wa.me/5401146275967?text=Hola!+Quiero+pedir+un+turno+por+WhatsApp" class="btn-verde" target="_blank">💬 Pedir turno por WhatsApp</a>
+        <a href="tel:01146275967" class="btn-outline-verde">📞 Llamar ahora</a>
+      </div>
+      <div class="hero-stats fade-up delay-4">
+        <div><div class="h-stat-num" data-target="20" data-suffix="+">0</div><div class="h-stat-label">Años de trayectoria</div></div>
+        <div><div class="h-stat-num" data-target="4.8" data-suffix="★" data-decimal="1">0</div><div class="h-stat-label">Calificación Google</div></div>
+        <div><div class="h-stat-num" data-target="5000" data-suffix="+">0</div><div class="h-stat-label">Pacientes atendidos</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=1200&q=85" alt="Clínica Veterinaria Marimon" />
+    <div class="hero-right-overlay"></div>
+  </div>
+</section>
+
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">🔬 Consulta general <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">💉 Vacunación <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">🏥 Cirugías <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">🧪 Análisis clínicos <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">📷 Radiografías <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">🪮 Peluquería canina <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">🦷 Odontología <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">🛍️ Pet Shop <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">🔬 Consulta general <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">💉 Vacunación <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">🏥 Cirugías <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">🧪 Análisis clínicos <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">📷 Radiografías <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">🪮 Peluquería canina <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">🦷 Odontología <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">🛍️ Pet Shop <span class="marquee-sep">·</span></span>
+  </div>
+</div>
+
+<section class="servicios" id="servicios">
+  <div class="container">
+    <span class="section-eyebrow fade-up">Lo que hacemos</span>
+    <h2 class="section-title fade-up">Atención <em>completa</em><br />para tu mascota</h2>
+    <p class="section-sub fade-up">Desde el control anual hasta intervenciones complejas. Estamos preparados para cuidar a tu compañero en cada etapa de su vida.</p>
+    <div class="servicios-grid">
+      <div class="servicio-card fade-up"><div class="servicio-icon">🔬</div><h3>Consulta general</h3><p>Revisación clínica completa, diagnóstico y plan de tratamiento personalizado.</p></div>
+      <div class="servicio-card fade-up delay-1"><div class="servicio-icon">💉</div><h3>Vacunación</h3><p>Plan de vacunas completo con calendario personalizado. Carnets vigentes.</p></div>
+      <div class="servicio-card fade-up delay-2"><div class="servicio-icon">🏥</div><h3>Cirugías</h3><p>Castración, esterilización, extracción dental y cirugías de tejidos blandos.</p></div>
+      <div class="servicio-card fade-up delay-3"><div class="servicio-icon">🧪</div><h3>Análisis clínicos</h3><p>Hemograma, bioquímica y orina con resultados en el día para diagnósticos ágiles.</p></div>
+      <div class="servicio-card fade-up"><div class="servicio-icon">📷</div><h3>Radiografías</h3><p>Diagnóstico por imágenes para fracturas, problemas cardiorrespiratorios y más.</p></div>
+      <div class="servicio-card fade-up delay-1"><div class="servicio-icon">🪮</div><h3>Peluquería canina</h3><p>Baño, corte y arreglo estético para todas las razas.</p></div>
+      <div class="servicio-card fade-up delay-2"><div class="servicio-icon">🦷</div><h3>Odontología</h3><p>Limpieza dental y tratamiento de enfermedades periodontales bajo anestesia segura.</p></div>
+      <div class="servicio-card fade-up delay-3"><div class="servicio-icon">🛍️</div><h3>Vet & Pet shop</h3><p>Alimentos premium, antiparasitarios, accesorios y medicamentos en un solo lugar.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="doctor" id="equipo">
+  <div class="container">
+    <div class="doctor-layout">
+      <div class="doctor-img fade-up">
+        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=700&q=80" alt="Dr. Daniel Marimon" loading="lazy" />
+      </div>
+      <div class="fade-up delay-2">
+        <div class="doctor-eyebrow">Conocé al profesional</div>
+        <h2 class="doctor-title">Dr. Daniel <em>Marimon</em></h2>
+        <p class="doctor-text">Con más de 20 años de trayectoria en la profesión, el Dr. Daniel Marimon se ha convertido en un referente de la medicina veterinaria en Morón. Su atención cercana, su amor genuino por los animales y su precisión diagnóstica lo distinguen.</p>
+        <p class="doctor-text">Cada paciente es tratado con la misma dedicación: desde un cachorro en su primera consulta hasta un compañero de años que necesita atención especial.</p>
+        <div class="credentials">
+          <div class="credential"><div class="cred-dot"></div><p>Médico Veterinario — Universidad de Buenos Aires (UBA)</p></div>
+          <div class="credential"><div class="cred-dot"></div><p>Especialización en cirugía de pequeños animales</p></div>
+          <div class="credential"><div class="cred-dot"></div><p>+20 años de ejercicio profesional en Morón</p></div>
+          <div class="credential"><div class="cred-dot"></div><p>Miembro del Colegio de Veterinarios de la Prov. de Buenos Aires</p></div>
+        </div>
+        <a href="https://wa.me/5401146275967?text=Hola+Dr.+Marimon!+Quiero+una+consulta+para+mi+mascota" class="btn-verde" target="_blank">💬 Pedir consulta con el Dr. Marimon</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="galeria" id="galeria">
+  <div class="container">
+    <span class="section-eyebrow fade-up">Nuestras instalaciones</span>
+    <h2 class="section-title fade-up">Un lugar pensado<br />para el <em>bienestar</em></h2>
+    <div class="galeria-grid">
+      <div class="gal-item"><img src="https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=800&q=80" alt="Consultorio" loading="lazy" /><div class="gal-overlay"></div></div>
+      <div class="gal-item"><img src="https://images.unsplash.com/photo-1548767797-d8c844163c4a?w=600&q=80" alt="Perros" loading="lazy" /><div class="gal-overlay"></div></div>
+      <div class="gal-item"><img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&q=80" alt="Cachorro" loading="lazy" /><div class="gal-overlay"></div></div>
+      <div class="gal-item"><img src="https://images.unsplash.com/photo-1615751072497-5f5169febe17?w=600&q=80" alt="Gatos" loading="lazy" /><div class="gal-overlay"></div></div>
+      <div class="gal-item"><img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=600&q=80" alt="Mascota feliz" loading="lazy" /><div class="gal-overlay"></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="resenas" id="resenas">
+  <div class="container">
+    <div class="resenas-header">
+      <div><span class="section-eyebrow fade-up">La gente habla</span><h2 class="section-title fade-up">Lo que dicen<br />los <em>dueños</em></h2></div>
+      <div class="resenas-score fade-up"><div class="score-num">4.8★</div><div class="score-label">520 reseñas en Google</div></div>
+    </div>
+    <div class="resenas-grid">
+      <div class="resena-card fade-up"><div class="resena-stars">★★★★★</div><p class="resena-texto">"El Dr. Daniel es simplemente el mejor veterinario de Morón. Siempre atiende con mucha empatía tanto al animal como al dueño. Mi perra salió de una cirugía complicada perfectamente. Eterno agradecimiento."</p><div class="resena-autor"><div class="resena-av">SR</div><div><div class="resena-nombre">Silvia R.</div><div class="resena-fecha">hace 3 semanas · Google</div></div></div></div>
+      <div class="resena-card fade-up delay-1"><div class="resena-stars">★★★★★</div><p class="resena-texto">"Daniel siempre la atiende con mucha profesionalidad y amor. Se nota que ama lo que hace. Mi gata estuvo internada y nunca me faltó información sobre su evolución. 100% recomendado."</p><div class="resena-autor"><div class="resena-av">MF</div><div><div class="resena-nombre">Mónica F.</div><div class="resena-fecha">hace 1 mes · Google</div></div></div></div>
+      <div class="resena-card fade-up delay-2"><div class="resena-stars">★★★★★</div><p class="resena-texto">"Excelente atención de Daniel y su hija. Mi cachorro llegó muy asustado y en minutos estaba tranquilo. La consulta muy completa y el precio muy razonable. No voy a buscar otra vet."</p><div class="resena-autor"><div class="resena-av">LP</div><div><div class="resena-nombre">Luis P.</div><div class="resena-fecha">hace 2 semanas · Google</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="horarios" id="horarios">
+  <div class="container">
+    <span class="section-eyebrow fade-up">Estamos disponibles</span>
+    <h2 class="section-title fade-up">Horarios de <em>atención</em></h2>
+    <div class="horarios-layout">
+      <div class="fade-up">
+        <div class="horario-tabla">
+          <div class="horario-row"><span class="horario-dia">Lunes a Viernes</span><span class="horario-hora">09:00 – 20:00 hs</span></div>
+          <div class="horario-row"><span class="horario-dia">Sábados</span><span class="horario-hora">09:00 – 14:00 hs</span></div>
+          <div class="horario-row cerrado"><span class="horario-dia">Domingos y Feriados</span><span class="horario-hora">Solo urgencias</span></div>
+        </div>
+        <div style="margin-top:1.5rem;padding:1.5rem;background:var(--verde-pale);border:1px solid var(--borde);border-radius:12px;">
+          <p style="font-size:.9rem;color:var(--gris);">📍 <strong style="color:var(--oscuro)">Dr. José María Casullo 821</strong><br />B1708 Morón, Provincia de Buenos Aires</p>
+        </div>
+        <a href="https://wa.me/5401146275967?text=Hola!+Quiero+pedir+un+turno" class="btn-wa-verde" style="display:flex;margin-top:1rem;" target="_blank">💬 Pedir turno por WhatsApp</a>
+      </div>
+      <div class="emergencia-box fade-up delay-2">
+        <h3>Urgencias fuera de horario</h3>
+        <p>Si tu mascota tiene una emergencia, escribinos por WhatsApp. Hacemos todo lo posible para atenderte a la brevedad o indicarte la guardia más cercana disponible.</p>
+        <p>Para urgencias graves durante la noche, trabajamos en red con veterinarias 24hs de la zona.</p>
+        <a href="https://wa.me/5401146275967?text=URGENCIA:+mi+mascota+necesita+atención" class="btn-emergencia" target="_blank">📲 Escribir por urgencia</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="turno">
+  <div class="container">
+    <div class="turno-layout">
+      <div class="fade-up">
+        <span class="section-eyebrow">Rápido y sin complicaciones</span>
+        <h2 class="section-title">Pedí tu turno<br /><em>en 3 pasos</em></h2>
+        <p style="color:var(--gris);margin-bottom:2rem;">No hace falta llamar horas para conseguir un turno. Por WhatsApp te respondemos rápido y coordinamos el horario que mejor te venga.</p>
+        <ul class="turno-pasos">
+          <li class="turno-paso"><div class="turno-num">1</div><p>Escribinos por WhatsApp contando el motivo de la consulta y el nombre de tu mascota.</p></li>
+          <li class="turno-paso"><div class="turno-num">2</div><p>Te respondemos en minutos con los horarios disponibles y elegís el que mejor te queda.</p></li>
+          <li class="turno-paso"><div class="turno-num">3</div><p>Venís a la clínica en el horario acordado. ¡Sin esperar horas en la sala!</p></li>
+        </ul>
+        <a href="https://wa.me/5401146275967?text=Hola!+Quiero+pedir+un+turno+para+mi+mascota" class="btn-verde" target="_blank">💬 Pedir turno ahora</a>
+      </div>
+      <div class="turno-img fade-up delay-2">
+        <img src="https://images.unsplash.com/photo-1599443015574-be5fe8a05783?w=700&q=80" alt="Mascota en el veterinario" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contacto" id="contacto">
+  <div class="container">
+    <span class="section-eyebrow fade-up">Encontranos</span>
+    <h2 class="section-title fade-up">Dónde <em>estamos</em></h2>
+    <div class="contacto-layout">
+      <div class="contacto-card fade-up">
+        <h3>Información de contacto</h3>
+        <div class="info-item"><div class="info-icon">📍</div><div><strong>Dirección</strong><p>Dr. José María Casullo 821, Morón</p></div></div>
+        <div class="info-item"><div class="info-icon">📞</div><div><strong>Teléfono</strong><p><a href="tel:01146275967" style="color:inherit;text-decoration:none">011 4627-5967</a></p></div></div>
+        <div class="info-item"><div class="info-icon">🕐</div><div><strong>Horario</strong><p>Lun–Vie 09:00–20:00 · Sáb 09:00–14:00</p></div></div>
+        <div class="info-item"><div class="info-icon">📱</div><div><strong>Instagram</strong><p>@clinica.veterinaria.marimon</p></div></div>
+        <a href="https://wa.me/5401146275967?text=Hola!+Quiero+una+consulta" class="btn-wa-verde" target="_blank">💬 Escribirnos por WhatsApp</a>
+      </div>
+      <div class="mapa fade-up delay-2">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3275.8!2d-58.6197!3d-34.6525!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDM5JzA5LjAiUyA1OMKwMzcnMTAuOSJX!5e0!3m2!1ses!2sar!4v1234567890" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="container" style="position:relative;z-index:2">
+    <h2 class="fade-up">Tu mascota <em>no puede esperar</em></h2>
+    <p class="fade-up delay-1">Pedí turno hoy. Atendemos con cariño, con experiencia y con el compromiso de siempre.</p>
+    <a href="https://wa.me/5401146275967?text=Hola!+Quiero+pedir+un+turno+para+mi+mascota" class="btn-verde fade-up delay-2" target="_blank" style="display:inline-flex;">💬 Pedir turno ahora — es gratis</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">🐾 Clínica Veterinaria Marimon</div>
+  <p>Dr. José María Casullo 821, Morón · 011 4627-5967</p>
+  <p>© 2025 Clínica Veterinaria Marimon · Morón, Buenos Aires</p>
+</footer>
+
+<a href="https://wa.me/5401146275967?text=Hola!+Consulto+desde+la+web" class="wa-float" target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  <span>Pedir turno</span>
+</a>
+
+<script>
+  window.addEventListener('scroll',()=>{
+    const p=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;
+    document.getElementById('progress-bar').style.width=p+'%';
+    document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);
+  });
+  const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.1});
+  document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+  function animateCounter(el){
+    const target=parseFloat(el.dataset.target);
+    const suffix=el.dataset.suffix||'';
+    const decimal=parseInt(el.dataset.decimal)||0;
+    const duration=2000; const start=performance.now();
+    const step=(now)=>{
+      const elapsed=Math.min((now-start)/duration,1);
+      const eased=1-Math.pow(1-elapsed,3);
+      const current=target*eased;
+      el.textContent=(decimal?current.toFixed(decimal):Math.floor(current))+suffix;
+      if(elapsed<1)requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  const cObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){animateCounter(e.target);cObs.unobserve(e.target)}})},{threshold:.5});
+  document.querySelectorAll('[data-target]').forEach(el=>cObs.observe(el));
+</script>
+</body>
+</html>

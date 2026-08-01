@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gentleman Club del Caballero | Barbería · Quilmes · Corte & Estilo Masculino</title>
+  <meta name="description" content="Gentleman Club del Caballero — la barbería de referencia en Quilmes. Corte, barba, afeitado clásico y tratamientos capilares. 4.9⭐ 209 reseñas. Turno por WhatsApp." />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"HairSalon","name":"Gentleman Club del Caballero",
+   "address":{"@type":"PostalAddress","streetAddress":"Alvear 439","addressLocality":"Quilmes","addressRegion":"Buenos Aires","addressCountry":"AR"},
+   "telephone":"+5401175172643","openingHours":["Mo-Fr 10:00-20:30","Sa 09:00-17:00"],
+   "aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"209"}}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --negro:#070706; --carbon:#0F0F0D; --carbon-medio:#181815; --carbon-card:#1E1E1B;
+      --dorado:#B8860B; --dorado-light:#D4A017; --dorado-pale:rgba(184,134,11,0.08);
+      --dorado-glow:rgba(184,134,11,0.35); --borde:#2A2A26; --gris:#7A7A70;
+      --crema:#F5EDD8; --crema-dark:#E8D9B8; --blanco:#FAFAF5;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',sans-serif;background:var(--negro);color:var(--blanco);line-height:1.65;overflow-x:hidden}
+
+    #progress-bar{position:fixed;top:0;left:0;height:2px;z-index:999;background:linear-gradient(90deg,var(--dorado),var(--dorado-light),var(--dorado));width:0%;transition:width .1s}
+
+    .fade-up{opacity:0;transform:translateY(36px);transition:opacity .85s cubic-bezier(.25,.46,.45,.94),transform .85s cubic-bezier(.25,.46,.45,.94)}
+    .fade-up.visible{opacity:1;transform:translateY(0)}
+    .d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+    /* NAV */
+    nav{position:fixed;top:2px;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 2rem;background:rgba(7,7,6,.95);backdrop-filter:blur(24px) saturate(180%);border-bottom:1px solid rgba(184,134,11,.25);transition:all .35s}
+    nav.scrolled{padding:.8rem 2rem;background:rgba(7,7,6,.99)}
+    .nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--crema);text-decoration:none;letter-spacing:.06em}
+    .nav-logo span{color:var(--dorado);display:block;font-size:.62rem;font-family:'Inter',sans-serif;font-weight:600;letter-spacing:.22em;text-transform:uppercase;margin-top:1px}
+    .nav-links{display:flex;gap:2.2rem;list-style:none}
+    .nav-links a{text-decoration:none;color:var(--gris);font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;transition:color .2s;position:relative}
+    .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--dorado);transform:scaleX(0);transition:transform .25s}
+    .nav-links a:hover{color:var(--dorado)}
+    .nav-links a:hover::after{transform:scaleX(1)}
+    .nav-cta{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--dorado),var(--dorado-light));color:var(--negro);padding:.58rem 1.5rem;border-radius:3px;font-size:.78rem;font-weight:800;text-decoration:none;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;flex-shrink:0;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 18px var(--dorado-glow)}
+    .nav-cta::after{content:'';position:absolute;top:-50%;left:-75%;width:50%;height:200%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transform:skewX(-20deg);animation:shimmer 3.5s infinite}
+    .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(184,134,11,.5)}
+    .hamburger{display:none;background:none;border:none;cursor:pointer}
+    .hamburger span{display:block;width:22px;height:1.5px;background:var(--crema);margin:5px 0}
+    @keyframes shimmer{0%{left:-75%}100%{left:150%}}
+
+    /* HERO */
+    .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;padding-top:64px}
+    .hero-left{display:flex;align-items:center;padding:4rem 3rem 4rem 5vw;background:var(--carbon);position:relative;z-index:2}
+    .hero-right{position:relative;overflow:hidden}
+    .hero-right img{width:100%;height:100%;object-fit:cover;transition:transform 12s ease;transform:scale(1.06)}
+    .hero-right img.loaded{transform:scale(1)}
+    .hero-right-overlay{position:absolute;inset:0;background:linear-gradient(to right,var(--carbon) 0%,transparent 25%),linear-gradient(to top,rgba(7,7,6,.5) 0%,transparent 40%)}
+    .hero-content{max-width:520px}
+    .hero-tag{display:flex;align-items:center;gap:.7rem;color:var(--dorado);font-size:.72rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;margin-bottom:1.8rem}
+    .hero-tag::before{content:'';width:32px;height:1px;background:var(--dorado)}
+    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,5vw,4.8rem);font-weight:900;line-height:1.0;color:var(--crema);margin-bottom:1.3rem}
+    .hero h1 em{color:var(--dorado);font-style:italic;display:block}
+    .hero p{font-size:1rem;color:var(--gris);margin-bottom:2rem;max-width:440px;line-height:1.8}
+    .hero-rating{display:inline-flex;align-items:center;gap:.55rem;background:rgba(184,134,11,.08);border:1px solid rgba(184,134,11,.25);padding:.45rem 1.1rem;border-radius:3px;font-size:.78rem;color:var(--dorado-light);margin-bottom:2rem;backdrop-filter:blur(4px)}
+    .hero-btns{display:flex;gap:.9rem;flex-wrap:wrap;margin-bottom:2.8rem}
+    .hero-stats{display:flex;gap:2.5rem;padding-top:2rem;border-top:1px solid var(--borde)}
+    .h-stat-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--dorado);line-height:1}
+    .h-stat-label{font-size:.7rem;color:var(--gris);margin-top:.15rem;text-transform:uppercase;letter-spacing:.06em}
+
+    /* BUTTONS */
+    .btn-dorado{display:inline-flex;align-items:center;gap:.6rem;background:linear-gradient(135deg,var(--dorado),var(--dorado-light));color:var(--negro);padding:.95rem 2.2rem;border-radius:4px;font-size:.9rem;font-weight:800;text-decoration:none;text-transform:uppercase;letter-spacing:.1em;transition:transform .25s,box-shadow .25s;box-shadow:0 6px 24px var(--dorado-glow);position:relative;overflow:hidden}
+    .btn-dorado::after{content:'';position:absolute;top:-50%;left:-75%;width:50%;height:200%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transform:skewX(-20deg);animation:shimmer 3.5s infinite}
+    .btn-dorado:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 12px 36px rgba(184,134,11,.5)}
+    .btn-outline{display:inline-flex;align-items:center;gap:.6rem;background:rgba(245,237,216,.04);color:var(--crema);padding:.95rem 2.2rem;border-radius:4px;font-size:.9rem;font-weight:600;text-decoration:none;text-transform:uppercase;letter-spacing:.1em;border:1px solid rgba(245,237,216,.18);backdrop-filter:blur(4px);transition:border-color .25s,background .25s,transform .25s}
+    .btn-outline:hover{border-color:var(--dorado);color:var(--dorado);background:var(--dorado-pale);transform:translateY(-3px)}
+
+    /* STATS STRIP */
+    .stats-strip{background:linear-gradient(135deg,var(--dorado),var(--dorado-light));padding:0}
+    .stats-inner{display:flex;max-width:1100px;margin:0 auto}
+    .stat-item{flex:1;text-align:center;padding:2rem 1rem;border-right:1px solid rgba(7,7,6,.15)}
+    .stat-item:last-child{border-right:none}
+    .stat-num{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:700;color:var(--negro);line-height:1}
+    .stat-label{font-size:.7rem;color:rgba(7,7,6,.6);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem}
+
+    /* MARQUEE */
+    .marquee-section{background:var(--carbon);overflow:hidden;border-top:1px solid var(--borde);border-bottom:1px solid var(--borde)}
+    .marquee-track{display:flex;animation:marquee 24s linear infinite;white-space:nowrap}
+    .marquee-item{display:inline-flex;align-items:center;gap:.5rem;padding:.95rem 2.5rem;font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(184,134,11,.65);font-weight:700}
+    .marquee-sep{color:var(--borde)}
+    @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+    /* SECTION */
+    section{padding:6rem 1.5rem}
+    .container{max-width:1100px;margin:0 auto}
+    .section-eyebrow{display:inline-flex;align-items:center;gap:.7rem;font-size:.7rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--dorado);margin-bottom:1rem}
+    .section-eyebrow::before{content:'';width:28px;height:1px;background:var(--dorado)}
+    .section-eyebrow::after{content:'';width:28px;height:1px;background:var(--dorado);opacity:.4}
+    .section-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4.5vw,3.5rem);font-weight:700;color:var(--crema);margin-bottom:1rem;line-height:1.1}
+    .section-title em{color:var(--dorado);font-style:italic}
+    .section-sub{font-size:.9rem;color:var(--gris);max-width:500px;margin-bottom:3.5rem;line-height:1.82}
+
+    /* SERVICIOS */
+    .servicios{background:var(--carbon)}
+    .servicios-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--borde);border:1px solid var(--borde);border-radius:8px;overflow:hidden}
+    .servicio-item{background:var(--carbon-medio);padding:2.5rem 2rem;transition:background .3s;position:relative;overflow:hidden}
+    .servicio-item::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--dorado),var(--dorado-light));transform:scaleX(0);transition:transform .35s}
+    .servicio-item:hover{background:#201E1A}
+    .servicio-item:hover::before{transform:scaleX(1)}
+    .servicio-num{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:rgba(184,134,11,.12);line-height:1;margin-bottom:.8rem;transition:color .3s}
+    .servicio-item:hover .servicio-num{color:rgba(184,134,11,.25)}
+    .servicio-item h3{font-size:.98rem;font-weight:800;color:var(--crema);margin-bottom:.5rem;letter-spacing:.01em}
+    .servicio-item p{font-size:.83rem;color:var(--gris);line-height:1.75}
+    .servicio-precio{display:inline-flex;align-items:center;gap:.4rem;margin-top:1.2rem;font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--dorado);border-bottom:1px solid rgba(184,134,11,.3);padding-bottom:2px;transition:border-color .2s}
+    .servicio-item:hover .servicio-precio{border-color:var(--dorado)}
+
+    /* GALERÍA */
+    .galeria-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:260px 260px;gap:10px}
+    .gal{overflow:hidden;border-radius:8px;position:relative}
+    .gal:first-child{grid-row:span 2}
+    .gal img{width:100%;height:100%;object-fit:cover;transition:transform .65s cubic-bezier(.25,.46,.45,.94)}
+    .gal:hover img{transform:scale(1.08)}
+    .gal-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(184,134,11,.12),transparent);opacity:0;transition:opacity .35s}
+    .gal:hover .gal-overlay{opacity:1}
+
+    /* BARBEROS */
+    .barberos{background:var(--carbon)}
+    .barberos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+    .barbero-card{border:1px solid var(--borde);border-radius:8px;overflow:hidden;transition:border-color .35s,transform .35s,box-shadow .35s}
+    .barbero-card:hover{border-color:var(--dorado);transform:translateY(-6px);box-shadow:0 20px 60px rgba(184,134,11,.1)}
+    .barbero-foto{height:300px;overflow:hidden;position:relative}
+    .barbero-foto img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;filter:grayscale(20%)}
+    .barbero-card:hover .barbero-foto img{transform:scale(1.05);filter:grayscale(0%)}
+    .barbero-foto::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(7,7,6,.7) 0%,transparent 50%)}
+    .barbero-info{padding:1.8rem}
+    .barbero-info h3{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--crema);margin-bottom:.25rem}
+    .barbero-role{font-size:.7rem;color:var(--dorado);font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.7rem}
+    .barbero-info p{font-size:.83rem;color:var(--gris);line-height:1.72}
+
+    /* RESEÑAS */
+    .resenas{background:var(--carbon-card)}
+    .resenas-header{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:3rem}
+    .resenas-score{text-align:right}
+    .score-num{font-family:'Playfair Display',serif;font-size:5rem;font-weight:700;color:var(--dorado);line-height:1}
+    .score-label{font-size:.78rem;color:var(--gris)}
+    .resenas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+    .resena{background:var(--carbon-medio);border:1px solid var(--borde);border-radius:8px;padding:2rem;transition:border-color .3s,transform .3s,box-shadow .3s;position:relative;overflow:hidden}
+    .resena::before{content:'"';position:absolute;top:-.5rem;right:1rem;font-family:'Playfair Display',serif;font-size:7rem;line-height:1;color:rgba(184,134,11,.06);pointer-events:none}
+    .resena:hover{border-color:rgba(184,134,11,.4);transform:translateY(-5px);box-shadow:0 16px 50px rgba(184,134,11,.08)}
+    .resena-stars{color:var(--dorado);font-size:.95rem;letter-spacing:2px;margin-bottom:.9rem}
+    .resena-texto{font-size:.88rem;color:rgba(250,250,245,.75);font-style:italic;margin-bottom:1.3rem;line-height:1.82}
+    .resena-autor{display:flex;align-items:center;gap:.8rem}
+    .r-av{width:40px;height:40px;border-radius:3px;background:rgba(184,134,11,.1);border:1px solid rgba(184,134,11,.3);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--dorado);font-weight:800;flex-shrink:0}
+    .r-nombre{font-size:.87rem;font-weight:700;color:var(--crema)}
+    .r-fecha{font-size:.72rem;color:var(--gris)}
+
+    /* TURNO */
+    .turno{background:var(--carbon)}
+    .turno-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+    .horario-tabla{border:1px solid var(--borde);border-radius:8px;overflow:hidden;margin-bottom:1.5rem}
+    .h-row{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 1.6rem;border-bottom:1px solid var(--borde);transition:background .2s}
+    .h-row:last-child{border-bottom:none}
+    .h-row:hover{background:rgba(184,134,11,.04)}
+    .h-dia{font-weight:700;font-size:.9rem;color:var(--crema)}
+    .h-hrs{color:var(--dorado);font-size:.88rem;font-weight:700;letter-spacing:.04em}
+    .turno-card{background:var(--carbon-card);border:1px solid var(--borde);border-radius:10px;padding:2.2rem;position:relative;overflow:hidden}
+    .turno-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--dorado),var(--dorado-light))}
+    .turno-card h3{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--crema);margin-bottom:1rem}
+    .turno-card p{font-size:.87rem;color:var(--gris);margin-bottom:1.5rem;line-height:1.78}
+
+    .btn-wa{display:flex;align-items:center;justify-content:center;gap:.75rem;background:linear-gradient(135deg,#25D366,#1da851);color:#fff;padding:1.05rem 1.5rem;border-radius:8px;font-size:.9rem;font-weight:800;text-decoration:none;text-transform:uppercase;letter-spacing:.06em;transition:transform .25s,box-shadow .25s;box-shadow:0 6px 24px rgba(37,211,102,.3);position:relative;overflow:hidden}
+    .btn-wa::after{content:'';position:absolute;top:-50%;left:-75%;width:50%;height:200%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transform:skewX(-20deg);animation:shimmer 3.5s infinite}
+    .btn-wa:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(37,211,102,.45)}
+
+    /* CONTACTO */
+    .contacto{background:var(--carbon-card)}
+    .contacto-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+    .info-row{display:flex;gap:1.2rem;align-items:flex-start;margin-bottom:1.8rem}
+    .info-icon{width:48px;height:48px;border:1px solid rgba(184,134,11,.3);background:rgba(184,134,11,.06);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;border-radius:6px;color:var(--dorado)}
+    .info-row strong{display:block;font-size:.72rem;color:var(--gris);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.25rem}
+    .info-row p{font-size:.95rem;color:var(--crema);font-weight:500}
+    .mapa{border-radius:10px;overflow:hidden;border:1px solid var(--borde);height:360px}
+    .mapa iframe{width:100%;height:100%;border:none;filter:grayscale(100%) brightness(.35) contrast(1.2)}
+
+    /* CTA FINAL */
+    .cta-final{background:var(--carbon);border-top:1px solid rgba(184,134,11,.2);border-bottom:1px solid rgba(184,134,11,.2);text-align:center;padding:7rem 1.5rem;position:relative;overflow:hidden}
+    .cta-final::before{content:'✂';position:absolute;font-size:22rem;opacity:.02;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;color:var(--dorado)}
+    .cta-final h2{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5.5vw,4.2rem);color:var(--crema);margin-bottom:.8rem;line-height:1.05;position:relative;z-index:2}
+    .cta-final h2 em{color:var(--dorado);font-style:italic}
+    .cta-final p{color:var(--gris);margin-bottom:2.5rem;font-size:1rem;position:relative;z-index:2;max-width:460px;margin-left:auto;margin-right:auto}
+
+    /* FOOTER */
+    footer{background:#030302;padding:2.5rem 1.5rem;text-align:center;border-top:1px solid var(--borde)}
+    .footer-logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--crema);margin-bottom:.5rem}
+    .footer-logo span{color:var(--dorado)}
+    footer p{font-size:.78rem;color:#333;margin-top:.3rem}
+
+    /* WA FLOTANTE */
+    .wa-float{position:fixed;bottom:1.5rem;right:1.5rem;z-index:300;display:flex;align-items:center;gap:.75rem;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;text-decoration:none;border-radius:50px;padding:.9rem 1.4rem;box-shadow:0 8px 30px rgba(37,211,102,.45);font-size:.85rem;font-weight:800;letter-spacing:.04em;animation:wa-pulse 3s infinite;transition:transform .2s}
+    .wa-float svg{width:26px;height:26px;fill:#fff;flex-shrink:0}
+    .wa-float:hover{transform:scale(1.05)}
+    @keyframes wa-pulse{0%,100%{box-shadow:0 8px 30px rgba(37,211,102,.45)}50%{box-shadow:0 8px 50px rgba(37,211,102,.75)}}
+
+    @media(max-width:900px){
+      .hero{grid-template-columns:1fr;grid-template-rows:auto}
+      .hero-right{height:55vw}
+      .hero-left{padding:2.5rem 1.5rem}
+      .servicios-grid{grid-template-columns:repeat(2,1fr)}
+      .barberos-grid,.resenas-grid{grid-template-columns:1fr}
+      .turno-layout,.contacto-layout{grid-template-columns:1fr}
+    }
+    @media(max-width:768px){
+      .nav-links{display:none}.hamburger{display:block}
+      .galeria-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:auto}
+      .gal:first-child{grid-row:span 1;height:200px}
+      .servicios-grid{grid-template-columns:1fr}
+      .stats-inner{flex-wrap:wrap}
+      .stat-item{flex:0 0 50%}
+      .wa-float span{display:none}.wa-float{padding:.9rem;border-radius:50%}
+    }
+  </style>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">Gentleman Club del Caballero<span>Barbería · Quilmes Centro</span></a>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#galeria">Galería</a></li>
+    <li><a href="#turno">Turnos</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="https://wa.me/5401175172643?text=Hola!+Quiero+sacar+turno" class="nav-cta" target="_blank">Sacar turno</a>
+  <button class="hamburger"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-left">
+    <div class="hero-content">
+      <div class="hero-tag fade-up">Quilmes Centro · Desde 2012</div>
+      <h1 class="fade-up d1">El arte del<br /><em>caballero bien cuidado</em></h1>
+      <p class="fade-up d2">Más que un corte de pelo. Una experiencia de cuidado masculino que te hace salir sintiéndote distinto. Nuestros barberos son artesanos del estilo.</p>
+      <div class="hero-rating fade-up d2">⭐ 4.9 · 209 reseñas · La barbería mejor calificada de Quilmes</div>
+      <div class="hero-btns fade-up d3">
+        <a href="https://wa.me/5401175172643?text=Hola!+Quiero+sacar+turno+para+corte" class="btn-dorado" target="_blank">💬 Sacar turno ahora</a>
+        <a href="#servicios" class="btn-outline">Ver servicios →</a>
+      </div>
+      <div class="hero-stats fade-up d4">
+        <div><div class="h-stat-num" data-target="4.9" data-suffix="★" data-decimal="1">0</div><div class="h-stat-label">Calificación</div></div>
+        <div><div class="h-stat-num" data-target="209">0</div><div class="h-stat-label">Reseñas Google</div></div>
+        <div><div class="h-stat-num" data-target="12" data-suffix="+">0</div><div class="h-stat-label">Años de experiencia</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1200&q=85" alt="Gentleman Club del Caballero" id="heroImg" />
+    <div class="hero-right-overlay"></div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat-item"><div class="stat-num">4.9★</div><div class="stat-label">La mejor calificación</div></div>
+    <div class="stat-item"><div class="stat-num">209</div><div class="stat-label">Reseñas en Google</div></div>
+    <div class="stat-item"><div class="stat-num">12+</div><div class="stat-label">Años en Quilmes</div></div>
+    <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">Servicios disponibles</div></div>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">✂ Corte clásico <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">🪒 Barba & delineado <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">✂ Corte + barba combo <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">🪒 Afeitado clásico con navaja <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">🎨 Coloración & mechas <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">💆 Tratamientos capilares <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">✂ Corte clásico <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">🪒 Barba & delineado <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">✂ Corte + barba combo <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">🪒 Afeitado clásico con navaja <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">🎨 Coloración & mechas <span class="marquee-sep">·</span></span>
+    <span class="marquee-item">💆 Tratamientos capilares <span class="marquee-sep">·</span></span>
+  </div>
+</div>
+
+<!-- SERVICIOS -->
+<section class="servicios" id="servicios">
+  <div class="container">
+    <span class="section-eyebrow fade-up">Lo que hacemos</span>
+    <h2 class="section-title fade-up">Servicios de <em>barbería premium</em></h2>
+    <p class="section-sub fade-up">Todo lo que un caballero necesita, en un solo lugar. Precios accesibles, resultado de primera.</p>
+    <div class="servicios-grid">
+      <div class="servicio-item fade-up"><div class="servicio-num">01</div><h3>Corte clásico</h3><p>Navaja, tijera o máquina. Te asesoramos según tu cara y estilo de vida para que el resultado sea siempre el indicado.</p><span class="servicio-precio">Consultar precio →</span></div>
+      <div class="servicio-item fade-up d1"><div class="servicio-num">02</div><h3>Barba & delineado</h3><p>Arreglo, perfilado y delineado de barba con navaja recta. El detalle que define la imagen de un caballero.</p><span class="servicio-precio">Consultar precio →</span></div>
+      <div class="servicio-item fade-up d2"><div class="servicio-num">03</div><h3>Corte + barba</h3><p>El combo completo. Corte a medida más arreglo de barba. El paquete más elegido por nuestros clientes frecuentes.</p><span class="servicio-precio">Consultar precio →</span></div>
+      <div class="servicio-item fade-up d3"><div class="servicio-num">04</div><h3>Afeitado clásico</h3><p>Toalla caliente, espuma artesanal y navaja recta. Un ritual de otro tiempo que sigue siendo insuperable.</p><span class="servicio-precio">Consultar precio →</span></div>
+      <div class="servicio-item fade-up d4"><div class="servicio-num">05</div><h3>Coloración & mechas</h3><p>Tintura, decoloración y mechas a cargo de profesionales. Para quienes quieren un cambio de look completo.</p><span class="servicio-precio">Consultar precio →</span></div>
+      <div class="servicio-item fade-up"><div class="servicio-num">06</div><h3>Tratamientos capilares</h3><p>Hidratación profunda, tratamiento anticaída y productos profesionales para mantener tu pelo sano todo el año.</p><span class="servicio-precio">Consultar precio →</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERÍA -->
+<section id="galeria">
+  <div class="container">
+    <span class="section-eyebrow fade-up">Nuestro trabajo</span>
+    <h2 class="section-title fade-up">El resultado <em>habla solo</em></h2>
+    <div class="galeria-grid" style="margin-top:2.5rem;">
+      <div class="gal"><img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=800&q=80" alt="Barbería Gentleman Club" loading="lazy" /><div class="gal-overlay"></div></div>
+      <div class="gal"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=500&q=80" alt="Corte de pelo" loading="lazy" /><div class="gal-overlay"></div></div>
+      <div class="gal"><img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=500&q=80" alt="Afeitado clásico" loading="lazy" /><div class="gal-overlay"></div></div>
+      <div class="gal"><img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=500&q=80" alt="Barba y estilo" loading="lazy" /><div class="gal-overlay"></div></div>
+      <div class="gal"><img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=500&q=80" alt="Interior barbería" loading="lazy" /><div class="gal-overlay"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BARBEROS -->
+<section class="barberos">
+  <div class="container">
+    <span class="section-eyebrow fade-up">El equipo</span>
+    <h2 class="section-title fade-up">Artesanos <em>del estilo</em></h2>
+    <div class="barberos-grid" style="margin-top:2.5rem;">
+      <div class="barbero-card fade-up">
+        <div class="barbero-foto"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" alt="Darío" loading="lazy" /></div>
+        <div class="barbero-info"><h3>Darío</h3><p class="barbero-role">Barbero senior · 12 años de experiencia</p><p>Especialista en cortes clásicos y afeitado con navaja recta. El favorito de los clientes según las reseñas de Google.</p></div>
+      </div>
+      <div class="barbero-card fade-up d1">
+        <div class="barbero-foto"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80" alt="Lucas" loading="lazy" /></div>
+        <div class="barbero-info"><h3>Lucas</h3><p class="barbero-role">Barbero · Especialista en fade</p><p>Maestro del fade y los degradados modernos. Convierte cualquier corte en una obra de arte.</p></div>
+      </div>
+      <div class="barbero-card fade-up d2">
+        <div class="barbero-foto"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80" alt="Martín" loading="lazy" /></div>
+        <div class="barbero-info"><h3>Martín</h3><p class="barbero-role">Estilista · Coloración</p><p>Especializado en coloración y tratamientos capilares. Tu cambio de look está en las mejores manos.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEÑAS -->
+<section class="resenas" id="resenas">
+  <div class="container">
+    <div class="resenas-header">
+      <div><span class="section-eyebrow fade-up">Lo que dice la gente</span><h2 class="section-title fade-up">La barbería <em>mejor calificada</em><br />de Quilmes</h2></div>
+      <div class="resenas-score fade-up"><div class="score-num">4.9★</div><div class="score-label">209 reseñas en Google</div></div>
+    </div>
+    <div class="resenas-grid">
+      <div class="resena fade-up"><div class="resena-stars">★★★★★</div><p class="resena-texto">"Muy buenos barberos, en particular Darío. Muy recomendable! Fui por primera vez y desde ese día no voy a ningún otro lado. Te hacen sentir como en casa."</p><div class="resena-autor"><div class="r-av">MG</div><div><div class="r-nombre">Martín G.</div><div class="r-fecha">hace 1 mes · Google</div></div></div></div>
+      <div class="resena fade-up d1"><div class="resena-stars">★★★★★</div><p class="resena-texto">"En muy buen ambiente, excelente servicio y buenos precios. Te tratan como un rey. Lo recomiendo a todos los caballeros que quieran salir bien presentados y relajados."</p><div class="resena-autor"><div class="r-av">AP</div><div><div class="r-nombre">Ariel P.</div><div class="r-fecha">hace 2 semanas · Google</div></div></div></div>
+      <div class="resena fade-up d2"><div class="resena-stars">★★★★★</div><p class="resena-texto">"Hace dos años que vengo con mi hijo y siempre salimos los dos con el corte perfecto. Atención de primera, precios razonables y el resultado habla solo. El mejor barbero del Quilmes."</p><div class="resena-autor"><div class="r-av">RL</div><div><div class="r-nombre">Roberto L.</div><div class="r-fecha">hace 3 semanas · Google</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TURNO -->
+<section class="turno" id="turno">
+  <div class="container">
+    <span class="section-eyebrow fade-up">Reservá tu lugar</span>
+    <h2 class="section-title fade-up">Sacar un turno <em>es simple</em></h2>
+    <div class="turno-layout" style="margin-top:2.5rem;">
+      <div class="fade-up">
+        <p style="font-size:.88rem;color:var(--gris);margin-bottom:1.5rem;line-height:1.78;">Atendemos con turno previo para que no esperes. Mandanos un WhatsApp y te confirmamos el horario en minutos.</p>
+        <div class="horario-tabla">
+          <div class="h-row"><span class="h-dia">Lunes a Viernes</span><span class="h-hrs">10:00 – 20:30</span></div>
+          <div class="h-row"><span class="h-dia">Sábados</span><span class="h-hrs">09:00 – 17:00</span></div>
+          <div class="h-row"><span class="h-dia">Domingos</span><span class="h-hrs" style="color:var(--gris)">Cerrado</span></div>
+        </div>
+        <p style="font-size:.8rem;color:var(--gris);margin-top:1rem;">📍 Alvear 439, Quilmes Centro (a 2 cuadras de Plaza Conesa)</p>
+        <p style="font-size:.8rem;color:var(--gris);margin-top:.5rem;">📞 <a href="tel:01146050235" style="color:var(--dorado);text-decoration:none;">011 4605-0235</a></p>
+      </div>
+      <div class="turno-card fade-up d2">
+        <h3>¿Querés tu turno?</h3>
+        <p>Mandanos un mensaje y te respondemos enseguida. Elegís el día y el horario que más te conviene. Sin esperas, sin complicaciones.</p>
+        <a href="https://wa.me/5401175172643?text=Hola!+Quiero+sacar+turno+para+corte+de+pelo" class="btn-wa" target="_blank">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Sacar turno por WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="contacto" id="contacto">
+  <div class="container">
+    <span class="section-eyebrow fade-up">Encontranos</span>
+    <h2 class="section-title fade-up">Dónde <em>estamos</em></h2>
+    <div class="contacto-layout" style="margin-top:2.5rem;">
+      <div class="fade-up">
+        <div class="info-row"><div class="info-icon">📍</div><div><strong>Dirección</strong><p>Alvear 439, Quilmes Centro, Buenos Aires</p></div></div>
+        <div class="info-row"><div class="info-icon">📞</div><div><strong>Teléfono</strong><p><a href="tel:01146050235" style="color:inherit;text-decoration:none;">011 4605-0235</a></p></div></div>
+        <div class="info-row"><div class="info-icon">🕐</div><div><strong>Horario</strong><p>Lun–Vie 10:00–20:30 · Sáb 09:00–17:00</p></div></div>
+        <div class="info-row"><div class="info-icon">📱</div><div><strong>Instagram</strong><p>@gentlemanclub.barberia</p></div></div>
+        <a href="https://wa.me/5401175172643?text=Hola!+Quiero+sacar+turno" class="btn-wa" style="margin-top:1rem;" target="_blank">💬 Escribirnos por WhatsApp</a>
+      </div>
+      <div class="mapa fade-up d2">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282!2d-58.2543!3d-34.7206!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDQzJzE0LjIiUyA1OMKwMTUnMTUuNSJX!5e0!3m2!1ses!2sar!4v1234567890" allowfullscreen loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <div class="container" style="position:relative;z-index:2">
+    <h2 class="fade-up">El mejor corte de tu vida<br /><em>te está esperando</em></h2>
+    <p class="fade-up d1">Turno en minutos. Sin esperas. Con el resultado que merecés.</p>
+    <a href="https://wa.me/5401175172643?text=Hola!+Quiero+sacar+turno+para+cortarme+el+pelo" class="btn-dorado fade-up d2" target="_blank" style="display:inline-flex;">💬 Reservar mi turno ahora</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Gentleman <span>Club</span> del Caballero</div>
+  <p>Alvear 439, Quilmes · 011 4605-0235</p>
+  <p>© 2025 Gentleman Club del Caballero · Quilmes, Buenos Aires</p>
+</footer>
+
+<a href="https://wa.me/5401175172643?text=Hola!+Consulto+desde+la+web" class="wa-float" target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  <span>Sacar turno</span>
+</a>
+
+<script>
+  window.addEventListener('scroll',()=>{
+    const p=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;
+    document.getElementById('progress-bar').style.width=p+'%';
+    document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);
+  });
+  const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.1});
+  document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+  function animateCounter(el){
+    const target=parseFloat(el.dataset.target);
+    const suffix=el.dataset.suffix||'';
+    const decimal=parseInt(el.dataset.decimal)||0;
+    const duration=1800; const start=performance.now();
+    const step=(now)=>{
+      const elapsed=Math.min((now-start)/duration,1);
+      const eased=1-Math.pow(1-elapsed,3);
+      const current=target*eased;
+      el.textContent=(decimal?current.toFixed(decimal):Math.floor(current))+suffix;
+      if(elapsed<1)requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  const cObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){animateCounter(e.target);cObs.unobserve(e.target)}})},{threshold:.5});
+  document.querySelectorAll('[data-target]').forEach(el=>cObs.observe(el));
+  document.getElementById('heroImg').classList.add('loaded');
+</script>
+</body>
+</html>

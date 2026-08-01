@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El Boliche de Roberto | Bar Notable — Almagro, Buenos Aires desde 1893</title>
+  <meta name="description" content="El Boliche de Roberto (12 de Octubre), Bar Notable en Almagro desde 1893. 4 shows de tango, folklore y rock nacional por noche, sin entrada. Bulnes 331, Buenos Aires." />
+  <meta name="keywords" content="boliche de roberto, bar notable buenos aires, tango almagro, bar tango buenos aires, 12 de octubre, música en vivo almagro, bar histórico buenos aires" />
+  <link rel="canonical" href="https://bolichederoberto.com.ar/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="El Boliche de Roberto | Bar Notable desde 1893 — Almagro, CABA" />
+  <meta property="og:description" content="4 shows en vivo por noche: tango, folklore, rock nacional. Sin entrada. El bar más auténtico de Buenos Aires desde 1893." />
+  <meta property="og:image" content="https://turismo.buenosaires.gob.ar/sites/turismo/files/bar_roberto_almagro1200.jpg" />
+  <meta property="og:url" content="https://bolichederoberto.com.ar/" />
+  <meta property="og:locale" content="es_AR" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BarOrPub",
+    "name": "El Boliche de Roberto",
+    "alternateName": "12 de Octubre",
+    "image": "https://turismo.buenosaires.gob.ar/sites/turismo/files/bar_roberto_almagro1200.jpg",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Bulnes 331, esquina Presidente Perón",
+      "addressLocality": "Almagro",
+      "addressRegion": "Buenos Aires",
+      "addressCountry": "AR"
+    },
+    "telephone": "+54-11-4862-0415",
+    "url": "https://bolichederoberto.com.ar",
+    "sameAs": ["https://www.instagram.com/bolichederoberto_/"],
+    "openingHours": ["Mo-Su 19:00-03:00"],
+    "servesCuisine": "Tango Bar, Live Music",
+    "priceRange": "$",
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "reviewCount": "2340" },
+    "foundingDate": "1893"
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --espresso:    #080604;
+      --espresso-mid:#100C06;
+      --madera:      #2A1A0A;
+      --madera-mid:  #3D2512;
+      --madera-claro:#5C3720;
+      --oro:         #C9933A;
+      --oro-claro:   #E5B860;
+      --oro-oscuro:  #9A6E22;
+      --crema:       #EDE0C4;
+      --crema-oscuro:#C8B89A;
+      --rojo:        #7A1E1E;
+      --rojo-claro:  #A02E2E;
+      --texto:       #EDE0C4;
+      --texto-dim:   rgba(237,224,196,0.65);
+      --separador:   rgba(201,147,58,0.25);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--espresso);
+      color: var(--crema);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLL PROGRESS ── */
+    #scroll-bar {
+      position: fixed; top: 0; left: 0; z-index: 9999;
+      height: 3px; width: 0%; background: linear-gradient(90deg, var(--oro-oscuro), var(--oro), var(--oro-claro));
+      transition: width 0.1s linear;
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-up { opacity: 0; transform: translateY(36px); transition: opacity 0.9s ease, transform 0.9s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fd1 { transition-delay: 0.1s; } .fd2 { transition-delay: 0.2s; }
+    .fd3 { transition-delay: 0.3s; } .fd4 { transition-delay: 0.4s; }
+    .fd5 { transition-delay: 0.5s; }
+
+    /* ── ANNOUNCEMENT BAR ── */
+    .announce {
+      position: fixed; top: 3px; left: 0; right: 0; z-index: 200;
+      background: var(--rojo);
+      color: var(--crema);
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.45rem 1rem;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: calc(3px + 28px); left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(8,6,4,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--separador);
+      transition: padding 0.3s;
+    }
+    nav.scrolled { padding: 0.65rem 3rem; }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--oro);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      line-height: 1.1;
+    }
+    .nav-logo span { display: block; font-size: 0.6rem; font-style: normal; font-weight: 400; color: var(--crema-oscuro); letter-spacing: 0.25em; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: 2.2rem; list-style: none; }
+    .nav-links a {
+      color: var(--texto-dim); text-decoration: none;
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--oro); }
+    .nav-cta {
+      background: var(--oro) !important;
+      color: var(--espresso) !important;
+      padding: 0.5rem 1.3rem !important;
+      border-radius: 4px;
+      font-weight: 700 !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--oro-claro) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--crema); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; z-index: 99;
+      background: rgba(8,6,4,0.99); flex-direction: column;
+      align-items: center; justify-content: center; gap: 2.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--crema); text-decoration: none; font-weight: 600; transition: color 0.2s; }
+    .mobile-menu a:hover { color: var(--oro); }
+    .mobile-menu-wa {
+      display: flex; align-items: center; gap: 0.7rem;
+      background: #25D366; color: white;
+      font-size: 0.9rem; font-weight: 700; text-decoration: none;
+      padding: 0.9rem 2.2rem; border-radius: 50px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; height: 100vh; min-height: 680px;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://turismo.buenosaires.gob.ar/sites/turismo/files/bar_roberto_almagro1200.jpg');
+      background-size: cover; background-position: center 35%;
+      filter: brightness(0.28) saturate(0.7) sepia(0.5);
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        170deg,
+        rgba(8,6,4,0.3) 0%,
+        rgba(42,26,10,0.6) 50%,
+        rgba(8,6,4,0.92) 100%
+      );
+    }
+    .hero-grain {
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.35; pointer-events: none;
+    }
+    .hero-content {
+      position: relative; z-index: 2; text-align: center;
+      padding: 0 1.5rem; max-width: 860px;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 1rem;
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--oro); margin-bottom: 2rem; opacity: 0.9;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: ''; display: inline-block; width: 36px; height: 1px; background: var(--oro); opacity: 0.6;
+    }
+    .hero-rose { font-size: 1.6rem; margin-bottom: 1.2rem; display: block; }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.2rem, 9vw, 7.5rem);
+      color: var(--crema); line-height: 1.0; font-weight: 900;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 4px 40px rgba(0,0,0,0.8), 0 0 80px rgba(201,147,58,0.12);
+      letter-spacing: -0.01em;
+    }
+    .hero h1 em { font-style: italic; color: var(--oro); }
+    .hero-sub {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: var(--crema-oscuro); margin-bottom: 2.2rem;
+      letter-spacing: 0.08em;
+    }
+    .hero-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; margin-bottom: 2.5rem; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      border: 1px solid rgba(201,147,58,0.4);
+      color: var(--crema-oscuro); background: rgba(201,147,58,0.08);
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.4rem 0.9rem; border-radius: 3px;
+    }
+    .pill-gold { background: rgba(201,147,58,0.15); border-color: var(--oro); color: var(--oro); }
+    .hero-rating {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(201,147,58,0.12); border: 1px solid rgba(201,147,58,0.35);
+      padding: 0.5rem 1rem; border-radius: 4px; margin-bottom: 2.5rem;
+      font-size: 0.8rem; color: var(--crema);
+    }
+    .stars { color: var(--oro); letter-spacing: 0.1em; font-size: 0.85rem; }
+    .hero-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--oro); color: var(--espresso);
+      font-weight: 700; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.9rem 2rem; border-radius: 4px; text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .btn-primary::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%);
+      transform: translateX(-100%); transition: transform 0.5s ease;
+    }
+    .btn-primary:hover::after { transform: translateX(100%); }
+    .btn-primary:hover { background: var(--oro-claro); transform: translateY(-2px); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      border: 1px solid rgba(237,224,196,0.4); color: var(--crema);
+      font-weight: 600; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.9rem 2rem; border-radius: 4px; text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--oro); color: var(--oro); transform: translateY(-2px); }
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    }
+    .hero-scroll span { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--texto-dim); }
+    .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--oro), transparent); animation: scrollPulse 1.8s ease infinite; }
+    @keyframes scrollPulse { 0%,100%{opacity:0.3;transform:scaleY(0.8);} 50%{opacity:1;transform:scaleY(1);} }
+
+    /* ── STRIP DORADO ── */
+    .strip {
+      background: var(--oro);
+      padding: 1.2rem 2rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-wrap: wrap; gap: 0;
+    }
+    .strip-item {
+      display: flex; align-items: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--espresso); padding: 0 2rem;
+    }
+    .strip-sep { color: var(--espresso); opacity: 0.4; font-size: 1rem; }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap { background: var(--madera); overflow: hidden; padding: 0.9rem 0; border-top: 1px solid var(--separador); border-bottom: 1px solid var(--separador); }
+    .marquee-track {
+      display: flex; gap: 0; white-space: nowrap;
+      animation: marqueeScroll 30s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    @keyframes marqueeScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .marquee-item {
+      display: inline-flex; align-items: center; gap: 1.5rem;
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: 1.05rem; font-weight: 400; color: var(--crema-oscuro);
+      padding: 0 2rem;
+    }
+    .marquee-item .rose { color: var(--oro); font-style: normal; }
+
+    /* ── SECTIONS SHARED ── */
+    .section { padding: 6rem 2rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 0.8rem;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--oro); margin-bottom: 1rem;
+    }
+    .section-label::before { content: '◆'; font-size: 0.5rem; }
+    h2.section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      font-weight: 700; color: var(--crema); line-height: 1.15; margin-bottom: 1.2rem;
+    }
+    h2.section-title em { font-style: italic; color: var(--oro); }
+    .divider {
+      display: flex; align-items: center; gap: 1rem; margin: 1.5rem 0;
+    }
+    .divider-line { flex: 1; height: 1px; background: var(--separador); }
+    .divider-icon { color: var(--oro); font-size: 0.85rem; }
+
+    /* ── HISTORIA ── */
+    .historia { background: var(--espresso-mid); }
+    .historia-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .historia-text p { color: var(--texto-dim); line-height: 1.85; margin-bottom: 1.2rem; font-size: 0.97rem; }
+    .pull-quote {
+      border-left: 3px solid var(--oro);
+      padding: 1.2rem 1.5rem;
+      margin: 2rem 0;
+      background: rgba(201,147,58,0.06);
+      border-radius: 0 4px 4px 0;
+    }
+    .pull-quote p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.15rem !important;
+      color: var(--crema) !important;
+      line-height: 1.6 !important;
+      margin: 0 !important;
+    }
+    .historia-visual { position: relative; }
+    .historia-img {
+      width: 100%; border-radius: 4px;
+      filter: sepia(0.3) brightness(0.85);
+      transition: filter 0.5s;
+    }
+    .historia-img:hover { filter: sepia(0.15) brightness(0.95); }
+    .historia-card {
+      position: absolute; bottom: -2rem; left: -2rem;
+      background: var(--madera);
+      border: 1px solid var(--separador);
+      padding: 1.2rem 1.5rem;
+      border-radius: 4px;
+      min-width: 180px;
+    }
+    .historia-card .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem; font-weight: 900; color: var(--oro); line-height: 1;
+    }
+    .historia-card .lab { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--crema-oscuro); }
+    .historia-tag {
+      display: inline-block;
+      background: var(--rojo); color: var(--crema);
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.25rem 0.7rem; border-radius: 3px; margin-bottom: 1rem;
+    }
+
+    /* ── SHOWS ── */
+    .shows { background: var(--espresso); }
+    .shows-header { text-align: center; max-width: 680px; margin: 0 auto 4rem; }
+    .shows-header p { color: var(--texto-dim); font-size: 1.0rem; line-height: 1.8; }
+    .shows-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.2rem; }
+    .show-card {
+      background: var(--madera);
+      border: 1px solid var(--separador);
+      border-radius: 4px; padding: 2rem 1.5rem;
+      text-align: center; transition: transform 0.3s, border-color 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .show-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(201,147,58,0.06) 0%, transparent 60%);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .show-card:hover { transform: translateY(-5px); border-color: rgba(201,147,58,0.5); }
+    .show-card:hover::before { opacity: 1; }
+    .show-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+    .show-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--oro); margin-bottom: 0.6rem;
+    }
+    .show-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem; font-weight: 700; color: var(--crema);
+      margin-bottom: 0.6rem; line-height: 1.2;
+    }
+    .show-desc { font-size: 0.82rem; color: var(--texto-dim); line-height: 1.65; }
+    .shows-timeline {
+      margin-top: 3.5rem; padding: 2.5rem;
+      background: var(--madera); border: 1px solid var(--separador);
+      border-radius: 4px;
+    }
+    .timeline-title {
+      text-align: center; font-family: 'Playfair Display', serif;
+      font-style: italic; font-size: 1.1rem; color: var(--crema-oscuro);
+      margin-bottom: 2rem;
+    }
+    .timeline-items { display: flex; align-items: flex-start; justify-content: center; gap: 0; flex-wrap: wrap; }
+    .tl-item { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; flex: 1; min-width: 100px; }
+    .tl-dot {
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--oro); flex-shrink: 0; position: relative; z-index: 1;
+    }
+    .tl-connector { flex: 1; height: 2px; background: var(--separador); margin-top: 7px; }
+    .tl-row { display: flex; align-items: center; width: 100%; max-width: 700px; gap: 0; }
+    .tl-time { font-size: 0.75rem; font-weight: 700; color: var(--oro); letter-spacing: 0.1em; }
+    .tl-label { font-size: 0.7rem; color: var(--texto-dim); text-align: center; margin-top: 0.3rem; }
+    .shows-note {
+      text-align: center; margin-top: 2rem;
+      font-style: italic; color: var(--texto-dim); font-size: 0.85rem;
+    }
+    .shows-note strong { color: var(--oro); }
+
+    /* ── LA BARRA ── */
+    .labarra { background: var(--espresso-mid); }
+    .barra-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .barra-imgs { position: relative; }
+    .barra-img-main { width: 100%; border-radius: 4px; filter: sepia(0.25) brightness(0.9); }
+    .barra-img-inset {
+      position: absolute; bottom: -1.5rem; right: -1.5rem;
+      width: 45%; border-radius: 4px;
+      filter: sepia(0.25) brightness(0.85);
+      border: 3px solid var(--madera);
+    }
+    .barra-text .section-label { margin-bottom: 0.5rem; }
+    .barra-text p { color: var(--texto-dim); line-height: 1.85; margin-bottom: 1.2rem; font-size: 0.97rem; }
+    .barra-features { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+    .feat-item {
+      display: flex; align-items: flex-start; gap: 0.7rem;
+      background: rgba(201,147,58,0.06); border: 1px solid var(--separador);
+      padding: 0.9rem 1rem; border-radius: 4px;
+    }
+    .feat-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.05rem; }
+    .feat-text strong { display: block; font-size: 0.78rem; font-weight: 700; color: var(--oro); letter-spacing: 0.05em; margin-bottom: 0.15rem; }
+    .feat-text span { font-size: 0.72rem; color: var(--texto-dim); }
+    .barra-quote {
+      border-left: 3px solid var(--rojo);
+      padding: 1rem 1.3rem;
+      background: rgba(122,30,30,0.1);
+      border-radius: 0 4px 4px 0;
+      margin-top: 1.5rem;
+    }
+    .barra-quote p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic; font-size: 1rem;
+      color: var(--crema); line-height: 1.6;
+    }
+
+    /* ── GALERÍA ── */
+    .galeria { background: var(--espresso); padding: 5rem 2rem; }
+    .galeria-inner { max-width: 1100px; margin: 0 auto; }
+    .galeria-header { text-align: center; margin-bottom: 3rem; }
+    .galeria-grid { display: grid; grid-template-columns: repeat(3,1fr) ; grid-template-rows: 240px 240px; gap: 0.8rem; }
+    .gal-item { position: relative; overflow: hidden; border-radius: 4px; cursor: pointer; }
+    .gal-item:nth-child(1) { grid-row: span 2; }
+    .gal-item img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.2) brightness(0.85); transition: transform 0.6s ease, filter 0.4s ease; }
+    .gal-item:hover img { transform: scale(1.08); filter: sepia(0.05) brightness(1); }
+    .gal-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(201,147,58,0.7) 0%, transparent 60%);
+      opacity: 0; transition: opacity 0.4s;
+      display: flex; align-items: flex-end;
+      padding: 1.2rem; color: var(--espresso); font-weight: 700; font-size: 0.78rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .gal-item:hover .gal-overlay { opacity: 1; }
+
+    /* ── RESEÑAS ── */
+    .resenas { background: var(--espresso-mid); }
+    .resenas-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+    .resena-card {
+      background: var(--madera); border: 1px solid var(--separador);
+      border-radius: 4px; padding: 2rem;
+      transition: transform 0.3s;
+    }
+    .resena-card:hover { transform: translateY(-4px); }
+    .resena-stars { color: var(--oro); font-size: 0.9rem; margin-bottom: 1rem; letter-spacing: 0.1em; }
+    .resena-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic; color: var(--crema);
+      font-size: 0.98rem; line-height: 1.75; margin-bottom: 1.2rem;
+    }
+    .resena-author { display: flex; align-items: center; gap: 0.8rem; }
+    .resena-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--oro); display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.8rem; color: var(--espresso); flex-shrink: 0;
+    }
+    .resena-name { font-size: 0.8rem; font-weight: 600; color: var(--crema); }
+    .resena-origin { font-size: 0.7rem; color: var(--crema-oscuro); }
+    .resena-badge {
+      display: inline-block; background: rgba(201,147,58,0.12);
+      border: 1px solid rgba(201,147,58,0.3); color: var(--oro);
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.15rem 0.5rem; border-radius: 2px; margin-left: 0.4rem;
+    }
+
+    /* ── HORARIOS ── */
+    .horarios { background: var(--espresso); }
+    .horarios-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+    .horarios-inner .section-label { justify-content: center; }
+    .horarios-table {
+      width: 100%; border-collapse: collapse; margin: 2rem 0;
+      font-size: 0.9rem;
+    }
+    .horarios-table th {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--oro); padding: 0.8rem 1rem; text-align: left;
+      border-bottom: 1px solid var(--separador);
+    }
+    .horarios-table td {
+      padding: 1rem 1rem; text-align: left; color: var(--crema-oscuro);
+      border-bottom: 1px solid rgba(201,147,58,0.1);
+    }
+    .horarios-table tr:hover td { color: var(--crema); background: rgba(201,147,58,0.04); }
+    .horarios-table .td-dia { font-weight: 600; color: var(--crema); }
+    .horarios-table .td-hora { color: var(--oro); font-weight: 600; }
+    .horarios-note {
+      background: var(--madera); border: 1px solid var(--separador);
+      border-radius: 4px; padding: 1.2rem 1.5rem;
+      font-style: italic; color: var(--texto-dim); font-size: 0.88rem;
+      line-height: 1.7;
+    }
+
+    /* ── CONTACTO ── */
+    .contacto { background: var(--espresso-mid); }
+    .contacto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .contacto-info { display: flex; flex-direction: column; gap: 1.5rem; }
+    .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
+    .contact-icon {
+      width: 44px; height: 44px; border-radius: 4px;
+      background: rgba(201,147,58,0.1); border: 1px solid var(--separador);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+    .contact-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--oro); margin-bottom: 0.3rem; }
+    .contact-val { color: var(--crema-oscuro); font-size: 0.95rem; line-height: 1.5; text-decoration: none; transition: color 0.2s; }
+    a.contact-val:hover { color: var(--oro); }
+    .ig-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: rgba(201,147,58,0.12); border: 1px solid rgba(201,147,58,0.3);
+      border-radius: 3px; padding: 0.2rem 0.6rem;
+      font-size: 0.7rem; font-weight: 700; color: var(--oro); margin-left: 0.5rem;
+    }
+    .map-embed { border-radius: 4px; overflow: hidden; border: 1px solid var(--separador); }
+    .map-embed iframe { width: 100%; height: 340px; border: none; filter: grayscale(0.7) brightness(0.8); }
+    .contacto-wa {
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      background: #25D366; color: white;
+      font-weight: 700; font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase;
+      padding: 0.9rem 2rem; border-radius: 50px; text-decoration: none;
+      transition: background 0.2s, transform 0.2s; margin-top: 1rem;
+    }
+    .contacto-wa:hover { background: #1dad50; transform: translateY(-2px); }
+
+    /* ── CTA FINAL ── */
+    .cta-final {
+      position: relative; padding: 8rem 2rem; overflow: hidden; text-align: center;
+    }
+    .cta-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1508341591423-4347099e1f19?w=1200&q=85');
+      background-size: cover; background-position: center;
+      filter: brightness(0.18) saturate(0.5) sepia(0.7);
+    }
+    .cta-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(8,6,4,0.6) 0%, rgba(8,6,4,0.85) 100%);
+    }
+    .cta-content { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+    .cta-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 6vw, 4.5rem);
+      font-weight: 900; color: var(--crema); line-height: 1.1; margin-bottom: 1.2rem;
+      text-shadow: 0 4px 40px rgba(0,0,0,0.9);
+    }
+    .cta-content h2 em { font-style: italic; color: var(--oro); }
+    .cta-content p { color: var(--crema-oscuro); font-size: 1.05rem; line-height: 1.8; margin-bottom: 2.5rem; font-style: italic; }
+    .btn-cta-final {
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      background: var(--oro); color: var(--espresso);
+      font-weight: 800; font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 1.1rem 2.8rem; border-radius: 4px; text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .btn-cta-final::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      transform: translateX(-100%); transition: transform 0.5s ease;
+    }
+    .btn-cta-final:hover::after { transform: translateX(100%); }
+    .btn-cta-final:hover { background: var(--oro-claro); transform: translateY(-3px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--espresso); padding: 3rem 2rem;
+      border-top: 1px solid var(--separador);
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-style: italic; font-size: 1.4rem; font-weight: 700;
+      color: var(--oro); margin-bottom: 0.4rem;
+    }
+    .footer-sub { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--crema-oscuro); margin-bottom: 1.5rem; }
+    .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem; margin-bottom: 1.5rem; }
+    .footer-links a { color: var(--texto-dim); font-size: 0.75rem; text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--oro); }
+    .footer-copy { color: var(--texto-dim); font-size: 0.73rem; line-height: 1.6; }
+    .footer-rose { color: var(--oro); }
+
+    /* ── FLOATING BUTTONS ── */
+    .float-buttons { position: fixed; bottom: 2rem; right: 1.8rem; z-index: 500; display: flex; flex-direction: column; gap: 0.8rem; }
+    .float-wa, .float-ig {
+      width: 52px; height: 52px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; font-size: 1.35rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .float-wa { background: #25D366; }
+    .float-ig { background: linear-gradient(135deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); }
+    .float-wa:hover, .float-ig:hover { transform: scale(1.12) translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.55); }
+
+    /* ── COUNTERS ── */
+    .counters { background: var(--madera); padding: 3.5rem 2rem; border-top: 1px solid var(--separador); border-bottom: 1px solid var(--separador); }
+    .counters-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); gap: 2rem; text-align: center; }
+    .counter-item {}
+    .counter-num {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem,4vw,3.5rem); font-weight: 900; color: var(--oro); line-height: 1;
+    }
+    .counter-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--crema-oscuro); margin-top: 0.4rem; }
+
+    /* ── MEDIA QUERIES ── */
+    @media (max-width: 900px) {
+      .historia-grid, .barra-grid, .contacto-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .historia-card { position: static; margin-top: 1rem; display: inline-flex; gap: 1.5rem; align-items: center; }
+      .barra-img-inset { display: none; }
+      .shows-grid { grid-template-columns: repeat(2,1fr); }
+      .resenas-grid { grid-template-columns: 1fr; }
+      .counters-inner { grid-template-columns: repeat(2,1fr); }
+      .galeria-grid { grid-template-columns: repeat(2,1fr); grid-template-rows: auto; }
+      .gal-item:nth-child(1) { grid-row: span 1; }
+      nav { padding: 1rem 1.5rem; }
+      nav.scrolled { padding: 0.6rem 1.5rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .strip { gap: 0.5rem; flex-direction: column; }
+      .strip-sep { display: none; }
+    }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2.8rem; }
+      .shows-grid { grid-template-columns: 1fr; }
+      .counters-inner { grid-template-columns: 1fr 1fr; }
+      .galeria-grid { grid-template-columns: 1fr; }
+      .section { padding: 4rem 1.2rem; }
+      .announce { font-size: 0.58rem; padding: 0.4rem 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── SCROLL PROGRESS ─── -->
+<div id="scroll-bar"></div>
+
+<!-- ─── ANNOUNCEMENT BAR ─── -->
+<div class="announce">
+  🌹 4 SHOWS EN VIVO CADA NOCHE &nbsp;◆&nbsp; SIN ENTRADA &nbsp;◆&nbsp; ALMAGRO, BUENOS AIRES
+</div>
+
+<!-- ─── NAV ─── -->
+<nav id="main-nav">
+  <a href="#" class="nav-logo">
+    El Boliche de Roberto
+    <span>Bar Notable · Desde 1893</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#historia">Historia</a></li>
+    <li><a href="#shows">Shows</a></li>
+    <li><a href="#labarra">La Barra</a></li>
+    <li><a href="#contacto">Llegar</a></li>
+    <li><a class="nav-cta" href="https://wa.me/5401148620415" target="_blank" rel="noopener">Ir esta noche</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ─── MOBILE MENU ─── -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#historia" class="mobile-link">Historia</a>
+  <a href="#shows" class="mobile-link">Shows</a>
+  <a href="#labarra" class="mobile-link">La Barra</a>
+  <a href="#contacto" class="mobile-link">Llegar</a>
+  <a href="https://wa.me/5401148620415" class="mobile-menu-wa" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    Ir esta noche
+  </a>
+</div>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Bar Notable Oficial · Almagro · CABA</div>
+    <span class="hero-rose">🌹</span>
+    <h1>EL BOLICHE<br><em>DE ROBERTO</em></h1>
+    <p class="hero-sub">Bar Notable · Fundado en 1893</p>
+    <div class="hero-pills">
+      <span class="pill pill-gold">◆ Bar Notable Oficial</span>
+      <span class="pill">Fundado 1893</span>
+      <span class="pill">44K en Instagram ✅</span>
+      <span class="pill">Almagro, CABA</span>
+    </div>
+    <div class="hero-rating">
+      <span class="stars">★★★★★</span>
+      <span>4.8 &nbsp;·&nbsp; +2.300 reseñas en Google</span>
+    </div>
+    <div class="hero-ctas">
+      <a href="https://wa.me/5401148620415" class="btn-primary" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Ir esta noche
+      </a>
+      <a href="https://www.instagram.com/bolichederoberto_/" class="btn-outline" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        Ver en Instagram
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Descubrir</span>
+  </div>
+</section>
+
+<!-- ─── STRIP ─── -->
+<div class="strip">
+  <div class="strip-item">FUNDADO EN 1893</div>
+  <div class="strip-sep">◆</div>
+  <div class="strip-item">4 SHOWS POR NOCHE</div>
+  <div class="strip-sep">◆</div>
+  <div class="strip-item">SIN ENTRADA</div>
+  <div class="strip-sep">◆</div>
+  <div class="strip-item">BAR NOTABLE OFICIAL</div>
+  <div class="strip-sep">◆</div>
+  <div class="strip-item">44K EN INSTAGRAM</div>
+</div>
+
+<!-- ─── MARQUEE ─── -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <!-- first copy -->
+    <span class="marquee-item">Tango <span class="rose">🌹</span></span>
+    <span class="marquee-item">Folklore <span class="rose">🌹</span></span>
+    <span class="marquee-item">Rock Nacional <span class="rose">🌹</span></span>
+    <span class="marquee-item">Milonga <span class="rose">🌹</span></span>
+    <span class="marquee-item">Candombe <span class="rose">🌹</span></span>
+    <span class="marquee-item">♪ Música en Vivo ♪ <span class="rose">🌹</span></span>
+    <span class="marquee-item">Tango <span class="rose">🌹</span></span>
+    <span class="marquee-item">Folklore <span class="rose">🌹</span></span>
+    <span class="marquee-item">Rock Nacional <span class="rose">🌹</span></span>
+    <span class="marquee-item">Milonga <span class="rose">🌹</span></span>
+    <!-- second copy (seamless) -->
+    <span class="marquee-item">Tango <span class="rose">🌹</span></span>
+    <span class="marquee-item">Folklore <span class="rose">🌹</span></span>
+    <span class="marquee-item">Rock Nacional <span class="rose">🌹</span></span>
+    <span class="marquee-item">Milonga <span class="rose">🌹</span></span>
+    <span class="marquee-item">Candombe <span class="rose">🌹</span></span>
+    <span class="marquee-item">♪ Música en Vivo ♪ <span class="rose">🌹</span></span>
+    <span class="marquee-item">Tango <span class="rose">🌹</span></span>
+    <span class="marquee-item">Folklore <span class="rose">🌹</span></span>
+    <span class="marquee-item">Rock Nacional <span class="rose">🌹</span></span>
+    <span class="marquee-item">Milonga <span class="rose">🌹</span></span>
+  </div>
+</div>
+
+<!-- ─── COUNTERS ─── -->
+<div class="counters">
+  <div class="counters-inner">
+    <div class="counter-item fade-up">
+      <div class="counter-num" data-target="1893" data-suffix="">1893</div>
+      <div class="counter-label">Año de fundación</div>
+    </div>
+    <div class="counter-item fade-up fd1">
+      <div class="counter-num" data-target="4" data-suffix="">4</div>
+      <div class="counter-label">Shows por noche</div>
+    </div>
+    <div class="counter-item fade-up fd2">
+      <div class="counter-num" data-target="44" data-suffix="K">44K</div>
+      <div class="counter-label">Seguidores en Instagram</div>
+    </div>
+    <div class="counter-item fade-up fd3">
+      <div class="counter-num" data-target="130" data-suffix="+">130+</div>
+      <div class="counter-label">Años de historia porteña</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── HISTORIA ─── -->
+<section class="section historia" id="historia">
+  <div class="section-inner">
+    <div class="historia-grid">
+      <div class="historia-text">
+        <div class="fade-up">
+          <span class="historia-tag">Bar Notable de Buenos Aires</span>
+          <div class="section-label">◆ &nbsp;Nuestra Historia</div>
+          <h2 class="section-title">Desde 1893,<br>el corazón<br><em>tanguero</em> de Almagro.</h2>
+          <div class="divider"><div class="divider-line"></div><div class="divider-icon">🌹</div><div class="divider-line"></div></div>
+        </div>
+        <div class="fade-up fd1">
+          <p>
+            Todo comenzó como una pulpería de barrio. En 1893, en la esquina de Bulnes y Presidente Perón,
+            abrió sus puertas un almacén general que llevaría décadas transformándose en lo que hoy el mundo
+            entero reconoce como <strong style="color:var(--crema)">El Boliche de Roberto</strong> — también conocido con su nombre histórico,
+            <em style="color:var(--oro)">12 de Octubre</em>.
+          </p>
+          <p>
+            Almagro fue siempre un barrio de trabajadores, de conventillos y de tango. Y Roberto supo leer
+            el alma del barrio: convirtió las mesas de su boliche en escenario, invitó a los músicos a tocar
+            y cobró lo de siempre — nada. Así nació una institución que el tiempo no pudo tocar.
+          </p>
+        </div>
+        <div class="pull-quote fade-up fd2">
+          <p>
+            "En la fachada está el mural de Carlos Gardel, pintado por el artista Crespi. Una obra que no
+            es decoración: es una declaración de identidad."
+          </p>
+        </div>
+        <div class="fade-up fd3">
+          <p>
+            Las botellas antiguas alineadas sobre los estantes, el mostrador de madera desgastado por un
+            siglo de codos y vasos, las seis mesas que apenas alcanzan para todos los que quieren entrar.
+            Nada fue puesto ahí para crear atmósfera: la atmósfera llegó sola, acumulada en 130 años de
+            noches porteñas.
+          </p>
+          <p>
+            El Gobierno de la Ciudad de Buenos Aires otorgó su reconocimiento oficial como
+            <strong style="color:var(--oro)">Bar Notable</strong> — distinción que reciben solo los bares que son
+            patrimonio cultural vivo de la ciudad. Una placa en la pared. Pero sobre todo, una noche
+            cualquiera de martes, a las dos de la madrugada, con un cantor de tango frente al mostrador
+            y quince personas aplaudiendo como si fuera el Teatro Colón.
+          </p>
+        </div>
+      </div>
+      <div class="historia-visual fade-up fd2">
+        <img
+          src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=800&q=85"
+          alt="Ambiente de bar clásico, El Boliche de Roberto"
+          class="historia-img"
+          loading="lazy"
+        />
+        <div class="historia-card">
+          <div class="num">130</div>
+          <div class="lab">años de historia</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SHOWS ─── -->
+<section class="section shows" id="shows">
+  <div class="section-inner">
+    <div class="shows-header fade-up">
+      <div class="section-label" style="justify-content:center">◆ &nbsp;Música en Vivo</div>
+      <h2 class="section-title" style="text-align:center">4 shows<br>cada <em>noche.</em></h2>
+      <div class="divider"><div class="divider-line"></div><div class="divider-icon">♪</div><div class="divider-line"></div></div>
+      <p>Cuatro shows de música en vivo por noche. Tango, folklore, rock nacional. Artistas que eligieron este
+      boliche no por dinero — sino porque aquí el público escucha de verdad. Y la entrada es libre, siempre.</p>
+    </div>
+    <div class="shows-grid">
+      <div class="show-card fade-up">
+        <span class="show-icon">🥀</span>
+        <div class="show-num">Show I</div>
+        <div class="show-name">Tango</div>
+        <div class="show-desc">El género que nació en estos mismos barrios. Bandoneón, violín, contrabajo y una voz
+        que cuenta todo lo que Buenos Aires no puede decir en voz alta.</div>
+      </div>
+      <div class="show-card fade-up fd1">
+        <span class="show-icon">🎸</span>
+        <div class="show-num">Show II</div>
+        <div class="show-name">Rock Nacional</div>
+        <div class="show-desc">El rock que escribió la historia argentina. Charly, Spinetta, Fito. En versión acústica,
+        íntima, a metros de distancia. Sin pantallas, sin megáfonos.</div>
+      </div>
+      <div class="show-card fade-up fd2">
+        <span class="show-icon">🪗</span>
+        <div class="show-num">Show III</div>
+        <div class="show-name">Folklore</div>
+        <div class="show-desc">Zambas, chacareras y gatos que viajan desde el norte hasta este boliche de Almagro.
+        El interior del país en el corazón de Buenos Aires.</div>
+      </div>
+      <div class="show-card fade-up fd3">
+        <span class="show-icon">💃</span>
+        <div class="show-num">Show IV</div>
+        <div class="show-name">Milonga</div>
+        <div class="show-desc">A veces el bandoneón vuelve para el cierre. A veces se baila. Siempre hay algo que
+        no se puede planear — esa es la magia de la noche en el Boliche.</div>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="shows-timeline fade-up fd2">
+      <div class="timeline-title">♪ &nbsp;La noche en el Boliche &nbsp;♪</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:0;max-width:720px;margin:0 auto;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.3rem;flex:1;min-width:80px;">
+          <div style="width:14px;height:14px;border-radius:50%;background:var(--oro);"></div>
+          <div style="font-size:0.8rem;font-weight:700;color:var(--oro);">19:00</div>
+          <div style="font-size:0.68rem;color:var(--texto-dim);text-align:center;">Apertura</div>
+        </div>
+        <div style="flex:1;height:2px;background:var(--separador);margin-bottom:1.6rem;"></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.3rem;flex:1;min-width:80px;">
+          <div style="width:14px;height:14px;border-radius:50%;background:var(--madera-claro);border:2px solid var(--oro);"></div>
+          <div style="font-size:0.8rem;font-weight:700;color:var(--crema-oscuro);">21:00</div>
+          <div style="font-size:0.68rem;color:var(--texto-dim);text-align:center;">Primer trago,<br>primeros acordes</div>
+        </div>
+        <div style="flex:1;height:2px;background:var(--separador);margin-bottom:1.6rem;"></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.3rem;flex:1;min-width:80px;">
+          <div style="width:14px;height:14px;border-radius:50%;background:var(--oro);"></div>
+          <div style="font-size:0.8rem;font-weight:700;color:var(--oro);">23:00</div>
+          <div style="font-size:0.68rem;color:var(--texto-dim);text-align:center;">Shows nocturnos<br>comienzan</div>
+        </div>
+        <div style="flex:1;height:2px;background:var(--separador);margin-bottom:1.6rem;"></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.3rem;flex:1;min-width:80px;">
+          <div style="width:14px;height:14px;border-radius:50%;background:var(--oro);"></div>
+          <div style="font-size:0.8rem;font-weight:700;color:var(--oro);">01:00–03:00</div>
+          <div style="font-size:0.68rem;color:var(--texto-dim);text-align:center;">Últimas notas,<br>cierre de madrugada</div>
+        </div>
+      </div>
+      <p class="shows-note">Las noches arrancan a las 19hs y los primeros shows comienzan después de las 23hs. <strong>Entrada siempre libre.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── LA BARRA ─── -->
+<section class="section labarra" id="labarra">
+  <div class="section-inner">
+    <div class="barra-grid">
+      <div class="barra-imgs fade-up">
+        <img
+          src="https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=800&q=85"
+          alt="Botellas antiguas en el estante del Boliche de Roberto"
+          class="barra-img-main"
+          loading="lazy"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1543007631-283050bb3e8c?w=800&q=85"
+          alt="Interior oscuro y íntimo del bar"
+          class="barra-img-inset"
+          loading="lazy"
+        />
+      </div>
+      <div class="barra-text">
+        <div class="fade-up fd1">
+          <div class="section-label">◆ &nbsp;La Barra</div>
+          <h2 class="section-title">Un espacio<br>que el tiempo<br><em>respetó.</em></h2>
+          <div class="divider"><div class="divider-line"></div><div class="divider-icon">◆</div><div class="divider-line"></div></div>
+          <p>
+            Seis mesas. Un mostrador de madera que vio pasar a cuatro generaciones. Botellas antiguas
+            alineadas en los estantes como trofeos de otro siglo. El Boliche de Roberto no es grande —
+            y esa es exactamente su grandeza.
+          </p>
+          <p>
+            Cuando uno entra, el espacio obliga a estar cerca. De la música, del artista, de los demás.
+            Aquí no existe la fila en el bar ni el camarero apurado. Existe el vaso, existe la noche,
+            existe la canción.
+          </p>
+        </div>
+        <div class="barra-features fade-up fd2">
+          <div class="feat-item">
+            <div class="feat-icon">🪑</div>
+            <div class="feat-text">
+              <strong>Solo 6 mesas</strong>
+              <span>Un espacio íntimo donde cada noche es única</span>
+            </div>
+          </div>
+          <div class="feat-item">
+            <div class="feat-icon">🍾</div>
+            <div class="feat-text">
+              <strong>Botellas centenarias</strong>
+              <span>Estantes con botellas antiguas de colección</span>
+            </div>
+          </div>
+          <div class="feat-item">
+            <div class="feat-icon">🎨</div>
+            <div class="feat-text">
+              <strong>Mural de Gardel</strong>
+              <span>Obra del artista Crespi en la fachada</span>
+            </div>
+          </div>
+          <div class="feat-item">
+            <div class="feat-icon">🏛️</div>
+            <div class="feat-text">
+              <strong>Bar Notable Oficial</strong>
+              <span>Reconocimiento del GCBA · Patrimonio cultural</span>
+            </div>
+          </div>
+        </div>
+        <div class="barra-quote fade-up fd3">
+          <p>
+            "No hay show de tango para turistas. Hay Buenos Aires de verdad."
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── GALERÍA ─── -->
+<section class="galeria" id="galeria">
+  <div class="galeria-inner">
+    <div class="galeria-header fade-up">
+      <div class="section-label" style="justify-content:center">◆ &nbsp;Galería</div>
+      <h2 class="section-title" style="text-align:center">El ambiente<br>que no se<br><em>describe.</em></h2>
+    </div>
+    <div class="galeria-grid">
+      <div class="gal-item fade-up">
+        <img src="https://turismo.buenosaires.gob.ar/sites/turismo/files/bar_roberto_almagro1200.jpg" alt="El Boliche de Roberto — fachada" loading="lazy"/>
+        <div class="gal-overlay">Fachada histórica</div>
+      </div>
+      <div class="gal-item fade-up fd1">
+        <img src="https://images.unsplash.com/photo-1508341591423-4347099e1f19?w=800&q=85" alt="Baile de tango" loading="lazy"/>
+        <div class="gal-overlay">Noches de tango</div>
+      </div>
+      <div class="gal-item fade-up fd2">
+        <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=800&q=85" alt="Música en vivo" loading="lazy"/>
+        <div class="gal-overlay">Música en vivo</div>
+      </div>
+      <div class="gal-item fade-up fd3">
+        <img src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=800&q=85" alt="Interior del bar" loading="lazy"/>
+        <div class="gal-overlay">La barra</div>
+      </div>
+      <div class="gal-item fade-up fd4">
+        <img src="https://images.unsplash.com/photo-1589391886645-d51941baf7fb?w=800&q=85" alt="Calles de Buenos Aires" loading="lazy"/>
+        <div class="gal-overlay">Almagro, CABA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── RESEÑAS ─── -->
+<section class="section resenas" id="resenas">
+  <div class="section-inner">
+    <div class="fade-up" style="text-align:center;margin-bottom:3rem;">
+      <div class="section-label" style="justify-content:center">◆ &nbsp;Lo que dicen</div>
+      <h2 class="section-title" style="text-align:center">La experiencia<br>en palabras <em>ajenas.</em></h2>
+    </div>
+    <div class="resenas-grid">
+      <div class="resena-card fade-up">
+        <div class="resena-stars">★★★★★</div>
+        <div class="resena-text">
+          "Fui una noche de miércoles sin saber qué esperar. Salí tres horas después con el alma llena.
+          El bandoneón, el mostrador de madera, las botellas antiguas. No es un bar temático. Es Buenos Aires
+          real, concentrada en seis mesas."
+        </div>
+        <div class="resena-author">
+          <div class="resena-avatar">ML</div>
+          <div>
+            <div class="resena-name">Martina L. <span class="resena-badge">Google</span></div>
+            <div class="resena-origin">Buenos Aires · Hace 2 semanas</div>
+          </div>
+        </div>
+      </div>
+      <div class="resena-card fade-up fd1">
+        <div class="resena-stars">★★★★★</div>
+        <div class="resena-text">
+          "Llevé a unos amigos de España que querían tango 'de verdad, no de turistas'. Los llevé al Boliche.
+          Se quedaron sin palabras. Cuatro shows en una noche, músicos increíbles, una intimidad que no se
+          puede fabricar. Eso es El Boliche de Roberto."
+        </div>
+        <div class="resena-author">
+          <div class="resena-avatar">JR</div>
+          <div>
+            <div class="resena-name">Jorge R. <span class="resena-badge">Google</span></div>
+            <div class="resena-origin">Palermo, CABA · Hace 1 mes</div>
+          </div>
+        </div>
+      </div>
+      <div class="resena-card fade-up fd2">
+        <div class="resena-stars">★★★★★</div>
+        <div class="resena-text">
+          "El mural de Gardel en la fachada te prepara para lo que vas a encontrar adentro. Una atmósfera
+          de otro tiempo. El folklore me llegó al pecho. No hay forma de salir de ahí sin haber sentido algo
+          importante."
+        </div>
+        <div class="resena-author">
+          <div class="resena-avatar">CP</div>
+          <div>
+            <div class="resena-name">Carolina P. <span class="resena-badge">Google</span></div>
+            <div class="resena-origin">Almagro, CABA · Hace 3 semanas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── HORARIOS ─── -->
+<section class="section horarios" id="horarios">
+  <div class="horarios-inner">
+    <div class="fade-up">
+      <div class="section-label" style="justify-content:center">◆ &nbsp;Horarios</div>
+      <h2 class="section-title" style="text-align:center">Abierto<br>todos los <em>días.</em></h2>
+      <div class="divider"><div class="divider-line"></div><div class="divider-icon">◆</div><div class="divider-line"></div></div>
+    </div>
+    <table class="horarios-table fade-up fd1">
+      <thead>
+        <tr>
+          <th>Día</th>
+          <th>Apertura</th>
+          <th>Shows nocturnos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-dia">Lunes a Domingo</td>
+          <td class="td-hora">19:00 hs</td>
+          <td>Desde las 23:00 hs</td>
+        </tr>
+        <tr>
+          <td class="td-dia">Fines de semana</td>
+          <td class="td-hora">19:00 hs</td>
+          <td>4 shows hasta las 3:00 hs</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="horarios-note fade-up fd2">
+      ♪ &nbsp;<strong style="color:var(--oro)">Entrada siempre libre.</strong> Los shows varían noche a noche según los artistas.
+      Tango, folklore, rock nacional, milonga y más. Seguí <a href="https://www.instagram.com/bolichederoberto_/" target="_blank" style="color:var(--oro)">@bolichederoberto_</a>
+      para enterarte de la grilla de cada semana.
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACTO ─── -->
+<section class="section contacto" id="contacto">
+  <div class="section-inner">
+    <div class="fade-up" style="margin-bottom:3rem;">
+      <div class="section-label">◆ &nbsp;Cómo llegar</div>
+      <h2 class="section-title">Encontranos<br>en <em>Almagro.</em></h2>
+    </div>
+    <div class="contacto-grid">
+      <div class="contacto-info">
+        <div class="contact-item fade-up">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">Dirección</div>
+            <div class="contact-val">Bulnes 331, esquina Presidente Perón<br>Almagro, Ciudad de Buenos Aires</div>
+          </div>
+        </div>
+        <div class="contact-item fade-up fd1">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-label">Teléfono</div>
+            <a href="tel:+541148620415" class="contact-val">011 4862-0415</a>
+          </div>
+        </div>
+        <div class="contact-item fade-up fd2">
+          <div class="contact-icon">📱</div>
+          <div>
+            <div class="contact-label">WhatsApp</div>
+            <a href="https://wa.me/5401148620415" class="contact-val" target="_blank" rel="noopener">+54 11 4862-0415</a>
+          </div>
+        </div>
+        <div class="contact-item fade-up fd3">
+          <div class="contact-icon">📸</div>
+          <div>
+            <div class="contact-label">Instagram</div>
+            <a href="https://www.instagram.com/bolichederoberto_/" class="contact-val" target="_blank" rel="noopener">
+              @bolichederoberto_ ✅
+              <span class="ig-badge">44K seguidores</span>
+            </a>
+          </div>
+        </div>
+        <div class="contact-item fade-up fd4">
+          <div class="contact-icon">🕖</div>
+          <div>
+            <div class="contact-label">Horario</div>
+            <div class="contact-val">Lunes a Domingo · Desde las 19:00 hs<br>Shows nocturnos desde las 23:00 hs</div>
+          </div>
+        </div>
+        <a href="https://wa.me/5401148620415" class="contacto-wa fade-up" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Escribinos por WhatsApp
+        </a>
+      </div>
+      <div class="map-embed fade-up fd2">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.5284530640707!2d-58.413944!3d-34.607854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccb59aa3e0b79%3A0xf7b9e0d10b2a82f4!2sBulnes%20331%2C%20Buenos%20Aires!5e0!3m2!1ses!2sar!4v1620000000000!5m2!1ses!2sar"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          title="Mapa El Boliche de Roberto"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA FINAL ─── -->
+<section class="cta-final" id="reservar">
+  <div class="cta-bg"></div>
+  <div class="cta-overlay"></div>
+  <div class="cta-content">
+    <div class="fade-up">
+      <div class="section-label" style="justify-content:center;color:var(--crema-oscuro);">◆ &nbsp;Una decisión</div>
+      <h2>UNA NOCHE EN EL BOLICHE<br><em>CAMBIA TODO.</em></h2>
+      <div class="divider"><div class="divider-line"></div><div class="divider-icon" style="color:var(--crema-oscuro);">🌹</div><div class="divider-line"></div></div>
+      <p>
+        No es una propuesta turística. Es la experiencia más auténtica de Buenos Aires.
+        Tango de verdad, folklore de verdad, gente de verdad — en el mismo boliche
+        que sobrevivió 130 años porque no necesitó cambiar nada.
+      </p>
+      <a href="https://wa.me/5401148620415" class="btn-cta-final" target="_blank" rel="noopener">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Ir esta noche — WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-logo">El Boliche de Roberto 🌹</div>
+  <div class="footer-sub">Bar Notable de Buenos Aires desde 1893</div>
+  <div class="footer-links">
+    <a href="#historia">Historia</a>
+    <a href="#shows">Shows</a>
+    <a href="#labarra">La Barra</a>
+    <a href="#horarios">Horarios</a>
+    <a href="#contacto">Llegar</a>
+    <a href="https://www.instagram.com/bolichederoberto_/" target="_blank" rel="noopener">Instagram</a>
+  </div>
+  <div class="footer-copy">
+    Bulnes 331, esquina Presidente Perón · Almagro, CABA<br>
+    011 4862-0415 &nbsp;·&nbsp;
+    <a href="https://www.instagram.com/bolichederoberto_/" target="_blank" style="color:var(--oro);text-decoration:none;">@bolichederoberto_</a><br><br>
+    <span class="footer-rose">◆</span> &nbsp;Bar Notable Oficial · Ciudad de Buenos Aires &nbsp;<span class="footer-rose">◆</span>
+  </div>
+</footer>
+
+<!-- ─── FLOATING BUTTONS ─── -->
+<div class="float-buttons">
+  <a href="https://www.instagram.com/bolichederoberto_/" class="float-ig" target="_blank" rel="noopener" aria-label="Instagram">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+  </a>
+  <a href="https://wa.me/5401148620415" class="float-wa" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  </a>
+</div>
+
+<!-- ─── JS ─── -->
+<script>
+  // Scroll progress bar
+  const bar = document.getElementById('scroll-bar');
+  function updateBar() {
+    const scrollTop = window.scrollY;
+    const docH = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (scrollTop / docH * 100) + '%';
+  }
+  window.addEventListener('scroll', updateBar, { passive: true });
+
+  // Nav scroll behavior
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // Hamburger / mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  document.querySelectorAll('.mobile-link, .mobile-menu-wa').forEach(a => {
+    a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // Fade-up on scroll
+  const faders = document.querySelectorAll('.fade-up');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  faders.forEach(el => io.observe(el));
+
+  // Counters (animate when visible)
+  const counters = document.querySelectorAll('.counter-num[data-target]');
+  const counterIO = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const target = parseInt(el.getAttribute('data-target'));
+      const suffix = el.getAttribute('data-suffix') || '';
+      let start = 0;
+      const duration = 1800;
+      const startTime = performance.now();
+      function step(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(eased * target);
+        el.textContent = current + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+      counterIO.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => counterIO.observe(c));
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href').slice(1);
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (el) {
+        e.preventDefault();
+        const navH = nav.offsetHeight + 28 + 3; // announce + scroll bar
+        const top = el.getBoundingClientRect().top + window.scrollY - navH - 10;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

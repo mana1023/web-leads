@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KINGBLACK® | Gimnasio Glew · +1500 m² · Musculación, Funcional & Padel</title>
+  <meta name="description" content="KINGBLACK® — el gimnasio más completo de Glew. Más de 1500 m², musculación, funcional, clases grupales, padel, buffet y estacionamiento. Tu objetivo es nuestro objetivo." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --king:#F5C518;--king-dark:#C9A000;--king-pale:rgba(245,197,24,.08);
+      --king-glow:rgba(245,197,24,.4);--king-glow2:rgba(245,197,24,.15);
+      --negro:#050505;--carbon:#0A0A0A;--carbon-med:#101010;--carbon-card:#161616;
+      --borde:#1E1E1E;--gris:#555;--gris2:#888;--blanco:#F5F5F0;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',sans-serif;background:var(--negro);color:var(--blanco);line-height:1.65;overflow-x:hidden}
+
+    /* PROGRESS */
+    #progress-bar{position:fixed;top:0;left:0;height:3px;z-index:999;background:linear-gradient(90deg,var(--king-dark),var(--king),#FFE566);width:0%;transition:width .1s}
+
+    /* FADE */
+    .fade-up{opacity:0;transform:translateY(30px);transition:opacity .75s cubic-bezier(.25,.46,.45,.94),transform .75s cubic-bezier(.25,.46,.45,.94)}
+    .fade-up.visible{opacity:1;transform:translateY(0)}
+    .d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+    /* ANNOUNCEMENT BAR */
+    .announce{background:linear-gradient(90deg,var(--king-dark),var(--king) 50%,#FFD700);text-align:center;padding:.55rem 1rem;font-size:.7rem;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:var(--negro);position:relative;z-index:201}
+    .announce a{color:var(--negro);text-decoration:none;display:inline-flex;align-items:center;gap:.5rem}
+    .announce a::after{content:'→';font-size:.9rem}
+
+    /* NAV */
+    nav{position:sticky;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;background:rgba(5,5,5,.92);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(245,197,24,.12);transition:all .3s}
+    nav.scrolled{padding:.7rem 2rem;background:rgba(5,5,5,.99);border-bottom-color:rgba(245,197,24,.28)}
+    .nav-logo{display:flex;align-items:center;gap:.7rem;text-decoration:none}
+    .nav-logo img{height:28px;filter:brightness(0) invert(1)}
+    .nav-links{display:flex;gap:1.8rem;list-style:none}
+    .nav-links a{text-decoration:none;color:rgba(255,255,255,.55);font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;transition:color .2s;position:relative}
+    .nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:var(--king);transform:scaleX(0);transition:transform .25s}
+    .nav-links a:hover{color:var(--king)}
+    .nav-links a:hover::after{transform:scaleX(1)}
+    .nav-right{display:flex;align-items:center;gap:.75rem}
+    .nav-social{display:flex;align-items:center;gap:.5rem}
+    .nav-icon{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border:1px solid rgba(255,255,255,.1);border-radius:50%;color:rgba(255,255,255,.5);text-decoration:none;font-size:1rem;transition:all .25s}
+    .nav-icon:hover{border-color:var(--king);color:var(--king);background:var(--king-pale)}
+    .nav-cta{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--king-dark),var(--king));color:var(--negro);padding:.6rem 1.4rem;border-radius:3px;font-size:.75rem;font-weight:900;text-decoration:none;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;flex-shrink:0;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 20px var(--king-glow2)}
+    .nav-cta::after{content:'';position:absolute;top:-50%;left:-75%;width:50%;height:200%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);transform:skewX(-20deg);animation:shimmer 3.5s infinite}
+    .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px var(--king-glow)}
+    .hamburger{display:none;background:none;border:none;cursor:pointer}
+    .hamburger span{display:block;width:22px;height:1.5px;background:var(--blanco);margin:5px 0;transition:.3s}
+    @keyframes shimmer{0%{left:-75%}100%{left:150%}}
+
+    /* HERO */
+    .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+    .hero-bg{position:absolute;inset:0}
+    .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 25%;filter:brightness(.22)}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(110deg,rgba(5,5,5,.97) 0%,rgba(5,5,5,.75) 50%,rgba(5,5,5,.35) 100%),linear-gradient(to top,rgba(5,5,5,1) 0%,transparent 30%)}
+    /* gold glow orb */
+    .hero-orb{position:absolute;top:-10%;left:30%;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(245,197,24,.12) 0%,transparent 70%);pointer-events:none;animation:orb-pulse 6s ease-in-out infinite}
+    @keyframes orb-pulse{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+    .hero-crown{position:absolute;top:0;right:0;width:42%;height:100%;overflow:hidden}
+    .hero-crown img{width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.5) saturate(.7)}
+    .hero-crown::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--negro) 0%,transparent 50%),linear-gradient(to top,var(--negro) 0%,transparent 35%),linear-gradient(to bottom,var(--negro) 0%,transparent 25%)}
+    .hero-content{position:relative;z-index:2;padding:0 2rem 4rem 5vw;max-width:780px}
+    .hero-eyebrow{display:inline-flex;align-items:center;gap:.65rem;margin-bottom:1.4rem;color:var(--king);font-size:.68rem;font-weight:800;letter-spacing:.24em;text-transform:uppercase}
+    .hero-eyebrow::before{content:'👑';font-size:.95rem}
+    .hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,13vw,10rem);line-height:.88;letter-spacing:.03em;color:var(--blanco);margin-bottom:.8rem;position:relative}
+    .hero h1 em{color:var(--king);font-style:normal;display:block;text-shadow:0 0 80px rgba(245,197,24,.4)}
+    .hero-sub{font-size:1.05rem;color:rgba(255,255,255,.62);max-width:460px;line-height:1.72;margin-bottom:1.8rem}
+    .hero-pills{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:2rem}
+    .hero-pill{background:rgba(245,197,24,.1);border:1px solid rgba(245,197,24,.28);color:rgba(255,255,255,.82);font-size:.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.32rem .85rem;border-radius:2px;transition:all .25s}
+    .hero-pill:hover{background:rgba(245,197,24,.18);border-color:var(--king)}
+    .hero-rating{display:inline-flex;align-items:center;gap:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(245,197,24,.2);border-radius:3px;padding:.5rem 1.2rem;font-size:.8rem;color:rgba(255,255,255,.72);margin-bottom:2.2rem}
+    .hero-rating .stars{color:var(--king)}
+    .hero-btns{display:flex;gap:.9rem;flex-wrap:wrap}
+    .btn-king{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:.6rem;background:linear-gradient(135deg,var(--king-dark),var(--king) 60%,#FFE566);color:var(--negro);padding:.95rem 2.4rem;border-radius:3px;font-size:.85rem;font-weight:900;text-decoration:none;letter-spacing:.12em;text-transform:uppercase;transition:transform .2s,box-shadow .2s;box-shadow:0 6px 30px var(--king-glow2)}
+    .btn-king::after{content:'';position:absolute;top:-50%;left:-75%;width:50%;height:200%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);transform:skewX(-20deg);animation:shimmer 2.8s infinite}
+    .btn-king:hover{transform:translateY(-3px);box-shadow:0 14px 48px var(--king-glow)}
+    .btn-ig{display:inline-flex;align-items:center;gap:.65rem;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;padding:.95rem 2rem;border-radius:3px;font-size:.85rem;font-weight:800;text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:transform .2s,box-shadow .2s;box-shadow:0 6px 28px rgba(253,29,29,.3)}
+    .btn-ig:hover{transform:translateY(-3px);box-shadow:0 12px 42px rgba(253,29,29,.45)}
+    .btn-ghost{display:inline-flex;align-items:center;gap:.6rem;color:rgba(255,255,255,.65);border:1px solid rgba(255,255,255,.16);padding:.95rem 1.8rem;border-radius:3px;font-size:.85rem;font-weight:600;text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:all .25s}
+    .btn-ghost:hover{border-color:var(--king);color:var(--king)}
+
+    /* SOCIAL PROOF STRIP */
+    .proof-strip{background:var(--carbon-med);border-top:1px solid var(--borde);border-bottom:1px solid var(--borde);padding:1rem 2rem;display:flex;justify-content:center;gap:3rem;flex-wrap:wrap}
+    .proof-item{display:flex;align-items:center;gap:.6rem;font-size:.72rem;color:rgba(255,255,255,.5);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+    .proof-item strong{color:var(--king);font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.06em}
+
+    /* STATS */
+    .stats{background:linear-gradient(90deg,var(--king-dark) 0%,var(--king) 50%,#FFD700 100%);padding:0}
+    .stats-inner{display:flex;max-width:1200px;margin:0 auto}
+    .stat{flex:1;text-align:center;padding:2rem 1rem;border-right:1px solid rgba(5,5,5,.15)}
+    .stat:last-child{border-right:none}
+    .stat-num{font-family:'Bebas Neue',sans-serif;font-size:3.2rem;letter-spacing:.04em;color:var(--negro);line-height:1}
+    .stat-label{font-size:.63rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:rgba(5,5,5,.58);margin-top:.3rem}
+
+    /* MARQUEE */
+    .marquee-wrap{background:var(--carbon-med);padding:.9rem 0;overflow:hidden;border-top:1px solid var(--borde);border-bottom:1px solid var(--borde)}
+    .marquee-track{display:flex;width:max-content;animation:marquee 28s linear infinite}
+    .marquee-track:hover{animation-play-state:paused}
+    .m-item{display:flex;align-items:center;gap:.6rem;padding:0 1.8rem;font-size:.68rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.32);white-space:nowrap}
+    .m-dot{color:var(--king);font-size:.5rem}
+    @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+    /* SECCIÓN BASE */
+    .sec{padding:5.5rem 2rem}
+    .sec-inner{max-width:1140px;margin:0 auto}
+    .label{display:flex;align-items:center;gap:.7rem;font-size:.66rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--king);margin-bottom:1rem}
+    .label::before{content:'';width:22px;height:1px;background:var(--king)}
+    h2.title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.6rem,5vw,4.2rem);letter-spacing:.04em;line-height:1.05;color:var(--blanco)}
+    h2.title em{color:var(--king);font-style:normal}
+
+    /* INSTAGRAM SECTION */
+    .instagram{background:var(--carbon)}
+    .ig-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;margin-bottom:2.5rem}
+    .ig-profile{display:flex;align-items:center;gap:1.2rem}
+    .ig-avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;box-shadow:0 0 0 2px var(--negro),0 0 0 4px rgba(253,29,29,.5)}
+    .ig-handle{font-size:1rem;font-weight:800;color:var(--blanco)}
+    .ig-followers{font-size:.78rem;color:var(--gris2);margin-top:.2rem}
+    .ig-followers span{color:var(--king);font-weight:700}
+    .ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-bottom:2rem}
+    .ig-post{position:relative;aspect-ratio:1;overflow:hidden;cursor:pointer}
+    .ig-post img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease,filter .3s}
+    .ig-post:hover img{transform:scale(1.06);filter:brightness(.75)}
+    .ig-post-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:.8rem;opacity:0;transition:opacity .3s;background:rgba(5,5,5,.45)}
+    .ig-post:hover .ig-post-overlay{opacity:1}
+    .ig-post-overlay span{color:#fff;font-size:.8rem;font-weight:700;display:flex;align-items:center;gap:.3rem}
+    .ig-cta{text-align:center;padding-top:.5rem}
+
+    /* INSTALACIONES */
+    .instalaciones{background:var(--negro)}
+    .inst-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--borde);margin-top:3.5rem}
+    .inst-card{padding:2rem 1.7rem;border-right:1px solid var(--borde);border-bottom:1px solid var(--borde);position:relative;transition:background .3s;cursor:default}
+    .inst-card:nth-child(3n){border-right:none}
+    .inst-card:nth-last-child(-n+3){border-bottom:none}
+    .inst-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--king),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+    .inst-card:hover{background:rgba(245,197,24,.04)}
+    .inst-card:hover::before{transform:scaleX(1)}
+    .inst-icon{font-size:2rem;margin-bottom:.85rem;display:block}
+    .inst-name{font-size:.98rem;font-weight:800;color:var(--blanco);margin-bottom:.4rem;letter-spacing:.02em}
+    .inst-desc{font-size:.8rem;color:var(--gris2);line-height:1.65}
+    .inst-tag{display:inline-block;margin-top:.75rem;font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--king);border:1px solid rgba(245,197,24,.28);padding:.18rem .55rem;border-radius:2px}
+
+    /* FEATURE */
+    .feature{background:var(--carbon)}
+    .feature-layout{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:3.5rem;border:1px solid var(--borde)}
+    .feature-img{position:relative;overflow:hidden;min-height:500px}
+    .feature-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+    .feature-img:hover img{transform:scale(1.04)}
+    .feature-img-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(245,197,24,.12),transparent)}
+    .feature-content{background:var(--carbon-card);padding:3.5rem;display:flex;flex-direction:column;justify-content:center;border-left:1px solid var(--borde)}
+    .feature-quote{font-family:'Bebas Neue',sans-serif;font-size:5rem;color:rgba(245,197,24,.07);line-height:.7;margin-bottom:.8rem;letter-spacing:.04em}
+    .feature-text{font-size:1.25rem;color:var(--blanco);font-weight:300;line-height:1.65;margin-bottom:1.6rem;font-style:italic}
+    .feature-text strong{color:var(--king);font-style:normal;font-weight:800}
+    .feature-list{display:flex;flex-direction:column;gap:.7rem;margin-bottom:2rem}
+    .feature-item{display:flex;align-items:center;gap:.8rem;font-size:.83rem;color:rgba(255,255,255,.72)}
+    .feature-item::before{content:'';width:6px;height:6px;background:var(--king);border-radius:50%;flex-shrink:0}
+
+    /* PLANES */
+    .planes{background:var(--negro)}
+    .planes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
+    .plan{background:var(--carbon-card);border:1px solid var(--borde);border-radius:3px;padding:2.3rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+    .plan:hover{border-color:rgba(245,197,24,.22);transform:translateY(-5px)}
+    .plan.top{border-color:rgba(245,197,24,.4);box-shadow:0 0 0 1px rgba(245,197,24,.08),0 24px 64px rgba(245,197,24,.12)}
+    .plan.top::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--king-dark),var(--king),#FFD700)}
+    .plan-badge{display:inline-block;background:linear-gradient(90deg,var(--king-dark),var(--king));color:var(--negro);font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;padding:.26rem .7rem;border-radius:2px;margin-bottom:1.1rem}
+    .plan-name{font-family:'Bebas Neue',sans-serif;font-size:2.1rem;letter-spacing:.06em;color:var(--blanco);margin-bottom:.35rem}
+    .plan-price{margin-bottom:1.5rem;padding-bottom:1.3rem;border-bottom:1px solid var(--borde)}
+    .plan-price .sym{font-size:1rem;font-weight:700;color:var(--king);vertical-align:top;margin-top:.5rem;display:inline-block}
+    .plan-price .amount{font-family:'Bebas Neue',sans-serif;font-size:3.8rem;letter-spacing:.02em;color:var(--blanco);line-height:1}
+    .plan-price .per{font-size:.7rem;color:var(--gris);margin-left:.3rem}
+    .plan-price.ask .amount{font-size:2rem;color:var(--gris);font-family:'Inter',sans-serif;font-weight:300}
+    .plan-feats{list-style:none;display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.8rem}
+    .plan-feats li{display:flex;align-items:flex-start;gap:.65rem;font-size:.82rem;color:rgba(255,255,255,.68);line-height:1.4}
+    .plan-feats li::before{content:'✓';color:var(--king);font-weight:900;flex-shrink:0}
+    .plan-gratis{display:inline-flex;align-items:center;gap:.4rem;font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--king);border:1px solid rgba(245,197,24,.3);padding:.22rem .6rem;border-radius:2px;margin-bottom:1.1rem}
+    .btn-plan-gold{display:block;text-align:center;background:linear-gradient(135deg,var(--king-dark),var(--king));color:var(--negro);padding:.86rem;border-radius:3px;font-size:.78rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:box-shadow .25s,transform .2s;box-shadow:0 4px 20px var(--king-glow2)}
+    .btn-plan-gold:hover{box-shadow:0 8px 36px var(--king-glow);transform:translateY(-2px)}
+    .btn-plan-ghost{display:block;text-align:center;border:1px solid var(--borde);color:rgba(255,255,255,.5);padding:.86rem;border-radius:3px;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .25s}
+    .btn-plan-ghost:hover{border-color:var(--king);color:var(--king)}
+
+    /* PADEL */
+    .padel{background:var(--carbon)}
+    .padel-layout{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-top:3.5rem}
+    .padel-img{position:relative;height:420px;overflow:hidden;border:1px solid var(--borde)}
+    .padel-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s}
+    .padel-img:hover img{transform:scale(1.04)}
+    .padel-img-badge{position:absolute;top:1.2rem;left:1.2rem;background:linear-gradient(135deg,var(--king-dark),var(--king));color:var(--negro);font-size:.62rem;font-weight:900;letter-spacing:.16em;text-transform:uppercase;padding:.32rem .8rem;border-radius:2px}
+    .padel-feats{display:flex;flex-direction:column;gap:.9rem;margin-top:1.6rem}
+    .padel-feat{display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.2rem;background:var(--carbon-card);border:1px solid var(--borde);border-radius:3px;transition:border-color .25s}
+    .padel-feat:hover{border-color:rgba(245,197,24,.28)}
+    .padel-feat-icon{font-size:1.3rem;flex-shrink:0}
+    .padel-feat h4{font-size:.88rem;font-weight:700;color:var(--blanco);margin-bottom:.22rem}
+    .padel-feat p{font-size:.78rem;color:var(--gris2);line-height:1.5}
+
+    /* GALERÍA */
+    .galeria{background:var(--carbon-med)}
+    .galeria-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:260px 260px;gap:3px;margin-top:2.5rem}
+    .gal{position:relative;overflow:hidden}
+    .gal:first-child{grid-row:span 2}
+    .gal img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease,filter .4s}
+    .gal:hover img{transform:scale(1.07);filter:brightness(1.08)}
+    .gal-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(245,197,24,.18),transparent);opacity:0;transition:opacity .4s}
+    .gal:hover .gal-overlay{opacity:1}
+    .gal-label{position:absolute;bottom:.85rem;left:.9rem;font-size:.62rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--king);background:rgba(5,5,5,.72);padding:.22rem .6rem;border-radius:2px;opacity:0;transform:translateY(4px);transition:opacity .3s,transform .3s}
+    .gal:hover .gal-label{opacity:1;transform:translateY(0)}
+
+    /* RESEÑAS */
+    .resenas{background:var(--negro)}
+    .resenas-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;margin-bottom:3rem}
+    .score-big{font-family:'Bebas Neue',sans-serif;font-size:7rem;line-height:1;color:var(--king);text-shadow:0 0 60px rgba(245,197,24,.3)}
+    .score-label{font-size:.7rem;color:var(--gris2);letter-spacing:.1em;text-transform:uppercase}
+    .resenas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+    .resena{background:var(--carbon-card);border:1px solid var(--borde);border-radius:3px;padding:1.7rem;position:relative;transition:border-color .25s,transform .25s}
+    .resena:hover{border-color:rgba(245,197,24,.22);transform:translateY(-3px)}
+    .resena::before{content:'"';position:absolute;top:.4rem;right:1rem;font-family:'Bebas Neue',sans-serif;font-size:5rem;color:rgba(245,197,24,.06);line-height:1}
+    .resena-stars{color:var(--king);font-size:.82rem;margin-bottom:.75rem;letter-spacing:.06em}
+    .resena-text{font-size:.84rem;color:rgba(255,255,255,.7);line-height:1.75;margin-bottom:1.1rem;font-style:italic}
+    .resena-author{display:flex;align-items:center;gap:.7rem}
+    .resena-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--king-dark),var(--king));display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:900;color:var(--negro);flex-shrink:0}
+    .resena-name{font-size:.83rem;font-weight:700;color:var(--blanco)}
+    .resena-date{font-size:.7rem;color:var(--gris2)}
+    .resena-google{display:inline-flex;align-items:center;gap:.3rem;font-size:.62rem;color:var(--gris2);margin-top:.25rem}
+
+    /* HORARIOS */
+    .horarios{background:var(--carbon)}
+    .horarios-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;margin-top:3.5rem}
+    .hora-list{display:flex;flex-direction:column;gap:.55rem}
+    .hora-row{display:flex;justify-content:space-between;align-items:center;padding:.9rem 1.15rem;background:var(--carbon-card);border:1px solid var(--borde);border-radius:3px;transition:border-color .2s}
+    .hora-row:hover{border-color:rgba(245,197,24,.22)}
+    .hora-dia{font-size:.84rem;font-weight:700;color:var(--blanco)}
+    .hora-hrs{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:.06em;color:var(--king)}
+    .hora-cerrado{color:var(--gris);font-size:.84rem}
+    .horarios-cta{background:var(--carbon-card);border:1px solid rgba(245,197,24,.22);border-radius:3px;padding:2.6rem;text-align:center;position:relative;overflow:hidden}
+    .horarios-cta::before{content:'👑';position:absolute;top:-1rem;right:-1rem;font-size:8rem;opacity:.04;line-height:1}
+    .horarios-cta h3{font-family:'Bebas Neue',sans-serif;font-size:2.3rem;letter-spacing:.05em;color:var(--blanco);margin-bottom:.7rem}
+    .horarios-cta p{font-size:.86rem;color:var(--gris2);line-height:1.7;margin-bottom:1.8rem}
+
+    /* CONTACTO */
+    .contacto{background:var(--negro)}
+    .contacto-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3rem}
+    .info-list{display:flex;flex-direction:column;gap:.9rem}
+    .info-item{display:flex;align-items:flex-start;gap:.95rem;padding:1.1rem;background:var(--carbon-card);border:1px solid var(--borde);border-radius:3px;transition:border-color .2s;text-decoration:none}
+    .info-item:hover{border-color:rgba(245,197,24,.22)}
+    .info-icon{font-size:1.25rem;flex-shrink:0;margin-top:.05rem}
+    .info-label{font-size:.62rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--king);margin-bottom:.28rem}
+    .info-val{font-size:.88rem;color:rgba(255,255,255,.8);line-height:1.5}
+    .info-item-ig{background:linear-gradient(135deg,rgba(131,58,180,.15),rgba(253,29,29,.12),rgba(252,176,69,.1));border-color:rgba(253,29,29,.2)}
+    .info-item-ig:hover{border-color:rgba(253,29,29,.4)}
+    .info-item-ig .info-val{color:rgba(255,255,255,.85)}
+    .map-wrap{border-radius:3px;overflow:hidden;border:1px solid var(--borde);min-height:340px;height:100%}
+    .map-wrap iframe{width:100%;height:100%;min-height:340px;display:block;filter:grayscale(100%) brightness(.28) contrast(1.3)}
+    .social-btns{display:flex;gap:.75rem;margin-top:.5rem;flex-wrap:wrap}
+
+    /* CTA FINAL */
+    .cta-final{position:relative;padding:7rem 2rem;text-align:center;overflow:hidden}
+    .cta-bg{position:absolute;inset:0;background:url('https://www.kingblack.com.ar/wp-content/uploads/2024/10/WhatsApp-Image-2024-10-08-at-16.14.00-576x1024.jpeg') center/cover}
+    .cta-dark{position:absolute;inset:0;background:rgba(5,5,5,.9)}
+    .cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;border-radius:50%;background:radial-gradient(ellipse,rgba(245,197,24,.15),transparent 70%);pointer-events:none}
+    .cta-gold-line{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--king),transparent)}
+    .cta-content{position:relative;z-index:2;max-width:700px;margin:0 auto}
+    .cta-content h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.2rem,9vw,7rem);letter-spacing:.04em;line-height:.9;color:var(--blanco);margin-bottom:1.2rem}
+    .cta-content h2 em{color:var(--king);font-style:normal;display:block;text-shadow:0 0 80px rgba(245,197,24,.5)}
+    .cta-content p{font-size:1.05rem;color:rgba(255,255,255,.62);margin-bottom:2.5rem;line-height:1.65}
+    .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+
+    /* FOOTER */
+    footer{background:var(--carbon-med);border-top:1px solid var(--borde);padding:3rem 2rem 2rem;text-align:center}
+    .footer-logo{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:.12em;color:rgba(255,255,255,.18);margin-bottom:1.2rem;display:block}
+    .footer-social{display:flex;justify-content:center;gap:.75rem;margin-bottom:1.5rem}
+    .footer-social-icon{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border:1px solid var(--borde);border-radius:50%;color:var(--gris2);text-decoration:none;font-size:1.05rem;transition:all .25s}
+    .footer-social-icon:hover{border-color:var(--king);color:var(--king);background:var(--king-pale)}
+    .footer-social-icon.ig:hover{border-color:#fd1d1d;color:#fd1d1d;background:rgba(253,29,29,.08)}
+    footer p{font-size:.76rem;color:var(--gris);line-height:1.9}
+    footer strong{color:var(--king)}
+    footer a{color:var(--gris2);text-decoration:none;transition:color .2s}
+    footer a:hover{color:var(--king)}
+
+    /* FLOAT BUTTONS */
+    .float-btns{position:fixed;bottom:1.5rem;right:1.5rem;z-index:300;display:flex;flex-direction:column;gap:.6rem;align-items:flex-end}
+    .wa-float{display:flex;align-items:center;gap:.7rem;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;text-decoration:none;border-radius:50px;padding:.8rem 1.3rem;box-shadow:0 6px 28px rgba(37,211,102,.4);font-size:.82rem;font-weight:800;letter-spacing:.04em;animation:wa-pulse 3s infinite;transition:transform .2s;white-space:nowrap}
+    .wa-float svg{width:22px;height:22px;fill:#fff;flex-shrink:0}
+    .wa-float:hover{transform:scale(1.05)}
+    .ig-float{display:flex;align-items:center;gap:.7rem;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;text-decoration:none;border-radius:50px;padding:.8rem 1.3rem;box-shadow:0 6px 28px rgba(253,29,29,.35);font-size:.82rem;font-weight:800;letter-spacing:.04em;transition:transform .2s,box-shadow .2s;white-space:nowrap}
+    .ig-float:hover{transform:scale(1.05);box-shadow:0 8px 40px rgba(253,29,29,.5)}
+    @keyframes wa-pulse{0%,100%{box-shadow:0 6px 28px rgba(37,211,102,.4)}50%{box-shadow:0 6px 48px rgba(37,211,102,.7)}}
+
+    /* MOBILE */
+    @media(max-width:900px){
+      .feature-layout,.padel-layout,.horarios-layout,.contacto-layout{grid-template-columns:1fr}
+      .planes-grid{grid-template-columns:1fr}
+      .inst-grid{grid-template-columns:repeat(2,1fr)}
+      .inst-card:nth-child(2n){border-right:none}
+      .inst-card:nth-child(3n){border-right:1px solid var(--borde)}
+      .resenas-grid{grid-template-columns:1fr}
+      .hero-crown{display:none}
+      .ig-grid{grid-template-columns:repeat(3,1fr)}
+    }
+    @media(max-width:768px){
+      .nav-links{display:none}.hamburger{display:block}
+      .nav-social{display:none}
+      .galeria-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:auto}
+      .gal:first-child{grid-row:span 1;height:200px}
+      .inst-grid{grid-template-columns:1fr}
+      .inst-card{border-right:none!important}
+      .stats-inner{flex-wrap:wrap}
+      .stat{flex:0 0 50%;border-bottom:1px solid rgba(5,5,5,.15)}
+      .stat:nth-child(even){border-right:none}
+      .proof-strip{gap:1.5rem}
+      .wa-float span,.ig-float span{display:none}
+      .wa-float,.ig-float{padding:.85rem;border-radius:50%}
+    }
+  </style>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="announce">
+  <a href="https://wa.me/5401123091425?text=Hola!+Quiero+mi+primera+clase+gratis+en+KINGBLACK" target="_blank">
+    👑 PRIMERA CLASE GRATIS — escribinos y empezá hoy
+  </a>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#inicio" class="nav-logo">
+    <img src="https://www.kingblack.com.ar/wp-content/uploads/2023/02/KB-LOGOTIPO_positivo-200x44.png" alt="KINGBLACK" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+    <span style="display:none;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.08em;color:#F5F5F0">KING<span style="color:#F5C518">BLACK</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#instalaciones">Instalaciones</a></li>
+    <li><a href="#instagram">Instagram</a></li>
+    <li><a href="#padel">Padel</a></li>
+    <li><a href="#planes">Planes</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="nav-social">
+      <a href="https://www.instagram.com/kingblackgym/" class="nav-icon" target="_blank" title="Instagram">📸</a>
+      <a href="https://wa.me/5401123091425" class="nav-icon" target="_blank" title="WhatsApp">💬</a>
+    </div>
+    <a href="https://wa.me/5401123091425?text=Hola!+Quiero+info+sobre+KINGBLACK" class="nav-cta" target="_blank">Empezar ahora</a>
+  </div>
+  <button class="hamburger"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-bg">
+    <img src="https://www.kingblack.com.ar/wp-content/uploads/2024/10/WhatsApp-Image-2024-10-08-at-16.13.59-576x1024.jpeg" alt="KINGBLACK Gimnasio Glew" id="heroBg" />
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-crown">
+    <img src="https://www.kingblack.com.ar/wp-content/uploads/2024/10/WhatsApp-Image-2024-10-08-at-16.14.00-576x1024.jpeg" alt="KINGBLACK interior" />
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow fade-up">Glew · Jorge Newbery 2750 · Bs. As.</div>
+    <h1 class="fade-up d1">KING<em>BLACK®</em></h1>
+    <p class="hero-sub fade-up d2">Tu objetivo es nuestro objetivo. Más de 1.500 m² de equipamiento de alto rendimiento, canchas de padel, buffet y estacionamiento propio. Todo en un solo lugar en Glew.</p>
+    <div class="hero-pills fade-up d2">
+      <span class="hero-pill">+1.500 m²</span>
+      <span class="hero-pill">🎾 Padel</span>
+      <span class="hero-pill">🍽️ Buffet</span>
+      <span class="hero-pill">🚗 Estacionamiento</span>
+      <span class="hero-pill">❄️ Climatizado</span>
+      <span class="hero-pill">📸 15K seguidores</span>
+    </div>
+    <div class="hero-rating fade-up d3">
+      <span class="stars" style="color:var(--king)">★★★★★</span>
+      <span>9.4 / 10 · 566 reseñas verificadas en Google</span>
+    </div>
+    <div class="hero-btns fade-up d3">
+      <a href="https://wa.me/5401123091425?text=Hola!+Quiero+mi+primera+clase+gratis+en+KINGBLACK" class="btn-king" target="_blank">👑 Primera clase gratis</a>
+      <a href="https://www.instagram.com/kingblackgym/" class="btn-ig" target="_blank">📸 @kingblackgym</a>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF STRIP -->
+<div class="proof-strip">
+  <div class="proof-item"><strong>566</strong> Reseñas en Google</div>
+  <div class="proof-item"><strong>9.4</strong> Calificación / 10</div>
+  <div class="proof-item"><strong>15K</strong> Seguidores en Instagram</div>
+  <div class="proof-item"><strong>+1.500</strong> m² de instalaciones</div>
+</div>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-inner">
+    <div class="stat fade-up"><div class="stat-num" data-target="1500" data-suffix="m²">0</div><div class="stat-label">Superficie total</div></div>
+    <div class="stat fade-up d1"><div class="stat-num" data-target="566" data-suffix="+">0</div><div class="stat-label">Reseñas Google</div></div>
+    <div class="stat fade-up d2"><div class="stat-num" data-target="9.4" data-suffix="/10" data-decimal="1">0</div><div class="stat-label">Calificación</div></div>
+    <div class="stat fade-up d3"><div class="stat-num" data-target="15" data-suffix="K">0</div><div class="stat-label">Seguidores IG</div></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="m-item">Musculación <span class="m-dot">◆</span></div>
+    <div class="m-item">Funcional <span class="m-dot">◆</span></div>
+    <div class="m-item">Cardio <span class="m-dot">◆</span></div>
+    <div class="m-item">Clases grupales <span class="m-dot">◆</span></div>
+    <div class="m-item">Padel <span class="m-dot">◆</span></div>
+    <div class="m-item">Personal Training <span class="m-dot">◆</span></div>
+    <div class="m-item">Buffet <span class="m-dot">◆</span></div>
+    <div class="m-item">Estacionamiento gratis <span class="m-dot">◆</span></div>
+    <div class="m-item">Primera clase gratis <span class="m-dot">◆</span></div>
+    <div class="m-item">Musculación <span class="m-dot">◆</span></div>
+    <div class="m-item">Funcional <span class="m-dot">◆</span></div>
+    <div class="m-item">Cardio <span class="m-dot">◆</span></div>
+    <div class="m-item">Clases grupales <span class="m-dot">◆</span></div>
+    <div class="m-item">Padel <span class="m-dot">◆</span></div>
+    <div class="m-item">Personal Training <span class="m-dot">◆</span></div>
+    <div class="m-item">Buffet <span class="m-dot">◆</span></div>
+    <div class="m-item">Estacionamiento gratis <span class="m-dot">◆</span></div>
+    <div class="m-item">Primera clase gratis <span class="m-dot">◆</span></div>
+  </div>
+</div>
+
+<!-- INSTAGRAM SECTION -->
+<section class="instagram sec" id="instagram">
+  <div class="sec-inner">
+    <div class="ig-header fade-up">
+      <div class="ig-profile">
+        <div class="ig-avatar">📸</div>
+        <div>
+          <div class="ig-handle">@kingblackgym</div>
+          <div class="ig-followers"><span>15.000</span> seguidores · Glew, Buenos Aires</div>
+        </div>
+      </div>
+      <a href="https://www.instagram.com/kingblackgym/" class="btn-ig" target="_blank">📸 Seguir en Instagram</a>
+    </div>
+    <div class="ig-grid">
+      <div class="ig-post fade-up">
+        <img src="https://www.kingblack.com.ar/wp-content/uploads/2024/10/WhatsApp-Image-2024-10-08-at-16.13.59-576x1024.jpeg" alt="KINGBLACK post" loading="lazy" />
+        <div class="ig-post-overlay"><span>❤️ 421</span><span>💬 18</span></div>
+      </div>
+      <div class="ig-post fade-up d1">
+        <img src="https://www.kingblack.com.ar/wp-content/uploads/2024/10/Storie-VASB_planes-576x1024.jpg" alt="Planes KINGBLACK" loading="lazy" />
+        <div class="ig-post-overlay"><span>❤️ 312</span><span>💬 9</span></div>
+      </div>
+      <div class="ig-post fade-up d2">
+        <img src="https://www.kingblack.com.ar/wp-content/uploads/2024/10/WhatsApp-Image-2024-10-08-at-16.14.00-576x1024.jpeg" alt="KINGBLACK interior" loading="lazy" />
+        <div class="ig-post-overlay"><span>❤️ 588</span><span>💬 34</span></div>
+      </div>
+      <div class="ig-post fade-up d1">
+        <img src="https://www.kingblack.com.ar/wp-content/uploads/2024/10/Storie-VASB_beneficios-576x1024.jpg" alt="Beneficios KINGBLACK" loading="lazy" />
+        <div class="ig-post-overlay"><span>❤️ 276</span><span>💬 11</span></div>
+      </div>
+      <div class="ig-post fade-up d2">
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80" alt="Musculación" loading="lazy" />
+        <div class="ig-post-overlay"><span>❤️ 490</span><span>💬 22</span></div>
+      </div>
+      <div class="ig-post fade-up d3">
+        <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=80" alt="Entrenamiento" loading="lazy" />
+        <div class="ig-post-overlay"><span>❤️ 344</span><span>💬 15</span></div>
+      </div>
+    </div>
+    <div class="ig-cta fade-up">
+      <a href="https://www.instagram.com/kingblackgym/" class="btn-ig" target="_blank" style="display:inline-flex">📸 Ver todas las publicaciones en @kingblackgym</a>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALACIONES -->
+<section class="instalaciones sec" id="instalaciones">
+  <div class="sec-inner">
+    <div class="label fade-up">Nuestro espacio</div>
+    <h2 class="title fade-up d1">+1.500 m² para <em>entrenar sin límites</em></h2>
+    <div class="inst-grid">
+      <div class="inst-card fade-up">
+        <span class="inst-icon">🏋️</span>
+        <div class="inst-name">Sala de musculación</div>
+        <div class="inst-desc">Máquinas de última generación, zona de pesas libre con barras olímpicas y mancuernas. Todo lo que necesitás para ganar masa y definir tu cuerpo.</div>
+        <span class="inst-tag">Zona principal</span>
+      </div>
+      <div class="inst-card fade-up d1">
+        <span class="inst-icon">🚴</span>
+        <div class="inst-name">Zona cardio</div>
+        <div class="inst-desc">Bicicletas, cintas, elípticas y steppers de alta gama. Cardio completo para potenciar tus resultados sin esperas.</div>
+      </div>
+      <div class="inst-card fade-up d2">
+        <span class="inst-icon">🔥</span>
+        <div class="inst-name">Área funcional</div>
+        <div class="inst-desc">Entrenamiento funcional, kettlebells, TRX y circuitos HIIT con instructores especializados. Resultados reales.</div>
+      </div>
+      <div class="inst-card fade-up">
+        <span class="inst-icon">🧑‍🤝‍🧑</span>
+        <div class="inst-name">Clases grupales</div>
+        <div class="inst-desc">Dictadas por profesores certificados. Motivación garantizada en cada clase. Consultá el cronograma semanal.</div>
+        <span class="inst-tag">Incluido en planes</span>
+      </div>
+      <div class="inst-card fade-up d1">
+        <span class="inst-icon">🍽️</span>
+        <div class="inst-name">Buffet propio</div>
+        <div class="inst-desc">Batidos, snacks saludables y comidas disponibles antes y después de tu entrenamiento. Sin salir del predio.</div>
+        <span class="inst-tag">Diferencial exclusivo</span>
+      </div>
+      <div class="inst-card fade-up d2">
+        <span class="inst-icon">🚗</span>
+        <div class="inst-name">Estacionamiento</div>
+        <div class="inst-desc">Amplio estacionamiento privado sin costo adicional. Entrenás tranquilo, sin preocuparte por el auto.</div>
+        <span class="inst-tag">Gratis para socios</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE -->
+<section class="feature sec" id="nosotros">
+  <div class="sec-inner">
+    <div class="feature-layout">
+      <div class="feature-img fade-up">
+        <img src="https://www.kingblack.com.ar/wp-content/uploads/2024/10/WhatsApp-Image-2024-10-08-at-16.13.59-576x1024.jpeg" alt="KINGBLACK instalaciones reales" loading="lazy" />
+        <div class="feature-img-overlay"></div>
+      </div>
+      <div class="feature-content fade-up d2">
+        <div class="feature-quote">"</div>
+        <p class="feature-text">Más de <strong>1.500 metros cuadrados</strong> pensados para que nada te frene. Equipamiento completo, profesionales comprometidos y un ambiente que te da ganas de volver cada día.</p>
+        <div class="feature-list">
+          <div class="feature-item">Instructores con formación profesional certificada</div>
+          <div class="feature-item">Equipamiento renovado y en perfecto estado</div>
+          <div class="feature-item">Ambiente climatizado todo el año</div>
+          <div class="feature-item">Área de entrenamiento exterior</div>
+          <div class="feature-item">Primera clase completamente gratis</div>
+          <div class="feature-item">Asesoramiento nutricional incluido</div>
+        </div>
+        <a href="https://wa.me/5401123091425?text=Hola!+Quiero+mi+primera+clase+gratis+en+KINGBLACK" class="btn-king" style="display:inline-flex;justify-content:center" target="_blank">👑 Primera clase gratis</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERÍA -->
+<section class="galeria sec" id="galeria">
+  <div class="sec-inner">
+    <div class="label fade-up">El lugar</div>
+    <h2 class="title fade-up d1">Así es <em>KINGBLACK®</em></h2>
+  </div>
+  <div class="galeria-grid" style="margin-top:2.5rem">
+    <div class="gal fade-up">
+      <img src="https://www.kingblack.com.ar/wp-content/uploads/2024/10/WhatsApp-Image-2024-10-08-at-16.14.00-576x1024.jpeg" alt="Sala principal KINGBLACK" loading="lazy" />
+      <div class="gal-overlay"></div>
+      <div class="gal-label">Sala principal</div>
+    </div>
+    <div class="gal fade-up d1">
+      <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80" alt="Musculación" loading="lazy" />
+      <div class="gal-overlay"></div>
+      <div class="gal-label">Musculación</div>
+    </div>
+    <div class="gal fade-up d2">
+      <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=80" alt="Cardio" loading="lazy" />
+      <div class="gal-overlay"></div>
+      <div class="gal-label">Cardio</div>
+    </div>
+    <div class="gal fade-up d1">
+      <img src="https://images.unsplash.com/photo-1581009137042-c552e485697a?w=600&q=80" alt="Funcional" loading="lazy" />
+      <div class="gal-overlay"></div>
+      <div class="gal-label">Funcional</div>
+    </div>
+    <div class="gal fade-up d2">
+      <img src="https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=600&q=80" alt="Clases grupales" loading="lazy" />
+      <div class="gal-overlay"></div>
+      <div class="gal-label">Clases grupales</div>
+    </div>
+  </div>
+</section>
+
+<!-- PADEL -->
+<section class="padel sec" id="padel">
+  <div class="sec-inner">
+    <div class="label fade-up">Más que un gimnasio</div>
+    <h2 class="title fade-up d1">Canchas de <em>Padel</em></h2>
+    <div class="padel-layout">
+      <div class="padel-img fade-up">
+        <img src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=900&q=80" alt="Padel KINGBLACK" loading="lazy" />
+        <span class="padel-img-badge">👑 KINGBLACK PADEL</span>
+      </div>
+      <div class="fade-up d2">
+        <p style="color:var(--gris2);font-size:.95rem;line-height:1.78;margin-bottom:1.8rem">KINGBLACK es mucho más que un gimnasio. Con canchas de padel propias dentro del predio, podés entrenar, jugar y disfrutar todo en el mismo lugar. Sin moverte, sin complicaciones.</p>
+        <div class="padel-feats">
+          <div class="padel-feat"><span class="padel-feat-icon">🎾</span><div><h4>Canchas profesionales</h4><p>Superficie de alta calidad, iluminación profesional y todo para jugar al nivel que querés.</p></div></div>
+          <div class="padel-feat"><span class="padel-feat-icon">📱</span><div><h4>Reservas por WhatsApp</h4><p>Sin apps ni complicaciones. Solo escribís, reservás y jugás. Así de simple.</p></div></div>
+          <div class="padel-feat"><span class="padel-feat-icon">🤝</span><div><h4>Para socios y no socios</h4><p>Las canchas están disponibles para todos. Socios del gym con condiciones especiales.</p></div></div>
+        </div>
+        <a href="https://wa.me/5401123091425?text=Hola!+Quiero+reservar+cancha+de+padel+en+KINGBLACK" class="btn-king" style="display:inline-flex;margin-top:1.8rem" target="_blank">🎾 Reservar cancha</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANES -->
+<section class="planes sec" id="planes">
+  <div class="sec-inner">
+    <div class="label fade-up">Membresías</div>
+    <h2 class="title fade-up d1">Elegí tu <em>plan</em></h2>
+    <div class="planes-grid">
+      <div class="plan fade-up">
+        <div class="plan-gratis">🎁 Primera clase gratis</div>
+        <div class="plan-name">Básico</div>
+        <div class="plan-price"><span class="sym">$</span><span class="amount">9.000</span><span class="per">/mes</span></div>
+        <ul class="plan-feats">
+          <li>Sala de musculación completa</li>
+          <li>Zona de cardio</li>
+          <li>Lunes a viernes</li>
+          <li>Vestuarios</li>
+          <li>Estacionamiento gratis</li>
+        </ul>
+        <a href="https://wa.me/5401123091425?text=Hola!+Quiero+info+sobre+el+plan+básico+de+KINGBLACK" class="btn-plan-ghost" target="_blank">Consultar</a>
+      </div>
+      <div class="plan top fade-up d1">
+        <div class="plan-badge">👑 Más elegido</div>
+        <div class="plan-name">Full</div>
+        <div class="plan-price"><span class="sym">$</span><span class="amount">13.500</span><span class="per">/mes</span></div>
+        <ul class="plan-feats">
+          <li>Acceso completo los 7 días</li>
+          <li>Todas las clases grupales</li>
+          <li>Cardio + funcional</li>
+          <li>Asesoramiento de rutina</li>
+          <li>Asesoramiento nutricional</li>
+          <li>Buffet con descuento</li>
+          <li>Estacionamiento gratuito</li>
+        </ul>
+        <a href="https://wa.me/5401123091425?text=Hola!+Quiero+inscribirme+al+plan+Full+de+KINGBLACK" class="btn-plan-gold" target="_blank">Quiero el Full 👑</a>
+      </div>
+      <div class="plan fade-up d2">
+        <div class="plan-gratis">👨‍👩‍👧 Para toda la familia</div>
+        <div class="plan-name">Familiar</div>
+        <div class="plan-price ask"><span class="amount">CONSULTAR</span></div>
+        <ul class="plan-feats">
+          <li>2 o más personas</li>
+          <li>Descuento especial</li>
+          <li>Acceso completo 7 días</li>
+          <li>Todas las disciplinas</li>
+          <li>Condiciones especiales</li>
+        </ul>
+        <a href="https://wa.me/5401123091425?text=Hola!+Quiero+info+sobre+el+plan+Familiar+de+KINGBLACK" class="btn-plan-ghost" target="_blank">Consultar precio</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEÑAS -->
+<section class="resenas sec" id="resenas">
+  <div class="sec-inner">
+    <div class="resenas-top">
+      <div>
+        <div class="label fade-up">Lo que dicen nuestros socios</div>
+        <h2 class="title fade-up d1">566 personas <em>no se equivocan</em></h2>
+      </div>
+      <div class="fade-up d2" style="text-align:center">
+        <div class="score-big">9.4</div>
+        <div style="color:var(--king);font-size:1.3rem;letter-spacing:.12em;margin:.3rem 0">★★★★★</div>
+        <div class="score-label">566 reseñas verificadas · Google</div>
+      </div>
+    </div>
+    <div class="resenas-grid">
+      <div class="resena fade-up">
+        <div class="resena-stars">★★★★★</div>
+        <p class="resena-text">"El mejor gimnasio de la zona, sin dudas. El espacio es enorme, hay máquinas para todo y los instructores están siempre atentos. Hace 2 años que soy socio y no lo cambio por nada."</p>
+        <div class="resena-author">
+          <div class="resena-av">ML</div>
+          <div>
+            <div class="resena-name">Marcos L.</div>
+            <div class="resena-date">hace 1 mes</div>
+            <div class="resena-google">🟢 Google</div>
+          </div>
+        </div>
+      </div>
+      <div class="resena fade-up d1">
+        <div class="resena-stars">★★★★★</div>
+        <p class="resena-text">"Tienen de todo: musculación, clases, padel y hasta buffet. No necesitás ir a ningún otro lado. El ambiente es buenísimo y la limpieza impecable. Muy recomendable."</p>
+        <div class="resena-author">
+          <div class="resena-av">VR</div>
+          <div>
+            <div class="resena-name">Valentina R.</div>
+            <div class="resena-date">hace 3 semanas</div>
+            <div class="resena-google">🟢 Google</div>
+          </div>
+        </div>
+      </div>
+      <div class="resena fade-up d2">
+        <div class="resena-stars">★★★★★</div>
+        <p class="resena-text">"Empecé sin saber nada y los profes me armaron una rutina personalizada desde el día uno. En 4 meses los cambios fueron impresionantes. El estacionamiento es un plus enorme."</p>
+        <div class="resena-author">
+          <div class="resena-av">GF</div>
+          <div>
+            <div class="resena-name">Gustavo F.</div>
+            <div class="resena-date">hace 2 meses</div>
+            <div class="resena-google">🟢 Google</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HORARIOS -->
+<section class="horarios sec" id="horarios">
+  <div class="sec-inner">
+    <div class="label fade-up">Cuándo venís</div>
+    <h2 class="title fade-up d1">Horarios de <em>atención</em></h2>
+    <div class="horarios-layout">
+      <div class="hora-list fade-up">
+        <div class="hora-row"><span class="hora-dia">Lunes a Viernes</span><span class="hora-hrs">7:00 — 23:00</span></div>
+        <div class="hora-row"><span class="hora-dia">Sábados</span><span class="hora-hrs">9:00 — 15:00</span></div>
+        <div class="hora-row"><span class="hora-dia">Domingos</span><span class="hora-cerrado">Cerrado</span></div>
+        <div class="hora-row"><span class="hora-dia">Feriados</span><span class="hora-hrs" style="color:var(--gris2);font-family:'Inter',sans-serif;font-size:.84rem;font-weight:500">Consultar</span></div>
+      </div>
+      <div class="horarios-cta fade-up d2">
+        <h3>¿Tu objetivo es crecer?</h3>
+        <p>El nuestro también. Escribinos y te damos toda la info sobre planes, disciplinas y cómo arrancar hoy mismo con tu primera clase gratis.</p>
+        <a href="https://wa.me/5401123091425?text=Hola!+Quiero+empezar+en+KINGBLACK" class="btn-king" style="display:inline-flex;justify-content:center" target="_blank">👑 Empezar ahora</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="contacto sec" id="contacto">
+  <div class="sec-inner">
+    <div class="label fade-up">Encontranos</div>
+    <h2 class="title fade-up d1">Volvé a <em>sentirte bien</em></h2>
+    <div class="contacto-layout">
+      <div class="info-list fade-up">
+        <div class="info-item">
+          <span class="info-icon">📍</span>
+          <div>
+            <div class="info-label">Dirección</div>
+            <div class="info-val">Jorge Newbery 2750 · Glew, Buenos Aires</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">📞</span>
+          <div>
+            <div class="info-label">Teléfono / WhatsApp</div>
+            <div class="info-val">011 2309-1425</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">🌐</span>
+          <div>
+            <div class="info-label">Sitio web</div>
+            <div class="info-val">kingblack.com.ar</div>
+          </div>
+        </div>
+        <a href="https://www.instagram.com/kingblackgym/" class="info-item info-item-ig" target="_blank">
+          <span class="info-icon">📸</span>
+          <div>
+            <div class="info-label" style="background:linear-gradient(90deg,#833ab4,#fd1d1d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Instagram</div>
+            <div class="info-val">@kingblackgym · 15.000 seguidores → Ver perfil</div>
+          </div>
+        </a>
+        <div class="social-btns">
+          <a href="https://wa.me/5401123091425?text=Hola!+Quiero+info+sobre+KINGBLACK" class="btn-king" target="_blank">💬 WhatsApp</a>
+          <a href="https://www.instagram.com/kingblackgym/" class="btn-ig" target="_blank">📸 Instagram</a>
+        </div>
+      </div>
+      <div class="map-wrap fade-up d2">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.2!2d-58.3728818!3d-34.8809999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcd2b05ea3fbd9%3A0xd2e9a3e48e5d0d97!2sKingblack%20gym!5e0!3m2!1ses!2sar!4v1620000000000" style="border:0" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <div class="cta-bg"></div>
+  <div class="cta-dark"></div>
+  <div class="cta-glow"></div>
+  <div class="cta-gold-line"></div>
+  <div class="cta-content fade-up">
+    <h2>TU OBJETIVO<em>ES EL NUESTRO</em></h2>
+    <p>KINGBLACK® te espera en Glew. +1.500 m² para que no tengas excusas. Primera clase completamente gratis. Vení a conocernos hoy.</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/5401123091425?text=Hola!+Quiero+mi+primera+clase+gratis+en+KINGBLACK" class="btn-king" target="_blank">👑 Primera clase gratis</a>
+      <a href="https://www.instagram.com/kingblackgym/" class="btn-ig" target="_blank">📸 Seguirnos en IG</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo">KINGBLACK®</span>
+  <div class="footer-social">
+    <a href="https://www.instagram.com/kingblackgym/" class="footer-social-icon ig" target="_blank" title="Instagram">📸</a>
+    <a href="https://wa.me/5401123091425" class="footer-social-icon" target="_blank" title="WhatsApp">💬</a>
+    <a href="https://www.facebook.com/kingblackgym" class="footer-social-icon" target="_blank" title="Facebook">📘</a>
+  </div>
+  <p><strong>KINGBLACK®</strong> · Jorge Newbery 2750, Glew, Buenos Aires · <a href="tel:01123091425">011 2309-1425</a></p>
+  <p>Lun–Vie 7:00–23:00 · Sáb 9:00–15:00 · <a href="https://www.instagram.com/kingblackgym/" target="_blank">@kingblackgym</a> · <a href="https://www.kingblack.com.ar" target="_blank">kingblack.com.ar</a></p>
+</footer>
+
+<!-- FLOAT BUTTONS -->
+<div class="float-btns">
+  <a href="https://www.instagram.com/kingblackgym/" class="ig-float" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="white"/></svg>
+    <span>@kingblackgym</span>
+  </a>
+  <a href="https://wa.me/5401123091425?text=Hola!+Quiero+info+sobre+KINGBLACK" class="wa-float" target="_blank">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.532 5.85L.057 23.57a.5.5 0 0 0 .61.666l5.98-1.57A11.944 11.944 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.9a9.9 9.9 0 0 1-5.031-1.374l-.36-.214-3.737.981.998-3.64-.235-.374A9.9 9.9 0 0 1 2.1 12C2.1 6.534 6.534 2.1 12 2.1c5.465 0 9.9 4.434 9.9 9.9 0 5.465-4.435 9.9-9.9 9.9z"/></svg>
+    <span>Consultar ahora</span>
+  </a>
+</div>
+
+<script>
+  // Progress bar + nav scroll
+  window.addEventListener('scroll',()=>{
+    document.getElementById('progress-bar').style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%';
+    document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);
+  });
+  // Hero parallax
+  window.addEventListener('load',()=>{const b=document.getElementById('heroBg');if(b)setTimeout(()=>b.style.filter='brightness(.22)',100)});
+  // Fade on scroll
+  const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target)}}),{threshold:.08});
+  document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+  // Counter animation
+  function animateCounter(el){
+    const t=parseFloat(el.dataset.target),s=el.dataset.suffix||'',d=parseInt(el.dataset.decimal)||0,dur=2000,st=performance.now();
+    const step=now=>{const e=Math.min((now-st)/dur,1),ease=1-Math.pow(1-e,3),c=t*ease;el.textContent=(d?c.toFixed(d):Math.floor(c))+s;if(e<1)requestAnimationFrame(step)};
+    requestAnimationFrame(step);
+  }
+  const cObs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){animateCounter(x.target);cObs.unobserve(x.target)}}),{threshold:.5});
+  document.querySelectorAll('[data-target]').forEach(el=>cObs.observe(el));
+</script>
+</body>
+</html>
