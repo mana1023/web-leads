@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<!--
+  DEMO · SISTEMA DE GESTIÓN para barbería (turnos + caja + clientes).
+  No es una web de vitrina: es el panel interno para MANEJAR el negocio.
+  Pitch AR: el 94% de las pymes maneja todo entre WhatsApp, Excel y la memoria.
+  Reemplazá "Barbería Costa", precios y datos por los del cliente real.
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema de Gestión · Barbería — Turnos, Caja y Clientes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#F3F3F6; --sidebar:#17151B; --sidebar2:#211E27; --sidebar-line:#302C38;
+      --gold:#D9A441; --gold-d:#B8862B; --ink:#1E1C22; --muted:#6C6875;
+      --card:#FFFFFF; --line:#E8E6EC; --green:#17A25B; --green-bg:#E6F6EE;
+      --red:#DA4F38; --red-bg:#FBEAE6; --blue:#3B7DD8; --blue-bg:#E9F1FC;
+      --amber-bg:#FBF1DC;
+      --fh:'Sora',system-ui,sans-serif; --fb:'Inter',system-ui,sans-serif;
+      --tr:.2s ease; --sh:0 10px 30px -18px rgba(30,20,10,.35);
+    }
+    body{font-family:var(--fb);background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    button{font-family:inherit;cursor:pointer;border:none;background:none}
+
+    /* Layout */
+    .app{display:flex;min-height:100vh}
+    /* Sidebar */
+    .side{width:250px;background:var(--sidebar);color:#C9C4D2;flex:none;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+    .brand{padding:1.4rem 1.4rem 1.1rem;display:flex;align-items:center;gap:.7rem;border-bottom:1px solid var(--sidebar-line)}
+    .brand .pole{width:34px;height:34px;border-radius:9px;background:conic-gradient(from 45deg,var(--gold),#e9c877,var(--gold-d),var(--gold));display:grid;place-items:center;font-size:1.1rem}
+    .brand b{font-family:var(--fh);font-weight:800;color:#fff;font-size:1.02rem;letter-spacing:-.01em;line-height:1.1;display:block}
+    .brand small{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+    .navlbl{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:#6A6675;padding:1.2rem 1.4rem .4rem}
+    .nav{display:flex;flex-direction:column;gap:2px;padding:0 .7rem}
+    .nav button{display:flex;align-items:center;gap:.75rem;width:100%;text-align:left;padding:.7rem .8rem;border-radius:10px;color:#C9C4D2;font-size:.9rem;font-weight:500;transition:var(--tr)}
+    .nav button .ic{width:20px;text-align:center;font-size:1rem}
+    .nav button:hover{background:var(--sidebar2);color:#fff}
+    .nav button.active{background:linear-gradient(90deg,var(--gold),var(--gold-d));color:#1a140a;font-weight:600}
+    .nav button.active .ic{filter:grayscale(1) brightness(.3)}
+    .side-foot{margin-top:auto;padding:1rem 1.4rem;border-top:1px solid var(--sidebar-line);font-size:.72rem;color:#6A6675}
+    .side-foot b{color:#C9C4D2;font-weight:600}
+
+    /* Main */
+    .main{flex:1;min-width:0;display:flex;flex-direction:column}
+    .topbar{background:var(--card);border-bottom:1px solid var(--line);padding:1rem 1.6rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;position:sticky;top:0;z-index:20}
+    .topbar h1{font-family:var(--fh);font-weight:700;font-size:1.15rem;letter-spacing:-.01em}
+    .topbar .date{font-size:.8rem;color:var(--muted)}
+    .top-actions{display:flex;align-items:center;gap:.6rem}
+    .pill-wa{display:inline-flex;align-items:center;gap:.4rem;background:var(--green-bg);color:#0f7a43;padding:.5rem .8rem;border-radius:999px;font-size:.78rem;font-weight:600}
+    .pill-wa .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(23,162,91,.2)}
+    .btn{display:inline-flex;align-items:center;gap:.45rem;padding:.6rem 1rem;border-radius:10px;font-weight:600;font-size:.85rem;transition:var(--tr)}
+    .btn-gold{background:var(--gold);color:#231a08}
+    .btn-gold:hover{background:var(--gold-d)}
+
+    .content{padding:1.6rem;flex:1}
+    .panel{display:none;animation:fade .3s ease}
+    .panel.show{display:block}
+    @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+    /* Stat cards */
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+    .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.1rem 1.2rem}
+    .stat .t{display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:var(--muted);font-weight:500}
+    .stat .v{font-family:var(--fh);font-weight:700;font-size:1.7rem;margin-top:.35rem;letter-spacing:-.02em}
+    .stat .chip{font-size:.7rem;font-weight:600;padding:.15rem .5rem;border-radius:999px;margin-left:auto}
+    .chip-g{background:var(--green-bg);color:#0f7a43}
+    .chip-r{background:var(--red-bg);color:#b23a25}
+    .stat.gold{background:linear-gradient(135deg,#211E27,#17151B);color:#fff;border:none}
+    .stat.gold .t{color:#B9B3C4}
+    .stat.gold .v{color:var(--gold)}
+
+    /* Card */
+    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+    .card-h{padding:1rem 1.2rem;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .card-h h2{font-family:var(--fh);font-weight:600;font-size:1rem}
+    .card-h .sub{font-size:.78rem;color:var(--muted)}
+
+    /* Table */
+    table{width:100%;border-collapse:collapse}
+    th{text-align:left;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:.7rem 1.2rem;border-bottom:1px solid var(--line)}
+    td{padding:.75rem 1.2rem;border-bottom:1px solid var(--line);font-size:.88rem;vertical-align:middle}
+    tr:last-child td{border-bottom:none}
+    .cli{display:flex;align-items:center;gap:.65rem}
+    .av{width:34px;height:34px;border-radius:50%;background:var(--amber-bg);color:var(--gold-d);display:grid;place-items:center;font-weight:700;font-size:.8rem;flex:none}
+    .hora{font-family:var(--fh);font-weight:600}
+    .precio{font-family:var(--fh);font-weight:600}
+    .estado{font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:999px;white-space:nowrap}
+    .e-pend{background:var(--blue-bg);color:#245ba8}
+    .e-ok{background:var(--green-bg);color:#0f7a43}
+    .e-aus{background:var(--red-bg);color:#b23a25}
+    .rowact{display:flex;gap:.4rem;justify-content:flex-end}
+    .mini{font-size:.74rem;font-weight:600;padding:.35rem .6rem;border-radius:8px;transition:var(--tr);white-space:nowrap}
+    .mini-ok{background:var(--ink);color:#fff}
+    .mini-ok:hover{background:#000}
+    .mini-wa{background:var(--green-bg);color:#0f7a43}
+    .mini-wa:hover{background:#d4efe0}
+    .done{color:var(--muted);font-size:.78rem;font-weight:600}
+
+    /* Agenda */
+    .agenda{overflow-x:auto}
+    .grid-ag{min-width:720px;display:grid;grid-template-columns:60px repeat(6,1fr)}
+    .gcell{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:.4rem;min-height:52px;font-size:.78rem}
+    .ghead{font-family:var(--fh);font-weight:600;font-size:.8rem;text-align:center;padding:.6rem;background:#FAFAFB;position:sticky;top:0}
+    .gtime{font-size:.72rem;color:var(--muted);text-align:right;padding-right:.6rem}
+    .turno{border-radius:8px;padding:.35rem .5rem;font-size:.72rem;font-weight:600;line-height:1.2;height:100%}
+    .t-blue{background:var(--blue-bg);color:#245ba8} .t-gold{background:var(--amber-bg);color:var(--gold-d)} .t-green{background:var(--green-bg);color:#0f7a43}
+
+    /* Caja */
+    .caja-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:1.2rem}
+    .metodos{display:flex;flex-direction:column;gap:.8rem}
+    .metodo{display:flex;align-items:center;gap:.8rem;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:.9rem 1.1rem}
+    .metodo .mi{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-size:1.1rem}
+    .metodo b{font-family:var(--fh);margin-left:auto;font-weight:700}
+    .total-big{background:linear-gradient(135deg,#17151B,#2a2531);color:#fff;border-radius:16px;padding:1.4rem;text-align:center}
+    .total-big .l{font-size:.78rem;color:#B9B3C4;letter-spacing:.05em}
+    .total-big .n{font-family:var(--fh);font-weight:800;font-size:2.4rem;color:var(--gold);margin-top:.3rem;letter-spacing:-.02em}
+
+    /* Servicios */
+    .serv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    .serv{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.1rem}
+    .serv h3{font-family:var(--fh);font-weight:600;font-size:1rem}
+    .serv .p{font-family:var(--fh);font-weight:800;font-size:1.5rem;color:var(--gold-d);margin-top:.4rem}
+    .serv .d{font-size:.8rem;color:var(--muted);margin-top:.2rem}
+
+    .banner{background:linear-gradient(120deg,var(--amber-bg),#fff);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:14px;padding:1rem 1.2rem;margin-bottom:1.4rem;font-size:.9rem}
+    .banner b{color:var(--gold-d)}
+
+    /* Toast */
+    .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--ink);color:#fff;padding:.8rem 1.3rem;border-radius:12px;font-size:.88rem;font-weight:500;opacity:0;transition:.3s ease;z-index:99;box-shadow:var(--sh);display:flex;align-items:center;gap:.5rem}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+    /* Mobile */
+    .burger{display:none}
+    @media(max-width:880px){
+      .side{position:fixed;left:0;top:0;z-index:60;transform:translateX(-100%);transition:transform var(--tr);box-shadow:var(--sh)}
+      .side.open{transform:none}
+      .burger{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--bg)}
+      .stats{grid-template-columns:repeat(2,1fr)}
+      .caja-grid{grid-template-columns:1fr}
+      .serv-grid{grid-template-columns:1fr}
+      .scrim{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:55;display:none}
+      .scrim.show{display:block}
+    }
+    @media(max-width:520px){ .stats{grid-template-columns:1fr 1fr} .hide-sm{display:none} }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- SIDEBAR -->
+    <aside class="side" id="side">
+      <div class="brand">
+        <span class="pole">💈</span>
+        <span><b>Barbería Costa</b><small>Sistema de gestión</small></span>
+      </div>
+      <div class="navlbl">Operación</div>
+      <nav class="nav" id="nav">
+        <button data-p="hoy" class="active"><span class="ic">📅</span> Turnos de hoy</button>
+        <button data-p="agenda"><span class="ic">🗓️</span> Agenda semanal</button>
+        <button data-p="caja"><span class="ic">💵</span> Caja</button>
+        <button data-p="clientes"><span class="ic">👥</span> Clientes</button>
+        <button data-p="servicios"><span class="ic">✂️</span> Servicios y precios</button>
+      </nav>
+      <div class="side-foot">
+        <b>Demo interactiva</b><br>Tocá los botones: marcá turnos, mirá cómo se actualiza la caja.
+      </div>
+    </aside>
+    <div class="scrim" id="scrim"></div>
+
+    <!-- MAIN -->
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;gap:.8rem">
+          <button class="burger" id="burger">☰</button>
+          <div>
+            <h1 id="ptitle">Turnos de hoy</h1>
+            <div class="date" id="fecha">—</div>
+          </div>
+        </div>
+        <div class="top-actions">
+          <span class="pill-wa hide-sm"><span class="dot"></span> Recordatorios por WhatsApp activos</span>
+          <button class="btn btn-gold">+ Nuevo turno</button>
+        </div>
+      </div>
+
+      <div class="content">
+        <!-- ══ HOY ══ -->
+        <section class="panel show" id="p-hoy">
+          <div class="stats">
+            <div class="stat"><div class="t">📅 Turnos hoy</div><div class="v">9</div></div>
+            <div class="stat"><div class="t">✅ Atendidos <span class="chip chip-g" id="pct">2 / 9</span></div><div class="v" id="cAtend">2</div></div>
+            <div class="stat gold"><div class="t">💵 Ingresos del día</div><div class="v" id="cIng">$ 21.000</div></div>
+            <div class="stat"><div class="t">⚠️ Ausencias <span class="chip chip-r">no-show</span></div><div class="v">1</div></div>
+          </div>
+
+          <div class="banner">💡 <b>Recordatorio automático:</b> el sistema le manda un WhatsApp al cliente 2 hs antes del turno. Las barberías que lo usan bajan las ausencias hasta un 40%.</div>
+
+          <div class="card">
+            <div class="card-h"><div><h2>Turnos de hoy</h2><div class="sub">Marcá cada uno como atendido al terminar</div></div></div>
+            <div style="overflow-x:auto">
+            <table id="tHoy">
+              <thead><tr><th>Hora</th><th>Cliente</th><th>Servicio</th><th>Barbero</th><th>Precio</th><th>Estado</th><th></th></tr></thead>
+              <tbody>
+                <tr data-precio="8000"><td class="hora">10:00</td><td><div class="cli"><span class="av">MG</span> Martín Giménez</div></td><td>Corte</td><td>Nico</td><td class="precio">$ 8.000</td><td><span class="estado e-ok">Atendido</span></td><td><div class="rowact"><span class="done">✓ Cobrado</span></div></td></tr>
+                <tr data-precio="12000"><td class="hora">10:45</td><td><div class="cli"><span class="av">LR</span> Lucas Romero</div></td><td>Corte + Barba</td><td>Faca</td><td class="precio">$ 12.000</td><td><span class="estado e-ok">Atendido</span></td><td><div class="rowact"><span class="done">✓ Cobrado</span></div></td></tr>
+                <tr data-precio="9000"><td class="hora">11:30</td><td><div class="cli"><span class="av">JP</span> Juan Pérez</div></td><td>Degradé</td><td>Nico</td><td class="precio">$ 9.000</td><td><span class="estado e-pend">Pendiente</span></td><td><div class="rowact"><button class="mini mini-wa">💬 Recordar</button><button class="mini mini-ok" onclick="atender(this)">Marcar atendido</button></div></td></tr>
+                <tr data-precio="12000"><td class="hora">12:15</td><td><div class="cli"><span class="av">EA</span> Ezequiel Alonso</div></td><td>Corte + Barba</td><td>Juanma</td><td class="precio">$ 12.000</td><td><span class="estado e-pend">Pendiente</span></td><td><div class="rowact"><button class="mini mini-wa">💬 Recordar</button><button class="mini mini-ok" onclick="atender(this)">Marcar atendido</button></div></td></tr>
+                <tr data-precio="5000"><td class="hora">14:00</td><td><div class="cli"><span class="av">TF</span> Tomás Ferreyra</div></td><td>Barba / Perfilado</td><td>Faca</td><td class="precio">$ 5.000</td><td><span class="estado e-pend">Pendiente</span></td><td><div class="rowact"><button class="mini mini-wa">💬 Recordar</button><button class="mini mini-ok" onclick="atender(this)">Marcar atendido</button></div></td></tr>
+                <tr data-precio="8000"><td class="hora">15:30</td><td><div class="cli"><span class="av">BS</span> Bruno Sosa</div></td><td>Corte</td><td>Nico</td><td class="precio">$ 8.000</td><td><span class="estado e-pend">Pendiente</span></td><td><div class="rowact"><button class="mini mini-wa">💬 Recordar</button><button class="mini mini-ok" onclick="atender(this)">Marcar atendido</button></div></td></tr>
+                <tr data-precio="9000"><td class="hora">16:15</td><td><div class="cli"><span class="av">FD</span> Facundo Díaz</div></td><td>Degradé + Diseño</td><td>Juanma</td><td class="precio">$ 9.000</td><td><span class="estado e-pend">Pendiente</span></td><td><div class="rowact"><button class="mini mini-wa">💬 Recordar</button><button class="mini mini-ok" onclick="atender(this)">Marcar atendido</button></div></td></tr>
+                <tr data-precio="6000"><td class="hora">17:30</td><td><div class="cli"><span class="av">IM</span> Ignacio Molina</div></td><td>Corte niño</td><td>Faca</td><td class="precio">$ 6.000</td><td><span class="estado e-pend">Pendiente</span></td><td><div class="rowact"><button class="mini mini-wa">💬 Recordar</button><button class="mini mini-ok" onclick="atender(this)">Marcar atendido</button></div></td></tr>
+                <tr data-precio="12000"><td class="hora">18:15</td><td><div class="cli"><span class="av">NC</span> Nahuel Castro</div></td><td>Corte + Barba</td><td>Nico</td><td class="precio">$ 12.000</td><td><span class="estado e-pend">Pendiente</span></td><td><div class="rowact"><button class="mini mini-wa">💬 Recordar</button><button class="mini mini-ok" onclick="atender(this)">Marcar atendido</button></div></td></tr>
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══ AGENDA ══ -->
+        <section class="panel" id="p-agenda">
+          <div class="banner">🗓️ Vista semanal. Cada cliente reserva su turno online y cae acá solo — sin llamadas ni idas y vueltas por DM.</div>
+          <div class="card agenda">
+            <div class="grid-ag">
+              <div class="gcell ghead"></div>
+              <div class="gcell ghead">Lun</div><div class="gcell ghead">Mar</div><div class="gcell ghead">Mié</div><div class="gcell ghead">Jue</div><div class="gcell ghead">Vie</div><div class="gcell ghead">Sáb</div>
+              <div class="gcell gtime">10hs</div>
+              <div class="gcell"><div class="turno t-blue">M. Giménez · Corte</div></div><div class="gcell"></div><div class="gcell"><div class="turno t-gold">Barba · L. Paz</div></div><div class="gcell"></div><div class="gcell"><div class="turno t-blue">Corte · D. Ruiz</div></div><div class="gcell"><div class="turno t-green">Corte+Barba</div></div>
+              <div class="gcell gtime">11hs</div>
+              <div class="gcell"><div class="turno t-gold">Degradé · J.P.</div></div><div class="gcell"><div class="turno t-blue">Corte · S. Vera</div></div><div class="gcell"></div><div class="gcell"><div class="turno t-green">Corte+Barba</div></div><div class="gcell"></div><div class="gcell"><div class="turno t-blue">Corte · M. Ana</div></div>
+              <div class="gcell gtime">12hs</div>
+              <div class="gcell"><div class="turno t-green">Corte+Barba</div></div><div class="gcell"></div><div class="gcell"><div class="turno t-blue">Corte · R. Gil</div></div><div class="gcell"></div><div class="gcell"><div class="turno t-gold">Diseño · Fer</div></div><div class="gcell"><div class="turno t-green">Corte+Barba</div></div>
+              <div class="gcell gtime">15hs</div>
+              <div class="gcell"><div class="turno t-blue">Corte · T.F.</div></div><div class="gcell"><div class="turno t-gold">Barba · N.C.</div></div><div class="gcell"><div class="turno t-blue">Corte · P. Luna</div></div><div class="gcell"><div class="turno t-green">Corte+Barba</div></div><div class="gcell"></div><div class="gcell"><div class="turno t-blue">Corte · J. Mar</div></div>
+              <div class="gcell gtime">17hs</div>
+              <div class="gcell"><div class="turno t-gold">Degradé · F.D.</div></div><div class="gcell"><div class="turno t-blue">Corte · I. Sol</div></div><div class="gcell"></div><div class="gcell"><div class="turno t-blue">Corte · A. Paz</div></div><div class="gcell"><div class="turno t-green">Corte+Barba</div></div><div class="gcell"><div class="turno t-gold">Barba · E. Ríos</div></div>
+              <div class="gcell gtime">18hs</div>
+              <div class="gcell"><div class="turno t-green">Corte+Barba</div></div><div class="gcell"></div><div class="gcell"><div class="turno t-blue">Corte · D. Núñez</div></div><div class="gcell"><div class="turno t-gold">Diseño · Lu</div></div><div class="gcell"><div class="turno t-blue">Corte · V. Roldán</div></div><div class="gcell"><div class="turno t-green">Corte+Barba</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══ CAJA ══ -->
+        <section class="panel" id="p-caja">
+          <div class="banner">💵 <b>Caja del día en pesos.</b> Cada turno cobrado entra acá automático, separado por método de pago. Cierre de caja claro al final del día.</div>
+          <div class="caja-grid">
+            <div class="card">
+              <div class="card-h"><div><h2>Movimientos de hoy</h2><div class="sub">Ingresos por servicio</div></div></div>
+              <div style="overflow-x:auto">
+              <table id="tCaja">
+                <thead><tr><th>Hora</th><th>Cliente</th><th>Servicio</th><th>Método</th><th>Monto</th></tr></thead>
+                <tbody>
+                  <tr><td class="hora">10:00</td><td>Martín Giménez</td><td>Corte</td><td>Efectivo</td><td class="precio">$ 8.000</td></tr>
+                  <tr><td class="hora">10:45</td><td>Lucas Romero</td><td>Corte + Barba</td><td>Mercado Pago</td><td class="precio">$ 12.000</td></tr>
+                </tbody>
+              </table>
+              </div>
+            </div>
+            <div>
+              <div class="total-big"><div class="l">Total del día</div><div class="n" id="cajaTotal">$ 21.000</div></div>
+              <div class="metodos" style="margin-top:1.2rem">
+                <div class="metodo"><span class="mi" style="background:var(--green-bg)">💵</span> Efectivo <b id="mEf">$ 8.000</b></div>
+                <div class="metodo"><span class="mi" style="background:var(--blue-bg)">📱</span> Mercado Pago <b id="mMp">$ 12.000</b></div>
+                <div class="metodo"><span class="mi" style="background:var(--amber-bg)">💳</span> Débito <b id="mDb">$ 0</b></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══ CLIENTES ══ -->
+        <section class="panel" id="p-clientes">
+          <div class="banner">👥 <b>Base de clientes propia</b> (no la de Instagram). Sabés quién viene seguido, qué se hace y hace cuánto no viene — para reactivarlo por WhatsApp.</div>
+          <div class="card">
+            <div class="card-h"><div><h2>Clientes</h2><div class="sub">Ordenados por frecuencia</div></div></div>
+            <div style="overflow-x:auto">
+            <table>
+              <thead><tr><th>Cliente</th><th>Teléfono</th><th>Servicio habitual</th><th>Visitas</th><th>Última visita</th><th></th></tr></thead>
+              <tbody>
+                <tr><td><div class="cli"><span class="av">LR</span> Lucas Romero</div></td><td>11 5023-8891</td><td>Corte + Barba</td><td><b>18</b></td><td>Hoy</td><td><span class="estado e-ok">Cliente fiel</span></td></tr>
+                <tr><td><div class="cli"><span class="av">MG</span> Martín Giménez</div></td><td>11 6744-1200</td><td>Corte</td><td><b>12</b></td><td>Hoy</td><td><span class="estado e-ok">Cliente fiel</span></td></tr>
+                <tr><td><div class="cli"><span class="av">JP</span> Juan Pérez</div></td><td>11 3388-7712</td><td>Degradé</td><td><b>9</b></td><td>Hace 3 sem.</td><td></td></tr>
+                <tr><td><div class="cli"><span class="av">TF</span> Tomás Ferreyra</div></td><td>11 2290-5567</td><td>Barba</td><td><b>7</b></td><td>Hace 5 días</td><td></td></tr>
+                <tr><td><div class="cli"><span class="av">RG</span> Ramiro Godoy</div></td><td>11 4471-0093</td><td>Corte + Barba</td><td><b>4</b></td><td>Hace 2 meses</td><td><span class="estado e-aus">Reactivar 💬</span></td></tr>
+                <tr><td><div class="cli"><span class="av">DP</span> Diego Paz</div></td><td>11 7789-3341</td><td>Corte</td><td><b>2</b></td><td>Hace 3 meses</td><td><span class="estado e-aus">Reactivar 💬</span></td></tr>
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══ SERVICIOS ══ -->
+        <section class="panel" id="p-servicios">
+          <div class="banner">✂️ Precios que ve el cliente al reservar y con los que se arma la caja. Los cambiás en un toque cuando actualizás la lista.</div>
+          <div class="serv-grid">
+            <div class="serv"><h3>Corte</h3><div class="p">$ 8.000</div><div class="d">Corte a máquina y tijera · ~30 min</div></div>
+            <div class="serv"><h3>Corte + Barba</h3><div class="p">$ 12.000</div><div class="d">Corte completo + perfilado de barba · ~45 min</div></div>
+            <div class="serv"><h3>Degradé / Fade</h3><div class="p">$ 9.000</div><div class="d">Low, mid o high fade prolijo · ~35 min</div></div>
+            <div class="serv"><h3>Barba / Perfilado</h3><div class="p">$ 5.000</div><div class="d">Perfilado a navaja + toalla caliente · ~20 min</div></div>
+            <div class="serv"><h3>Diseño / Líneas</h3><div class="p">$ 3.000</div><div class="d">Adicional de líneas y diseños</div></div>
+            <div class="serv"><h3>Corte niño</h3><div class="p">$ 6.000</div><div class="d">Menores de 12 · ~25 min</div></div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">✓ Turno cobrado</div>
+
+  <script>
+    // Fecha de hoy
+    const dias=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+    const meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    const d=new Date();
+    document.getElementById('fecha').textContent=`${dias[d.getDay()]} ${d.getDate()} de ${meses[d.getMonth()]}`;
+
+    // Navegación entre paneles
+    const titles={hoy:'Turnos de hoy',agenda:'Agenda semanal',caja:'Caja',clientes:'Clientes',servicios:'Servicios y precios'};
+    document.querySelectorAll('#nav button').forEach(b=>{
+      b.addEventListener('click',()=>{
+        document.querySelectorAll('#nav button').forEach(x=>x.classList.remove('active'));
+        b.classList.add('active');
+        const p=b.dataset.p;
+        document.querySelectorAll('.panel').forEach(x=>x.classList.remove('show'));
+        document.getElementById('p-'+p).classList.add('show');
+        document.getElementById('ptitle').textContent=titles[p];
+        closeSide();
+      });
+    });
+
+    // Estado caja
+    let total=21000, ef=8000, mp=12000, db=0, atend=2;
+    const fmt=n=>'$ '+n.toLocaleString('es-AR');
+
+    function atender(btn){
+      const tr=btn.closest('tr');
+      const precio=parseInt(tr.dataset.precio);
+      // método aleatorio realista
+      const metodos=[['Efectivo','ef'],['Mercado Pago','mp'],['Débito','db']];
+      const m=metodos[Math.floor(Math.random()*metodos.length)];
+      // actualizar fila
+      tr.querySelector('.estado').outerHTML='<span class="estado e-ok">Atendido</span>';
+      tr.querySelector('.rowact').innerHTML='<span class="done">✓ Cobrado</span>';
+      // stats
+      atend++;
+      total+=precio; if(m[1]==='ef')ef+=precio; else if(m[1]==='mp')mp+=precio; else db+=precio;
+      document.getElementById('cAtend').textContent=atend;
+      document.getElementById('pct').textContent=atend+' / 9';
+      document.getElementById('cIng').textContent=fmt(total);
+      document.getElementById('cajaTotal').textContent=fmt(total);
+      document.getElementById('mEf').textContent=fmt(ef);
+      document.getElementById('mMp').textContent=fmt(mp);
+      document.getElementById('mDb').textContent=fmt(db);
+      // agregar a movimientos de caja
+      const cli=tr.querySelector('.cli').textContent.trim();
+      const serv=tr.children[2].textContent;
+      const hora=tr.querySelector('.hora').textContent;
+      const row=document.createElement('tr');
+      row.innerHTML=`<td class="hora">${hora}</td><td>${cli}</td><td>${serv}</td><td>${m[0]}</td><td class="precio">${fmt(precio)}</td>`;
+      document.querySelector('#tCaja tbody').appendChild(row);
+      toast(`✓ ${cli} · ${fmt(precio)} cobrado (${m[0]})`);
+    }
+    window.atender=atender;
+
+    let tt;
+    function toast(msg){
+      const t=document.getElementById('toast');
+      t.textContent=msg; t.classList.add('show');
+      clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('show'),2200);
+    }
+
+    // Recordatorios WA (demo)
+    document.addEventListener('click',e=>{
+      if(e.target.classList.contains('mini-wa')){
+        const cli=e.target.closest('tr').querySelector('.cli').textContent.trim();
+        toast(`💬 Recordatorio enviado a ${cli}`);
+      }
+    });
+
+    // Sidebar mobile
+    const side=document.getElementById('side'),scrim=document.getElementById('scrim');
+    function closeSide(){side.classList.remove('open');scrim.classList.remove('show')}
+    document.getElementById('burger').addEventListener('click',()=>{side.classList.add('open');scrim.classList.add('show')});
+    scrim.addEventListener('click',closeSide);
+  </script>
+</body>
+</html>

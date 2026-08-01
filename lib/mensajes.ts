@@ -1,6 +1,6 @@
 // Generador central de los mensajes de WhatsApp.
 // Antes estaba duplicado en buscar-ar/page.tsx y LeadCard.tsx.
-import { getDemoMatch, getDemoUrl } from './demos'
+import { getDemoMatch, getDemoUrl, getGestionMatch, getGestionUrl } from './demos'
 
 export interface MsgSettings {
   nombre: string
@@ -46,21 +46,27 @@ export function construirMensajes(lead: MsgLead, settings: MsgSettings): Mensaje
   const portfolio = settings.linkPortfolio || 'https://mana-dev.vercel.app'
   const match = getDemoMatch(lead.nombre, lead.categoria)
   const demoUrl = getDemoUrl(match, settings.demoBaseUrl)
+  const gestion = getGestionMatch(lead.nombre, lead.categoria)
+  const gestionUrl = getGestionUrl(gestion, settings.demoBaseUrl)
+  // Línea extra que ofrece el sistema de gestión, si aplica al rubro.
+  const lineaGestion = gestionUrl
+    ? `\n\nY si hoy manejan los turnos y la caja a mano o por WhatsApp, también les hago ${gestion!.que} 👇\n${gestionUrl}`
+    : ''
 
   // ── Msg 1: apertura (romper el hielo)
   const apertura = 'Hola, ¿cómo están? 👋'
 
   // ── Msg 2: pitch (despues de que responden). Con demo si la hay.
   const pitch = demoUrl
-    ? `Soy ${nombre}, programador y desarrollador web 💻\n\n` +
-      `Trabajo con locales como ${lead.nombre} armando sistemas que ahorran tiempo: página web, WhatsApp con IA, tienda online, control de stock y caja, turnos online y más.\n\n` +
-      `Justo armé un ejemplo de cómo les podría quedar la página 👇\n${demoUrl}\n\n` +
-      `Y acá pueden ver más trabajos míos:\n${portfolio}\n\n` +
-      `¿Les interesa que charlemos? Sin compromiso 🙂`
-    : `Soy ${nombre}, programador y desarrollador web 💻\n\n` +
-      `Trabajo con locales como ${lead.nombre} armando sistemas que ahorran tiempo: página web, WhatsApp con IA, tienda online, control de stock y caja, turnos online y más.\n\n` +
-      `Pueden ver los trabajos que hago acá 👇\n${portfolio}\n\n` +
-      `¿Les interesa que charlemos? Sin compromiso 🙂`
+    ? `Soy ${nombre}, desarrollador web en formación 💻\n\n` +
+      `Estoy sumando proyectos reales a mi portfolio, así que trabajo a un precio muy por debajo del mercado: yo gano experiencia y ustedes se llevan una web profesional por mucho menos.\n\n` +
+      `Que esté empezando no baja la calidad, y quiero que lo vean ustedes mismos: les armé un ejemplo pensado para ${lead.nombre} 👇\n${demoUrl}\n\n` +
+      `Acá pueden ver más trabajos míos:\n${portfolio}${lineaGestion}\n\n` +
+      `¿Les interesa que lo charlemos? Sin compromiso 🙂`
+    : `Soy ${nombre}, desarrollador web en formación 💻\n\n` +
+      `Estoy sumando proyectos reales a mi portfolio, así que trabajo a un precio muy por debajo del mercado: yo gano experiencia y ustedes se llevan una web profesional por mucho menos.\n\n` +
+      `Que esté empezando no baja la calidad. Miren algunos trabajos míos 👇\n${portfolio}${lineaGestion}\n\n` +
+      `¿Les interesa que lo charlemos? Sin compromiso 🙂`
 
   // ── Msg 3: seguimiento (2-3 dias sin respuesta)
   const seguimiento = demoUrl

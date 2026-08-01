@@ -49,6 +49,33 @@ export function getDemoMatch(nombre: string, categoria: string): DemoMatch | nul
   return null
 }
 
+// ── Demos de SISTEMA DE GESTIÓN (panel interno), distinto de la web de vitrina.
+export interface GestionMatch {
+  file: string
+  que: string   // qué es, para el mensaje ("un sistema de turnos, caja y clientes")
+}
+const GESTION: { test: RegExp; g: GestionMatch }[] = [
+  { test: /barber|peluquer|corte de pelo/i, g: { file: 'barberia-gestion-demo.html', que: 'un sistema para manejar turnos, caja y clientes' } },
+]
+const GESTION_POR_CATEGORIA: Record<string, GestionMatch> = {
+  'Peluquerías': { file: 'barberia-gestion-demo.html', que: 'un sistema para manejar turnos, caja y clientes' },
+  'Salones de belleza': { file: 'barberia-gestion-demo.html', que: 'un sistema para manejar turnos, caja y clientes' },
+}
+
+/** Devuelve la demo de sistema de gestión que aplica al rubro, o null. */
+export function getGestionMatch(nombre: string, categoria: string): GestionMatch | null {
+  const texto = `${nombre} ${categoria}`
+  for (const { test, g } of GESTION) if (test.test(texto)) return g
+  return GESTION_POR_CATEGORIA[categoria] || null
+}
+
+export function getGestionUrl(m: GestionMatch | null, base: string | null | undefined): string | null {
+  if (!m || !base) return null
+  const clean = base.replace(/\/+$/, '')
+  if (!/^https?:\/\//i.test(clean)) return null
+  return `${clean}/${m.file}`
+}
+
 /** URL publica completa de la demo, lista para meter en el mensaje.
  *  Si no hay demo o no hay dominio configurado, devuelve null (no se
  *  muestra link roto ni relativo). */
