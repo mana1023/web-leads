@@ -15,7 +15,7 @@ const REGLAS: { test: RegExp; demo: DemoMatch }[] = [
   { test: /panader|confiter|pasteler|factura|tortas?/i, demo: { file: 'lafavorita-demo.html', rubro: 'una panaderia' } },
   { test: /caf[eé]|cafeter|coffee|brunch/i,        demo: { file: 'bruzzone-demo.html', rubro: 'una cafeteria' } },
   { test: /gimnasio|\bgym\b|fitness|crossfit|musculaci/i, demo: { file: 'powergym-demo.html', rubro: 'un gimnasio' } },
-  { test: /peluquer|barber|barbería|barberia|corte de pelo/i, demo: { file: 'gentlemanclub-demo.html', rubro: 'una barberia' } },
+  { test: /peluquer|barber|barbería|barberia|corte de pelo/i, demo: { file: 'barberia-costa-demo.html', rubro: 'una barberia' } },
   { test: /veterinar|mascota|animal/i,             demo: { file: 'marimon-veterinaria-demo.html', rubro: 'una veterinaria' } },
   { test: /muebl|carpinter|placard|amoblamient|muebler|colchon/i, demo: { file: 'nogal-muebleria-demo.html', rubro: 'una muebleria' } },
   { test: /evento|sal[oó]n de fiesta|fiesta|casamiento|cumplea/i, demo: { file: 'lacasadelosquinotos-demo.html', rubro: 'un salon de eventos' } },
