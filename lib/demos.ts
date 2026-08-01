@@ -17,6 +17,7 @@ const REGLAS: { test: RegExp; demo: DemoMatch }[] = [
   { test: /gimnasio|\bgym\b|fitness|crossfit|musculaci/i, demo: { file: 'powergym-demo.html', rubro: 'un gimnasio' } },
   { test: /peluquer|barber|barbería|barberia|corte de pelo/i, demo: { file: 'gentlemanclub-demo.html', rubro: 'una barberia' } },
   { test: /veterinar|mascota|animal/i,             demo: { file: 'marimon-veterinaria-demo.html', rubro: 'una veterinaria' } },
+  { test: /muebl|carpinter|placard|amoblamient|muebler|colchon/i, demo: { file: 'nogal-muebleria-demo.html', rubro: 'una muebleria' } },
   { test: /evento|sal[oó]n de fiesta|fiesta|casamiento|cumplea/i, demo: { file: 'lacasadelosquinotos-demo.html', rubro: 'un salon de eventos' } },
   { test: /pizza|pizzer|empanada|resta?urant|comida|delivery|rotiser/i, demo: { file: 'ladorita-demo.html', rubro: 'un restaurante' } },
 ]
@@ -32,6 +33,7 @@ const POR_CATEGORIA: Record<string, DemoMatch> = {
   'Peluquerías': { file: 'gentlemanclub-demo.html', rubro: 'una peluqueria' },
   'Salones de belleza': { file: 'gentlemanclub-demo.html', rubro: 'un salon' },
   'Veterinarias': { file: 'marimon-veterinaria-demo.html', rubro: 'una veterinaria' },
+  'Mueblería': { file: 'nogal-muebleria-demo.html', rubro: 'una muebleria' },
 }
 
 /**
