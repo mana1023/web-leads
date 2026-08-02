@@ -20,6 +20,14 @@
 | Sistema de gestión | $300.000 – $600.000 | Setup. Opcional: abono chico mensual (hosting + soporte) |
 | Combo web + sistema | −15% del total | El más rentable para vos |
 
+**Para arrancar (números concretos recomendados):**
+- Web (tipo estas demos): **$180.000** · seña $90.000
+- Landing simple (1 página): **$90.000**
+- Sistema de gestión: **$400.000** — o **$250.000 + $18.000/mes** de soporte/hosting
+- Combo web + sistema: **$520.000** (en vez de $580.000)
+
+> Con los **2-3 primeros clientes** podés arrancar más abajo (ej. web a $120.000) para juntar testimonios rápido, y subís apenas los tengas. Ajustá a tu zona y actualizá cada 2-3 meses por inflación.
+
 **Cómo lo decís (anclaje):** "Un estudio te cobra $X por esto; yo, porque estoy armando mi portfolio, te lo hago por la mitad." El descuento se siente enorme.
 
 **Siempre pedí seña del 50% para arrancar.** El otro 50% a la entrega. (Igual que muestra el sistema de mueblería.)

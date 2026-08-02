@@ -53,20 +53,18 @@ export function construirMensajes(lead: MsgLead, settings: MsgSettings): Mensaje
     ? `\n\nY si hoy manejan los turnos y la caja a mano o por WhatsApp, también les hago ${gestion!.que} 👇\n${gestionUrl}`
     : ''
 
-  // ── Msg 1: apertura (romper el hielo)
-  const apertura = 'Hola, ¿cómo están? 👋'
+  // ── Msg 1: apertura personalizada — tienta con valor y pide un "sí" (no vende todavía)
+  const apertura = `¡Hola! 👋 Soy ${nombre}, desarrollador web. Les armé un ejemplo de página pensado para ${lead.nombre} y quería mostrárselos — ¿puedo? Es un minuto y sin compromiso 🙂`
 
-  // ── Msg 2: pitch (despues de que responden). Con demo si la hay.
+  // ── Msg 2: pitch (después del "sí"). Arranca con la demo, explica lo de estudiante y pide la charla.
   const pitch = demoUrl
-    ? `Soy ${nombre}, desarrollador web en formación 💻\n\n` +
-      `Estoy sumando proyectos reales a mi portfolio, así que trabajo a un precio muy por debajo del mercado: yo gano experiencia y ustedes se llevan una web profesional por mucho menos.\n\n` +
-      `Que esté empezando no baja la calidad, y quiero que lo vean ustedes mismos: les armé un ejemplo pensado para ${lead.nombre} 👇\n${demoUrl}\n\n` +
-      `Acá pueden ver más trabajos míos:\n${portfolio}${lineaGestion}\n\n` +
-      `¿Les interesa que lo charlemos? Sin compromiso 🙂`
-    : `Soy ${nombre}, desarrollador web en formación 💻\n\n` +
-      `Estoy sumando proyectos reales a mi portfolio, así que trabajo a un precio muy por debajo del mercado: yo gano experiencia y ustedes se llevan una web profesional por mucho menos.\n\n` +
-      `Que esté empezando no baja la calidad. Miren algunos trabajos míos 👇\n${portfolio}${lineaGestion}\n\n` +
-      `¿Les interesa que lo charlemos? Sin compromiso 🙂`
+    ? `¡Genial! Mirá cómo les quedaría 👇\n${demoUrl}\n\n` +
+      `Lo adapto 100% a ${lead.nombre}: fotos, colores y sus datos. Te cuento por qué te lo hago tan accesible: soy estudiante de programación armando mi portfolio con proyectos reales, así que cobro muy por debajo del mercado. Ganás vos — misma calidad, precio de estudiante.${lineaGestion}\n\n` +
+      `Acá hay más trabajos míos: ${portfolio}\n\n` +
+      `¿Lo charlamos unos minutos por acá, o te llamo cuando te quede cómodo? Sin compromiso 🙂`
+    : `¡Genial! Te muestro algunos trabajos míos 👇\n${portfolio}\n\n` +
+      `Soy estudiante de programación armando mi portfolio con proyectos reales, así que cobro muy por debajo del mercado: misma calidad, precio de estudiante.${lineaGestion}\n\n` +
+      `¿Lo charlamos unos minutos por acá, o te llamo cuando te quede cómodo? Sin compromiso 🙂`
 
   // ── Msg 3: seguimiento (2-3 dias sin respuesta)
   const seguimiento = demoUrl
