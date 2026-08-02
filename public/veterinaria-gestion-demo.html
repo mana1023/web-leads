@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+<!--
+  DEMO · SISTEMA DE GESTIÓN para veterinaria (turnos + historia clínica + vacunas).
+  Gancho AR: se pierde plata porque no se siguen los refuerzos de vacunas /
+  desparasitación. El sistema los flaggea y avisa por WhatsApp.
+  Reemplazá "Veterinaria Patitas", precios y datos por los del cliente real.
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema de Gestión · Veterinaria — Turnos, Historia Clínica y Vacunas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#EEF4F3; --sidebar:#0F1E1C; --sidebar2:#172B28; --sidebar-line:#25403B;
+      --acc:#0EA5A0; --acc-d:#0B8781; --ink:#152321; --muted:#63736F;
+      --card:#FFFFFF; --line:#E2ECEA; --green:#17A25B; --green-bg:#E6F6EE;
+      --red:#E0483C; --red-bg:#FBE9E7; --amber:#E0A63E; --amber-bg:#FBF1DC;
+      --teal-bg:#E1F4F2;
+      --fh:'Sora',system-ui,sans-serif; --fb:'Inter',system-ui,sans-serif;
+      --tr:.2s ease; --sh:0 10px 30px -18px rgba(15,40,35,.4);
+    }
+    body{font-family:var(--fb);background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none} button{font-family:inherit;cursor:pointer;border:none;background:none}
+    .app{display:flex;min-height:100vh}
+    .side{width:250px;background:var(--sidebar);color:#A9BAB6;flex:none;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+    .brand{padding:1.4rem 1.4rem 1.1rem;display:flex;align-items:center;gap:.7rem;border-bottom:1px solid var(--sidebar-line)}
+    .brand .pole{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--acc),#5FD3CE);display:grid;place-items:center;font-size:1.1rem}
+    .brand b{font-family:var(--fh);font-weight:800;color:#fff;font-size:1.02rem;line-height:1.1;display:block}
+    .brand small{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+    .navlbl{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:#576763;padding:1.2rem 1.4rem .4rem}
+    .nav{display:flex;flex-direction:column;gap:2px;padding:0 .7rem}
+    .nav button{display:flex;align-items:center;gap:.75rem;width:100%;text-align:left;padding:.7rem .8rem;border-radius:10px;color:#A9BAB6;font-size:.9rem;font-weight:500;transition:var(--tr)}
+    .nav button .ic{width:20px;text-align:center;font-size:1rem}
+    .nav button:hover{background:var(--sidebar2);color:#fff}
+    .nav button.active{background:linear-gradient(90deg,var(--acc),var(--acc-d));color:#fff;font-weight:600}
+    .side-foot{margin-top:auto;padding:1rem 1.4rem;border-top:1px solid var(--sidebar-line);font-size:.72rem;color:#576763}
+    .side-foot b{color:#A9BAB6;font-weight:600}
+    .main{flex:1;min-width:0;display:flex;flex-direction:column}
+    .topbar{background:var(--card);border-bottom:1px solid var(--line);padding:1rem 1.6rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;position:sticky;top:0;z-index:20}
+    .topbar h1{font-family:var(--fh);font-weight:700;font-size:1.15rem}
+    .topbar .date{font-size:.8rem;color:var(--muted)}
+    .top-actions{display:flex;align-items:center;gap:.6rem}
+    .pill-wa{display:inline-flex;align-items:center;gap:.4rem;background:var(--green-bg);color:#0f7a43;padding:.5rem .8rem;border-radius:999px;font-size:.78rem;font-weight:600}
+    .pill-wa .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(23,162,91,.2)}
+    .btn{display:inline-flex;align-items:center;gap:.45rem;padding:.6rem 1rem;border-radius:10px;font-weight:600;font-size:.85rem;transition:var(--tr)}
+    .btn-acc{background:var(--acc);color:#fff}.btn-acc:hover{background:var(--acc-d)}
+    .content{padding:1.6rem;flex:1}
+    .panel{display:none;animation:fade .3s ease}.panel.show{display:block}
+    @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+    .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.1rem 1.2rem}
+    .stat .t{display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:var(--muted);font-weight:500}
+    .stat .v{font-family:var(--fh);font-weight:700;font-size:1.7rem;margin-top:.35rem;letter-spacing:-.02em}
+    .stat .chip{font-size:.7rem;font-weight:600;padding:.15rem .5rem;border-radius:999px;margin-left:auto}
+    .chip-g{background:var(--green-bg);color:#0f7a43}.chip-r{background:var(--red-bg);color:#b23a25}.chip-a{background:var(--amber-bg);color:#95701c}
+    .stat.acc{background:linear-gradient(135deg,#172B28,#0F1E1C);color:#fff;border:none}
+    .stat.acc .t{color:#A9BAB6}.stat.acc .v{color:var(--acc)}
+    .stat.danger .v{color:var(--red)}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+    .card-h{padding:1rem 1.2rem;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .card-h h2{font-family:var(--fh);font-weight:600;font-size:1rem}
+    .card-h .sub{font-size:.78rem;color:var(--muted)}
+    table{width:100%;border-collapse:collapse}
+    th{text-align:left;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:.7rem 1.2rem;border-bottom:1px solid var(--line)}
+    td{padding:.75rem 1.2rem;border-bottom:1px solid var(--line);font-size:.88rem;vertical-align:middle}
+    tr:last-child td{border-bottom:none}
+    .cli{display:flex;align-items:center;gap:.65rem}
+    .av{width:34px;height:34px;border-radius:50%;background:var(--teal-bg);color:var(--acc-d);display:grid;place-items:center;font-weight:700;font-size:.9rem;flex:none}
+    .sub2{font-size:.76rem;color:var(--muted)}
+    .precio{font-family:var(--fh);font-weight:600}
+    .estado{font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:999px;white-space:nowrap}
+    .e-ok{background:var(--green-bg);color:#0f7a43}.e-pend{background:var(--teal-bg);color:var(--acc-d)}.e-vence{background:var(--amber-bg);color:#95701c}.e-venc{background:var(--red-bg);color:#b23a25}
+    .rowact{display:flex;gap:.4rem;justify-content:flex-end}
+    .mini{font-size:.74rem;font-weight:600;padding:.35rem .6rem;border-radius:8px;transition:var(--tr);white-space:nowrap}
+    .mini-ok{background:var(--ink);color:#fff}.mini-ok:hover{background:#000}
+    .mini-wa{background:var(--green-bg);color:#0f7a43}.mini-wa:hover{background:#d4efe0}
+    .done{color:var(--muted);font-size:.78rem;font-weight:600}
+    .banner{background:linear-gradient(120deg,var(--teal-bg),#fff);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:14px;padding:1rem 1.2rem;margin-bottom:1.4rem;font-size:.9rem}
+    .banner b{color:var(--acc-d)}
+    .banner.warn{background:linear-gradient(120deg,var(--red-bg),#fff);border-left-color:var(--red)}.banner.warn b{color:#b23a25}
+    .caja-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:1.2rem}
+    .metodos{display:flex;flex-direction:column;gap:.8rem}
+    .metodo{display:flex;align-items:center;gap:.8rem;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:.9rem 1.1rem}
+    .metodo .mi{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-size:1.1rem}
+    .metodo b{font-family:var(--fh);margin-left:auto;font-weight:700}
+    .total-big{background:linear-gradient(135deg,#0F1E1C,#1d332f);color:#fff;border-radius:16px;padding:1.4rem;text-align:center}
+    .total-big .l{font-size:.78rem;color:#A9BAB6;letter-spacing:.05em}
+    .total-big .n{font-family:var(--fh);font-weight:800;font-size:2.2rem;color:var(--acc);margin-top:.3rem;letter-spacing:-.02em}
+    .serv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    .serv{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.1rem}
+    .serv h3{font-family:var(--fh);font-weight:600;font-size:1rem}
+    .serv .p{font-family:var(--fh);font-weight:800;font-size:1.5rem;color:var(--acc-d);margin-top:.4rem}
+    .serv .d{font-size:.8rem;color:var(--muted);margin-top:.2rem}
+    .vac{display:flex;align-items:center;gap:.5rem}
+    .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--ink);color:#fff;padding:.8rem 1.3rem;border-radius:12px;font-size:.88rem;font-weight:500;opacity:0;transition:.3s ease;z-index:99;box-shadow:var(--sh)}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .burger{display:none}
+    @media(max-width:880px){
+      .side{position:fixed;left:0;top:0;z-index:60;transform:translateX(-100%);transition:transform var(--tr);box-shadow:var(--sh)}
+      .side.open{transform:none}
+      .burger{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--bg)}
+      .stats{grid-template-columns:repeat(2,1fr)}.caja-grid{grid-template-columns:1fr}.serv-grid{grid-template-columns:1fr}
+      .scrim{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:55;display:none}.scrim.show{display:block}
+    }
+    @media(max-width:520px){.stats{grid-template-columns:1fr 1fr}.hide-sm{display:none}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="side" id="side">
+      <div class="brand"><span class="pole">🐾</span><span><b>Vet Patitas</b><small>Sistema de gestión</small></span></div>
+      <div class="navlbl">Operación</div>
+      <nav class="nav" id="nav">
+        <button data-p="turnos" class="active"><span class="ic">📅</span> Turnos de hoy</button>
+        <button data-p="pacientes"><span class="ic">🐶</span> Pacientes / Historia</button>
+        <button data-p="vacunas"><span class="ic">💉</span> Vacunas y avisos</button>
+        <button data-p="caja"><span class="ic">💵</span> Caja</button>
+        <button data-p="servicios"><span class="ic">🏷️</span> Servicios y precios</button>
+      </nav>
+      <div class="side-foot"><b>Demo interactiva</b><br>Atendé una consulta y mirá la caja; avisá una vacuna vencida.</div>
+    </aside>
+    <div class="scrim" id="scrim"></div>
+
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;gap:.8rem">
+          <button class="burger" id="burger">☰</button>
+          <div><h1 id="ptitle">Turnos de hoy</h1><div class="date" id="fecha">—</div></div>
+        </div>
+        <div class="top-actions">
+          <span class="pill-wa hide-sm"><span class="dot"></span> Avisos de vacunas por WhatsApp</span>
+          <button class="btn btn-acc">+ Nuevo turno</button>
+        </div>
+      </div>
+
+      <div class="content">
+        <!-- TURNOS -->
+        <section class="panel show" id="p-turnos">
+          <div class="stats">
+            <div class="stat"><div class="t">📅 Turnos hoy</div><div class="v">7</div></div>
+            <div class="stat"><div class="t">✅ Atendidos <span class="chip chip-g" id="pct">2 / 7</span></div><div class="v" id="cAtend">2</div></div>
+            <div class="stat acc"><div class="t">💵 Ingresos del día</div><div class="v" id="cIng">$ 34.000</div></div>
+            <div class="stat"><div class="t">🚨 Urgencias <span class="chip chip-r">hoy</span></div><div class="v">1</div></div>
+          </div>
+
+          <div class="banner">💡 <b>Recordatorio automático:</b> el sistema le avisa al dueño por WhatsApp el día del turno y cuando toca la próxima vacuna. Menos ausencias, más refuerzos aplicados.</div>
+
+          <div class="card">
+            <div class="card-h"><div><h2>Turnos de hoy</h2><div class="sub">Marcá cada consulta como atendida</div></div></div>
+            <div style="overflow-x:auto">
+            <table id="tHoy">
+              <thead><tr><th>Hora</th><th>Paciente</th><th>Motivo</th><th>Profesional</th><th>Precio</th><th>Estado</th><th></th></tr></thead>
+              <tbody>
+                <tr data-precio="22000"><td class="precio">09:30</td><td><div class="cli"><span class="av">🐕</span><div>Firulais<div class="sub2">Juan Gómez · Labrador</div></div></div></td><td>Control + vacuna</td><td>Dra. Rosso</td><td class="precio">$ 22.000</td><td><span class="estado e-ok">Atendido</span></td><td><div class="rowact"><span class="done">✓ Cobrado</span></div></td></tr>
+                <tr data-precio="12000"><td class="precio">10:15</td><td><div class="cli"><span class="av">🐈</span><div>Michi<div class="sub2">Ana Ruiz · Gato común</div></div></div></td><td>Consulta</td><td>Dr. León</td><td class="precio">$ 12.000</td><td><span class="estado e-ok">Atendido</span></td><td><div class="rowact"><span class="done">✓ Cobrado</span></div></td></tr>
+                <tr data-precio="6000"><td class="precio">11:00</td><td><div class="cli"><span class="av">🐕</span><div>Rocky<div class="sub2">Pablo Díaz · Bulldog</div></div></div></td><td>Desparasitación</td><td>Dra. Rosso</td><td class="precio">$ 6.000</td><td><span class="estado e-pend">En sala</span></td><td><div class="rowact"><button class="mini mini-wa">💬 Avisar</button><button class="mini mini-ok" onclick="atender(this)">Atender</button></div></td></tr>
+                <tr data-precio="45000"><td class="precio">11:45</td><td><div class="cli"><span class="av">🐈</span><div>Luna<div class="sub2">Sofía M. · Siamés</div></div></div></td><td>Castración</td><td>Dr. León</td><td class="precio">$ 45.000</td><td><span class="estado e-pend">Pendiente</span></td><td><div class="rowact"><button class="mini mini-wa">💬 Avisar</button><button class="mini mini-ok" onclick="atender(this)">Atender</button></div></td></tr>
+                <tr data-precio="12000"><td class="precio">15:00</td><td><div class="cli"><span class="av">🐕</span><div>Toby<div class="sub2">Marcos F. · Mestizo</div></div></div></td><td>Control</td><td>Dra. Rosso</td><td class="precio">$ 12.000</td><td><span class="estado e-pend">Pendiente</span></td><td><div class="rowact"><button class="mini mini-wa">💬 Avisar</button><button class="mini mini-ok" onclick="atender(this)">Atender</button></div></td></tr>
+                <tr data-precio="18000"><td class="precio">16:00</td><td><div class="cli"><span class="av">🐩</span><div>Nina<div class="sub2">Lucía P. · Caniche</div></div></div></td><td>Peluquería + antipulgas</td><td>Dr. León</td><td class="precio">$ 18.000</td><td><span class="estado e-pend">Pendiente</span></td><td><div class="rowact"><button class="mini mini-wa">💬 Avisar</button><button class="mini mini-ok" onclick="atender(this)">Atender</button></div></td></tr>
+                <tr data-precio="25000"><td class="precio">17:30</td><td><div class="cli"><span class="av">🐈</span><div>Simón<div class="sub2">Diego A. · Gato</div></div></div></td><td>Ecografía</td><td>Dra. Rosso</td><td class="precio">$ 25.000</td><td><span class="estado e-pend">Pendiente</span></td><td><div class="rowact"><button class="mini mini-wa">💬 Avisar</button><button class="mini mini-ok" onclick="atender(this)">Atender</button></div></td></tr>
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- PACIENTES -->
+        <section class="panel" id="p-pacientes">
+          <div class="banner">🐶 <b>Historia clínica digital</b> (chau carpeta de papel). Toda la ficha de cada mascota: vacunas, consultas, peso y tratamientos, a mano en 2 segundos.</div>
+          <div class="card">
+            <div class="card-h"><div><h2>Pacientes</h2><div class="sub">Ficha de cada mascota</div></div></div>
+            <div style="overflow-x:auto">
+            <table>
+              <thead><tr><th>Mascota</th><th>Dueño</th><th>Especie / Raza</th><th>Última visita</th><th>Vacunas</th></tr></thead>
+              <tbody>
+                <tr><td><div class="cli"><span class="av">🐕</span><div>Firulais<div class="sub2">4 años · 28 kg</div></div></div></td><td>Juan Gómez</td><td>Perro · Labrador</td><td>Hoy</td><td><span class="estado e-ok">Al día</span></td></tr>
+                <tr><td><div class="cli"><span class="av">🐈</span><div>Michi<div class="sub2">2 años · 4 kg</div></div></div></td><td>Ana Ruiz</td><td>Gato · Común</td><td>Hoy</td><td><span class="estado e-venc">Triple vencida</span></td></tr>
+                <tr><td><div class="cli"><span class="av">🐕</span><div>Rocky<div class="sub2">3 años · 22 kg</div></div></div></td><td>Pablo Díaz</td><td>Perro · Bulldog</td><td>Hace 5 días</td><td><span class="estado e-vence">Quíntuple en 3 días</span></td></tr>
+                <tr><td><div class="cli"><span class="av">🐩</span><div>Nina<div class="sub2">6 años · 8 kg</div></div></div></td><td>Lucía Paz</td><td>Perro · Caniche</td><td>Hace 2 meses</td><td><span class="estado e-venc">Desparasitación vencida</span></td></tr>
+                <tr><td><div class="cli"><span class="av">🐈</span><div>Simón<div class="sub2">7 años · 5 kg</div></div></div></td><td>Diego Alonso</td><td>Gato · Común</td><td>Hace 1 semana</td><td><span class="estado e-ok">Al día</span></td></tr>
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- VACUNAS -->
+        <section class="panel" id="p-vacunas">
+          <div class="banner warn">🔴 <b>Tenés 3 refuerzos sin aplicar.</b> Cada vacuna que no vuelve son ~$10.000 que se van y una mascota menos protegida. Avisá por WhatsApp y los recuperás.</div>
+          <div class="stats" style="grid-template-columns:repeat(3,1fr)">
+            <div class="stat danger"><div class="t">🔴 Vencidas</div><div class="v" id="vVenc">3</div></div>
+            <div class="stat"><div class="t">⏰ Vencen esta semana</div><div class="v">2</div></div>
+            <div class="stat acc"><div class="t">💬 Avisos enviados hoy</div><div class="v" id="vAvis">0</div></div>
+          </div>
+          <div class="card">
+            <div class="card-h"><div><h2>Vacunas y desparasitaciones a seguir</h2><div class="sub">Mandá el recordatorio en un toque</div></div></div>
+            <div style="overflow-x:auto">
+            <table id="tVac">
+              <thead><tr><th>Mascota</th><th>Dueño</th><th>Aplicación</th><th>Estado</th><th></th></tr></thead>
+              <tbody>
+                <tr><td><div class="vac"><span class="av">🐈</span> Michi</div></td><td>Ana Ruiz</td><td>Triple felina</td><td><span class="estado e-venc">Venció hace 6 días</span></td><td><div class="rowact"><button class="mini mini-wa" onclick="avisar(this)">💬 Avisar refuerzo</button></div></td></tr>
+                <tr><td><div class="vac"><span class="av">🐩</span> Nina</div></td><td>Lucía Paz</td><td>Desparasitación</td><td><span class="estado e-venc">Venció hace 20 días</span></td><td><div class="rowact"><button class="mini mini-wa" onclick="avisar(this)">💬 Avisar refuerzo</button></div></td></tr>
+                <tr><td><div class="vac"><span class="av">🐕</span> Balto</div></td><td>Renzo Vera</td><td>Antirrábica</td><td><span class="estado e-venc">Venció hace 12 días</span></td><td><div class="rowact"><button class="mini mini-wa" onclick="avisar(this)">💬 Avisar refuerzo</button></div></td></tr>
+                <tr><td><div class="vac"><span class="av">🐕</span> Rocky</div></td><td>Pablo Díaz</td><td>Quíntuple</td><td><span class="estado e-vence">Vence en 3 días</span></td><td><div class="rowact"><button class="mini mini-wa" onclick="avisar(this)">💬 Avisar</button></div></td></tr>
+                <tr><td><div class="vac"><span class="av">🐕</span> Toby</div></td><td>Marcos F.</td><td>Antirrábica</td><td><span class="estado e-vence">Vence en 5 días</span></td><td><div class="rowact"><button class="mini mini-wa" onclick="avisar(this)">💬 Avisar</button></div></td></tr>
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- CAJA -->
+        <section class="panel" id="p-caja">
+          <div class="banner">💵 <b>Caja del día en pesos.</b> Cada consulta, vacuna o práctica cobrada entra acá automático, separada por método.</div>
+          <div class="caja-grid">
+            <div class="card">
+              <div class="card-h"><div><h2>Movimientos de hoy</h2></div></div>
+              <div style="overflow-x:auto">
+              <table id="tCaja">
+                <thead><tr><th>Hora</th><th>Paciente</th><th>Práctica</th><th>Método</th><th>Monto</th></tr></thead>
+                <tbody>
+                  <tr><td class="precio">09:30</td><td>Firulais</td><td>Control + vacuna</td><td>Mercado Pago</td><td class="precio">$ 22.000</td></tr>
+                  <tr><td class="precio">10:15</td><td>Michi</td><td>Consulta</td><td>Efectivo</td><td class="precio">$ 12.000</td></tr>
+                </tbody>
+              </table>
+              </div>
+            </div>
+            <div>
+              <div class="total-big"><div class="l">Total del día</div><div class="n" id="cajaTotal">$ 34.000</div></div>
+              <div class="metodos" style="margin-top:1.2rem">
+                <div class="metodo"><span class="mi" style="background:var(--green-bg)">💵</span> Efectivo <b id="mEf">$ 12.000</b></div>
+                <div class="metodo"><span class="mi" style="background:var(--teal-bg)">📱</span> Mercado Pago <b id="mMp">$ 22.000</b></div>
+                <div class="metodo"><span class="mi" style="background:var(--amber-bg)">💳</span> Débito <b id="mDb">$ 0</b></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SERVICIOS -->
+        <section class="panel" id="p-servicios">
+          <div class="banner">🏷️ Precios de consultas y prácticas, con los que se arma la caja y el presupuesto que ve el dueño.</div>
+          <div class="serv-grid">
+            <div class="serv"><h3>Consulta</h3><div class="p">$ 12.000</div><div class="d">Clínica general · ~20 min</div></div>
+            <div class="serv"><h3>Vacunación</h3><div class="p">$ 10.000</div><div class="d">Aplicación + carnet actualizado</div></div>
+            <div class="serv"><h3>Desparasitación</h3><div class="p">$ 6.000</div><div class="d">Interna / externa</div></div>
+            <div class="serv"><h3>Castración gato</h3><div class="p">$ 45.000</div><div class="d">Cirugía + control post</div></div>
+            <div class="serv"><h3>Castración perro</h3><div class="p">$ 70.000</div><div class="d">Según tamaño · cirugía + control</div></div>
+            <div class="serv"><h3>Ecografía</h3><div class="p">$ 25.000</div><div class="d">Diagnóstico por imagen</div></div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">✓ Listo</div>
+
+  <script>
+    const dias=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+    const meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    const d=new Date();
+    document.getElementById('fecha').textContent=`${dias[d.getDay()]} ${d.getDate()} de ${meses[d.getMonth()]}`;
+
+    const titles={turnos:'Turnos de hoy',pacientes:'Pacientes / Historia',vacunas:'Vacunas y avisos',caja:'Caja',servicios:'Servicios y precios'};
+    document.querySelectorAll('#nav button').forEach(b=>{
+      b.addEventListener('click',()=>{
+        document.querySelectorAll('#nav button').forEach(x=>x.classList.remove('active'));
+        b.classList.add('active');
+        const p=b.dataset.p;
+        document.querySelectorAll('.panel').forEach(x=>x.classList.remove('show'));
+        document.getElementById('p-'+p).classList.add('show');
+        document.getElementById('ptitle').textContent=titles[p];
+        closeSide();
+      });
+    });
+
+    let total=34000, ef=12000, mp=22000, db=0, atend=2, avisos=0;
+    const fmt=n=>'$ '+n.toLocaleString('es-AR');
+
+    function atender(btn){
+      const tr=btn.closest('tr');
+      const precio=parseInt(tr.dataset.precio);
+      const metodos=[['Efectivo','ef'],['Mercado Pago','mp'],['Débito','db']];
+      const m=metodos[Math.floor(Math.random()*metodos.length)];
+      tr.querySelector('.estado').outerHTML='<span class="estado e-ok">Atendido</span>';
+      tr.querySelector('.rowact').innerHTML='<span class="done">✓ Cobrado</span>';
+      atend++; total+=precio; if(m[1]==='ef')ef+=precio; else if(m[1]==='mp')mp+=precio; else db+=precio;
+      document.getElementById('cAtend').textContent=atend;
+      document.getElementById('pct').textContent=atend+' / 7';
+      document.getElementById('cIng').textContent=fmt(total);
+      document.getElementById('cajaTotal').textContent=fmt(total);
+      document.getElementById('mEf').textContent=fmt(ef);
+      document.getElementById('mMp').textContent=fmt(mp);
+      document.getElementById('mDb').textContent=fmt(db);
+      const nombre=tr.querySelector('.cli div').firstChild.textContent.trim();
+      const motivo=tr.children[2].textContent, hora=tr.children[0].textContent;
+      const row=document.createElement('tr');
+      row.innerHTML=`<td class="precio">${hora}</td><td>${nombre}</td><td>${motivo}</td><td>${m[0]}</td><td class="precio">${fmt(precio)}</td>`;
+      document.querySelector('#tCaja tbody').appendChild(row);
+      toast(`✓ ${nombre} · ${fmt(precio)} cobrado (${m[0]})`);
+    }
+    window.atender=atender;
+
+    function avisar(btn){
+      const tr=btn.closest('tr');
+      const nombre=tr.querySelector('.vac').textContent.trim();
+      const eraVenc=tr.querySelector('.estado').classList.contains('e-venc');
+      btn.outerHTML='<span class="done">✓ Avisado</span>';
+      avisos++; document.getElementById('vAvis').textContent=avisos;
+      if(eraVenc){ const v=document.getElementById('vVenc'); v.textContent=Math.max(parseInt(v.textContent)-1,0); }
+      toast(`💬 Recordatorio de refuerzo enviado (${nombre})`);
+    }
+    window.avisar=avisar;
+
+    let tt;
+    function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2200)}
+    document.addEventListener('click',e=>{
+      if(e.target.classList.contains('mini-wa') && !e.target.getAttribute('onclick')){
+        const tr=e.target.closest('tr'); const nombre=tr.querySelector('.cli div')?tr.querySelector('.cli div').firstChild.textContent.trim():'el dueño';
+        toast(`💬 Recordatorio enviado (${nombre})`);
+      }
+    });
+
+    const side=document.getElementById('side'),scrim=document.getElementById('scrim');
+    function closeSide(){side.classList.remove('open');scrim.classList.remove('show')}
+    document.getElementById('burger').addEventListener('click',()=>{side.classList.add('open');scrim.classList.add('show')});
+    scrim.addEventListener('click',closeSide);
+  </script>
+</body>
+</html>
