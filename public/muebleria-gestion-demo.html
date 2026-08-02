@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<!--
+  DEMO · SISTEMA DE GESTIÓN para mueblería / fábrica de muebles.
+  Flujo real: PRESUPUESTO -> SEÑA -> PRODUCCIÓN -> ENTREGA, + control de stock.
+  Gancho AR: los presupuestos se pierden en el WhatsApp y no se controla la producción ni los materiales.
+  Reemplazá "Nogal Muebles", precios y datos por los del cliente real.
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema de Gestión · Mueblería — Presupuestos, Producción y Stock</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#F5F1EB; --sidebar:#1E1712; --sidebar2:#2B211A; --sidebar-line:#3B2E24;
+      --acc:#9A6A43; --acc-d:#71482B; --acc-l:#C08A57; --ink:#241C15; --muted:#736A5F;
+      --card:#FFFFFF; --line:#E9E1D6; --green:#17A25B; --green-bg:#E6F6EE;
+      --red:#DA4F38; --red-bg:#FBE9E7; --amber:#C8922E; --amber-bg:#FBF1DC;
+      --blue:#3B7DD8; --blue-bg:#E9F1FC; --wood-bg:#F2E7D8;
+      --fh:'Sora',system-ui,sans-serif; --fb:'Inter',system-ui,sans-serif;
+      --tr:.2s ease; --sh:0 10px 30px -18px rgba(40,25,10,.4);
+    }
+    body{font-family:var(--fb);background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none} button{font-family:inherit;cursor:pointer;border:none;background:none}
+    .app{display:flex;min-height:100vh}
+    .side{width:250px;background:var(--sidebar);color:#B7AB9C;flex:none;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+    .brand{padding:1.4rem 1.4rem 1.1rem;display:flex;align-items:center;gap:.7rem;border-bottom:1px solid var(--sidebar-line)}
+    .brand .pole{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--acc),var(--acc-l));display:grid;place-items:center;font-size:1.1rem}
+    .brand b{font-family:var(--fh);font-weight:800;color:#fff;font-size:1.02rem;line-height:1.1;display:block}
+    .brand small{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--acc-l)}
+    .navlbl{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:#6B5E51;padding:1.2rem 1.4rem .4rem}
+    .nav{display:flex;flex-direction:column;gap:2px;padding:0 .7rem}
+    .nav button{display:flex;align-items:center;gap:.75rem;width:100%;text-align:left;padding:.7rem .8rem;border-radius:10px;color:#B7AB9C;font-size:.9rem;font-weight:500;transition:var(--tr)}
+    .nav button .ic{width:20px;text-align:center;font-size:1rem}
+    .nav button:hover{background:var(--sidebar2);color:#fff}
+    .nav button.active{background:linear-gradient(90deg,var(--acc),var(--acc-d));color:#fff;font-weight:600}
+    .side-foot{margin-top:auto;padding:1rem 1.4rem;border-top:1px solid var(--sidebar-line);font-size:.72rem;color:#6B5E51}
+    .side-foot b{color:#B7AB9C;font-weight:600}
+    .main{flex:1;min-width:0;display:flex;flex-direction:column}
+    .topbar{background:var(--card);border-bottom:1px solid var(--line);padding:1rem 1.6rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;position:sticky;top:0;z-index:20}
+    .topbar h1{font-family:var(--fh);font-weight:700;font-size:1.15rem}
+    .topbar .date{font-size:.8rem;color:var(--muted)}
+    .top-actions{display:flex;align-items:center;gap:.6rem}
+    .pill-wa{display:inline-flex;align-items:center;gap:.4rem;background:var(--green-bg);color:#0f7a43;padding:.5rem .8rem;border-radius:999px;font-size:.78rem;font-weight:600}
+    .pill-wa .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(23,162,91,.2)}
+    .btn{display:inline-flex;align-items:center;gap:.45rem;padding:.6rem 1rem;border-radius:10px;font-weight:600;font-size:.85rem;transition:var(--tr)}
+    .btn-acc{background:var(--acc);color:#fff}.btn-acc:hover{background:var(--acc-d)}
+    .content{padding:1.6rem;flex:1}
+    .panel{display:none;animation:fade .3s ease}.panel.show{display:block}
+    @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+    .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.1rem 1.2rem}
+    .stat .t{display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:var(--muted);font-weight:500}
+    .stat .v{font-family:var(--fh);font-weight:700;font-size:1.6rem;margin-top:.35rem;letter-spacing:-.02em}
+    .stat .chip{font-size:.7rem;font-weight:600;padding:.15rem .5rem;border-radius:999px;margin-left:auto}
+    .chip-g{background:var(--green-bg);color:#0f7a43}.chip-b{background:var(--blue-bg);color:#245ba8}.chip-a{background:var(--amber-bg);color:#8a6416}
+    .stat.acc{background:linear-gradient(135deg,#2B211A,#1E1712);color:#fff;border:none}
+    .stat.acc .t{color:#B7AB9C}.stat.acc .v{color:var(--acc-l)}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+    .card-h{padding:1rem 1.2rem;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .card-h h2{font-family:var(--fh);font-weight:600;font-size:1rem}
+    .card-h .sub{font-size:.78rem;color:var(--muted)}
+    table{width:100%;border-collapse:collapse}
+    th{text-align:left;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:.7rem 1.2rem;border-bottom:1px solid var(--line)}
+    td{padding:.75rem 1.2rem;border-bottom:1px solid var(--line);font-size:.88rem;vertical-align:middle}
+    tr:last-child td{border-bottom:none}
+    .cli{display:flex;align-items:center;gap:.65rem}
+    .av{width:34px;height:34px;border-radius:9px;background:var(--wood-bg);color:var(--acc-d);display:grid;place-items:center;font-size:1rem;flex:none}
+    .sub2{font-size:.76rem;color:var(--muted)}
+    .precio{font-family:var(--fh);font-weight:600}
+    .estado{font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:999px;white-space:nowrap}
+    .e-env{background:var(--blue-bg);color:#245ba8}.e-apr{background:var(--green-bg);color:#0f7a43}.e-rech{background:var(--red-bg);color:#b23a25}
+    .e-corte{background:var(--wood-bg);color:var(--acc-d)}.e-arm{background:var(--amber-bg);color:#8a6416}.e-term{background:var(--blue-bg);color:#245ba8}.e-listo{background:var(--green-bg);color:#0f7a43}
+    .rowact{display:flex;gap:.4rem;justify-content:flex-end}
+    .mini{font-size:.74rem;font-weight:600;padding:.35rem .6rem;border-radius:8px;transition:var(--tr);white-space:nowrap}
+    .mini-ok{background:var(--ink);color:#fff}.mini-ok:hover{background:#000}
+    .mini-wa{background:var(--green-bg);color:#0f7a43}.mini-wa:hover{background:#d4efe0}
+    .done{color:var(--muted);font-size:.78rem;font-weight:600}
+    .prog{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:.35rem;min-width:90px}
+    .prog b{display:block;height:100%;background:linear-gradient(90deg,var(--acc),var(--acc-l))}
+    .banner{background:linear-gradient(120deg,var(--wood-bg),#fff);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:14px;padding:1rem 1.2rem;margin-bottom:1.4rem;font-size:.9rem}
+    .banner b{color:var(--acc-d)}
+    .banner.warn{background:linear-gradient(120deg,var(--red-bg),#fff);border-left-color:var(--red)}.banner.warn b{color:#b23a25}
+    .caja-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:1.2rem}
+    .metodos{display:flex;flex-direction:column;gap:.8rem}
+    .metodo{display:flex;align-items:center;gap:.8rem;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:.9rem 1.1rem}
+    .metodo .mi{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-size:1.1rem}
+    .metodo b{font-family:var(--fh);margin-left:auto;font-weight:700}
+    .total-big{background:linear-gradient(135deg,#1E1712,#33271d);color:#fff;border-radius:16px;padding:1.4rem;text-align:center}
+    .total-big .l{font-size:.78rem;color:#B7AB9C;letter-spacing:.05em}
+    .total-big .n{font-family:var(--fh);font-weight:800;font-size:2rem;color:var(--acc-l);margin-top:.3rem;letter-spacing:-.02em}
+    .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--ink);color:#fff;padding:.8rem 1.3rem;border-radius:12px;font-size:.88rem;font-weight:500;opacity:0;transition:.3s ease;z-index:99;box-shadow:var(--sh)}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .burger{display:none}
+    @media(max-width:880px){
+      .side{position:fixed;left:0;top:0;z-index:60;transform:translateX(-100%);transition:transform var(--tr);box-shadow:var(--sh)}
+      .side.open{transform:none}
+      .burger{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--bg)}
+      .stats{grid-template-columns:repeat(2,1fr)}.caja-grid{grid-template-columns:1fr}
+      .scrim{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:55;display:none}.scrim.show{display:block}
+    }
+    @media(max-width:520px){.stats{grid-template-columns:1fr 1fr}.hide-sm{display:none}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="side" id="side">
+      <div class="brand"><span class="pole">🪵</span><span><b>Nogal Muebles</b><small>Sistema de gestión</small></span></div>
+      <div class="navlbl">Taller</div>
+      <nav class="nav" id="nav">
+        <button data-p="presu" class="active"><span class="ic">📝</span> Presupuestos</button>
+        <button data-p="prod"><span class="ic">🔨</span> Producción</button>
+        <button data-p="stock"><span class="ic">📦</span> Stock / Materiales</button>
+        <button data-p="caja"><span class="ic">💵</span> Caja</button>
+      </nav>
+      <div class="side-foot"><b>Demo interactiva</b><br>Aprobá un presupuesto y cobrá un saldo: mirá cómo se mueven los números.</div>
+    </aside>
+    <div class="scrim" id="scrim"></div>
+
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;gap:.8rem">
+          <button class="burger" id="burger">☰</button>
+          <div><h1 id="ptitle">Presupuestos</h1><div class="date" id="fecha">—</div></div>
+        </div>
+        <div class="top-actions">
+          <span class="pill-wa hide-sm"><span class="dot"></span> Avisos de avance por WhatsApp</span>
+          <button class="btn btn-acc">+ Nuevo presupuesto</button>
+        </div>
+      </div>
+
+      <div class="content">
+        <!-- PRESUPUESTOS -->
+        <section class="panel show" id="p-presu">
+          <div class="stats">
+            <div class="stat"><div class="t">📝 Presupuestos del mes</div><div class="v">18</div></div>
+            <div class="stat"><div class="t">✅ Aprobados <span class="chip chip-g" id="aprN">7</span></div><div class="v" id="aprV">7</div></div>
+            <div class="stat acc"><div class="t">💰 En producción</div><div class="v" id="enProd">$ 2.310.000</div></div>
+            <div class="stat"><div class="t">⏳ Sin respuesta <span class="chip chip-a">seguir</span></div><div class="v">6</div></div>
+          </div>
+          <div class="banner">💡 <b>Se acabó perder presupuestos en el WhatsApp.</b> Cada uno queda registrado, con recordatorio automático al cliente. Cuando aprueba, pasa solo a producción con la seña cargada.</div>
+          <div class="card">
+            <div class="card-h"><div><h2>Presupuestos enviados</h2><div class="sub">Aprobá o mandá recordatorio</div></div></div>
+            <div style="overflow-x:auto">
+            <table id="tPresu">
+              <thead><tr><th>Cliente</th><th>Trabajo</th><th>Monto</th><th>Enviado</th><th>Estado</th><th></th></tr></thead>
+              <tbody>
+                <tr data-monto="420000"><td><div class="cli"><span class="av">🚪</span><div>Marina López<div class="sub2">Banfield</div></div></div></td><td>Placard 3 puertas a medida</td><td class="precio">$ 420.000</td><td>Hace 2 días</td><td><span class="estado e-env">Enviado</span></td><td><div class="rowact"><button class="mini mini-wa">💬 Recordar</button><button class="mini mini-ok" onclick="aprobar(this)">Aprobar</button></div></td></tr>
+                <tr data-monto="650000"><td><div class="cli"><span class="av">🍳</span><div>Diego Ramos<div class="sub2">Lomas</div></div></div></td><td>Amoblamiento de cocina completo</td><td class="precio">$ 650.000</td><td>Hace 4 días</td><td><span class="estado e-env">Enviado</span></td><td><div class="rowact"><button class="mini mini-wa">💬 Recordar</button><button class="mini mini-ok" onclick="aprobar(this)">Aprobar</button></div></td></tr>
+                <tr data-monto="380000"><td><div class="cli"><span class="av">🍽️</span><div>Carla Pérez<div class="sub2">Temperley</div></div></div></td><td>Comedor de guayubira + 6 sillas</td><td class="precio">$ 380.000</td><td>Ayer</td><td><span class="estado e-env">Enviado</span></td><td><div class="rowact"><button class="mini mini-wa">💬 Recordar</button><button class="mini mini-ok" onclick="aprobar(this)">Aprobar</button></div></td></tr>
+                <tr data-monto="180000"><td><div class="cli"><span class="av">📺</span><div>Nahuel Sosa<div class="sub2">Adrogué</div></div></div></td><td>Rack de TV modular</td><td class="precio">$ 180.000</td><td>Hace 6 días</td><td><span class="estado e-rech">No avanzó</span></td><td><div class="rowact"><button class="mini mini-wa">💬 Reactivar</button></div></td></tr>
+                <tr><td><div class="cli"><span class="av">🚪</span><div>Sofía Molina<div class="sub2">CABA</div></div></div></td><td>Vestidor completo</td><td class="precio">$ 540.000</td><td>Hace 8 días</td><td><span class="estado e-apr">Aprobado</span></td><td><div class="rowact"><span class="done">✓ En producción</span></div></td></tr>
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- PRODUCCIÓN -->
+        <section class="panel" id="p-prod">
+          <div class="banner">🔨 <b>Cada mueble, en qué etapa está.</b> Cortado → armado → terminación → entrega. El cliente recibe un WhatsApp cuando avanza, y vos sabés qué falta cobrar.</div>
+          <div class="card">
+            <div class="card-h"><div><h2>En el taller</h2><div class="sub">Trabajos aprobados en producción</div></div></div>
+            <div style="overflow-x:auto">
+            <table>
+              <thead><tr><th>Trabajo</th><th>Cliente</th><th>Etapa</th><th>Seña</th><th>Saldo</th><th>Entrega</th></tr></thead>
+              <tbody>
+                <tr><td>Vestidor completo</td><td>Sofía Molina</td><td><span class="estado e-corte">Cortado</span><div class="prog"><b style="width:25%"></b></div></td><td class="precio">$ 270.000</td><td class="precio">$ 270.000</td><td>15/08</td></tr>
+                <tr><td>Placard 2 puertas</td><td>Julián Costa</td><td><span class="estado e-arm">Armado</span><div class="prog"><b style="width:55%"></b></div></td><td class="precio">$ 210.000</td><td class="precio">$ 210.000</td><td>12/08</td></tr>
+                <tr><td>Mesa + banco a medida</td><td>Rocío Vera</td><td><span class="estado e-term">Terminación</span><div class="prog"><b style="width:80%"></b></div></td><td class="precio">$ 160.000</td><td class="precio">$ 160.000</td><td>08/08</td></tr>
+                <tr><td>Biblioteca de pared</td><td>Martín Ferro</td><td><span class="estado e-listo">Lista p/ entrega</span><div class="prog"><b style="width:100%"></b></div></td><td class="precio">$ 145.000</td><td class="precio">$ 145.000</td><td>Hoy</td></tr>
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- STOCK -->
+        <section class="panel" id="p-stock">
+          <div class="banner warn">📦 <b>2 materiales por debajo del mínimo.</b> El sistema te avisa antes de que te quedes sin placa a mitad de un mueble. Nunca más frenar la producción por falta de material.</div>
+          <div class="card">
+            <div class="card-h"><div><h2>Materiales</h2><div class="sub">Stock actual vs. mínimo</div></div></div>
+            <div style="overflow-x:auto">
+            <table>
+              <thead><tr><th>Material</th><th>Stock</th><th>Mínimo</th><th>Estado</th></tr></thead>
+              <tbody>
+                <tr><td>Placa melamina blanca 18mm</td><td class="precio">4 pl.</td><td>10 pl.</td><td><span class="estado e-rech">Reponer</span></td></tr>
+                <tr><td>Herrajes cierre suave</td><td class="precio">8 u.</td><td>20 u.</td><td><span class="estado e-rech">Reponer</span></td></tr>
+                <tr><td>MDF 18mm</td><td class="precio">22 pl.</td><td>10 pl.</td><td><span class="estado e-apr">OK</span></td></tr>
+                <tr><td>Corredera telescópica 45cm</td><td class="precio">34 u.</td><td>15 u.</td><td><span class="estado e-apr">OK</span></td></tr>
+                <tr><td>Bisagra codo recto</td><td class="precio">18 u.</td><td>24 u.</td><td><span class="estado e-arm">Justo</span></td></tr>
+                <tr><td>Tirador aluminio 128mm</td><td class="precio">40 u.</td><td>20 u.</td><td><span class="estado e-apr">OK</span></td></tr>
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- CAJA -->
+        <section class="panel" id="p-caja">
+          <div class="banner">💵 <b>Señas y saldos.</b> Sabés cuánto cobraste de seña y cuánto te queda por cobrar de cada mueble entregado. Sin cuentas en la cabeza.</div>
+          <div class="caja-grid">
+            <div class="card">
+              <div class="card-h"><div><h2>Cobros de hoy</h2></div><button class="btn btn-acc" onclick="cobrarSaldo()">+ Cobrar saldo entrega</button></div>
+              <div style="overflow-x:auto">
+              <table id="tCaja">
+                <thead><tr><th>Cliente</th><th>Concepto</th><th>Método</th><th>Monto</th></tr></thead>
+                <tbody>
+                  <tr><td>Sofía Molina</td><td>Seña vestidor (50%)</td><td>Transferencia</td><td class="precio">$ 270.000</td></tr>
+                  <tr><td>Rocío Vera</td><td>Seña mesa + banco</td><td>Mercado Pago</td><td class="precio">$ 160.000</td></tr>
+                </tbody>
+              </table>
+              </div>
+            </div>
+            <div>
+              <div class="total-big"><div class="l">Cobrado hoy</div><div class="n" id="cajaTotal">$ 430.000</div></div>
+              <div class="metodos" style="margin-top:1.2rem">
+                <div class="metodo"><span class="mi" style="background:var(--green-bg)">💵</span> Efectivo / Transf. <b id="mEf">$ 270.000</b></div>
+                <div class="metodo"><span class="mi" style="background:var(--blue-bg)">📱</span> Mercado Pago <b id="mMp">$ 160.000</b></div>
+                <div class="metodo"><span class="mi" style="background:var(--amber-bg)">📄</span> Saldo por cobrar <b id="mSaldo" style="color:var(--red)">$ 785.000</b></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">✓ Listo</div>
+
+  <script>
+    const dias=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+    const meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    const d=new Date();
+    document.getElementById('fecha').textContent=`${dias[d.getDay()]} ${d.getDate()} de ${meses[d.getMonth()]}`;
+
+    const titles={presu:'Presupuestos',prod:'Producción',stock:'Stock / Materiales',caja:'Caja'};
+    document.querySelectorAll('#nav button').forEach(b=>{
+      b.addEventListener('click',()=>{
+        document.querySelectorAll('#nav button').forEach(x=>x.classList.remove('active'));
+        b.classList.add('active');
+        const p=b.dataset.p;
+        document.querySelectorAll('.panel').forEach(x=>x.classList.remove('show'));
+        document.getElementById('p-'+p).classList.add('show');
+        document.getElementById('ptitle').textContent=titles[p];
+        closeSide();
+      });
+    });
+
+    let apr=7, enProd=2310000, cajaHoy=430000, mp=160000, saldo=785000;
+    const fmt=n=>'$ '+n.toLocaleString('es-AR');
+
+    function aprobar(btn){
+      const tr=btn.closest('tr');
+      const monto=parseInt(tr.dataset.monto);
+      const cli=tr.querySelector('.cli div').firstChild.textContent.trim();
+      tr.querySelector('.estado').outerHTML='<span class="estado e-apr">Aprobado</span>';
+      tr.querySelector('.rowact').innerHTML='<span class="done">✓ En producción</span>';
+      apr++; enProd+=monto;
+      document.getElementById('aprN').textContent=apr;
+      document.getElementById('aprV').textContent=apr;
+      document.getElementById('enProd').textContent=fmt(enProd);
+      toast(`✓ Presupuesto de ${cli} aprobado — pasó a producción`);
+    }
+    window.aprobar=aprobar;
+
+    let saldos=[['Martín Ferro','Saldo biblioteca (entrega)',145000],['Julián Costa','Saldo placard',210000]];
+    function cobrarSaldo(){
+      if(!saldos.length){toast('No hay saldos pendientes de entrega hoy');return;}
+      const [cli,concepto,monto]=saldos.shift();
+      cajaHoy+=monto; mp+=monto; saldo-=monto;
+      document.getElementById('cajaTotal').textContent=fmt(cajaHoy);
+      document.getElementById('mMp').textContent=fmt(mp);
+      document.getElementById('mSaldo').textContent=fmt(Math.max(saldo,0));
+      const row=document.createElement('tr');
+      row.innerHTML=`<td>${cli}</td><td>${concepto}</td><td>Mercado Pago</td><td class="precio">${fmt(monto)}</td>`;
+      document.querySelector('#tCaja tbody').appendChild(row);
+      toast(`✓ Saldo de ${cli} cobrado · ${fmt(monto)}`);
+    }
+    window.cobrarSaldo=cobrarSaldo;
+
+    let tt;
+    function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2200)}
+    document.addEventListener('click',e=>{
+      if(e.target.classList.contains('mini-wa')){
+        const tr=e.target.closest('tr'); const cli=tr.querySelector('.cli div').firstChild.textContent.trim();
+        toast(`💬 Recordatorio enviado a ${cli}`);
+      }
+    });
+
+    const side=document.getElementById('side'),scrim=document.getElementById('scrim');
+    function closeSide(){side.classList.remove('open');scrim.classList.remove('show')}
+    document.getElementById('burger').addEventListener('click',()=>{side.classList.add('open');scrim.classList.add('show')});
+    scrim.addEventListener('click',closeSide);
+  </script>
+</body>
+</html>

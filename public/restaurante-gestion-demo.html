@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<!--
+  DEMO · SISTEMA DE GESTIÓN para restaurante/bar/parrilla (mesas + comandas + caja).
+  Estilo Fudo. Gancho AR: se pierde el control entre pedidos por WhatsApp, mesas y cocina.
+  Reemplazá "Parrilla Don Costa", precios y datos por los del cliente real.
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema de Gestión · Restaurante — Mesas, Comandas y Caja</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#F5F1EE; --sidebar:#1E1512; --sidebar2:#2B1F1A; --sidebar-line:#3B2C25;
+      --acc:#E0533B; --acc-d:#C23E28; --ink:#221813; --muted:#736A63;
+      --card:#FFFFFF; --line:#EAE3DD; --green:#17A25B; --green-bg:#E6F6EE;
+      --red:#DA4F38; --red-bg:#FBE9E7; --amber:#E0A63E; --amber-bg:#FBF1DC;
+      --blue:#3B7DD8; --blue-bg:#E9F1FC; --red-soft:#FCEAE6;
+      --fh:'Sora',system-ui,sans-serif; --fb:'Inter',system-ui,sans-serif;
+      --tr:.2s ease; --sh:0 10px 30px -18px rgba(40,20,10,.4);
+    }
+    body{font-family:var(--fb);background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none} button{font-family:inherit;cursor:pointer;border:none;background:none}
+    .app{display:flex;min-height:100vh}
+    .side{width:250px;background:var(--sidebar);color:#B8ABA3;flex:none;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+    .brand{padding:1.4rem 1.4rem 1.1rem;display:flex;align-items:center;gap:.7rem;border-bottom:1px solid var(--sidebar-line)}
+    .brand .pole{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--acc),#EF8A76);display:grid;place-items:center;font-size:1.1rem}
+    .brand b{font-family:var(--fh);font-weight:800;color:#fff;font-size:1.02rem;line-height:1.1;display:block}
+    .brand small{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+    .navlbl{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:#6B5C54;padding:1.2rem 1.4rem .4rem}
+    .nav{display:flex;flex-direction:column;gap:2px;padding:0 .7rem}
+    .nav button{display:flex;align-items:center;gap:.75rem;width:100%;text-align:left;padding:.7rem .8rem;border-radius:10px;color:#B8ABA3;font-size:.9rem;font-weight:500;transition:var(--tr)}
+    .nav button .ic{width:20px;text-align:center;font-size:1rem}
+    .nav button:hover{background:var(--sidebar2);color:#fff}
+    .nav button.active{background:linear-gradient(90deg,var(--acc),var(--acc-d));color:#fff;font-weight:600}
+    .side-foot{margin-top:auto;padding:1rem 1.4rem;border-top:1px solid var(--sidebar-line);font-size:.72rem;color:#6B5C54}
+    .side-foot b{color:#B8ABA3;font-weight:600}
+    .main{flex:1;min-width:0;display:flex;flex-direction:column}
+    .topbar{background:var(--card);border-bottom:1px solid var(--line);padding:1rem 1.6rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;position:sticky;top:0;z-index:20}
+    .topbar h1{font-family:var(--fh);font-weight:700;font-size:1.15rem}
+    .topbar .date{font-size:.8rem;color:var(--muted)}
+    .top-actions{display:flex;align-items:center;gap:.6rem}
+    .pill-wa{display:inline-flex;align-items:center;gap:.4rem;background:var(--green-bg);color:#0f7a43;padding:.5rem .8rem;border-radius:999px;font-size:.78rem;font-weight:600}
+    .pill-wa .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(23,162,91,.2)}
+    .btn{display:inline-flex;align-items:center;gap:.45rem;padding:.6rem 1rem;border-radius:10px;font-weight:600;font-size:.85rem;transition:var(--tr)}
+    .btn-acc{background:var(--acc);color:#fff}.btn-acc:hover{background:var(--acc-d)}
+    .content{padding:1.6rem;flex:1}
+    .panel{display:none;animation:fade .3s ease}.panel.show{display:block}
+    @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+    .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.1rem 1.2rem}
+    .stat .t{display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:var(--muted);font-weight:500}
+    .stat .v{font-family:var(--fh);font-weight:700;font-size:1.7rem;margin-top:.35rem;letter-spacing:-.02em}
+    .stat .chip{font-size:.7rem;font-weight:600;padding:.15rem .5rem;border-radius:999px;margin-left:auto}
+    .chip-g{background:var(--green-bg);color:#0f7a43}.chip-b{background:var(--blue-bg);color:#245ba8}.chip-a{background:var(--amber-bg);color:#95701c}
+    .stat.acc{background:linear-gradient(135deg,#2B1F1A,#1E1512);color:#fff;border:none}
+    .stat.acc .t{color:#B8ABA3}.stat.acc .v{color:#EF8A76}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+    .card-h{padding:1rem 1.2rem;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .card-h h2{font-family:var(--fh);font-weight:600;font-size:1rem}
+    .card-h .sub{font-size:.78rem;color:var(--muted)}
+    /* Mesas */
+    .mesas{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+    .mesa{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.1rem;border-top:4px solid var(--line);transition:var(--tr)}
+    .mesa:hover{box-shadow:var(--sh)}
+    .mesa.libre{border-top-color:var(--green)}
+    .mesa.ocupada{border-top-color:var(--blue)}
+    .mesa.cobrar{border-top-color:var(--amber)}
+    .mesa .top{display:flex;align-items:center;justify-content:space-between}
+    .mesa .nm{font-family:var(--fh);font-weight:700;font-size:1.15rem}
+    .mesa .st{font-size:.7rem;font-weight:600;padding:.15rem .55rem;border-radius:999px}
+    .st.libre{background:var(--green-bg);color:#0f7a43}.st.ocupada{background:var(--blue-bg);color:#245ba8}.st.cobrar{background:var(--amber-bg);color:#95701c}
+    .mesa .meta{font-size:.78rem;color:var(--muted);margin-top:.5rem;min-height:2.4em}
+    .mesa .tot{font-family:var(--fh);font-weight:700;font-size:1.35rem;margin-top:.4rem}
+    .mesa .act{margin-top:.7rem}
+    .mesa .mbtn{width:100%;font-size:.8rem;font-weight:600;padding:.5rem;border-radius:9px;transition:var(--tr)}
+    .mbtn-cobrar{background:var(--acc);color:#fff}.mbtn-cobrar:hover{background:var(--acc-d)}
+    .mbtn-ver{background:var(--bg);color:var(--ink);border:1px solid var(--line)}.mbtn-ver:hover{border-color:var(--acc)}
+    .mbtn-libre{background:var(--green-bg);color:#0f7a43}
+    @media(max-width:960px){.mesas{grid-template-columns:repeat(3,1fr)}}
+    /* tables */
+    table{width:100%;border-collapse:collapse}
+    th{text-align:left;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:.7rem 1.2rem;border-bottom:1px solid var(--line)}
+    td{padding:.75rem 1.2rem;border-bottom:1px solid var(--line);font-size:.88rem;vertical-align:middle}
+    tr:last-child td{border-bottom:none}
+    .precio{font-family:var(--fh);font-weight:600}
+    .estado{font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:999px;white-space:nowrap}
+    .e-coc{background:var(--amber-bg);color:#95701c}.e-listo{background:var(--green-bg);color:#0f7a43}.e-entr{background:var(--blue-bg);color:#245ba8}
+    .mini{font-size:.74rem;font-weight:600;padding:.35rem .6rem;border-radius:8px;transition:var(--tr)}
+    .mini-ok{background:var(--ink);color:#fff}.mini-ok:hover{background:#000}
+    .done{color:var(--muted);font-size:.78rem;font-weight:600}
+    .banner{background:linear-gradient(120deg,var(--red-soft),#fff);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:14px;padding:1rem 1.2rem;margin-bottom:1.4rem;font-size:.9rem}
+    .banner b{color:var(--acc-d)}
+    .caja-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:1.2rem}
+    .metodos{display:flex;flex-direction:column;gap:.8rem}
+    .metodo{display:flex;align-items:center;gap:.8rem;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:.9rem 1.1rem}
+    .metodo .mi{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-size:1.1rem}
+    .metodo b{font-family:var(--fh);margin-left:auto;font-weight:700}
+    .total-big{background:linear-gradient(135deg,#1E1512,#33231c);color:#fff;border-radius:16px;padding:1.4rem;text-align:center}
+    .total-big .l{font-size:.78rem;color:#B8ABA3;letter-spacing:.05em}
+    .total-big .n{font-family:var(--fh);font-weight:800;font-size:2.2rem;color:#EF8A76;margin-top:.3rem;letter-spacing:-.02em}
+    .serv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    .serv{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.1rem}
+    .serv h3{font-family:var(--fh);font-weight:600;font-size:1rem}
+    .serv .p{font-family:var(--fh);font-weight:800;font-size:1.5rem;color:var(--acc-d);margin-top:.4rem}
+    .serv .d{font-size:.8rem;color:var(--muted);margin-top:.2rem}
+    .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--ink);color:#fff;padding:.8rem 1.3rem;border-radius:12px;font-size:.88rem;font-weight:500;opacity:0;transition:.3s ease;z-index:99;box-shadow:var(--sh)}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .burger{display:none}
+    @media(max-width:880px){
+      .side{position:fixed;left:0;top:0;z-index:60;transform:translateX(-100%);transition:transform var(--tr);box-shadow:var(--sh)}
+      .side.open{transform:none}
+      .burger{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--bg)}
+      .stats{grid-template-columns:repeat(2,1fr)}.caja-grid{grid-template-columns:1fr}.serv-grid{grid-template-columns:1fr}.mesas{grid-template-columns:repeat(2,1fr)}
+      .scrim{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:55;display:none}.scrim.show{display:block}
+    }
+    @media(max-width:520px){.stats{grid-template-columns:1fr 1fr}.hide-sm{display:none}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="side" id="side">
+      <div class="brand"><span class="pole">🍽️</span><span><b>Parrilla Don Costa</b><small>Sistema de gestión</small></span></div>
+      <div class="navlbl">Servicio</div>
+      <nav class="nav" id="nav">
+        <button data-p="salon" class="active"><span class="ic">🪑</span> Salón / Mesas</button>
+        <button data-p="comandas"><span class="ic">🍳</span> Comandas / Cocina</button>
+        <button data-p="caja"><span class="ic">💵</span> Caja</button>
+        <button data-p="menu"><span class="ic">📖</span> Menú y precios</button>
+      </nav>
+      <div class="side-foot"><b>Demo interactiva</b><br>Cobrá una mesa "por cobrar": se libera y entra a la caja.</div>
+    </aside>
+    <div class="scrim" id="scrim"></div>
+
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;gap:.8rem">
+          <button class="burger" id="burger">☰</button>
+          <div><h1 id="ptitle">Salón / Mesas</h1><div class="date" id="fecha">—</div></div>
+        </div>
+        <div class="top-actions">
+          <span class="pill-wa hide-sm"><span class="dot"></span> Pedidos de WhatsApp entran solos</span>
+          <button class="btn btn-acc">+ Abrir mesa</button>
+        </div>
+      </div>
+
+      <div class="content">
+        <!-- SALON -->
+        <section class="panel show" id="p-salon">
+          <div class="stats">
+            <div class="stat"><div class="t">🪑 Mesas ocupadas <span class="chip chip-b" id="ocupCount">6 / 12</span></div><div class="v" id="ocupN">6</div></div>
+            <div class="stat"><div class="t">🍽️ Cubiertos hoy</div><div class="v">74</div></div>
+            <div class="stat acc"><div class="t">💵 Vendido hoy</div><div class="v" id="cIng">$ 312.000</div></div>
+            <div class="stat"><div class="t">🎫 Ticket promedio</div><div class="v">$ 14.800</div></div>
+          </div>
+          <div class="banner">💡 <b>Todo en una pantalla:</b> mesas, cocina y caja sincronizadas. El pedido que entra por WhatsApp o QR cae directo a la comanda, sin anotar en papelitos ni perder mesas.</div>
+          <div class="mesas" id="mesas">
+            <div class="mesa cobrar"><div class="top"><span class="nm">Mesa 1</span><span class="st cobrar">Por cobrar</span></div><div class="meta">Mozo: Caro · 4 pers · 55 min</div><div class="tot">$ 38.500</div><div class="act"><button class="mbtn mbtn-cobrar" onclick="cobrar(this,38500)">Cobrar $ 38.500</button></div></div>
+            <div class="mesa ocupada"><div class="top"><span class="nm">Mesa 2</span><span class="st ocupada">Ocupada</span></div><div class="meta">Mozo: Nacho · 2 pers · 20 min</div><div class="tot">$ 21.000</div><div class="act"><button class="mbtn mbtn-ver">Ver comanda</button></div></div>
+            <div class="mesa libre"><div class="top"><span class="nm">Mesa 3</span><span class="st libre">Libre</span></div><div class="meta">—</div><div class="tot">$ 0</div><div class="act"><button class="mbtn mbtn-ver">Abrir mesa</button></div></div>
+            <div class="mesa cobrar"><div class="top"><span class="nm">Mesa 4</span><span class="st cobrar">Por cobrar</span></div><div class="meta">Mozo: Caro · 6 pers · 1h 10m</div><div class="tot">$ 62.000</div><div class="act"><button class="mbtn mbtn-cobrar" onclick="cobrar(this,62000)">Cobrar $ 62.000</button></div></div>
+            <div class="mesa ocupada"><div class="top"><span class="nm">Mesa 5</span><span class="st ocupada">Ocupada</span></div><div class="meta">Mozo: Nacho · 3 pers · 35 min</div><div class="tot">$ 29.500</div><div class="act"><button class="mbtn mbtn-ver">Ver comanda</button></div></div>
+            <div class="mesa libre"><div class="top"><span class="nm">Mesa 6</span><span class="st libre">Libre</span></div><div class="meta">—</div><div class="tot">$ 0</div><div class="act"><button class="mbtn mbtn-ver">Abrir mesa</button></div></div>
+            <div class="mesa ocupada"><div class="top"><span class="nm">Mesa 7</span><span class="st ocupada">Ocupada</span></div><div class="meta">Mozo: Caro · 2 pers · 15 min</div><div class="tot">$ 16.800</div><div class="act"><button class="mbtn mbtn-ver">Ver comanda</button></div></div>
+            <div class="mesa cobrar"><div class="top"><span class="nm">Mesa 8</span><span class="st cobrar">Por cobrar</span></div><div class="meta">Mozo: Nacho · 4 pers · 48 min</div><div class="tot">$ 44.200</div><div class="act"><button class="mbtn mbtn-cobrar" onclick="cobrar(this,44200)">Cobrar $ 44.200</button></div></div>
+            <div class="mesa ocupada"><div class="top"><span class="nm">Mesa 9</span><span class="st ocupada">Ocupada</span></div><div class="meta">Mozo: Caro · 5 pers · 25 min</div><div class="tot">$ 51.000</div><div class="act"><button class="mbtn mbtn-ver">Ver comanda</button></div></div>
+            <div class="mesa libre"><div class="top"><span class="nm">Mesa 10</span><span class="st libre">Libre</span></div><div class="meta">—</div><div class="tot">$ 0</div><div class="act"><button class="mbtn mbtn-ver">Abrir mesa</button></div></div>
+            <div class="mesa ocupada"><div class="top"><span class="nm">Mesa 11</span><span class="st ocupada">Ocupada</span></div><div class="meta">Mozo: Nacho · 2 pers · 10 min</div><div class="tot">$ 12.400</div><div class="act"><button class="mbtn mbtn-ver">Ver comanda</button></div></div>
+            <div class="mesa libre"><div class="top"><span class="nm">Mesa 12</span><span class="st libre">Libre</span></div><div class="meta">—</div><div class="tot">$ 0</div><div class="act"><button class="mbtn mbtn-ver">Abrir mesa</button></div></div>
+          </div>
+        </section>
+
+        <!-- COMANDAS -->
+        <section class="panel" id="p-comandas">
+          <div class="banner">🍳 <b>Comandas en cocina.</b> Lo que pide el mozo (o el cliente por QR) aparece acá al toque. La cocina marca "listo" y el mozo lo ve en su celu.</div>
+          <div class="card">
+            <div class="card-h"><div><h2>Pedidos en curso</h2><div class="sub">Cocina en tiempo real</div></div></div>
+            <div style="overflow-x:auto">
+            <table>
+              <thead><tr><th>Mesa</th><th>Pedido</th><th>Mozo</th><th>Tiempo</th><th>Estado</th><th></th></tr></thead>
+              <tbody>
+                <tr><td class="precio">Mesa 5</td><td>2x Bife de chorizo · 1x Ensalada mixta</td><td>Nacho</td><td>8 min</td><td><span class="estado e-coc">En cocina</span></td><td><button class="mini mini-ok" onclick="listo(this)">Marcar listo</button></td></tr>
+                <tr><td class="precio">Mesa 7</td><td>1x Provoleta · 2x Empanadas carne</td><td>Caro</td><td>3 min</td><td><span class="estado e-coc">En cocina</span></td><td><button class="mini mini-ok" onclick="listo(this)">Marcar listo</button></td></tr>
+                <tr><td class="precio">Mesa 9</td><td>1x Parrillada (2p) · 1x Papas</td><td>Caro</td><td>14 min</td><td><span class="estado e-listo">Listo p/ servir</span></td><td><span class="done">✓ En camino</span></td></tr>
+                <tr><td class="precio">Mesa 11</td><td>2x Milanesa napo · 2x Gaseosa</td><td>Nacho</td><td>1 min</td><td><span class="estado e-coc">En cocina</span></td><td><button class="mini mini-ok" onclick="listo(this)">Marcar listo</button></td></tr>
+                <tr><td class="precio">Delivery</td><td>1x Parrillada · 1x Flan (WhatsApp)</td><td>Mostrador</td><td>6 min</td><td><span class="estado e-entr">A despachar</span></td><td><span class="done">🛵 Cadete</span></td></tr>
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- CAJA -->
+        <section class="panel" id="p-caja">
+          <div class="banner">💵 <b>Caja del día.</b> Cada mesa cerrada entra acá con su método de pago. Cierre de turno claro, sin sumar tickets a mano.</div>
+          <div class="caja-grid">
+            <div class="card">
+              <div class="card-h"><div><h2>Mesas cerradas hoy</h2></div></div>
+              <div style="overflow-x:auto">
+              <table id="tCaja">
+                <thead><tr><th>Hora</th><th>Mesa</th><th>Mozo</th><th>Método</th><th>Total</th></tr></thead>
+                <tbody>
+                  <tr><td class="precio">13:20</td><td>Mesa 10</td><td>Caro</td><td>Mercado Pago</td><td class="precio">$ 34.000</td></tr>
+                  <tr><td class="precio">13:45</td><td>Mesa 3</td><td>Nacho</td><td>Débito</td><td class="precio">$ 28.500</td></tr>
+                  <tr><td class="precio">14:10</td><td>Mesa 6</td><td>Caro</td><td>Efectivo</td><td class="precio">$ 41.000</td></tr>
+                </tbody>
+              </table>
+              </div>
+            </div>
+            <div>
+              <div class="total-big"><div class="l">Vendido hoy</div><div class="n" id="cajaTotal">$ 312.000</div></div>
+              <div class="metodos" style="margin-top:1.2rem">
+                <div class="metodo"><span class="mi" style="background:var(--green-bg)">💵</span> Efectivo <b id="mEf">$ 118.000</b></div>
+                <div class="metodo"><span class="mi" style="background:var(--blue-bg)">📱</span> Mercado Pago <b id="mMp">$ 142.000</b></div>
+                <div class="metodo"><span class="mi" style="background:var(--amber-bg)">💳</span> Débito <b id="mDb">$ 52.000</b></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- MENU -->
+        <section class="panel" id="p-menu">
+          <div class="banner">📖 La carta con la que se arman las comandas y la caja. La actualizás y cambia también en el menú QR de las mesas.</div>
+          <div class="serv-grid">
+            <div class="serv"><h3>Bife de chorizo</h3><div class="p">$ 14.500</div><div class="d">Con guarnición a elección</div></div>
+            <div class="serv"><h3>Parrillada (2p)</h3><div class="p">$ 32.000</div><div class="d">Achuras + carnes surtidas</div></div>
+            <div class="serv"><h3>Milanesa napolitana</h3><div class="p">$ 12.800</div><div class="d">Con papas fritas</div></div>
+            <div class="serv"><h3>Provoleta</h3><div class="p">$ 7.500</div><div class="d">A la parrilla con pan</div></div>
+            <div class="serv"><h3>Empanadas (u.)</h3><div class="p">$ 1.800</div><div class="d">Carne, pollo o jamón y queso</div></div>
+            <div class="serv"><h3>Flan casero</h3><div class="p">$ 5.500</div><div class="d">Con dulce de leche o crema</div></div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">✓ Mesa cobrada</div>
+
+  <script>
+    const dias=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+    const meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    const d=new Date();
+    document.getElementById('fecha').textContent=`${dias[d.getDay()]} ${d.getDate()} de ${meses[d.getMonth()]}`;
+
+    const titles={salon:'Salón / Mesas',comandas:'Comandas / Cocina',caja:'Caja',menu:'Menú y precios'};
+    document.querySelectorAll('#nav button').forEach(b=>{
+      b.addEventListener('click',()=>{
+        document.querySelectorAll('#nav button').forEach(x=>x.classList.remove('active'));
+        b.classList.add('active');
+        const p=b.dataset.p;
+        document.querySelectorAll('.panel').forEach(x=>x.classList.remove('show'));
+        document.getElementById('p-'+p).classList.add('show');
+        document.getElementById('ptitle').textContent=titles[p];
+        closeSide();
+      });
+    });
+
+    let total=312000, ef=118000, mp=142000, db=52000, ocup=6;
+    const fmt=n=>'$ '+n.toLocaleString('es-AR');
+
+    function cobrar(btn,monto){
+      const mesa=btn.closest('.mesa');
+      const nm=mesa.querySelector('.nm').textContent;
+      const metodos=[['Efectivo','ef'],['Mercado Pago','mp'],['Débito','db']];
+      const m=metodos[Math.floor(Math.random()*metodos.length)];
+      mesa.className='mesa libre';
+      mesa.querySelector('.st').className='st libre';
+      mesa.querySelector('.st').textContent='Libre';
+      mesa.querySelector('.meta').textContent='—';
+      mesa.querySelector('.tot').textContent='$ 0';
+      mesa.querySelector('.act').innerHTML='<button class="mbtn mbtn-libre">✓ Cerrada</button>';
+      total+=monto; if(m[1]==='ef')ef+=monto; else if(m[1]==='mp')mp+=monto; else db+=monto;
+      ocup--; document.getElementById('ocupN').textContent=ocup; document.getElementById('ocupCount').textContent=ocup+' / 12';
+      document.getElementById('cIng').textContent=fmt(total);
+      document.getElementById('cajaTotal').textContent=fmt(total);
+      document.getElementById('mEf').textContent=fmt(ef);
+      document.getElementById('mMp').textContent=fmt(mp);
+      document.getElementById('mDb').textContent=fmt(db);
+      const now=new Date(); const hora=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+      const row=document.createElement('tr');
+      row.innerHTML=`<td class="precio">${hora}</td><td>${nm}</td><td>—</td><td>${m[0]}</td><td class="precio">${fmt(monto)}</td>`;
+      document.querySelector('#tCaja tbody').appendChild(row);
+      toast(`✓ ${nm} cobrada · ${fmt(monto)} (${m[0]})`);
+    }
+    window.cobrar=cobrar;
+
+    function listo(btn){
+      const tr=btn.closest('tr');
+      tr.querySelector('.estado').outerHTML='<span class="estado e-listo">Listo p/ servir</span>';
+      btn.outerHTML='<span class="done">✓ Avisado al mozo</span>';
+      toast('🔔 Cocina lista — mozo avisado');
+    }
+    window.listo=listo;
+
+    let tt;
+    function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2200)}
+
+    const side=document.getElementById('side'),scrim=document.getElementById('scrim');
+    function closeSide(){side.classList.remove('open');scrim.classList.remove('show')}
+    document.getElementById('burger').addEventListener('click',()=>{side.classList.add('open');scrim.classList.add('show')});
+    scrim.addEventListener('click',closeSide);
+  </script>
+</body>
+</html>

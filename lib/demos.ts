@@ -58,12 +58,19 @@ const GESTION: { test: RegExp; g: GestionMatch }[] = [
   { test: /barber|peluquer|corte de pelo/i, g: { file: 'barberia-gestion-demo.html', que: 'un sistema para manejar turnos, caja y clientes' } },
   { test: /gimnasio|\bgym\b|fitness|crossfit|musculaci/i, g: { file: 'gimnasio-gestion-demo.html', que: 'un sistema para manejar socios, cuotas y accesos' } },
   { test: /veterinar|mascota/i, g: { file: 'veterinaria-gestion-demo.html', que: 'un sistema para manejar turnos, historia clínica y recordatorios de vacunas' } },
+  { test: /restaurant|parrilla|bodeg[oó]n|pizzer|\bresto\b|\bbar\b|cervec|hamburgues|rotiser|comida/i, g: { file: 'restaurante-gestion-demo.html', que: 'un sistema para manejar mesas, comandas y caja (estilo Fudo)' } },
+  { test: /muebl|carpinter|placard|amoblamient|muebler/i, g: { file: 'muebleria-gestion-demo.html', que: 'un sistema para manejar presupuestos, producción y stock' } },
 ]
 const GESTION_POR_CATEGORIA: Record<string, GestionMatch> = {
   'Peluquerías': { file: 'barberia-gestion-demo.html', que: 'un sistema para manejar turnos, caja y clientes' },
   'Salones de belleza': { file: 'barberia-gestion-demo.html', que: 'un sistema para manejar turnos, caja y clientes' },
   'Gimnasios': { file: 'gimnasio-gestion-demo.html', que: 'un sistema para manejar socios, cuotas y accesos' },
   'Veterinarias': { file: 'veterinaria-gestion-demo.html', que: 'un sistema para manejar turnos, historia clínica y recordatorios de vacunas' },
+  'Restaurantes': { file: 'restaurante-gestion-demo.html', que: 'un sistema para manejar mesas, comandas y caja (estilo Fudo)' },
+  'Bares': { file: 'restaurante-gestion-demo.html', que: 'un sistema para manejar mesas, comandas y caja (estilo Fudo)' },
+  'Cafeterías': { file: 'restaurante-gestion-demo.html', que: 'un sistema para manejar mesas, comandas y caja' },
+  'Delivery': { file: 'restaurante-gestion-demo.html', que: 'un sistema para manejar pedidos, comandas y caja' },
+  'Mueblería': { file: 'muebleria-gestion-demo.html', que: 'un sistema para manejar presupuestos, producción y stock' },
 }
 
 /** Devuelve la demo de sistema de gestión que aplica al rubro, o null. */
