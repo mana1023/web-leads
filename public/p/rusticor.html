@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="es">
+<!--
+  ────────────────────────────────────────────────────────────────
+  DEMO MUEBLERÍA · plantilla para mostrar a mueblerías / fábricas de muebles.
+  Para adaptarla a un cliente real, reemplazá:
+    • "Mueblería Rusticor"                 → nombre del negocio
+    • 543518788424           → su WhatsApp (formato 549 + código + número)
+    • Dirección / horarios    → sección #contacto
+    • Fotos (images.unsplash) → fotos reales del negocio
+  ────────────────────────────────────────────────────────────────
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mueblería Rusticor — Muebles & Diseño · Fábrica de muebles a medida</title>
+  <meta name="description" content="Muebles de diseño y a medida: living, comedor, dormitorio, placares, racks y cocinas. Fabricación propia, envío e instalación y hasta 12 cuotas." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #FBF8F4;
+      --bg-2:      #F3ECE2;
+      --card:      #FFFFFF;
+      --ink:       #26201B;
+      --ink-soft:  #5B5149;
+      --muted:     #8A7E72;
+      --wood:      #9A6A43;
+      --wood-dark: #71482B;
+      --caramel:   #B5824E;
+      --sand:      #E7DCCB;
+      --line:      #E8DECF;
+      --wa:        #25D366;
+      --wa-dark:   #128C7E;
+      --font-head: 'Fraunces', Georgia, serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+      --radius:    16px;
+      --tr:        0.3s ease;
+      --shadow:    0 18px 50px -24px rgba(60,40,20,0.35);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    a { color: inherit; text-decoration: none; }
+    section { position: relative; }
+
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+    .eyebrow {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--wood);
+    }
+    h2.title {
+      font-family: var(--font-head); font-weight: 600;
+      font-size: clamp(1.9rem, 4.5vw, 3rem); line-height: 1.05;
+      letter-spacing: -0.02em; color: var(--ink); margin-top: 0.5rem;
+    }
+    .lead { color: var(--ink-soft); font-size: 1.02rem; max-width: 46ch; }
+
+    /* Progress */
+    #progress-bar {
+      position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+      background: linear-gradient(90deg, var(--wood), var(--caramel));
+      z-index: 9999; transition: width 0.1s linear;
+    }
+
+    /* Fade-up */
+    .fade-up { opacity: 0; transform: translateY(34px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .d1 { transition-delay: 0.08s; } .d2 { transition-delay: 0.16s; }
+    .d3 { transition-delay: 0.24s; } .d4 { transition-delay: 0.32s; }
+
+    /* Announce */
+    .announce {
+      background: var(--ink); color: #F6EEE3; text-align: center;
+      padding: 9px 1rem; font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; position: relative; z-index: 800;
+    }
+    .announce b { color: var(--caramel); }
+
+    /* Nav */
+    nav {
+      position: fixed; top: 34px; left: 0; right: 0; z-index: 900;
+      height: 66px; display: flex; align-items: center;
+      transition: background var(--tr), backdrop-filter var(--tr), top var(--tr), box-shadow var(--tr);
+    }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+    nav.scrolled {
+      top: 0; background: rgba(251,248,244,0.9);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 1px 0 var(--line);
+    }
+    .nav-logo {
+      font-family: var(--font-head); font-weight: 600; font-size: 1.7rem;
+      letter-spacing: -0.01em; color: var(--ink); line-height: 1; display: flex; align-items: baseline; gap: 0.35rem;
+    }
+    .nav-logo small { font-family: var(--font-body); font-size: 0.6rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--wood); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); transition: color var(--tr); }
+    .nav-links a:hover { color: var(--wood); }
+    .nav-cta {
+      background: var(--wood); color: #fff !important; padding: 0.6rem 1.25rem;
+      border-radius: 999px; font-size: 0.74rem !important; font-weight: 700 !important;
+      letter-spacing: 0.04em !important; text-transform: none !important;
+      transition: background var(--tr), transform var(--tr) !important; white-space: nowrap;
+    }
+    .nav-cta:hover { background: var(--wood-dark) !important; transform: translateY(-1px); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 6px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--ink); border-radius: 2px; transition: var(--tr); }
+
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex; flex-direction: column; position: absolute; top: 66px; left: 0; right: 0;
+        background: rgba(251,248,244,0.98); padding: 1.4rem 1.5rem; gap: 1.2rem; border-bottom: 1px solid var(--line);
+      }
+      .hamburger { display: flex; }
+    }
+
+    /* Hero */
+    #hero { height: 100vh; min-height: 620px; display: flex; align-items: center; }
+    #hero-bg { position: absolute; inset: 0; z-index: -2; }
+    #hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(105deg, rgba(20,14,9,0.72) 0%, rgba(20,14,9,0.45) 42%, rgba(20,14,9,0.12) 100%);
+    }
+    #hero .wrap { color: #fff; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.25); padding: 0.4rem 0.9rem; border-radius: 999px;
+      font-size: 0.74rem; font-weight: 600; letter-spacing: 0.04em; backdrop-filter: blur(6px);
+    }
+    .hero-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--wa); box-shadow: 0 0 0 3px rgba(37,211,102,0.3); }
+    #hero h1 {
+      font-family: var(--font-head); font-weight: 600;
+      font-size: clamp(2.6rem, 7vw, 5rem); line-height: 0.98; letter-spacing: -0.025em;
+      margin: 1.2rem 0 1rem; max-width: 15ch; text-shadow: 0 2px 30px rgba(0,0,0,0.3);
+    }
+    #hero h1 em { font-style: italic; color: #F0C99A; }
+    #hero p { font-size: 1.12rem; max-width: 42ch; color: #F1E9DE; }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 2rem; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.95rem 1.6rem;
+      border-radius: 999px; font-weight: 700; font-size: 0.92rem; cursor: pointer;
+      transition: transform var(--tr), background var(--tr), box-shadow var(--tr); border: none;
+    }
+    .btn-wa { background: var(--wa); color: #fff; box-shadow: 0 14px 30px -12px rgba(37,211,102,0.7); }
+    .btn-wa:hover { background: var(--wa-dark); transform: translateY(-2px); }
+    .btn-ghost { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.4); }
+    .btn-ghost:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+    .btn-wood { background: var(--wood); color: #fff; }
+    .btn-wood:hover { background: var(--wood-dark); transform: translateY(-2px); }
+    .scroll-hint { position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.8); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; animation: bob 2s ease-in-out infinite; }
+    @keyframes bob { 0%,100% { transform: translate(-50%,0); } 50% { transform: translate(-50%,8px); } }
+
+    /* Stats */
+    #stats { background: var(--ink); color: #F4ECE1; padding: 3rem 0; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; text-align: center; }
+    .stat .num { font-family: var(--font-head); font-weight: 600; font-size: clamp(2rem, 5vw, 3rem); color: #F0C99A; line-height: 1; }
+    .stat .lbl { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: #C9BBAA; margin-top: 0.5rem; }
+    @media (max-width: 620px) { .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; } }
+
+    /* Generic section padding */
+    .sec { padding: clamp(4rem, 9vw, 7rem) 0; }
+
+    /* Nosotros */
+    .split { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+    .split .media { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); aspect-ratio: 4/5; position: relative; }
+    .split .media .tag {
+      position: absolute; left: 1rem; bottom: 1rem; background: rgba(255,255,255,0.92);
+      color: var(--ink); padding: 0.6rem 1rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600; box-shadow: var(--shadow);
+    }
+    .feats { list-style: none; margin-top: 1.6rem; display: grid; gap: 0.9rem; }
+    .feats li { display: flex; gap: 0.8rem; align-items: flex-start; font-size: 0.98rem; color: var(--ink-soft); }
+    .feats .ic { flex: none; width: 26px; height: 26px; border-radius: 8px; background: var(--bg-2); color: var(--wood); display: grid; place-items: center; font-size: 0.9rem; }
+    @media (max-width: 820px) { .split { grid-template-columns: 1fr; } .split .media { aspect-ratio: 3/2; order: -1; } }
+
+    /* Catálogo */
+    #catalogo { background: var(--bg-2); }
+    .sec-head { text-align: center; max-width: 640px; margin: 0 auto 3rem; }
+    .sec-head .lead { margin: 0.8rem auto 0; }
+    .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .cat {
+      background: var(--card); border-radius: var(--radius); overflow: hidden;
+      box-shadow: 0 10px 30px -20px rgba(60,40,20,0.4); transition: transform var(--tr), box-shadow var(--tr);
+      display: flex; flex-direction: column;
+    }
+    .cat:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+    .cat .ph { aspect-ratio: 4/3; overflow: hidden; position: relative; }
+    .cat .ph img { transition: transform 0.6s ease; }
+    .cat:hover .ph img { transform: scale(1.06); }
+    .cat .badge { position: absolute; top: 0.8rem; left: 0.8rem; background: rgba(255,255,255,0.94); color: var(--wood-dark); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.3rem 0.7rem; border-radius: 999px; }
+    .cat .body { padding: 1.2rem 1.3rem 1.4rem; display: flex; flex-direction: column; flex: 1; }
+    .cat h3 { font-family: var(--font-head); font-weight: 600; font-size: 1.35rem; letter-spacing: -0.01em; }
+    .cat p { color: var(--muted); font-size: 0.9rem; margin: 0.35rem 0 1rem; flex: 1; }
+    .cat .go { display: inline-flex; align-items: center; gap: 0.45rem; font-weight: 700; font-size: 0.85rem; color: var(--wa-dark); }
+    .cat .go svg { width: 16px; height: 16px; }
+    @media (max-width: 900px) { .cat-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .cat-grid { grid-template-columns: 1fr; } }
+
+    /* A medida */
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 2.4rem; }
+    .step { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.6rem; }
+    .step .n { font-family: var(--font-head); font-size: 2.1rem; color: var(--sand); font-weight: 700; line-height: 1; }
+    .step h4 { font-size: 1.05rem; margin: 0.4rem 0 0.4rem; }
+    .step p { color: var(--muted); font-size: 0.9rem; }
+    @media (max-width: 780px) { .steps { grid-template-columns: 1fr; } }
+
+    /* Ambientes */
+    #ambientes { background: var(--bg-2); }
+    .gallery { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 200px; gap: 1rem; }
+    .gallery a { border-radius: 14px; overflow: hidden; position: relative; }
+    .gallery a img { transition: transform 0.6s ease; }
+    .gallery a:hover img { transform: scale(1.07); }
+    .gallery .big { grid-column: span 2; grid-row: span 2; }
+    .gallery .wide { grid-column: span 2; }
+    @media (max-width: 820px) {
+      .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
+      .gallery .big { grid-column: span 2; grid-row: span 1; }
+      .gallery .wide { grid-column: span 2; }
+    }
+
+    /* Beneficios */
+    .benef { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .benef .b { text-align: center; padding: 2rem 1.4rem; border-radius: var(--radius); background: var(--card); border: 1px solid var(--line); }
+    .benef .emoji { font-size: 2rem; }
+    .benef h4 { font-family: var(--font-head); font-weight: 600; font-size: 1.25rem; margin: 0.6rem 0 0.4rem; }
+    .benef p { color: var(--muted); font-size: 0.92rem; }
+    @media (max-width: 780px) { .benef { grid-template-columns: 1fr; } }
+
+    /* Reseñas */
+    #resenas { background: var(--ink); color: #F4ECE1; }
+    #resenas .title { color: #fff; }
+    .rev-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; margin-top: 2.6rem; }
+    .rev { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius); padding: 1.6rem; }
+    .rev .stars { color: #F0C99A; letter-spacing: 2px; font-size: 0.95rem; }
+    .rev p { color: #E6DACB; font-size: 0.95rem; margin: 0.7rem 0 1.2rem; font-style: italic; }
+    .rev .who { display: flex; align-items: center; gap: 0.7rem; }
+    .rev .av { width: 40px; height: 40px; border-radius: 50%; background: var(--wood); color: #fff; display: grid; place-items: center; font-weight: 700; }
+    .rev .who b { font-size: 0.9rem; } .rev .who small { display: block; color: #B7A997; font-weight: 400; }
+    @media (max-width: 860px) { .rev-grid { grid-template-columns: 1fr; } }
+
+    /* Contacto */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: stretch; }
+    .info-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 2rem; }
+    .info-row { display: flex; gap: 0.9rem; padding: 0.9rem 0; border-bottom: 1px solid var(--line); }
+    .info-row:last-child { border-bottom: none; }
+    .info-row .ic { flex: none; width: 40px; height: 40px; border-radius: 12px; background: var(--bg-2); display: grid; place-items: center; font-size: 1.1rem; }
+    .info-row b { display: block; font-size: 0.95rem; } .info-row span { color: var(--muted); font-size: 0.9rem; }
+    .map { border-radius: var(--radius); overflow: hidden; min-height: 320px; border: 1px solid var(--line); }
+    .map iframe { width: 100%; height: 100%; min-height: 320px; border: 0; display: block; }
+    @media (max-width: 820px) { .contact-grid { grid-template-columns: 1fr; } }
+
+    /* CTA final */
+    #cta { background: linear-gradient(135deg, var(--wood-dark), var(--wood)); color: #fff; text-align: center; }
+    #cta .title { color: #fff; }
+    #cta p { color: #F3E7D8; max-width: 48ch; margin: 1rem auto 2rem; }
+
+    /* Footer */
+    footer { background: #1B1611; color: #B9AC9C; padding: 3rem 0 2rem; }
+    footer .cols { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem; }
+    footer .nav-logo { color: #F4ECE1; margin-bottom: 0.6rem; }
+    footer a { color: #B9AC9C; font-size: 0.9rem; } footer a:hover { color: #fff; }
+    footer .fcol h5 { color: #F4ECE1; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.8rem; }
+    footer .fcol div { margin: 0.35rem 0; }
+    footer .copy { border-top: 1px solid rgba(255,255,255,0.08); margin-top: 2.2rem; padding-top: 1.4rem; font-size: 0.78rem; text-align: center; color: #8A7E6F; }
+
+    /* Floating WA */
+    .wa-float {
+      position: fixed; right: 20px; bottom: 20px; z-index: 950;
+      background: var(--wa); color: #fff; width: 60px; height: 60px; border-radius: 50%;
+      display: grid; place-items: center; box-shadow: 0 12px 30px -8px rgba(37,211,102,0.7);
+      transition: transform var(--tr); animation: pulse 2.4s infinite;
+    }
+    .wa-float:hover { transform: scale(1.08); }
+    .wa-float svg { width: 32px; height: 32px; }
+    @keyframes pulse { 0% { box-shadow: 0 12px 30px -8px rgba(37,211,102,0.7), 0 0 0 0 rgba(37,211,102,0.5); } 70% { box-shadow: 0 12px 30px -8px rgba(37,211,102,0.7), 0 0 0 16px rgba(37,211,102,0); } 100% { box-shadow: 0 12px 30px -8px rgba(37,211,102,0.7), 0 0 0 0 rgba(37,211,102,0); } }
+  </style>
+</head>
+<body>
+  <div id="progress-bar"></div>
+
+  <div class="announce">🚚 Envío e instalación en todo el AMBA · <b>Hasta 12 cuotas sin interés</b></div>
+
+  <nav id="nav">
+    <div class="wrap">
+      <a href="#hero" class="nav-logo">Mueblería Rusticor</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#catalogo">Muebles</a></li>
+        <li><a href="#amedida">A medida</a></li>
+        <li><a href="#ambientes">Ambientes</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+        <li><a class="nav-cta" href="https://wa.me/543518788424?text=Hola%20Muebler%C3%ADa%20Rusticor!%20Quiero%20pedir%20un%20presupuesto%20%F0%9F%99%82" target="_blank" rel="noopener">Pedir presupuesto</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div id="hero-bg">
+      <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=75" alt="Living amoblado por Mueblería Rusticor" />
+    </div>
+    <div class="wrap">
+      <span class="hero-badge"><span class="dot"></span> Respondemos al toque por WhatsApp</span>
+      <h1>Muebles que hacen tu <em>casa</em></h1>
+      <p>Diseño, fabricación propia y muebles a medida para cada ambiente. Del living al placard, lo hacemos como lo imaginás.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-wa" href="https://wa.me/543518788424?text=Hola%20Muebler%C3%ADa%20Rusticor!%20Vi%20la%20web%20y%20quiero%20hacer%20una%20consulta%20%F0%9F%99%82" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.3A7.9 7.9 0 0 0 12 4a8 8 0 0 0-6.9 12l-1 3.7 3.8-1A8 8 0 0 0 12 20a8 8 0 0 0 5.6-13.7ZM12 18.5c-1.2 0-2.4-.3-3.4-.9l-.2-.1-2.3.6.6-2.2-.2-.3A6.6 6.6 0 1 1 12 18.5Zm3.7-4.9c-.2-.1-1.2-.6-1.4-.6-.2-.1-.3-.1-.4.1l-.6.7c-.1.1-.2.2-.4.1a5.4 5.4 0 0 1-2.6-2.3c-.2-.3.2-.3.5-1 .1-.1 0-.3 0-.4l-.6-1.4c-.2-.4-.3-.3-.5-.3h-.4c-.1 0-.4.1-.5.3-.2.2-.7.7-.7 1.7s.7 1.9.8 2.1c.1.1 1.5 2.3 3.6 3.2 1.3.6 1.8.6 2.5.5.4 0 1.2-.5 1.4-1 .2-.5.2-.9.1-1-.1-.1-.2-.1-.4-.2Z"/></svg>
+          Presupuesto por WhatsApp
+        </a>
+        <a class="btn btn-ghost" href="#catalogo">Ver muebles</a>
+      </div>
+    </div>
+    <div class="scroll-hint">Scroll ↓</div>
+  </section>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="wrap">
+      <div class="stats-grid">
+        <div class="stat fade-up"><div class="num">+15</div><div class="lbl">Años fabricando</div></div>
+        <div class="stat fade-up d1"><div class="num">+3.500</div><div class="lbl">Muebles entregados</div></div>
+        <div class="stat fade-up d2"><div class="num">100%</div><div class="lbl">Fabricación propia</div></div>
+        <div class="stat fade-up d3"><div class="num">4.9★</div><div class="lbl">En Google Reviews</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOSOTROS -->
+  <section id="nosotros" class="sec">
+    <div class="wrap split">
+      <div class="text fade-up">
+        <span class="eyebrow">Nuestro taller</span>
+        <h2 class="title">Carpintería de verdad,<br>de acá a tu casa</h2>
+        <p class="lead">Somos una fábrica de muebles familiar. Elegimos maderas nobles, cuidamos cada terminación y trabajamos con vos desde el diseño hasta la instalación. Nada de intermediarios: hablás directo con quien hace el mueble.</p>
+        <ul class="feats">
+          <li><span class="ic">✓</span> Maderas macizas y placas premium, herrajes con garantía.</li>
+          <li><span class="ic">✓</span> Diseño sin cargo: te ayudamos a aprovechar cada cm².</li>
+          <li><span class="ic">✓</span> Cumplimos los tiempos que prometemos.</li>
+        </ul>
+      </div>
+      <div class="media fade-up d2">
+        <img src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=70" alt="Rincón amoblado con mesa y silla de madera" />
+        <div class="tag">🪵 Diseño + fabricación propia</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POR QUÉ TE CONVIENE -->
+  <section id="porque" class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head fade-up">
+        <span class="eyebrow">Por qué te conviene</span>
+        <h2 class="title">Lo que te cuesta no tener web</h2>
+        <p class="lead">Antes de comprar un mueble, la gente googlea y compara. Si no estás ahí, la venta se la lleva otro.</p>
+      </div>
+      <div class="benef">
+        <div class="b fade-up"><div class="emoji">🔎</div><h4>Te encuentran en Google</h4><p>La gente busca "muebles a medida" antes de comprar. Con web aparecés; sin web, no existís para ellos.</p></div>
+        <div class="b fade-up d1"><div class="emoji">🛋️</div><h4>Catálogo que vende</h4><p>Tus muebles ordenados y profesionales, no perdidos en el feed de Instagram.</p></div>
+        <div class="b fade-up d2"><div class="emoji">💬</div><h4>Consultas más serias</h4><p>Llegan con la medida y el modelo ya elegidos, no un "hola, precio?" suelto.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO -->
+  <section id="catalogo" class="sec">
+    <div class="wrap">
+      <div class="sec-head fade-up">
+        <span class="eyebrow">Catálogo</span>
+        <h2 class="title">Muebles para cada ambiente</h2>
+        <p class="lead">Tocá cualquier categoría y te pasamos fotos, medidas y precios al instante por WhatsApp.</p>
+      </div>
+      <div class="cat-grid">
+
+        <article class="cat fade-up">
+          <div class="ph"><span class="badge">Living</span><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=70" alt="Sofá de living" loading="lazy" /></div>
+          <div class="body">
+            <h3>Living & Sofás</h3>
+            <p>Sillones, sofás y mesas ratonas. Tapizados a elección y medidas a tu espacio.</p>
+            <a class="go" href="https://wa.me/543518788424?text=Hola%20Muebler%C3%ADa%20Rusticor!%20Me%20interesan%20los%20muebles%20de%20living%20%F0%9F%9B%8B%EF%B8%8F" target="_blank" rel="noopener">Consultar por WhatsApp <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.3A7.9 7.9 0 0 0 12 4a8 8 0 0 0-6.9 12l-1 3.7 3.8-1A8 8 0 0 0 12 20a8 8 0 0 0 5.6-13.7ZM12 18.5c-1.2 0-2.4-.3-3.4-.9l-.2-.1-2.3.6.6-2.2-.2-.3A6.6 6.6 0 1 1 12 18.5Z"/></svg></a>
+          </div>
+        </article>
+
+        <article class="cat fade-up d1">
+          <div class="ph"><span class="badge">Comedor</span><img src="https://images.unsplash.com/photo-1617806118233-18e1de247200?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=70" alt="Comedor con mesa y sillas" loading="lazy" /></div>
+          <div class="body">
+            <h3>Comedores</h3>
+            <p>Mesas de madera maciza, sillas y bancos. Extensibles o fijas, del tamaño que necesites.</p>
+            <a class="go" href="https://wa.me/543518788424?text=Hola%20Muebler%C3%ADa%20Rusticor!%20Me%20interesan%20los%20comedores%20%F0%9F%AA%91" target="_blank" rel="noopener">Consultar por WhatsApp <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.3A7.9 7.9 0 0 0 12 4a8 8 0 0 0-6.9 12l-1 3.7 3.8-1A8 8 0 0 0 12 20a8 8 0 0 0 5.6-13.7ZM12 18.5c-1.2 0-2.4-.3-3.4-.9l-.2-.1-2.3.6.6-2.2-.2-.3A6.6 6.6 0 1 1 12 18.5Z"/></svg></a>
+          </div>
+        </article>
+
+        <article class="cat fade-up d2">
+          <div class="ph"><span class="badge">Dormitorio</span><img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=70" alt="Dormitorio con cama y mesas de luz" loading="lazy" /></div>
+          <div class="body">
+            <h3>Dormitorios</h3>
+            <p>Camas, respaldos, mesas de luz y cómodas. Juegos completos que combinan.</p>
+            <a class="go" href="https://wa.me/543518788424?text=Hola%20Muebler%C3%ADa%20Rusticor!%20Me%20interesan%20los%20muebles%20de%20dormitorio%20%F0%9F%9B%8F%EF%B8%8F" target="_blank" rel="noopener">Consultar por WhatsApp <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.3A7.9 7.9 0 0 0 12 4a8 8 0 0 0-6.9 12l-1 3.7 3.8-1A8 8 0 0 0 12 20a8 8 0 0 0 5.6-13.7ZM12 18.5c-1.2 0-2.4-.3-3.4-.9l-.2-.1-2.3.6.6-2.2-.2-.3A6.6 6.6 0 1 1 12 18.5Z"/></svg></a>
+          </div>
+        </article>
+
+        <article class="cat fade-up">
+          <div class="ph"><span class="badge">A medida</span><img src="https://images.unsplash.com/photo-1558997519-83ea9252edf8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=70" alt="Placard de madera" loading="lazy" /></div>
+          <div class="body">
+            <h3>Placares & Vestidores</h3>
+            <p>Placares, vestidores y roperos a medida. Aprovechamos hasta el último rincón.</p>
+            <a class="go" href="https://wa.me/543518788424?text=Hola%20Muebler%C3%ADa%20Rusticor!%20Quiero%20un%20placard%20a%20medida%20%F0%9F%9A%AA" target="_blank" rel="noopener">Consultar por WhatsApp <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.3A7.9 7.9 0 0 0 12 4a8 8 0 0 0-6.9 12l-1 3.7 3.8-1A8 8 0 0 0 12 20a8 8 0 0 0 5.6-13.7ZM12 18.5c-1.2 0-2.4-.3-3.4-.9l-.2-.1-2.3.6.6-2.2-.2-.3A6.6 6.6 0 1 1 12 18.5Z"/></svg></a>
+          </div>
+        </article>
+
+        <article class="cat fade-up d1">
+          <div class="ph"><span class="badge">Living</span><img src="https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=70" alt="Rack y mueble de TV" loading="lazy" /></div>
+          <div class="body">
+            <h3>Racks & Muebles de TV</h3>
+            <p>Racks, modulares y bibliotecas. Modernos, prácticos y con el estilo de tu casa.</p>
+            <a class="go" href="https://wa.me/543518788424?text=Hola%20Muebler%C3%ADa%20Rusticor!%20Me%20interesan%20los%20racks%20y%20muebles%20de%20TV%20%F0%9F%93%BA" target="_blank" rel="noopener">Consultar por WhatsApp <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.3A7.9 7.9 0 0 0 12 4a8 8 0 0 0-6.9 12l-1 3.7 3.8-1A8 8 0 0 0 12 20a8 8 0 0 0 5.6-13.7ZM12 18.5c-1.2 0-2.4-.3-3.4-.9l-.2-.1-2.3.6.6-2.2-.2-.3A6.6 6.6 0 1 1 12 18.5Z"/></svg></a>
+          </div>
+        </article>
+
+        <article class="cat fade-up d2">
+          <div class="ph"><span class="badge">Cocina</span><img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=70" alt="Muebles de cocina a medida" loading="lazy" /></div>
+          <div class="body">
+            <h3>Cocinas & Alacenas</h3>
+            <p>Amoblamientos de cocina completos, bajo mesada y alacenas. Con mesada e instalación.</p>
+            <a class="go" href="https://wa.me/543518788424?text=Hola%20Muebler%C3%ADa%20Rusticor!%20Quiero%20amoblar%20mi%20cocina%20%F0%9F%8D%B3" target="_blank" rel="noopener">Consultar por WhatsApp <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.3A7.9 7.9 0 0 0 12 4a8 8 0 0 0-6.9 12l-1 3.7 3.8-1A8 8 0 0 0 12 20a8 8 0 0 0 5.6-13.7ZM12 18.5c-1.2 0-2.4-.3-3.4-.9l-.2-.1-2.3.6.6-2.2-.2-.3A6.6 6.6 0 1 1 12 18.5Z"/></svg></a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- A MEDIDA -->
+  <section id="amedida" class="sec">
+    <div class="wrap">
+      <div class="sec-head fade-up">
+        <span class="eyebrow">Muebles a medida</span>
+        <h2 class="title">Lo diseñamos para tu espacio</h2>
+        <p class="lead">¿Un rincón difícil, un ambiente chico, una idea puntual? Lo resolvemos en 3 pasos.</p>
+      </div>
+      <div class="steps">
+        <div class="step fade-up"><div class="n">01</div><h4>Nos contás la idea</h4><p>Mandanos por WhatsApp una foto del espacio y las medidas aproximadas. Sin compromiso.</p></div>
+        <div class="step fade-up d1"><div class="n">02</div><h4>Diseñamos y cotizamos</h4><p>Te pasamos una propuesta con el diseño, materiales y el precio final, en cuotas si querés.</p></div>
+        <div class="step fade-up d2"><div class="n">03</div><h4>Fabricamos e instalamos</h4><p>Lo hacemos en nuestro taller y te lo llevamos e instalamos listo para usar.</p></div>
+      </div>
+      <div style="text-align:center; margin-top:2.4rem" class="fade-up d2">
+        <a class="btn btn-wood" href="https://wa.me/543518788424?text=Hola%20Muebler%C3%ADa%20Rusticor!%20Quiero%20un%20mueble%20a%20medida%2C%20les%20paso%20las%20medidas%20%F0%9F%93%90" target="_blank" rel="noopener">Empezar mi proyecto a medida</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- AMBIENTES -->
+  <section id="ambientes" class="sec">
+    <div class="wrap">
+      <div class="sec-head fade-up">
+        <span class="eyebrow">Ambientes</span>
+        <h2 class="title">Trabajos que hablan solos</h2>
+        <p class="lead">Algunos de los ambientes que amoblamos. El tuyo puede ser el próximo.</p>
+      </div>
+      <div class="gallery fade-up">
+        <a class="big" href="#contacto"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=70" alt="Living con sillón y rack" loading="lazy" /></a>
+        <a href="https://images.unsplash.com/photo-1540574163026-643ea20ade25?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=65" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1540574163026-643ea20ade25?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=65" alt="Sofá de cuero" loading="lazy" /></a>
+        <a href="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=65" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=65" alt="Dormitorio moderno" loading="lazy" /></a>
+        <a class="wide" href="#contacto"><img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=70" alt="Ambiente con sillones" loading="lazy" /></a>
+        <a href="https://images.unsplash.com/photo-1615874959474-d609969a20ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=65" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1615874959474-d609969a20ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=65" alt="Dormitorio cálido" loading="lazy" /></a>
+        <a href="https://images.unsplash.com/photo-1449247709967-d4461a6a6103?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=65" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1449247709967-d4461a6a6103?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=65" alt="Escritorio a medida" loading="lazy" /></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFICIOS -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="benef">
+        <div class="b fade-up"><div class="emoji">💳</div><h4>Hasta 12 cuotas</h4><p>Financiación con todas las tarjetas y planes sin interés. Amoblate hoy, pagalo tranquilo.</p></div>
+        <div class="b fade-up d1"><div class="emoji">🚚</div><h4>Envío e instalación</h4><p>Llevamos y armamos tu mueble en todo el AMBA. Vos no movés un dedo.</p></div>
+        <div class="b fade-up d2"><div class="emoji">🛡️</div><h4>Garantía real</h4><p>Todos nuestros muebles tienen garantía escrita. Si algo falla, lo resolvemos.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEÑAS -->
+  <section id="resenas" class="sec">
+    <div class="wrap">
+      <div class="sec-head fade-up">
+        <span class="eyebrow" style="color:#F0C99A">Reseñas</span>
+        <h2 class="title">Lo que dicen nuestros clientes</h2>
+      </div>
+      <div class="rev-grid">
+        <div class="rev fade-up">
+          <div class="stars">★★★★★</div>
+          <p>"Nos hicieron el placard del cuarto a medida y quedó impecable. Súper prolijos con la instalación y cumplieron los tiempos."</p>
+          <div class="who"><div class="av">MG</div><div><b>María González</b><small>Placard a medida · Banfield</small></div></div>
+        </div>
+        <div class="rev fade-up d1">
+          <div class="stars">★★★★★</div>
+          <p>"Compré el comedor de madera maciza y es una obra de arte. Atención por WhatsApp muy rápida, me pasaron todo al toque."</p>
+          <div class="who"><div class="av">DR</div><div><b>Diego Rodríguez</b><small>Comedor extensible · Lomas</small></div></div>
+        </div>
+        <div class="rev fade-up d2">
+          <div class="stars">★★★★★</div>
+          <p>"Les mandé una foto de la cocina y en dos días tenía el diseño y el presupuesto. Excelente relación precio-calidad."</p>
+          <div class="who"><div class="av">CP</div><div><b>Carla Pérez</b><small>Cocina a medida · Temperley</small></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto" class="sec">
+    <div class="wrap">
+      <div class="sec-head fade-up">
+        <span class="eyebrow">Contacto</span>
+        <h2 class="title">Vení al showroom o escribinos</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="info-card fade-up">
+          <div class="info-row"><div class="ic">📍</div><div><b>Showroom & Fábrica</b><span>Córdoba</span></div></div>
+          <div class="info-row"><div class="ic">🕐</div><div><b>Horarios</b><span>Lun a Vie 9 a 18 hs · Sáb 9 a 13 hs</span></div></div>
+          <div class="info-row"><div class="ic">📱</div><div><b>WhatsApp</b><span>0351 878-8424</span></div></div>
+          <div class="info-row"><div class="ic">📷</div><div><b>Instagram</b><span>@rusticor</span></div></div>
+          <div style="margin-top:1.4rem; display:flex; gap:0.8rem; flex-wrap:wrap">
+            <a class="btn btn-wa" href="https://wa.me/543518788424?text=Hola%20Muebler%C3%ADa%20Rusticor!%20Quiero%20hacer%20una%20consulta%20%F0%9F%99%82" target="_blank" rel="noopener">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.3A7.9 7.9 0 0 0 12 4a8 8 0 0 0-6.9 12l-1 3.7 3.8-1A8 8 0 0 0 12 20a8 8 0 0 0 5.6-13.7ZM12 18.5c-1.2 0-2.4-.3-3.4-.9l-.2-.1-2.3.6.6-2.2-.2-.3A6.6 6.6 0 1 1 12 18.5Z"/></svg>
+              Escribir ahora
+            </a>
+            <a class="btn btn-wood" href="tel:+543518788424">Llamar</a>
+          </div>
+        </div>
+        <div class="map fade-up d1">
+          <iframe title="Mapa Mueblería Rusticor" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=Córdoba&output=embed"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section id="cta" class="sec">
+    <div class="wrap">
+      <h2 class="title fade-up">¿Armamos tu proyecto?</h2>
+      <p class="fade-up d1">Contanos qué necesitás y te pasamos ideas, medidas y precio sin compromiso. Respondemos rápido.</p>
+      <div class="fade-up d2">
+        <a class="btn btn-wa" style="font-size:1rem; padding:1.1rem 2rem" href="https://wa.me/543518788424?text=Hola%20Muebler%C3%ADa%20Rusticor!%20Quiero%20armar%20un%20proyecto%20de%20muebles%20%F0%9F%AA%91" target="_blank" rel="noopener">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.3A7.9 7.9 0 0 0 12 4a8 8 0 0 0-6.9 12l-1 3.7 3.8-1A8 8 0 0 0 12 20a8 8 0 0 0 5.6-13.7ZM12 18.5c-1.2 0-2.4-.3-3.4-.9l-.2-.1-2.3.6.6-2.2-.2-.3A6.6 6.6 0 1 1 12 18.5Z"/></svg>
+          Pedir presupuesto gratis
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div class="cols">
+        <div class="fcol" style="max-width:280px">
+          <div class="nav-logo">Mueblería Rusticor</div>
+          <p style="font-size:0.9rem">Fábrica de muebles de diseño y a medida. Del living al placard, lo hacemos como lo imaginás.</p>
+        </div>
+        <div class="fcol">
+          <h5>Muebles</h5>
+          <div><a href="#catalogo">Living & Sofás</a></div>
+          <div><a href="#catalogo">Comedores</a></div>
+          <div><a href="#catalogo">Dormitorios</a></div>
+          <div><a href="#catalogo">Placares</a></div>
+          <div><a href="#catalogo">Cocinas</a></div>
+        </div>
+        <div class="fcol">
+          <h5>Mueblería Rusticor</h5>
+          <div><a href="#nosotros">Nosotros</a></div>
+          <div><a href="#amedida">A medida</a></div>
+          <div><a href="#ambientes">Ambientes</a></div>
+          <div><a href="#contacto">Contacto</a></div>
+        </div>
+        <div class="fcol">
+          <h5>Contacto</h5>
+          <div>Córdoba, BA</div>
+          <div>0351 878-8424</div>
+          <div>@rusticor</div>
+          <div>Lun a Sáb</div>
+        </div>
+      </div>
+      <div class="copy">© 2026 Mueblería Rusticor Muebles · Hecho con dedicación · Demo de sitio web</div>
+    </div>
+  </footer>
+
+  <a class="wa-float" href="https://wa.me/543518788424?text=Hola%20Muebler%C3%ADa%20Rusticor!%20Quiero%20hacer%20una%20consulta%20%F0%9F%99%82" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.3A7.9 7.9 0 0 0 12 4a8 8 0 0 0-6.9 12l-1 3.7 3.8-1A8 8 0 0 0 12 20a8 8 0 0 0 5.6-13.7ZM12 18.5c-1.2 0-2.4-.3-3.4-.9l-.2-.1-2.3.6.6-2.2-.2-.3A6.6 6.6 0 1 1 12 18.5Zm3.7-4.9c-.2-.1-1.2-.6-1.4-.6-.2-.1-.3-.1-.4.1l-.6.7c-.1.1-.2.2-.4.1a5.4 5.4 0 0 1-2.6-2.3c-.2-.3.2-.3.5-1 .1-.1 0-.3 0-.4l-.6-1.4c-.2-.4-.3-.3-.5-.3h-.4c-.1 0-.4.1-.5.3-.2.2-.7.7-.7 1.7s.7 1.9.8 2.1c.1.1 1.5 2.3 3.6 3.2 1.3.6 1.8.6 2.5.5.4 0 1.2-.5 1.4-1 .2-.5.2-.9.1-1-.1-.1-.2-.1-.4-.2Z"/></svg>
+  </a>
+
+  <script>
+    // Scroll progress + nav state
+    const bar = document.getElementById('progress-bar');
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      const h = document.documentElement;
+      const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+      bar.style.width = (scrolled * 100) + '%';
+      nav.classList.toggle('scrolled', h.scrollTop > 40);
+    });
+
+    // Hamburger
+    const ham = document.getElementById('hamburger');
+    const links = document.getElementById('navLinks');
+    ham.addEventListener('click', () => links.classList.toggle('open'));
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+    // Fade-up on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.14 });
+    document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
