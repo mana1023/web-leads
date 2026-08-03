@@ -22,13 +22,18 @@ export interface Mensaje {
   url: string | null   // link wa.me listo, o null si no hay telefono
 }
 
-/** Normaliza un telefono argentino al formato que espera wa.me (54...). */
+/** Normaliza un telefono argentino al formato de celular que espera wa.me: 549 + área + número.
+ *  Saca el 0 inicial y el 15 de celular. OJO: si el número es una línea FIJA, no va a tener
+ *  WhatsApp igual — hay que buscar el celular real en el Instagram/Facebook del negocio. */
 export function buildPhone(raw: string | null): string | null {
   if (!raw) return null
-  const p = raw.replace(/\D/g, '')
-  const norm = p.startsWith('0') ? p.slice(1) : p
-  if (!norm) return null
-  return norm.startsWith('54') ? norm : `54${norm}`
+  let p = raw.replace(/\D/g, '')
+  p = p.replace(/^0/, '')            // saca el 0 inicial
+  p = p.replace(/^(11|\d{3,4})15/, '$1') // saca el "15" de celular después del código de área
+  if (!p) return null
+  if (p.startsWith('549')) return p
+  if (p.startsWith('54')) return '549' + p.slice(2)
+  return '549' + p
 }
 
 function wa(phone: string | null, texto: string): string | null {
