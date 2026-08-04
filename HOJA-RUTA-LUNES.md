@@ -32,6 +32,8 @@ Los teléfonos de Google eran fijos (sin WhatsApp). Estos son los **WhatsApp/IG 
 > ¡Genial! Mirá, se la armé con el nombre de ustedes 👇
 > https://web-leads-omega.vercel.app/p/peltre.html
 > 
+> (Tip: desde el celu, en la parte de "Elegí la terminación" tocá los colores y el mueble cambia en vivo 😉)
+> 
 > La adapto 100% con sus fotos, catálogo y datos reales. Te cuento por qué te lo hago tan accesible: soy estudiante de programación armando mi portfolio con proyectos reales, así que cobro muy por debajo del mercado — misma calidad, precio de estudiante.
 > 
 > Y si querés, además te hago un sistema para manejar presupuestos, producción y stock 👇
@@ -51,6 +53,8 @@ Los teléfonos de Google eran fijos (sin WhatsApp). Estos son los **WhatsApp/IG 
 **Msg 2 (cuando respondan):**
 > ¡Genial! Mirá, se la armé con el nombre de ustedes 👇
 > https://web-leads-omega.vercel.app/p/muebles-jujuy.html
+> 
+> (Tip: desde el celu, en la parte de "Elegí la terminación" tocá los colores y el mueble cambia en vivo 😉)
 > 
 > La adapto 100% con sus fotos, catálogo y datos reales. Te cuento por qué te lo hago tan accesible: soy estudiante de programación armando mi portfolio con proyectos reales, así que cobro muy por debajo del mercado — misma calidad, precio de estudiante.
 > 
@@ -72,6 +76,8 @@ Los teléfonos de Google eran fijos (sin WhatsApp). Estos son los **WhatsApp/IG 
 > ¡Genial! Mirá, se la armé con el nombre de ustedes 👇
 > https://web-leads-omega.vercel.app/p/muebles-constitucion.html
 > 
+> (Tip: desde el celu, en la parte de "Elegí la terminación" tocá los colores y el mueble cambia en vivo 😉)
+> 
 > La adapto 100% con sus fotos, catálogo y datos reales. Te cuento por qué te lo hago tan accesible: soy estudiante de programación armando mi portfolio con proyectos reales, así que cobro muy por debajo del mercado — misma calidad, precio de estudiante.
 > 
 > Y si querés, además te hago un sistema para manejar presupuestos, producción y stock 👇
@@ -91,6 +97,8 @@ Los teléfonos de Google eran fijos (sin WhatsApp). Estos son los **WhatsApp/IG 
 **Msg 2 (cuando respondan):**
 > ¡Genial! Mirá, se la armé con el nombre de ustedes 👇
 > https://web-leads-omega.vercel.app/p/la-puerta.html
+> 
+> (Tip: desde el celu, en la parte de "Elegí la terminación" tocá los colores y el mueble cambia en vivo 😉)
 > 
 > La adapto 100% con sus fotos, catálogo y datos reales. Te cuento por qué te lo hago tan accesible: soy estudiante de programación armando mi portfolio con proyectos reales, así que cobro muy por debajo del mercado — misma calidad, precio de estudiante.
 > 
@@ -112,6 +120,8 @@ Los teléfonos de Google eran fijos (sin WhatsApp). Estos son los **WhatsApp/IG 
 > ¡Genial! Mirá, se la armé con el nombre de ustedes 👇
 > https://web-leads-omega.vercel.app/p/amoblamientos-argentinos.html
 > 
+> (Tip: desde el celu, en la parte de "Elegí la terminación" tocá los colores y el mueble cambia en vivo 😉)
+> 
 > La adapto 100% con sus fotos, catálogo y datos reales. Te cuento por qué te lo hago tan accesible: soy estudiante de programación armando mi portfolio con proyectos reales, así que cobro muy por debajo del mercado — misma calidad, precio de estudiante.
 > 
 > Y si querés, además te hago un sistema para manejar presupuestos, producción y stock 👇
@@ -131,6 +141,8 @@ Los teléfonos de Google eran fijos (sin WhatsApp). Estos son los **WhatsApp/IG 
 **Msg 2 (cuando respondan):**
 > ¡Genial! Mirá, se la armé con el nombre de ustedes 👇
 > https://web-leads-omega.vercel.app/p/rusticor.html
+> 
+> (Tip: desde el celu, en la parte de "Elegí la terminación" tocá los colores y el mueble cambia en vivo 😉)
 > 
 > La adapto 100% con sus fotos, catálogo y datos reales. Te cuento por qué te lo hago tan accesible: soy estudiante de programación armando mi portfolio con proyectos reales, así que cobro muy por debajo del mercado — misma calidad, precio de estudiante.
 > 
@@ -152,6 +164,8 @@ Los teléfonos de Google eran fijos (sin WhatsApp). Estos son los **WhatsApp/IG 
 > ¡Genial! Mirá, se la armé con el nombre de ustedes 👇
 > https://web-leads-omega.vercel.app/p/ayolas.html
 > 
+> (Tip: desde el celu, en la parte de "Elegí la terminación" tocá los colores y el mueble cambia en vivo 😉)
+> 
 > La adapto 100% con sus fotos, catálogo y datos reales. Te cuento por qué te lo hago tan accesible: soy estudiante de programación armando mi portfolio con proyectos reales, así que cobro muy por debajo del mercado — misma calidad, precio de estudiante.
 > 
 > Y si querés, además te hago un sistema para manejar presupuestos, producción y stock 👇
@@ -171,6 +185,8 @@ Los teléfonos de Google eran fijos (sin WhatsApp). Estos son los **WhatsApp/IG 
 **Msg 2 (cuando respondan):**
 > ¡Genial! Mirá, se la armé con el nombre de ustedes 👇
 > https://web-leads-omega.vercel.app/p/cayn.html
+> 
+> (Tip: desde el celu, en la parte de "Elegí la terminación" tocá los colores y el mueble cambia en vivo 😉)
 > 
 > La adapto 100% con sus fotos, catálogo y datos reales. Te cuento por qué te lo hago tan accesible: soy estudiante de programación armando mi portfolio con proyectos reales, así que cobro muy por debajo del mercado — misma calidad, precio de estudiante.
 > 
@@ -192,6 +208,8 @@ Los teléfonos de Google eran fijos (sin WhatsApp). Estos son los **WhatsApp/IG 
 > ¡Genial! Mirá, se la armé con el nombre de ustedes 👇
 > https://web-leads-omega.vercel.app/p/fagnani.html
 > 
+> (Tip: desde el celu, en la parte de "Elegí la terminación" tocá los colores y el mueble cambia en vivo 😉)
+> 
 > La adapto 100% con sus fotos, catálogo y datos reales. Te cuento por qué te lo hago tan accesible: soy estudiante de programación armando mi portfolio con proyectos reales, así que cobro muy por debajo del mercado — misma calidad, precio de estudiante.
 > 
 > Y si querés, además te hago un sistema para manejar presupuestos, producción y stock 👇
@@ -211,6 +229,8 @@ Los teléfonos de Google eran fijos (sin WhatsApp). Estos son los **WhatsApp/IG 
 **Msg 2 (cuando respondan):**
 > ¡Genial! Mirá, se la armé con el nombre de ustedes 👇
 > https://web-leads-omega.vercel.app/p/supermuebles.html
+> 
+> (Tip: desde el celu, en la parte de "Elegí la terminación" tocá los colores y el mueble cambia en vivo 😉)
 > 
 > La adapto 100% con sus fotos, catálogo y datos reales. Te cuento por qué te lo hago tan accesible: soy estudiante de programación armando mi portfolio con proyectos reales, así que cobro muy por debajo del mercado — misma calidad, precio de estudiante.
 > 
