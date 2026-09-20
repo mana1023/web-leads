@@ -97,6 +97,34 @@
     .serv .p{font-family:var(--fh);font-weight:800;font-size:1.5rem;color:var(--acc-d);margin-top:.4rem}
     .serv .d{font-size:.8rem;color:var(--muted);margin-top:.2rem}
     .vac{display:flex;align-items:center;gap:.5rem}
+    #p-pacientes tbody tr{cursor:pointer;transition:var(--tr)}
+    #p-pacientes tbody tr:hover{background:var(--teal-bg)}
+    /* Modal */
+    .modal-bg{position:fixed;inset:0;background:rgba(10,25,22,.55);backdrop-filter:blur(2px);display:none;place-items:center;z-index:80;padding:1rem}
+    .modal-bg.show{display:grid}
+    .modal{background:var(--card);border-radius:16px;width:100%;max-width:520px;max-height:90vh;display:flex;flex-direction:column;box-shadow:var(--sh);overflow:hidden;animation:fade .25s ease}
+    .modal-h{padding:1.05rem 1.3rem;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .modal-h h3{font-family:var(--fh);font-weight:700;font-size:1.1rem;display:flex;align-items:center;gap:.5rem}
+    .modal-h .msub{font-size:.76rem;color:var(--muted)}
+    .modal-h button.x{font-size:1.4rem;color:var(--muted);line-height:1}
+    .modal-b{padding:1.2rem 1.3rem;overflow-y:auto}
+    .fld{display:grid;gap:.35rem;margin-bottom:.9rem}
+    .fld label{font-size:.72rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+    .fld input,.fld select,.fld textarea{font-family:inherit;font-size:.9rem;padding:.6rem .7rem;border:1px solid var(--line);border-radius:10px;background:#FAFAFB;color:var(--ink);width:100%}
+    .fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--acc);background:#fff}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+    .modal-f{padding:1rem 1.3rem;border-top:1px solid var(--line);display:flex;gap:.6rem;justify-content:flex-end}
+    .btn-ghost2{background:var(--bg);color:var(--ink);border:1px solid var(--line)}.btn-ghost2:hover{border-color:var(--acc)}
+    .ficha-meta{display:flex;gap:1.2rem;flex-wrap:wrap;font-size:.84rem;color:var(--muted);margin-bottom:.8rem}
+    .ficha-meta b{color:var(--ink)}
+    .tl{display:flex;flex-direction:column;margin-bottom:.6rem}
+    .tl-item{display:flex;gap:.9rem;padding:.7rem 0;border-bottom:1px solid var(--line)}
+    .tl-item:last-child{border-bottom:none}
+    .tl-date{min-width:6.2rem;font-size:.75rem;color:var(--muted);font-weight:600;padding-top:.1rem}
+    .tl-body b{display:block;font-size:.72rem;color:var(--acc-d);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.1rem}
+    .tl-body span{font-size:.86rem}
+    .addnote{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:.9rem;margin-top:.6rem;display:grid;gap:.6rem}
+    .addnote h4{font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
     .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--ink);color:#fff;padding:.8rem 1.3rem;border-radius:12px;font-size:.88rem;font-weight:500;opacity:0;transition:.3s ease;z-index:99;box-shadow:var(--sh)}
     .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
     .burger{display:none}
@@ -113,7 +141,7 @@
 <body>
   <div class="app">
     <aside class="side" id="side">
-      <div class="brand"><span class="pole">🐾</span><span><b>Vet Patitas</b><small>Sistema de gestión</small></span></div>
+      <div class="brand"><span class="pole">🐾</span><span><b>Veterinaria Huellas</b><small>Sistema de gestión</small></span></div>
       <div class="navlbl">Operación</div>
       <nav class="nav" id="nav">
         <button data-p="turnos" class="active"><span class="ic">📅</span> Turnos de hoy</button>
@@ -134,7 +162,7 @@
         </div>
         <div class="top-actions">
           <span class="pill-wa hide-sm"><span class="dot"></span> Avisos de vacunas por WhatsApp</span>
-          <button class="btn btn-acc">+ Nuevo turno</button>
+          <button class="btn btn-acc" id="btnNuevo">+ Nuevo turno</button>
         </div>
       </div>
 
@@ -142,7 +170,7 @@
         <!-- TURNOS -->
         <section class="panel show" id="p-turnos">
           <div class="stats">
-            <div class="stat"><div class="t">📅 Turnos hoy</div><div class="v">7</div></div>
+            <div class="stat"><div class="t">📅 Turnos hoy</div><div class="v" id="cTurnos">7</div></div>
             <div class="stat"><div class="t">✅ Atendidos <span class="chip chip-g" id="pct">2 / 7</span></div><div class="v" id="cAtend">2</div></div>
             <div class="stat acc"><div class="t">💵 Ingresos del día</div><div class="v" id="cIng">$ 34.000</div></div>
             <div class="stat"><div class="t">🚨 Urgencias <span class="chip chip-r">hoy</span></div><div class="v">1</div></div>
@@ -258,6 +286,53 @@
     </div>
   </div>
 
+  <!-- MODAL nuevo turno -->
+  <div class="modal-bg" id="modalTurno">
+    <div class="modal">
+      <div class="modal-h"><h3>Nuevo turno</h3><button class="x" id="tClose" aria-label="Cerrar">×</button></div>
+      <div class="modal-b">
+        <div class="grid2">
+          <div class="fld"><label>Mascota</label><input id="fMasc" placeholder="Nombre" autocomplete="off"></div>
+          <div class="fld"><label>Especie</label><select id="fEsp"><option value="🐕">Perro</option><option value="🐈">Gato</option><option value="🐾">Otra</option></select></div>
+        </div>
+        <div class="fld"><label>Dueño</label><input id="fDue" placeholder="Nombre del dueño" autocomplete="off"></div>
+        <div class="grid2">
+          <div class="fld"><label>Hora</label><input id="fHora" type="time" value="16:30"></div>
+          <div class="fld"><label>Profesional</label><select id="fProf"><option>Dra. Rosso</option><option>Dr. León</option></select></div>
+        </div>
+        <div class="fld"><label>Motivo</label><select id="fMotivo">
+          <option data-p="12000">Consulta — $12.000</option>
+          <option data-p="10000">Vacunación — $10.000</option>
+          <option data-p="6000">Desparasitación — $6.000</option>
+          <option data-p="18000">Peluquería + antipulgas — $18.000</option>
+          <option data-p="25000">Ecografía — $25.000</option>
+          <option data-p="45000">Castración gato — $45.000</option>
+          <option data-p="70000">Castración perro — $70.000</option>
+        </select></div>
+      </div>
+      <div class="modal-f"><button class="btn btn-ghost2" id="tCancel">Cancelar</button><button class="btn btn-acc" id="tSave">Agendar turno</button></div>
+    </div>
+  </div>
+
+  <!-- MODAL ficha clínica -->
+  <div class="modal-bg" id="modalFicha">
+    <div class="modal">
+      <div class="modal-h"><div><h3 id="fkTitle">🐾 Ficha</h3><div class="msub" id="fkSub">—</div></div><button class="x" id="fkClose" aria-label="Cerrar">×</button></div>
+      <div class="modal-b">
+        <div class="ficha-meta" id="fkMeta"></div>
+        <div class="tl" id="fkTl"></div>
+        <div class="addnote">
+          <h4>Agregar a la historia</h4>
+          <div class="grid2">
+            <div class="fld" style="margin:0"><label>Tipo</label><select id="fkTipo"><option>Consulta</option><option>Vacuna</option><option>Desparasitación</option><option>Control</option><option>Peso</option><option>Cirugía</option></select></div>
+            <div class="fld" style="margin:0"><label>Detalle</label><input id="fkNota" placeholder="Ej: peso 12 kg, todo ok" autocomplete="off"></div>
+          </div>
+          <button class="btn btn-acc" id="fkAdd" style="justify-self:start">+ Agregar nota</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="toast" id="toast">✓ Listo</div>
 
   <script>
@@ -279,8 +354,9 @@
       });
     });
 
-    let total=34000, ef=12000, mp=22000, db=0, atend=2, avisos=0;
+    let total=34000, ef=12000, mp=22000, db=0, atend=2, avisos=0, turnos=7;
     const fmt=n=>'$ '+n.toLocaleString('es-AR');
+    const iniciales=s=>s.trim().split(/\s+/).slice(0,2).map(w=>w[0]||'').join('').toUpperCase()||'?';
 
     function atender(btn){
       const tr=btn.closest('tr');
@@ -291,7 +367,7 @@
       tr.querySelector('.rowact').innerHTML='<span class="done">✓ Cobrado</span>';
       atend++; total+=precio; if(m[1]==='ef')ef+=precio; else if(m[1]==='mp')mp+=precio; else db+=precio;
       document.getElementById('cAtend').textContent=atend;
-      document.getElementById('pct').textContent=atend+' / 7';
+      document.getElementById('pct').textContent=atend+' / '+turnos;
       document.getElementById('cIng').textContent=fmt(total);
       document.getElementById('cajaTotal').textContent=fmt(total);
       document.getElementById('mEf').textContent=fmt(ef);
@@ -324,6 +400,97 @@
         const tr=e.target.closest('tr'); const nombre=tr.querySelector('.cli div')?tr.querySelector('.cli div').firstChild.textContent.trim():'el dueño';
         toast(`💬 Recordatorio enviado (${nombre})`);
       }
+    });
+
+    // ── MODAL nuevo turno ──
+    const modalTurno=document.getElementById('modalTurno');
+    const openTurno=()=>{modalTurno.classList.add('show');document.getElementById('fMasc').focus()};
+    const closeTurno=()=>modalTurno.classList.remove('show');
+    document.getElementById('btnNuevo').addEventListener('click',openTurno);
+    document.getElementById('tClose').addEventListener('click',closeTurno);
+    document.getElementById('tCancel').addEventListener('click',closeTurno);
+    modalTurno.addEventListener('click',e=>{if(e.target===modalTurno)closeTurno()});
+    document.getElementById('tSave').addEventListener('click',()=>{
+      const masc=document.getElementById('fMasc').value.trim();
+      const due=document.getElementById('fDue').value.trim();
+      if(!masc||!due){(!masc?document.getElementById('fMasc'):document.getElementById('fDue')).focus();return}
+      const esp=document.getElementById('fEsp').value;
+      const espTxt=document.getElementById('fEsp').selectedOptions[0].textContent;
+      const hora=document.getElementById('fHora').value||'16:30';
+      const prof=document.getElementById('fProf').value;
+      const mo=document.getElementById('fMotivo').selectedOptions[0];
+      const motivo=mo.textContent.split(' — ')[0];
+      const precio=parseInt(mo.dataset.p);
+      const row=document.createElement('tr');
+      row.dataset.precio=precio;
+      row.innerHTML=`<td class="precio">${hora}</td><td><div class="cli"><span class="av">${esp}</span><div>${masc}<div class="sub2">${due} · ${espTxt}</div></div></div></td><td>${motivo}</td><td>${prof}</td><td class="precio">${fmt(precio)}</td><td><span class="estado e-pend">Pendiente</span></td><td><div class="rowact"><button class="mini mini-wa">💬 Avisar</button><button class="mini mini-ok" onclick="atender(this)">Atender</button></div></td>`;
+      const tb=document.querySelector('#tHoy tbody');
+      const rows=[...tb.children];
+      const after=rows.find(r=>r.children[0].textContent>hora);
+      if(after)tb.insertBefore(row,after);else tb.appendChild(row);
+      turnos++;
+      document.getElementById('cTurnos').textContent=turnos;
+      document.getElementById('pct').textContent=atend+' / '+turnos;
+      document.getElementById('fMasc').value='';document.getElementById('fDue').value='';
+      closeTurno();
+      toast(`✓ Turno agendado · ${masc} ${hora}`);
+    });
+
+    // ── FICHA CLÍNICA ──
+    const fichas={
+      'Firulais':{esp:'Perro · Labrador',due:'Juan Gómez',edad:'4 años',peso:'28 kg',av:'🐕',hist:[
+        {f:'Hoy',t:'Control',d:'Control anual + vacuna quíntuple. Peso estable.'},
+        {f:'Hace 6 meses',t:'Vacuna',d:'Antirrábica aplicada. Próx. refuerzo en 12 meses.'},
+        {f:'Hace 1 año',t:'Consulta',d:'Otitis leve. Tratamiento 7 días, resuelto.'}]},
+      'Michi':{esp:'Gato · Común',due:'Ana Ruiz',edad:'2 años',peso:'4 kg',av:'🐈',hist:[
+        {f:'Hoy',t:'Consulta',d:'Control general. Se recomienda triple felina (vencida).'},
+        {f:'Hace 8 meses',t:'Vacuna',d:'Triple felina. Refuerzo vencido hace 6 días.'}]},
+      'Rocky':{esp:'Perro · Bulldog',due:'Pablo Díaz',edad:'3 años',peso:'22 kg',av:'🐕',hist:[
+        {f:'Hace 5 días',t:'Desparasitación',d:'Antiparasitario interno. Peso 22 kg.'},
+        {f:'Hace 3 meses',t:'Consulta',d:'Dermatitis. Mejoró con cambio de dieta.'}]},
+      'Nina':{esp:'Perro · Caniche',due:'Lucía Paz',edad:'6 años',peso:'8 kg',av:'🐩',hist:[
+        {f:'Hace 2 meses',t:'Peluquería',d:'Corte + antipulgas.'},
+        {f:'Hace 7 meses',t:'Vacuna',d:'Quíntuple aplicada. Desparasitación pendiente.'}]},
+      'Simón':{esp:'Gato · Común',due:'Diego Alonso',edad:'7 años',peso:'5 kg',av:'🐈',hist:[
+        {f:'Hace 1 semana',t:'Control',d:'Chequeo senior. Todo en orden.'},
+        {f:'Hace 6 meses',t:'Vacuna',d:'Triple felina al día.'}]}
+    };
+    const modalFicha=document.getElementById('modalFicha');
+    let curFicha=null;
+    function openFicha(name){
+      const f=fichas[name];if(!f)return;curFicha=name;
+      document.getElementById('fkTitle').innerHTML=`${f.av} ${name}`;
+      document.getElementById('fkSub').textContent=`${f.esp} · Dueño: ${f.due}`;
+      document.getElementById('fkMeta').innerHTML=`<div>Edad: <b>${f.edad}</b></div><div>Peso: <b>${f.peso}</b></div><div>Consultas: <b>${f.hist.length}</b></div>`;
+      renderTl();
+      modalFicha.classList.add('show');
+    }
+    function renderTl(){
+      const tl=document.getElementById('fkTl');tl.innerHTML='';
+      fichas[curFicha].hist.forEach(h=>{
+        const it=document.createElement('div');it.className='tl-item';
+        it.innerHTML=`<div class="tl-date">${h.f}</div><div class="tl-body"><b>${h.t}</b><span>${h.d}</span></div>`;
+        tl.appendChild(it);
+      });
+    }
+    document.getElementById('fkAdd').addEventListener('click',()=>{
+      const tipo=document.getElementById('fkTipo').value;
+      const nota=document.getElementById('fkNota').value.trim();
+      if(!nota){document.getElementById('fkNota').focus();return}
+      fichas[curFicha].hist.unshift({f:'Hoy',t:tipo,d:nota});
+      document.getElementById('fkNota').value='';
+      renderTl();
+      document.getElementById('fkMeta').innerHTML=document.getElementById('fkMeta').innerHTML.replace(/Consultas: <b>\d+<\/b>/,`Consultas: <b>${fichas[curFicha].hist.length}</b>`);
+      toast(`📋 Nota agregada a la ficha de ${curFicha}`);
+    });
+    document.getElementById('fkClose').addEventListener('click',()=>modalFicha.classList.remove('show'));
+    modalFicha.addEventListener('click',e=>{if(e.target===modalFicha)modalFicha.classList.remove('show')});
+    // wire filas de pacientes
+    document.querySelectorAll('#p-pacientes tbody tr').forEach(tr=>{
+      tr.addEventListener('click',()=>{
+        const name=tr.querySelector('.cli div').firstChild.textContent.trim();
+        openFicha(name);
+      });
     });
 
     const side=document.getElementById('side'),scrim=document.getElementById('scrim');
