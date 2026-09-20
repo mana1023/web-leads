@@ -36,6 +36,8 @@
     nav{position:fixed;top:0;left:0;right:0;z-index:900;height:74px;display:flex;align-items:center;transition:background var(--tr),border-color var(--tr),height var(--tr)}
     nav .wrap{display:flex;align-items:center;justify-content:space-between;width:100%}
     nav.scr{background:rgba(12,11,10,.86);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line);height:62px}
+    nav::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(12,11,10,.92),transparent);transition:opacity var(--tr)}
+    nav.scr::before{opacity:0}
     .logo{font-family:var(--fd);font-size:1.75rem;letter-spacing:.04em;color:var(--bone);line-height:1;display:flex;align-items:center;gap:.55rem}
     .logo .mark{display:inline-block;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#ffd08a,#e0571d 55%,#7a2b0e);box-shadow:0 0 10px 1px rgba(224,87,29,.7)}
     .links{display:flex;gap:2.2rem;list-style:none}
