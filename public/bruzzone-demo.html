@@ -1,1128 +1,303 @@
 <!DOCTYPE html>
 <html lang="es">
+<!--
+  WEB · Cafetería (estándar premium, editorial claro). Marca demo "Moka" (editable).
+  Para adaptar: cambiá "Moka"/"MOKA", el WhatsApp 5491166778899, dirección y fotos.
+-->
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bruzzone | Panadería & Confitería Artesanal — Glew, Buenos Aires</title>
-
-  <meta name="description" content="Panadería & Confitería Bruzzone en Glew. Medialunas, tortas artesanales, alfajores, pan y productos Sin TACC. Catering para eventos. Mar–Sáb 7–20hs." />
-  <meta name="keywords" content="panadería Glew, medialunas Glew, tortas Glew, alfajores Glew, sin TACC Glew, catering Glew, panadería artesanal Buenos Aires" />
-  <link rel="canonical" href="https://bruzzone.com.ar/" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Bruzzone | Panadería & Confitería — Glew" />
-  <meta property="og:description" content="Cocinamos en familia y con mucho amor. Medialunas, tortas, alfajores artesanales en Glew, Buenos Aires." />
-  <meta property="og:image" content="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=1200&q=80" />
-  <meta property="og:url" content="https://bruzzone.com.ar/" />
-  <meta property="og:locale" content="es_AR" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=1200&q=80" />
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Bakery",
-    "name": "Bruzzone Panadería & Confitería",
-    "image": "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Gervasio Méndez 206",
-      "addressLocality": "Glew",
-      "addressRegion": "Buenos Aires",
-      "addressCountry": "AR"
-    },
-    "telephone": "+5491153379763",
-    "url": "https://bruzzone.com.ar",
-    "openingHours": ["Tu-Sa 07:00-20:00", "Su 07:00-13:30", "Su 16:00-19:00"],
-    "servesCuisine": "Bakery, Confectionery",
-    "priceRange": "$",
-    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "127" }
-  }
-  </script>
-
+  <title>Café Moka — Café de especialidad, tostado propio</title>
+  <meta name="description" content="Café de especialidad con tostado propio. Espresso, flat white, cold brew y medialunas recién hechas. Pasá o pedí por WhatsApp." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --amber: #F59E0B;
-      --amber-dark: #D97706;
-      --amber-light: #FDE68A;
-      --negro: #0F0F0F;
-      --gris-dark: #1C1C1C;
-      --gris: #2A2A2A;
-      --gris-medio: #666;
-      --crema: #FDF8F0;
-      --crema-dark: #F5EDD8;
-      --blanco: #FFFFFF;
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#f6f1e8; --bg2:#efe7d7; --card:#fffdf8; --line:rgba(44,33,27,.12); --line2:rgba(44,33,27,.22);
+      --ink:#2c211b; --muted:#8a7c6f; --clay:#bd6a3c; --clay2:#a2542c; --olive:#6b7350;
+      --fd:'Fraunces',Georgia,serif; --fb:'Inter',system-ui,sans-serif;
+      --tr:.35s cubic-bezier(.2,.7,.2,1);
     }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background: var(--crema); color: var(--negro); line-height: 1.6; overflow-x: hidden; }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--fb);background:var(--bg);color:var(--ink);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    img{display:block;width:100%;height:100%;object-fit:cover}
+    a{color:inherit;text-decoration:none}
+    section{position:relative}
+    .wrap{max-width:1240px;margin:0 auto;padding:0 clamp(1.2rem,4vw,3rem)}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+    .reveal.in{opacity:1;transform:none}
+    .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
 
-    /* ── ANIMACIONES ── */
-    .fade-up { opacity: 0; transform: translateY(36px); transition: opacity 0.75s ease, transform 0.75s ease; }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
-    .fade-up-delay-1 { transition-delay: 0.1s; }
-    .fade-up-delay-2 { transition-delay: 0.2s; }
-    .fade-up-delay-3 { transition-delay: 0.3s; }
-    .fade-up-delay-4 { transition-delay: 0.4s; }
-    .fade-up-delay-5 { transition-delay: 0.5s; }
+    #bar{position:fixed;top:0;left:0;height:2px;width:0;background:var(--clay);z-index:9999;transition:width .1s linear}
 
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0.9rem 2.5rem;
-      background: rgba(15,15,15,0.96);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(245,158,11,0.15);
-      transition: padding 0.3s;
-    }
-    nav.scrolled { padding: 0.65rem 2.5rem; }
-    .nav-logo { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; }
-    .nav-logo img { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; }
-    .nav-logo-text { font-family: 'Playfair Display', serif; color: var(--blanco); font-size: 1.15rem; font-weight: 700; letter-spacing: 0.02em; }
-    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
-    .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--amber); }
-    .nav-cta {
-      background: var(--amber); color: var(--negro) !important;
-      padding: 0.5rem 1.1rem; border-radius: 6px; font-weight: 600 !important;
-      letter-spacing: 0.04em !important; transition: background 0.2s !important;
-    }
-    .nav-cta:hover { background: var(--amber-dark) !important; color: var(--negro) !important; }
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
-    .hamburger span { display: block; width: 24px; height: 2px; background: var(--blanco); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .mobile-menu {
-      display: none; position: fixed; inset: 0; z-index: 99;
-      background: rgba(15,15,15,0.98); flex-direction: column;
-      align-items: center; justify-content: center; gap: 2rem;
-      padding: 2rem;
-    }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a {
-      font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--blanco);
-      text-decoration: none; letter-spacing: 0.02em;
-      transition: color 0.2s;
-    }
-    .mobile-menu a:hover { color: var(--amber); }
-    .mobile-menu-wa {
-      margin-top: 1rem;
-      display: flex; align-items: center; gap: 0.6rem;
-      background: #25D366; color: white; font-family: 'Inter', sans-serif;
-      font-size: 1rem; font-weight: 600; text-decoration: none;
-      padding: 0.9rem 2rem; border-radius: 50px;
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:900;height:74px;display:flex;align-items:center;transition:background var(--tr),border-color var(--tr),height var(--tr)}
+    nav .wrap{display:flex;align-items:center;justify-content:space-between;width:100%}
+    nav.scr{background:rgba(246,241,232,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line);height:62px}
+    .logo{font-family:var(--fd);font-weight:600;font-size:1.55rem;letter-spacing:.02em;color:var(--ink);line-height:1;display:flex;align-items:center;gap:.55rem}
+    .logo .mark{display:inline-block;width:12px;height:16px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:var(--clay);position:relative;transform:rotate(20deg)}
+    .logo .mark::after{content:'';position:absolute;left:50%;top:12%;width:1.6px;height:76%;background:var(--bg);transform:translateX(-50%);border-radius:2px;opacity:.9}
+    .links{display:flex;gap:2.2rem;list-style:none}
+    .links a{font-family:var(--fb);font-weight:600;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);opacity:.72;transition:opacity var(--tr)}
+    .links a:hover{opacity:1;color:var(--clay2)}
+    .navcta{font-weight:600;font-size:.78rem !important;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--clay);color:var(--clay2) !important;padding:.6rem 1.2rem;border-radius:100px;opacity:1 !important;transition:var(--tr)}
+    .navcta:hover{background:var(--clay);color:#fff !important}
+    .burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:6px}
+    .burger span{width:26px;height:2px;background:var(--ink);border-radius:2px;transition:var(--tr)}
+    @media(max-width:900px){.links{display:none}.links.open{display:flex;flex-direction:column;position:absolute;top:62px;left:0;right:0;background:rgba(246,241,232,.98);padding:1.5rem;gap:1.3rem;border-bottom:1px solid var(--line)}.burger{display:flex}}
+
+    /* HERO — asimétrico */
+    #hero{min-height:100svh;display:grid;grid-template-columns:1.1fr .9fr;align-items:stretch}
+    #hero .txt{display:flex;flex-direction:column;justify-content:center;padding:8rem clamp(1.2rem,4vw,3rem) 4rem;position:relative;z-index:2}
+    #hero .txt::before{content:'';position:absolute;left:-8%;top:24%;width:60%;height:60%;background:radial-gradient(circle,rgba(189,106,60,.14),transparent 70%);filter:blur(46px);z-index:-1;pointer-events:none}
+    #hero .media{position:relative;overflow:hidden}
+    #hero .media::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--bg),transparent 32%)}
+    #hero .media img{transform:scale(1.05)}
+    .kicker{font-family:var(--fb);font-weight:600;font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;color:var(--clay2);display:flex;align-items:center;gap:.7rem}
+    .kicker::before{content:'';width:34px;height:1px;background:var(--clay)}
+    #hero h1{font-family:var(--fd);font-weight:600;font-size:clamp(3rem,7.4vw,6.2rem);line-height:1.0;letter-spacing:-.015em;margin:1.4rem 0 1.3rem;color:var(--ink)}
+    #hero h1 em{font-style:italic;font-weight:500;color:var(--clay2);display:block}
+    #hero p{font-size:1.08rem;color:var(--muted);max-width:38ch}
+    .ctas{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:2.2rem}
+    .btn{font-family:var(--fb);font-weight:600;font-size:.86rem;letter-spacing:.04em;text-transform:uppercase;padding:1rem 1.7rem;border-radius:100px;cursor:pointer;transition:var(--tr);display:inline-flex;align-items:center;gap:.6rem;border:1px solid transparent}
+    .btn-clay{background:var(--clay);color:#fff}.btn-clay:hover{background:var(--clay2);transform:translateY(-2px)}
+    .btn-ghost{border-color:var(--line2);color:var(--ink)}.btn-ghost:hover{border-color:var(--clay);color:var(--clay2)}
+    .btn-wa{background:#1f8a4c;color:#fff}.btn-wa:hover{background:#166b3a;transform:translateY(-2px)}
+    .since{position:absolute;right:-.3rem;bottom:3rem;font-family:var(--fb);font-weight:600;font-size:.72rem;letter-spacing:.28em;color:var(--muted);writing-mode:vertical-rl;transform:rotate(180deg);text-transform:uppercase}
+    @media(max-width:900px){
+      #hero{grid-template-columns:1fr;min-height:auto}
+      #hero .media{height:46vh;order:-1}
+      #hero .media::after{background:linear-gradient(0deg,var(--bg),transparent 55%)}
+      #hero .txt{padding:2.5rem 1.2rem 3rem}
+      .since{display:none}
     }
 
-    /* ── HERO ── */
-    .hero {
-      position: relative; height: 100vh; min-height: 620px;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute; inset: 0;
-      background-image: url('https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=1920&q=85&auto=format');
-      background-size: cover; background-position: center 50%;
-      filter: brightness(0.42);
-    }
-    .hero-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.55) 100%);
-    }
-    .hero-content {
-      position: relative; z-index: 2; text-align: center;
-      padding: 0 1.5rem; max-width: 760px;
-    }
-    .hero-badge {
-      display: inline-block; background: rgba(245,158,11,0.2);
-      border: 1px solid var(--amber); color: var(--amber-light);
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em;
-      text-transform: uppercase; padding: 0.35rem 1rem; border-radius: 50px;
-      margin-bottom: 1.4rem;
-    }
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.8rem, 7vw, 5.5rem);
-      font-weight: 900; color: var(--blanco); line-height: 1.1;
-      margin-bottom: 1.2rem;
-    }
-    .hero h1 em { font-style: italic; color: var(--amber); }
-    .hero-sub {
-      font-size: 1.05rem; color: rgba(255,255,255,0.78); font-weight: 300;
-      margin-bottom: 2.4rem; line-height: 1.7;
-    }
-    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .btn-hero-primary {
-      background: var(--amber); color: var(--negro); font-weight: 700;
-      font-size: 0.88rem; letter-spacing: 0.06em; text-transform: uppercase;
-      padding: 0.9rem 2rem; border-radius: 8px; text-decoration: none;
-      transition: background 0.2s, transform 0.2s;
-    }
-    .btn-hero-primary:hover { background: var(--amber-dark); transform: translateY(-2px); }
-    .btn-hero-outline {
-      border: 1.5px solid rgba(255,255,255,0.55); color: var(--blanco);
-      font-size: 0.88rem; letter-spacing: 0.06em; text-transform: uppercase;
-      padding: 0.9rem 2rem; border-radius: 8px; text-decoration: none;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .btn-hero-outline:hover { border-color: var(--amber); color: var(--amber); transform: translateY(-2px); }
-    .hero-scroll {
-      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
-      color: rgba(255,255,255,0.5); font-size: 0.7rem; letter-spacing: 0.1em;
-      text-transform: uppercase; z-index: 2;
-      animation: bounce 2s infinite;
-    }
-    @keyframes bounce {
-      0%   { transform: translateX(-50%) translateY(0);    opacity: 0.5; }
-      50%  { transform: translateX(-50%) translateY(10px); opacity: 1;   }
-      100% { transform: translateX(-50%) translateY(0);    opacity: 0.5; }
-    }
+    /* MARQUEE */
+    .marq{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2);overflow:hidden;padding:1rem 0}
+    .marq .row{display:flex;gap:2.5rem;white-space:nowrap;animation:scroll 30s linear infinite;font-family:var(--fd);font-weight:500;font-style:italic;font-size:1.55rem;letter-spacing:.01em;color:var(--ink)}
+    .marq .row span{opacity:.6}.marq .row b{color:var(--clay);font-weight:400;font-style:normal}
+    @keyframes scroll{to{transform:translateX(-50%)}}
 
-    /* ── STRIP TICKER ── */
-    .strip {
-      background: var(--negro); color: var(--blanco);
-      overflow: hidden; padding: 0.9rem 0;
-      border-top: 1px solid rgba(245,158,11,0.15);
-      border-bottom: 1px solid rgba(245,158,11,0.15);
-    }
-    .strip-track {
-      display: flex; align-items: center; gap: 3rem;
-      width: max-content;
-      animation: ticker 22s linear infinite;
-    }
-    .strip:hover .strip-track { animation-play-state: paused; }
-    @keyframes ticker {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    .strip-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.82rem; letter-spacing: 0.06em; white-space: nowrap; flex-shrink: 0; }
-    .strip-item span:first-child { color: var(--amber); font-size: 1rem; }
-    .strip-sep { color: rgba(245,158,11,0.4); font-size: 1.1rem; flex-shrink: 0; }
+    .sec{padding:clamp(4.5rem,9vw,8rem) 0}
+    .lbl{font-family:var(--fb);font-weight:600;font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--clay2)}
+    .h2{font-family:var(--fd);font-weight:600;font-size:clamp(2.4rem,5.6vw,4rem);line-height:1.04;letter-spacing:-.015em;margin-top:.7rem}
 
-    /* ── SECTION UTIL ── */
-    .section { padding: 6rem 2rem; }
-    .section-inner { max-width: 1100px; margin: 0 auto; }
-    .section-label {
-      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em;
-      text-transform: uppercase; color: var(--amber); margin-bottom: 0.6rem;
-    }
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 900;
-      color: var(--negro); line-height: 1.2; margin-bottom: 1.2rem;
-    }
-    .section-title.light { color: var(--blanco); }
-    .section-desc { color: var(--gris-medio); font-size: 1rem; max-width: 540px; line-height: 1.75; }
+    /* CARTA — editorial (imagen + lista con precios) */
+    .serv{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(2rem,5vw,4.5rem);align-items:center}
+    .serv .pic{aspect-ratio:3/4;overflow:hidden;border:1px solid var(--line);border-radius:6px}
+    .serv .pic img{transition:transform 1s ease}.serv .pic:hover img{transform:scale(1.05)}
+    .price-list{margin-top:1.8rem;display:flex;flex-direction:column}
+    .pr{display:flex;align-items:baseline;gap:1rem;padding:1.05rem 0;border-bottom:1px solid var(--line)}
+    .pr .n{font-family:var(--fd);font-weight:600;font-size:1.3rem;letter-spacing:0;color:var(--ink)}
+    .pr .desc{display:block;font-family:var(--fb);font-size:.82rem;letter-spacing:0;color:var(--muted);font-weight:400;margin-top:.15rem}
+    .pr .dots{flex:1;border-bottom:1px dotted var(--line2);transform:translateY(-5px)}
+    .pr .amt{font-family:var(--fd);font-weight:600;font-size:1.4rem;color:var(--clay2)}
+    @media(max-width:820px){.serv{grid-template-columns:1fr}.serv .pic{aspect-ratio:16/10}}
 
-    /* ── NOSOTROS ── */
-    .nosotros { background: var(--crema); }
-    .nosotros-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
-    }
-    .nosotros-img { position: relative; }
-    .nosotros-img img {
-      width: 100%; height: 480px; object-fit: cover; border-radius: 1.5rem;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
-    }
-    .nosotros-badge {
-      position: absolute; bottom: -1.5rem; right: -1.5rem;
-      background: var(--amber); color: var(--negro);
-      font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700;
-      padding: 1rem 1.4rem; border-radius: 1rem; text-align: center;
-      box-shadow: 0 8px 24px rgba(245,158,11,0.35);
-    }
-    .nosotros-badge strong { display: block; font-size: 1.6rem; }
-    .nosotros-text .section-title { margin-bottom: 1rem; }
-    .nosotros-text p { color: var(--gris-medio); margin-bottom: 1rem; line-height: 1.8; }
-    .nosotros-features { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.8rem; }
-    .nosotros-feat {
-      display: flex; align-items: center; gap: 0.75rem;
-      font-size: 0.9rem; font-weight: 500; color: var(--negro);
-    }
-    .nosotros-feat::before {
-      content: ''; width: 8px; height: 8px; border-radius: 50%;
-      background: var(--amber); flex-shrink: 0;
-    }
+    /* GRANO — split invertido */
+    #grano{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .split{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(2rem,5vw,4.5rem);align-items:center}
+    .split .pic{aspect-ratio:4/3;overflow:hidden;border:1px solid var(--line);border-radius:6px}
+    .rlist{list-style:none;margin-top:1.6rem;display:grid;gap:1.3rem}
+    .rlist li{display:flex;gap:1rem}
+    .rlist .num{font-family:var(--fd);font-weight:600;font-size:1.5rem;color:var(--clay2);line-height:1;min-width:2rem}
+    .rlist b{font-family:var(--fd);font-weight:600;letter-spacing:0;font-size:1.1rem;display:block}
+    .rlist span{color:var(--muted);font-size:.92rem}
+    @media(max-width:820px){.split{grid-template-columns:1fr}.split .pic{order:-1;aspect-ratio:16/11}}
 
-    /* ── PRODUCTOS ── */
-    .productos { background: var(--blanco); }
-    .productos-header { text-align: center; margin-bottom: 3.5rem; }
-    .productos-header .section-desc { margin: 0 auto; }
-    .productos-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
-    }
-    .producto-card {
-      border-radius: 1.25rem; overflow: hidden; background: var(--crema);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-      transition: transform 0.25s, box-shadow 0.25s;
-    }
-    .producto-card:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(0,0,0,0.12); }
-    .producto-img { aspect-ratio: 4/3; overflow: hidden; }
-    .producto-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-    .producto-card:hover .producto-img img { transform: scale(1.07); }
-    .producto-body { padding: 1.4rem; }
-    .producto-tag {
-      display: inline-block; font-size: 0.67rem; font-weight: 700; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--amber); margin-bottom: 0.4rem;
-    }
-    .producto-body h3 {
-      font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700;
-      color: var(--negro); margin-bottom: 0.5rem;
-    }
-    .producto-body p { font-size: 0.85rem; color: var(--gris-medio); line-height: 1.65; }
+    /* GALERÍA asimétrica */
+    .gal{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:150px;gap:.8rem}
+    .gal a{overflow:hidden;border:1px solid var(--line);border-radius:6px;position:relative}
+    .gal a img{transition:transform .9s ease}.gal a:hover img{transform:scale(1.08)}
+    .gal .a{grid-column:span 3;grid-row:span 2}.gal .b{grid-column:span 3}.gal .c{grid-column:span 2}.gal .d{grid-column:span 2}.gal .e{grid-column:span 2;grid-row:span 2}.gal .f{grid-column:span 4}
+    @media(max-width:820px){.gal{grid-template-columns:repeat(2,1fr);grid-auto-rows:140px}.gal .a,.gal .b,.gal .c,.gal .d,.gal .e,.gal .f{grid-column:span 1;grid-row:span 1}.gal .a,.gal .e{grid-column:span 2}}
 
-    /* ── GALERÍA ── */
-    .galeria { background: var(--negro); padding: 6rem 2rem; }
-    .galeria-header { text-align: center; margin-bottom: 3rem; }
-    .galeria-grid {
-      max-width: 1100px; margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: auto;
-      gap: 0.75rem;
-    }
-    .galeria-grid .g-tall { grid-row: span 2; }
-    .galeria-grid .g-wide { grid-column: span 2; }
-    .galeria-item {
-      position: relative; overflow: hidden; border-radius: 0.75rem;
-      background: var(--gris-dark); cursor: pointer;
-    }
-    .galeria-item img {
-      width: 100%; height: 100%; object-fit: cover;
-      min-height: 180px;
-      transition: transform 0.6s;
-    }
-    .g-tall img { min-height: 380px; }
-    .g-wide img { min-height: 200px; }
-    .galeria-item:hover img { transform: scale(1.07); }
-    .galeria-caption {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%);
-      display: flex; align-items: flex-end; padding: 1rem 0.9rem;
-      opacity: 0; transition: opacity 0.3s;
-    }
-    .galeria-item:hover .galeria-caption { opacity: 1; }
-    .galeria-caption span {
-      color: var(--blanco); font-size: 0.78rem; font-weight: 600;
-      letter-spacing: 0.04em;
-    }
-    .galeria-ig {
-      max-width: 1100px; margin: 2rem auto 0;
-      text-align: center;
-    }
-    .galeria-ig a {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      color: rgba(255,255,255,0.55); font-size: 0.82rem; font-weight: 500;
-      text-decoration: none; border: 1px solid rgba(255,255,255,0.2);
-      padding: 0.6rem 1.4rem; border-radius: 50px; transition: all 0.2s;
-    }
-    .galeria-ig a:hover { color: var(--blanco); border-color: var(--amber); }
+    /* PEDIDOS band */
+    #pedi{background:linear-gradient(135deg,#efe7d7,#f6f1e8);border-top:1px solid var(--line);text-align:center}
+    #pedi .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin:2.6rem 0}
+    .step .n{font-family:var(--fd);font-weight:600;font-size:2rem;color:var(--clay2)}
+    .step b{font-family:var(--fd);font-weight:600;letter-spacing:0;display:block;margin-top:.2rem}
+    .step span{color:var(--muted);font-size:.9rem}
+    .resctas{display:flex;flex-wrap:wrap;gap:.9rem;justify-content:center}
+    @media(max-width:700px){#pedi .steps{grid-template-columns:1fr;gap:1.8rem}}
 
-    /* ── RESEÑAS ── */
-    .resenas { background: var(--crema-dark); }
-    .resenas-header { text-align: center; margin-bottom: 3rem; }
-    .resenas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-    .resena-card {
-      background: var(--blanco); border-radius: 1.25rem; padding: 1.75rem;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .resena-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.1); }
-    .resena-stars { color: var(--amber); font-size: 0.95rem; letter-spacing: 2px; margin-bottom: 0.9rem; }
-    .resena-texto { font-size: 0.93rem; color: #333; line-height: 1.7; margin-bottom: 1.2rem; font-style: italic; }
-    .resena-autor { display: flex; align-items: center; gap: 0.7rem; }
-    .resena-avatar {
-      width: 38px; height: 38px; border-radius: 50%; background: var(--amber);
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 700; font-size: 0.85rem; color: var(--negro); flex-shrink: 0;
-    }
-    .resena-autor-info strong { display: block; font-size: 0.85rem; color: var(--negro); }
-    .resena-autor-info span { font-size: 0.75rem; color: var(--gris-medio); }
+    /* RESEÑAS editorial */
+    .quotes{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.5rem,4vw,3rem)}
+    .quote{border-left:2px solid var(--clay);padding:.4rem 0 .4rem 1.6rem}
+    .quote p{font-family:var(--fd);font-weight:500;font-style:italic;font-size:1.35rem;line-height:1.4;color:var(--ink)}
+    .quote .who{margin-top:1rem;color:var(--muted);font-size:.88rem;letter-spacing:.05em;text-transform:uppercase}
+    .quote .stars{color:var(--clay);letter-spacing:3px;font-size:.9rem}
+    @media(max-width:820px){.quotes{grid-template-columns:1fr;gap:2rem}}
 
-    /* ── SIN TACC ── */
-    .sintacc {
-      background: var(--negro);
-      padding: 5rem 2rem;
-    }
-    .sintacc-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
-    }
-    .sintacc-img img {
-      width: 100%; height: 420px; object-fit: cover;
-      border-radius: 1.5rem; filter: brightness(0.9);
-    }
-    .sintacc-text .section-label { color: var(--amber); }
-    .sintacc-text .section-title { color: var(--blanco); }
-    .sintacc-text p { color: rgba(255,255,255,0.65); line-height: 1.8; margin-bottom: 1rem; }
-    .sintacc-items { display: flex; flex-direction: column; gap: 0.65rem; margin: 1.5rem 0 2rem; }
-    .sintacc-item {
-      display: flex; align-items: center; gap: 0.75rem;
-      color: rgba(255,255,255,0.85); font-size: 0.9rem;
-    }
-    .sintacc-item::before {
-      content: '✓'; background: var(--amber); color: var(--negro);
-      width: 20px; height: 20px; border-radius: 50%; display: flex;
-      align-items: center; justify-content: center;
-      font-size: 0.65rem; font-weight: 800; flex-shrink: 0;
-    }
-    .btn-wa-green {
-      display: inline-flex; align-items: center; gap: 0.55rem;
-      background: #25D366; color: var(--blanco); font-weight: 600;
-      font-size: 0.88rem; padding: 0.85rem 1.8rem; border-radius: 8px;
-      text-decoration: none; transition: background 0.2s, transform 0.2s;
-    }
-    .btn-wa-green:hover { background: #1ebe5d; transform: translateY(-2px); }
+    /* INFO */
+    .info{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:stretch}
+    .irow{display:flex;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line)}
+    .irow:last-child{border:0}
+    .irow .k{font-family:var(--fb);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:.8rem;color:var(--clay2);min-width:6.5rem}
+    .irow .v{color:var(--ink)}
+    .map{border:1px solid var(--line);border-radius:6px;min-height:340px;overflow:hidden}
+    .map iframe{width:100%;height:100%;min-height:340px;border:0;filter:grayscale(.35) contrast(1.02)}
+    @media(max-width:820px){.info{grid-template-columns:1fr}}
 
-    /* ── CATERING ── */
-    .catering { background: var(--crema); }
-    .catering-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
-    }
-    .catering-text .section-title { margin-bottom: 1rem; }
-    .catering-text p { color: var(--gris-medio); line-height: 1.8; margin-bottom: 0.9rem; }
-    .catering-features { display: flex; flex-direction: column; gap: 0.65rem; margin: 1.5rem 0 2rem; }
-    .catering-feat {
-      display: flex; align-items: center; gap: 0.75rem;
-      font-size: 0.9rem; color: var(--negro);
-    }
-    .catering-feat::before {
-      content: ''; width: 6px; height: 6px; border-radius: 50%;
-      background: var(--amber); flex-shrink: 0;
-    }
-    .catering-img img {
-      width: 100%; height: 440px; object-fit: cover;
-      border-radius: 1.5rem; box-shadow: 0 16px 48px rgba(0,0,0,0.14);
-    }
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: var(--amber); color: var(--negro); font-weight: 700;
-      font-size: 0.88rem; letter-spacing: 0.04em; text-transform: uppercase;
-      padding: 0.85rem 1.8rem; border-radius: 8px; text-decoration: none;
-      transition: background 0.2s, transform 0.2s;
-    }
-    .btn-primary:hover { background: var(--amber-dark); transform: translateY(-2px); }
+    footer{border-top:1px solid var(--line);padding:3.5rem 0 2rem;background:#efe6d5}
+    footer .top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2rem;align-items:flex-start}
+    footer .logo{margin-bottom:.6rem}
+    footer p{color:var(--muted);font-size:.92rem;max-width:32ch}
+    footer .col h5{font-family:var(--fb);font-weight:600;text-transform:uppercase;letter-spacing:.12em;font-size:.78rem;color:var(--clay2);margin-bottom:.8rem}
+    footer .col a,footer .col div{display:block;color:var(--muted);font-size:.9rem;margin:.35rem 0}
+    footer .col a:hover{color:var(--ink)}
+    footer .copy{border-top:1px solid var(--line);margin-top:2.4rem;padding-top:1.4rem;color:#9c8f80;font-size:.78rem;text-align:center}
 
-    /* ── PEDIDO FORM ── */
-    .pedido { background: var(--gris-dark); padding: 6rem 2rem; }
-    .pedido-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1.1fr; gap: 4rem; align-items: start;
-    }
-    .pedido-text .section-label { color: var(--amber); }
-    .pedido-text .section-title { color: var(--blanco); margin-bottom: 1rem; }
-    .pedido-text p { color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 0.9rem; }
-    .pedido-beneficios { display: flex; flex-direction: column; gap: 0.65rem; margin-top: 1.5rem; }
-    .pedido-bene {
-      display: flex; align-items: center; gap: 0.75rem;
-      color: rgba(255,255,255,0.8); font-size: 0.88rem;
-    }
-    .pedido-bene-icon {
-      width: 32px; height: 32px; background: rgba(245,158,11,0.15);
-      border-radius: 8px; display: flex; align-items: center; justify-content: center;
-      font-size: 0.95rem; flex-shrink: 0;
-    }
-    .pedido-form {
-      background: var(--blanco); border-radius: 1.5rem;
-      padding: 2rem; box-shadow: 0 16px 48px rgba(0,0,0,0.2);
-    }
-    .form-title {
-      font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700;
-      color: var(--negro); margin-bottom: 1.4rem;
-    }
-    .form-group { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1rem; }
-    .form-group label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #555; }
-    .form-group input, .form-group select, .form-group textarea {
-      border: 1.5px solid #E5E7EB; border-radius: 10px;
-      padding: 0.7rem 0.9rem; font-size: 0.9rem; font-family: 'Inter', sans-serif;
-      background: #FAFAFA; transition: border-color 0.2s;
-      outline: none; width: 100%;
-    }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--amber); background: var(--blanco); }
-    .form-group textarea { resize: vertical; min-height: 80px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-    .btn-form-wa {
-      width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.55rem;
-      background: #25D366; color: var(--blanco); font-weight: 700; font-size: 0.9rem;
-      padding: 0.9rem; border-radius: 10px; border: none; cursor: pointer;
-      transition: background 0.2s, transform 0.2s; margin-top: 0.5rem;
-    }
-    .btn-form-wa:hover { background: #1ebe5d; transform: translateY(-1px); }
-    .form-nota { font-size: 0.72rem; color: #999; text-align: center; margin-top: 0.6rem; }
-
-    /* ── HORARIOS ── */
-    .horarios { background: var(--crema); padding: 6rem 2rem; }
-    .horarios-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1.4fr; gap: 4rem; align-items: start;
-    }
-    .horarios-text .section-title { margin-bottom: 2rem; }
-    .horario-tabla { width: 100%; border-collapse: collapse; }
-    .horario-tabla td { padding: 0.65rem 0; font-size: 0.9rem; border-bottom: 1px solid rgba(0,0,0,0.06); }
-    .horario-tabla td:first-child { font-weight: 600; color: var(--negro); width: 60%; }
-    .horario-tabla td:last-child { color: var(--amber-dark); font-weight: 500; }
-    .horario-tabla tr:last-child td { border-bottom: none; }
-    .contact-cards { display: flex; flex-direction: column; gap: 0.9rem; margin-top: 2rem; }
-    .contact-card {
-      display: flex; align-items: center; gap: 1rem;
-      background: var(--blanco); border-radius: 1rem; padding: 1rem 1.2rem;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-    }
-    .contact-card-icon {
-      width: 42px; height: 42px; border-radius: 10px;
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-    }
-    .contact-card-icon.wa { background: #25D366; }
-    .contact-card-icon.ig { background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
-    .contact-card-icon.maps { background: #4285F4; }
-    .contact-card-info h4 { font-size: 0.82rem; font-weight: 700; color: var(--negro); }
-    .contact-card-info p { font-size: 0.78rem; color: var(--gris-medio); }
-    .contact-card a { color: inherit; text-decoration: none; }
-    .horarios-mapa { border-radius: 1.5rem; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
-    .horarios-mapa iframe { width: 100%; height: 420px; border: none; display: block; }
-
-    /* ── WA FLOTANTE ── */
-    .wa-float {
-      position: fixed; bottom: 1.75rem; right: 1.75rem; z-index: 200;
-      width: 58px; height: 58px; border-radius: 50%;
-      background: #25D366; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 20px rgba(37,211,102,0.45);
-      text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.6); }
-
-    /* ── FOOTER ── */
-    footer {
-      background: var(--negro); color: rgba(255,255,255,0.5);
-      padding: 3rem 2rem; text-align: center;
-    }
-    .footer-inner { max-width: 1100px; margin: 0 auto; }
-    .footer-logo {
-      font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700;
-      color: var(--blanco); margin-bottom: 0.5rem;
-    }
-    .footer-tagline { font-size: 0.83rem; margin-bottom: 1.5rem; }
-    .footer-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
-    .footer-links a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--amber); }
-    .footer-copy { font-size: 0.73rem; color: rgba(255,255,255,0.3); }
-
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
-      .hamburger { width: 44px; height: 44px; justify-content: center; align-items: center; }
-      .nosotros-grid, .sintacc-inner, .catering-inner, .pedido-inner, .horarios-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-      .nosotros-badge { right: 0.5rem; bottom: -1rem; }
-      .productos-grid { grid-template-columns: repeat(2, 1fr); }
-      .resenas-grid { grid-template-columns: 1fr 1fr; }
-      .galeria-grid { grid-template-columns: repeat(2, 1fr); }
-      .galeria-grid .g-tall, .galeria-grid .g-wide { grid-row: span 1; grid-column: span 1; }
-      .form-row { grid-template-columns: 1fr; }
-      nav { padding: 0.9rem 1.25rem; }
-    }
-    @media (max-width: 580px) {
-      .productos-grid { grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
-      .producto-body { padding: 0.9rem; }
-      .producto-body h3 { font-size: 1rem; }
-      .producto-body p { font-size: 0.78rem; }
-      .resenas-grid { grid-template-columns: 1fr; }
-      .galeria-grid { grid-template-columns: 1fr 1fr; gap: 0.4rem; }
-      .hero h1 { font-size: 2.6rem; line-height: 1.1; }
-      .hero-sub { font-size: 0.95rem; }
-      .hero-btns { flex-direction: column; align-items: stretch; gap: 0.8rem; }
-      .btn-hero-primary, .btn-hero-outline { text-align: center; padding: 1rem 1.5rem; font-size: 0.9rem; }
-      .section { padding: 3.5rem 1.25rem; }
-      .section-title { font-size: 1.9rem; }
-      .producto-card { border-radius: 12px; }
-      .resena-card { padding: 1.4rem; }
-      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .cta-section { padding: 4rem 1.5rem; }
-      .cta-btns { flex-direction: column; align-items: stretch; }
-      .cta-btns a { text-align: center; }
-    }
-    @media (max-width: 390px) {
-      .hero h1 { font-size: 2.2rem; }
-      .hero-badge { font-size: 0.65rem; padding: 0.3rem 0.8rem; }
-      nav { padding: 0.8rem 1rem; }
-      .section { padding: 3rem 1rem; }
-      .productos-grid { gap: 0.6rem; }
-      .producto-body { padding: 0.75rem; }
-      .producto-body h3 { font-size: 0.92rem; }
-      .producto-tag { font-size: 0.6rem; }
-    }
+    .wafloat{position:fixed;right:20px;bottom:20px;z-index:950;width:58px;height:58px;border-radius:50%;background:#1f8a4c;color:#fff;display:grid;place-items:center;box-shadow:0 14px 34px -10px rgba(31,138,76,.7);transition:var(--tr)}
+    .wafloat:hover{transform:scale(1.08)}.wafloat svg{width:30px;height:30px}
   </style>
 </head>
 <body>
+  <div id="bar"></div>
 
-<!-- ── NAV ── -->
-<nav id="navbar">
-  <a href="#inicio" class="nav-logo" aria-label="Bruzzone inicio">
-    <img src="https://instagram.feze8-2.fna.fbcdn.net/v/t51.82787-19/539641655_18040944827660628_5716843044503423657_n.jpg" alt="Bruzzone logo"
-         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-    <span class="nav-logo-icon" style="display:none; width:38px;height:38px;background:var(--amber);border-radius:50%;align-items:center;justify-content:center;font-size:18px;">🌾</span>
-    <span class="nav-logo-text">Bruzzone</span>
-  </a>
-  <ul class="nav-links">
-    <li><a href="#nosotros">Nosotros</a></li>
-    <li><a href="#productos">Productos</a></li>
-    <li><a href="#galeria">Galería</a></li>
-    <li><a href="#catering">Catering</a></li>
-    <li><a href="#horarios">Horarios</a></li>
-    <li><a href="#pedido" class="nav-cta">Hacer pedido</a></li>
-  </ul>
-  <button class="hamburger" id="hamburgerBtn" aria-label="Menú" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
+  <nav id="nav"><div class="wrap">
+    <a href="#hero" class="logo"><span class="mark"></span>MOKA</a>
+    <ul class="links" id="links">
+      <li><a href="#carta">La carta</a></li>
+      <li><a href="#grano">El grano</a></li>
+      <li><a href="#lugar">El lugar</a></li>
+      <li><a href="#info">Dónde estamos</a></li>
+      <li><a class="navcta" href="https://wa.me/5491166778899?text=Hola%20Moka!%20Quiero%20hacer%20un%20pedido" target="_blank" rel="noopener">Pedí por WhatsApp</a></li>
+    </ul>
+    <button class="burger" id="burger"><span></span><span></span><span></span></button>
+  </div></nav>
 
-<!-- ── MENÚ MOBILE ── -->
-<div class="mobile-menu" id="mobileMenu" role="navigation">
-  <a href="#nosotros" onclick="closeMobileMenu()">Nosotros</a>
-  <a href="#productos" onclick="closeMobileMenu()">Productos</a>
-  <a href="#galeria" onclick="closeMobileMenu()">Galería</a>
-  <a href="#catering" onclick="closeMobileMenu()">Catering</a>
-  <a href="#horarios" onclick="closeMobileMenu()">Horarios</a>
-  <a href="https://wa.me/5491153379763?text=Hola%20Bruzzone!%20Quiero%20hacer%20un%20pedido%20🥐" target="_blank" rel="noopener" class="mobile-menu-wa" onclick="closeMobileMenu()">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    Hacer pedido
-  </a>
-</div>
-
-<!-- ── HERO ── -->
-<section class="hero" id="inicio">
-  <div class="hero-bg"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <div class="hero-badge">📍 Méndez 206, Glew · Desde 2018</div>
-    <h1>Cocinamos con<br/><em>amor</em> cada día</h1>
-    <p class="hero-sub">Medialunas, tortas artesanales, alfajores y mucho más.<br/>La mejor panadería de zona sur.</p>
-    <div class="hero-btns">
-      <a href="#productos" class="btn-hero-primary">Ver productos</a>
-      <a href="#pedido" class="btn-hero-outline">Hacer un pedido</a>
+  <!-- HERO -->
+  <section id="hero">
+    <div class="txt">
+      <span class="kicker">Café de especialidad · tostado propio</span>
+      <h1>Café de<br>verdad,<em>sin apuro</em></h1>
+      <p>Grano de origen, tostado por nosotros y medialunas recién hechas. Pasá, quedate, y llevate el día un poco mejor.</p>
+      <div class="ctas">
+        <a class="btn btn-clay" href="#carta">Ver la carta</a>
+        <a class="btn btn-ghost" href="#info">Cómo llegar</a>
+      </div>
+      <div class="since">Tostado propio</div>
     </div>
-  </div>
-  <div class="hero-scroll" aria-hidden="true">
-    <span>Scroll</span>
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-  </div>
-</section>
+    <div class="media"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1400&q=80" alt="Cafés con arte latte" /></div>
+  </section>
 
-<!-- ── STRIP ── -->
-<div class="strip" aria-hidden="true">
-  <div class="strip-track">
-    <div class="strip-item"><span>🥐</span> Hecho artesanalmente cada día</div>
-    <span class="strip-sep">✦</span>
-    <div class="strip-item"><span>⭐</span> +8.300 clientes en Instagram</div>
-    <span class="strip-sep">✦</span>
-    <div class="strip-item"><span>📦</span> Catering para eventos</div>
-    <span class="strip-sep">✦</span>
-    <div class="strip-item"><span>📍</span> Méndez 206, Glew</div>
-    <span class="strip-sep">✦</span>
-    <div class="strip-item"><span>🥐</span> Hecho artesanalmente cada día</div>
-    <span class="strip-sep">✦</span>
-    <div class="strip-item"><span>⭐</span> +8.300 clientes en Instagram</div>
-    <span class="strip-sep">✦</span>
-    <div class="strip-item"><span>📦</span> Catering para eventos</div>
-    <span class="strip-sep">✦</span>
-    <div class="strip-item"><span>📍</span> Méndez 206, Glew</div>
-    <span class="strip-sep">✦</span>
-  </div>
-</div>
+  <!-- MARQUEE -->
+  <div class="marq"><div class="row" id="marq">
+    <span>Espresso</span><b>·</b><span>Flat white</span><b>·</b><span>Cold brew</span><b>·</b><span>Medialunas</span><b>·</b><span>Cappuccino</span><b>·</b><span>Cortado</span><b>·</b><span>Filtrado</span><b>·</b>
+    <span>Espresso</span><b>·</b><span>Flat white</span><b>·</b><span>Cold brew</span><b>·</b><span>Medialunas</span><b>·</b><span>Cappuccino</span><b>·</b><span>Cortado</span><b>·</b><span>Filtrado</span><b>·</b>
+  </div></div>
 
-<!-- ── NOSOTROS ── -->
-<section class="nosotros section" id="nosotros">
-  <div class="section-inner nosotros-grid">
-    <div class="nosotros-img fade-up">
-      <!-- Foto: interior de panadería con vidriera y productos -->
-      <img src="https://images.unsplash.com/photo-1517433367423-c7e5b0f35086?w=800&q=80&auto=format"
-           alt="Interior de Bruzzone Panadería — vidriera con productos artesanales" loading="lazy" />
-      <div class="nosotros-badge">
-        <strong>+6 años</strong>
-        endulzando Glew
+  <!-- CARTA -->
+  <section id="carta" class="sec"><div class="wrap serv">
+    <div class="pic reveal"><img src="https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=800&q=80" alt="Espresso servido con luz de mañana" /></div>
+    <div class="reveal d1">
+      <span class="lbl">La carta</span>
+      <h2 class="h2">Café<br>y algo dulce</h2>
+      <div class="price-list">
+        <div class="pr"><span class="n">Espresso / Cortado <span class="desc">Doble, si querés arrancar en serio</span></span><span class="dots"></span><span class="amt">$1.800</span></div>
+        <div class="pr"><span class="n">Flat white <span class="desc">Nuestro más pedido</span></span><span class="dots"></span><span class="amt">$2.900</span></div>
+        <div class="pr"><span class="n">Cappuccino <span class="desc">Con espuma de verdad</span></span><span class="dots"></span><span class="amt">$2.700</span></div>
+        <div class="pr"><span class="n">Cold brew <span class="desc">24 hs de reposo en frío</span></span><span class="dots"></span><span class="amt">$3.200</span></div>
+        <div class="pr"><span class="n">Medialunas (x3) <span class="desc">Recién horneadas, de manteca</span></span><span class="dots"></span><span class="amt">$2.400</span></div>
+        <div class="pr"><span class="n">Tostado / Brunch <span class="desc">Jamón crudo, palta o huevos</span></span><span class="dots"></span><span class="amt">$5.500</span></div>
       </div>
     </div>
-    <div class="nosotros-text fade-up fade-up-delay-2">
-      <p class="section-label">Nuestra historia</p>
-      <h2 class="section-title">Una familia,<br/>una panadería</h2>
-      <p>Bruzzone nació del sueño de traer a Glew el sabor de la panadería artesanal de verdad: la que se hace con tiempo, con manos que saben y con el mismo amor de siempre.</p>
-      <p>Cada mañana, desde antes de las 7, nuestro equipo elabora las medialunas, las tortas, el pan y los alfajores que vas a encontrar en la vidriera. Sin atajos ni conservantes: todo fresco, todo del día.</p>
-      <div class="nosotros-features">
-        <div class="nosotros-feat">Elaboración artesanal, sin conservantes</div>
-        <div class="nosotros-feat">Ingredientes de primera calidad</div>
-        <div class="nosotros-feat">Pedidos especiales y catering para eventos</div>
-        <div class="nosotros-feat">Atención personalizada, como en familia</div>
-      </div>
+  </div></section>
+
+  <!-- GRANO -->
+  <section id="grano" class="sec"><div class="wrap split">
+    <div class="reveal">
+      <span class="lbl">El grano</span>
+      <h2 class="h2">De la finca<br>a tu taza</h2>
+      <ul class="rlist">
+        <li><span class="num">01</span><div><b>Tostado propio</b><span>Tostamos cada semana. Nunca café viejo.</span></div></li>
+        <li><span class="num">02</span><div><b>De origen</b><span>Granos seleccionados, con historia.</span></div></li>
+        <li><span class="num">03</span><div><b>Baristas de verdad</b><span>Cada taza sale como tiene que salir.</span></div></li>
+      </ul>
     </div>
-  </div>
-</section>
+    <div class="pic reveal d2"><img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=900&q=80" alt="Cafetera de émbolo junto a la ventana" /></div>
+  </div></section>
 
-<!-- ── PRODUCTOS ── -->
-<section class="productos section" id="productos">
-  <div class="section-inner">
-    <div class="productos-header fade-up">
-      <p class="section-label">Lo que hacemos</p>
-      <h2 class="section-title">Nuestros productos</h2>
-      <p class="section-desc">De la vidriera a tu mesa. Todo elaborado con harina, manteca, huevos y mucho amor.</p>
+  <!-- LUGAR / GALERÍA -->
+  <section id="lugar" class="sec"><div class="wrap">
+    <div class="reveal" style="margin-bottom:2.6rem"><span class="lbl">El lugar</span><h2 class="h2">Pasá un rato</h2></div>
+    <div class="gal reveal">
+      <a class="a" href="#pedi"><img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80" alt="Interior de la cafetería" /></a>
+      <a class="b" href="#pedi"><img src="https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?auto=format&fit=crop&w=700&q=80" alt="Preparando un café con leche frío" /></a>
+      <a class="c" href="#pedi"><img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=600&q=80" alt="Cold brew" /></a>
+      <a class="d" href="#pedi"><img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=600&q=80" alt="Granos de café tostados" /></a>
+      <a class="e" href="#pedi"><img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=700&q=80" alt="Salón con ventanales" /></a>
+      <a class="f" href="#pedi"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80" alt="Cafés con arte latte en la mesa" /></a>
     </div>
-    <div class="productos-grid">
+  </div></section>
 
-      <!-- Medialunas & Facturas — foto de medialunas/croissants dorados -->
-      <div class="producto-card fade-up fade-up-delay-1">
-        <div class="producto-img">
-          <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=700&q=80&auto=format"
-               alt="Medialunas y facturas artesanales recién horneadas" loading="lazy" />
-        </div>
-        <div class="producto-body">
-          <span class="producto-tag">⭐ Lo más pedido</span>
-          <h3>Medialunas & Facturas</h3>
-          <p>Doradas, hojaldradas y recién salidas del horno. De manteca, de grasa, vigilantes, cañoncitos, palmeritas y mucho más. La vidriera de siempre.</p>
-        </div>
-      </div>
-
-      <!-- Tortas Artesanales — foto de torta de chocolate con frutillas -->
-      <div class="producto-card fade-up fade-up-delay-2">
-        <div class="producto-img">
-          <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=700&q=80&auto=format"
-               alt="Torta artesanal de chocolate con frutillas y crema" loading="lazy" />
-        </div>
-        <div class="producto-body">
-          <span class="producto-tag">Confitería</span>
-          <h3>Tortas Artesanales</h3>
-          <p>Torta de chocolate con frutillas, torta de crema y mermelada, torta de limón, selva negra y más. Personalizadas para tu cumpleaños o evento.</p>
-        </div>
-      </div>
-
-      <!-- Pan Artesanal — foto de panes de campo/campo -->
-      <div class="producto-card fade-up fade-up-delay-3">
-        <div class="producto-img">
-          <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=700&q=80&auto=format"
-               alt="Pan artesanal de campo recién horneado" loading="lazy" />
-        </div>
-        <div class="producto-body">
-          <span class="producto-tag">Panadería</span>
-          <h3>Pan Artesanal</h3>
-          <p>Pan de campo, pan francés, pan de leche, pan árabe, pan de molde y más. Masa madre y fermentación lenta para un sabor auténtico.</p>
-        </div>
-      </div>
-
-      <!-- Alfajores — foto de alfajores de chocolate -->
-      <div class="producto-card fade-up fade-up-delay-1">
-        <div class="producto-img">
-          <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=700&q=80&auto=format"
-               alt="Alfajores artesanales de chocolate bañados" loading="lazy" />
-        </div>
-        <div class="producto-body">
-          <span class="producto-tag">Especialidad</span>
-          <h3>Alfajores Artesanales</h3>
-          <p>Alfajores de maicena con dulce de leche, bañados en chocolate. También de coco, de chocolate amargo y la versión Sin TACC. Hechos en el local.</p>
-        </div>
-      </div>
-
-      <!-- Productos Salados — foto de empanadas artesanales -->
-      <div class="producto-card fade-up fade-up-delay-2">
-        <div class="producto-img">
-          <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=700&q=80&auto=format"
-               alt="Productos salados — tarta, empanadas, sandwiches de miga" loading="lazy" />
-        </div>
-        <div class="producto-body">
-          <span class="producto-tag">Salados</span>
-          <h3>Productos Salados</h3>
-          <p>Medialunas de jamón y queso, tartas, empanadas, sandwiches de miga y otras delicias saladas. Ideal para reuniones y desayunos de trabajo.</p>
-        </div>
-      </div>
-
-      <!-- Regalos & Cajas — foto de caja regalo con productos artesanales -->
-      <div class="producto-card fade-up fade-up-delay-3">
-        <div class="producto-img">
-          <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=700&q=80&auto=format"
-               alt="Cajas regalo y regalos artesanales Bruzzone" loading="lazy" />
-        </div>
-        <div class="producto-body">
-          <span class="producto-tag">🎁 Ideal para regalar</span>
-          <h3>Cajas & Regalos</h3>
-          <p>Cajas armadas con lo mejor de la vidriera: alfajores, medialunas, budines y tortas. Perfectas para cumpleaños, fiestas o cualquier ocasión especial.</p>
-        </div>
-      </div>
-
+  <!-- PEDIDOS -->
+  <section id="pedi" class="sec"><div class="wrap reveal">
+    <span class="lbl">Pedidos</span>
+    <h2 class="h2">Pedí y te lo preparamos</h2>
+    <div class="steps">
+      <div class="step"><div class="n">01</div><b>Elegí de la carta</b><span>Café, brunch o algo dulce.</span></div>
+      <div class="step"><div class="n">02</div><b>Escribinos</b><span>Por WhatsApp, en un toque.</span></div>
+      <div class="step"><div class="n">03</div><b>Retirás o te llega</b><span>Para llevar o delivery en la zona.</span></div>
     </div>
-  </div>
-</section>
-
-<!-- ── GALERÍA ── -->
-<section class="galeria" id="galeria">
-  <div class="galeria-header fade-up">
-    <p class="section-label" style="color:var(--amber)">Instagram @bruzzone_panaderia</p>
-    <h2 class="section-title light">De nuestra vidriera</h2>
-  </div>
-  <div class="galeria-grid">
-
-    <!-- Foto 1 tall: Medialunas en vidriera -->
-    <div class="galeria-item g-tall fade-up">
-      <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&q=80&auto=format"
-           alt="Medialunas recién salidas del horno" loading="lazy" />
-      <div class="galeria-caption"><span>Medialunas recién salidas del horno</span></div>
-    </div>
-
-    <!-- Foto 2: Torta chocolate con frutillas -->
-    <div class="galeria-item fade-up fade-up-delay-1">
-      <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500&q=80&auto=format"
-           alt="Torta de chocolate con frutillas" loading="lazy" />
-      <div class="galeria-caption"><span>Torta de chocolate con frutillas</span></div>
-    </div>
-
-    <!-- Foto 3: Torta de crema y capas -->
-    <div class="galeria-item fade-up fade-up-delay-2">
-      <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=500&q=80&auto=format"
-           alt="Torta de crema y mermelada — capas artesanales" loading="lazy" />
-      <div class="galeria-caption"><span>Torta de crema y mermelada — capas artesanales</span></div>
-    </div>
-
-    <!-- Foto 4 wide: Facturas surtidas en bandeja -->
-    <div class="galeria-item g-wide fade-up fade-up-delay-1">
-      <img src="https://images.unsplash.com/photo-1530610476181-d83430b64dcd?w=900&q=80&auto=format"
-           alt="Facturas surtidas del día — vigilantes, cañoncitos, palmeritas" loading="lazy" />
-      <div class="galeria-caption"><span>Facturas surtidas del día</span></div>
-    </div>
-
-    <!-- Foto 5: Alfajores artesanales -->
-    <div class="galeria-item fade-up fade-up-delay-2">
-      <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=500&q=80&auto=format"
-           alt="Alfajores artesanales de chocolate" loading="lazy" />
-      <div class="galeria-caption"><span>Alfajores artesanales de chocolate</span></div>
-    </div>
-
-    <!-- Foto 6 tall: Pan artesanal de campo -->
-    <div class="galeria-item g-tall fade-up fade-up-delay-1">
-      <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&q=80&auto=format"
-           alt="Pan artesanal de campo — horneado fresco" loading="lazy" />
-      <div class="galeria-caption"><span>Pan artesanal de campo</span></div>
-    </div>
-
-    <!-- Foto 7: Catering para eventos -->
-    <div class="galeria-item fade-up fade-up-delay-3">
-      <img src="https://images.unsplash.com/photo-1530062845289-9109b2c9c868?w=500&q=80&auto=format"
-           alt="Catering para eventos — bocaditos y mesa dulce" loading="lazy" />
-      <div class="galeria-caption"><span>Catering para eventos y casamientos</span></div>
-    </div>
-
-    <!-- Foto 8: Sin TACC -->
-    <div class="galeria-item fade-up fade-up-delay-4">
-      <img src="https://images.unsplash.com/photo-1598373182133-52452f7691ef?w=500&q=80&auto=format"
-           alt="Línea Sin TACC — aptos para celíacos" loading="lazy" />
-      <div class="galeria-caption"><span>Línea Sin TACC — aptos celíacos</span></div>
-    </div>
-
-  </div>
-  <div class="galeria-ig">
-    <a href="https://www.instagram.com/bruzzone_panaderia" target="_blank" rel="noopener">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-      Ver más en @bruzzone_panaderia
-    </a>
-  </div>
-</section>
-
-<!-- ── RESEÑAS ── -->
-<section class="resenas section" id="resenas">
-  <div class="section-inner">
-    <div class="resenas-header fade-up">
-      <p class="section-label">Lo que dicen</p>
-      <h2 class="section-title">Clientes satisfechos</h2>
-      <p class="section-desc" style="margin:0 auto">Comentarios reales de nuestra comunidad en Instagram.</p>
-    </div>
-    <div class="resenas-grid">
-      <div class="resena-card fade-up fade-up-delay-1">
-        <div class="resena-stars">★★★★★</div>
-        <p class="resena-texto">"La mejor panadería de la historia. Las medialunas son una locura, no podés comer solo una. ¡Los mejores de zona sur sin ninguna duda!"</p>
-        <div class="resena-autor">
-          <div class="resena-avatar">MP</div>
-          <div class="resena-autor-info">
-            <strong>@mikypitrau</strong>
-            <span>Glew · Instagram</span>
-          </div>
-        </div>
-      </div>
-      <div class="resena-card fade-up fade-up-delay-2">
-        <div class="resena-stars">★★★★★</div>
-        <p class="resena-texto">"La mejor panadería de zona sur. Tiene todo lo que buscás y más. La atención es increíble, te tratan como en familia. ¡Los recomiendo a todos!"</p>
-        <div class="resena-autor">
-          <div class="resena-avatar">AD</div>
-          <div class="resena-autor-info">
-            <strong>@adii.13_ok</strong>
-            <span>Glew · Instagram</span>
-          </div>
-        </div>
-      </div>
-      <div class="resena-card fade-up fade-up-delay-3">
-        <div class="resena-stars">★★★★★</div>
-        <p class="resena-texto">"¡Las más ricas de Glew!!! Si buscás algo rico, vení a Bruzzone. No te pierdas en probar todas las exquisiteces que tienen. ¡Espectacular todo!"</p>
-        <div class="resena-autor">
-          <div class="resena-avatar">EC</div>
-          <div class="resena-autor-info">
-            <strong>@elba_carnovale</strong>
-            <span>Glew · Instagram</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── SIN TACC ── -->
-<section class="sintacc" id="sintacc">
-  <div class="sintacc-inner">
-    <div class="sintacc-img fade-up">
-      <!-- Foto: pan/productos sin gluten, miga abierta -->
-      <img src="https://images.unsplash.com/photo-1598373182133-52452f7691ef?w=800&q=80&auto=format"
-           alt="Pan artesanal Sin TACC — apto para celíacos" loading="lazy" />
-    </div>
-    <div class="sintacc-text fade-up fade-up-delay-2">
-      <p class="section-label">Para todos</p>
-      <h2 class="section-title light">Línea<br/>Sin TACC</h2>
-      <p>Porque la celaquía no debería privarte de disfrutar una buena medialuna o una torta artesanal. Desarrollamos una línea completa con harinas sin gluten para que todos puedan disfrutar Bruzzone.</p>
-      <div class="sintacc-items">
-        <div class="sintacc-item">Medialunas y facturas Sin TACC</div>
-        <div class="sintacc-item">Pan de campo y pan de molde aptos celíacos</div>
-        <div class="sintacc-item">Alfajores de maicena Sin TACC</div>
-        <div class="sintacc-item">Tortas y budines para celíacos</div>
-        <div class="sintacc-item">Producción diferenciada, sin contaminación cruzada</div>
-      </div>
-      <a href="https://wa.me/5491153379763?text=Hola%20Bruzzone!%20Quiero%20consultar%20por%20productos%20Sin%20TACC%20🌿" target="_blank" rel="noopener" class="btn-wa-green">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Consultar disponibilidad Sin TACC
+    <div class="resctas">
+      <a class="btn btn-wa" href="https://wa.me/5491166778899?text=Hola%20Moka!%20Quiero%20hacer%20un%20pedido" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.3A7.9 7.9 0 0 0 12 4a8 8 0 0 0-6.9 12l-1 3.7 3.8-1A8 8 0 0 0 12 20a8 8 0 0 0 5.6-13.7ZM12 18.5c-1.2 0-2.4-.3-3.4-.9l-.2-.1-2.3.6.6-2.2-.2-.3A6.6 6.6 0 1 1 12 18.5Z"/></svg>
+        Pedí por WhatsApp
       </a>
+      <a class="btn btn-ghost" href="#carta">Ver la carta</a>
     </div>
-  </div>
-</section>
+  </div></section>
 
-<!-- ── CATERING ── -->
-<section class="catering section" id="catering">
-  <div class="catering-inner section-inner">
-    <div class="catering-text fade-up">
-      <p class="section-label">Para tu evento</p>
-      <h2 class="section-title">Catering<br/>personalizado</h2>
-      <p>¿Tenés un casamiento, cumpleaños, bautismo o reunión de empresa? Nos encargamos de la mesa dulce y salada. Desde una docena de medialunas hasta una mesa completa para 200 personas.</p>
-      <p>Trabajamos con anticipación para asegurarte la mejor calidad y que todo esté listo en tiempo y forma para tu evento.</p>
-      <div class="catering-features">
-        <div class="catering-feat">Casamientos, cumpleaños y bautismos</div>
-        <div class="catering-feat">Reuniones de empresa y eventos corporativos</div>
-        <div class="catering-feat">Encuentros religiosos y comunitarios</div>
-        <div class="catering-feat">Mesa dulce y salada completamente personalizable</div>
-        <div class="catering-feat">Entrega puntual con embalaje profesional</div>
+  <!-- RESEÑAS -->
+  <section class="sec"><div class="wrap">
+    <div class="reveal" style="margin-bottom:2.4rem"><span class="lbl">Reseñas</span><h2 class="h2">Lo que dicen</h2></div>
+    <div class="quotes">
+      <div class="quote reveal"><div class="stars">★★★★★</div><p>"El mejor flat white que probé en mucho tiempo. Y las medialunas ni hablar."</p><div class="who">Sofía L. · va casi todos los días</div></div>
+      <div class="quote reveal d1"><div class="stars">★★★★★</div><p>"Se nota que el café es de otro nivel. El lugar es lindísimo para quedarse a laburar."</p><div class="who">Tomás P. · cliente</div></div>
+    </div>
+  </div></section>
+
+  <!-- INFO -->
+  <section id="info" class="sec" style="background:var(--bg2);border-top:1px solid var(--line)"><div class="wrap">
+    <div class="reveal" style="margin-bottom:2.4rem"><span class="lbl">Dónde estamos</span><h2 class="h2">Pasá por Moka</h2></div>
+    <div class="info">
+      <div class="reveal">
+        <div class="irow"><span class="k">Dirección</span><span class="v">Gorriti 4700, Palermo, CABA</span></div>
+        <div class="irow"><span class="k">Horarios</span><span class="v">Todos los días · 8 a 20 hs</span></div>
+        <div class="irow"><span class="k">WhatsApp</span><span class="v">+54 9 11 6677-8899</span></div>
+        <div class="irow"><span class="k">Instagram</span><span class="v">@cafemoka</span></div>
+        <div style="margin-top:1.6rem"><a class="btn btn-wa" href="https://wa.me/5491166778899?text=Hola%20Moka!%20Quiero%20hacer%20un%20pedido" target="_blank" rel="noopener">Pedí por WhatsApp</a></div>
       </div>
-      <a href="#pedido" class="btn-primary" style="margin-top:1.8rem;">📋 Solicitar presupuesto</a>
+      <div class="map reveal d1"><iframe title="Mapa" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Palermo+Buenos+Aires&output=embed"></iframe></div>
     </div>
-    <div class="catering-img fade-up fade-up-delay-2">
-      <!-- Foto: mesa de catering con bocaditos y productos -->
-      <img src="https://images.unsplash.com/photo-1530062845289-9109b2c9c868?w=800&q=80&auto=format"
-           alt="Mesa de catering Bruzzone — cumpleaños, casamientos, eventos" loading="lazy" />
+  </div></section>
+
+  <footer><div class="wrap">
+    <div class="top">
+      <div><div class="logo"><span class="mark"></span>MOKA</div><p>Café de especialidad con tostado propio. Pasá, quedate y volvé.</p></div>
+      <div class="col"><h5>La carta</h5><a href="#carta">Café</a><a href="#carta">Cold brew</a><a href="#carta">Brunch</a></div>
+      <div class="col"><h5>La casa</h5><a href="#grano">El grano</a><a href="#lugar">El lugar</a><a href="#pedi">Pedidos</a></div>
+      <div class="col"><h5>Contacto</h5><div>Palermo, CABA</div><div>+54 9 11 6677-8899</div><div>@cafemoka</div></div>
     </div>
-  </div>
-</section>
+    <div class="copy">© 2026 Café Moka · Café de especialidad · Demo de sitio web</div>
+  </div></footer>
 
-<!-- ── PEDIDO ── -->
-<section class="pedido" id="pedido">
-  <div class="pedido-inner">
-    <div class="pedido-text fade-up">
-      <p class="section-label">Pedí con anticipación</p>
-      <h2 class="section-title light">Pedido<br/>anticipado</h2>
-      <p>Completá el formulario y te enviamos confirmación por WhatsApp. Ideal para tortas de cumpleaños, catering y pedidos especiales.</p>
-      <p>Para tortas con decoración personalizada, pedimos al menos 48hs de anticipación.</p>
-      <div class="pedido-beneficios">
-        <div class="pedido-bene"><div class="pedido-bene-icon">⚡</div><span>Confirmación por WhatsApp en el día</span></div>
-        <div class="pedido-bene"><div class="pedido-bene-icon">📅</div><span>Reservá tu fecha, sin estrés</span></div>
-        <div class="pedido-bene"><div class="pedido-bene-icon">🎂</div><span>Tortas personalizadas a medida</span></div>
-        <div class="pedido-bene"><div class="pedido-bene-icon">🌿</div><span>Indicá si necesitás Sin TACC</span></div>
-        <div class="pedido-bene"><div class="pedido-bene-icon">🚚</div><span>Retiro en local · Méndez 206, Glew</span></div>
-      </div>
-    </div>
-    <div class="pedido-form fade-up fade-up-delay-2">
-      <p class="form-title">Hacé tu pedido 🛒</p>
-      <div class="form-group">
-        <label>Tu nombre</label>
-        <input type="text" id="f-nombre" placeholder="Ej: María González" />
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Teléfono / WhatsApp</label>
-          <input type="tel" id="f-tel" placeholder="+54 9 11 ..." />
-        </div>
-        <div class="form-group">
-          <label>Fecha de entrega</label>
-          <input type="date" id="f-fecha" />
-        </div>
-      </div>
-      <div class="form-group">
-        <label>¿Qué necesitás?</label>
-        <select id="f-tipo">
-          <option value="">— Seleccioná —</option>
-          <option value="Torta de cumpleaños personalizada">🎂 Torta de cumpleaños personalizada</option>
-          <option value="Torta para evento o catering">🎉 Torta para evento o catering</option>
-          <option value="Pedido de facturas y medialunas">🥐 Pedido de facturas y medialunas</option>
-          <option value="Alfajores para regalo o evento">🍫 Alfajores para regalo o evento</option>
-          <option value="Catering completo para evento">🍽️ Catering completo para evento</option>
-          <option value="Pedido Sin TACC">🌿 Pedido línea Sin TACC</option>
-          <option value="Otro pedido especial">✨ Otro pedido especial</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Detalles del pedido</label>
-        <textarea id="f-detalles" placeholder="Contanos qué necesitás: cantidad, sabor, decoración, cantidad de personas, etc."></textarea>
-      </div>
-      <button class="btn-form-wa" onclick="enviarPedido()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Enviar pedido por WhatsApp
-      </button>
-      <p class="form-nota">Te confirmamos disponibilidad en menos de 24hs.</p>
-    </div>
-  </div>
-</section>
+  <a class="wafloat" href="https://wa.me/5491166778899?text=Hola%20Moka!%20Quiero%20hacer%20un%20pedido" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.3A7.9 7.9 0 0 0 12 4a8 8 0 0 0-6.9 12l-1 3.7 3.8-1A8 8 0 0 0 12 20a8 8 0 0 0 5.6-13.7ZM12 18.5c-1.2 0-2.4-.3-3.4-.9l-.2-.1-2.3.6.6-2.2-.2-.3A6.6 6.6 0 1 1 12 18.5Zm3.7-4.9c-.2-.1-1.2-.6-1.4-.6-.2-.1-.3-.1-.4.1l-.6.7c-.1.1-.2.2-.4.1a5.4 5.4 0 0 1-2.6-2.3c-.2-.3.2-.3.5-1 .1-.1 0-.3 0-.4l-.6-1.4c-.2-.4-.3-.3-.5-.3h-.4c-.1 0-.4.1-.5.3-.2.2-.7.7-.7 1.7s.7 1.9.8 2.1c.1.1 1.5 2.3 3.6 3.2 1.3.6 1.8.6 2.5.5.4 0 1.2-.5 1.4-1 .2-.5.2-.9.1-1-.1-.1-.2-.1-.4-.2Z"/></svg>
+  </a>
 
-<!-- ── HORARIOS ── -->
-<section class="horarios" id="horarios">
-  <div class="horarios-inner section-inner">
-    <div class="horarios-text fade-up">
-      <p class="section-label">Dónde encontrarnos</p>
-      <h2 class="section-title">Horarios<br/>y ubicación</h2>
-      <table class="horario-tabla">
-        <tr><td>Lunes</td><td>Cerrado</td></tr>
-        <tr><td>Martes a Sábado</td><td>7:00 – 20:00 hs</td></tr>
-        <tr><td>Domingo (mañana)</td><td>7:00 – 13:30 hs</td></tr>
-        <tr><td>Domingo (tarde)</td><td>16:00 – 19:00 hs</td></tr>
-      </table>
-      <div class="contact-cards">
-        <div class="contact-card">
-          <div class="contact-card-icon wa">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          </div>
-          <div class="contact-card-info">
-            <a href="https://wa.me/5491153379763" target="_blank" rel="noopener">
-              <h4>WhatsApp</h4>
-              <p>+54 9 11 5337-9763 · Pedidos y consultas</p>
-            </a>
-          </div>
-        </div>
-        <div class="contact-card">
-          <div class="contact-card-icon ig">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          </div>
-          <div class="contact-card-info">
-            <a href="https://www.instagram.com/bruzzone_panaderia" target="_blank" rel="noopener">
-              <h4>Instagram</h4>
-              <p>@bruzzone_panaderia · 8.300+ seguidores</p>
-            </a>
-          </div>
-        </div>
-        <div class="contact-card">
-          <div class="contact-card-icon maps">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-          </div>
-          <div class="contact-card-info">
-            <h4>Dirección</h4>
-            <p>Gervasio Méndez 206, Glew, Buenos Aires</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="horarios-mapa fade-up fade-up-delay-2">
-      <iframe
-        src="https://maps.google.com/maps?q=Gervasio+Méndez+206+Glew+Buenos+Aires&output=embed"
-        title="Ubicación Bruzzone Panadería — Méndez 206, Glew"
-        loading="lazy"
-        allowfullscreen
-        referrerpolicy="no-referrer-when-downgrade">
-      </iframe>
-    </div>
-  </div>
-</section>
-
-<!-- ── FOOTER ── -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-logo">Bruzzone</div>
-    <p class="footer-tagline">Panadería & Confitería Artesanal · Glew, Buenos Aires</p>
-    <div class="footer-links">
-      <a href="#nosotros">Nosotros</a>
-      <a href="#productos">Productos</a>
-      <a href="#galeria">Galería</a>
-      <a href="#catering">Catering</a>
-      <a href="#horarios">Horarios</a>
-      <a href="#pedido">Pedidos</a>
-      <a href="https://www.instagram.com/bruzzone_panaderia" target="_blank" rel="noopener">Instagram</a>
-    </div>
-    <p class="footer-copy">© 2025 Bruzzone Panadería & Confitería · Gervasio Méndez 206, Glew</p>
-  </div>
-</footer>
-
-<!-- ── WA FLOTANTE ── -->
-<a href="https://wa.me/5491153379763?text=Hola%20Bruzzone!%20Quiero%20hacer%20un%20pedido%20🥐" target="_blank" rel="noopener" class="wa-float" aria-label="Contactar por WhatsApp">
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
-
-<script>
-// ── NAV SCROLL ──
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', window.scrollY > 60);
-}, { passive: true });
-
-// ── HAMBURGER ──
-const btn = document.getElementById('hamburgerBtn');
-const menu = document.getElementById('mobileMenu');
-btn.addEventListener('click', () => {
-  const isOpen = menu.classList.toggle('open');
-  btn.classList.toggle('open', isOpen);
-  btn.setAttribute('aria-expanded', isOpen);
-  document.body.style.overflow = isOpen ? 'hidden' : '';
-});
-function closeMobileMenu() {
-  menu.classList.remove('open');
-  btn.classList.remove('open');
-  btn.setAttribute('aria-expanded', false);
-  document.body.style.overflow = '';
-}
-
-// ── SCROLL ANIMATIONS ──
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-// ── FORMULARIO → WHATSAPP ──
-function enviarPedido() {
-  const nombre = document.getElementById('f-nombre').value.trim();
-  const tel = document.getElementById('f-tel').value.trim();
-  const fecha = document.getElementById('f-fecha').value;
-  const tipo = document.getElementById('f-tipo').value;
-  const detalles = document.getElementById('f-detalles').value.trim();
-  if (!nombre || !tipo) { alert('Por favor completá tu nombre y el tipo de pedido.'); return; }
-  const fechaStr = fecha ? new Date(fecha + 'T12:00:00').toLocaleDateString('es-AR', { weekday:'long', day:'numeric', month:'long' }) : 'a confirmar';
-  const msg = [
-    `Hola Bruzzone! 👋 Quiero hacer un pedido anticipado.`,
-    ``,
-    `👤 *Nombre:* ${nombre}`,
-    tel ? `📱 *Teléfono:* ${tel}` : '',
-    `📦 *Pedido:* ${tipo}`,
-    `📅 *Fecha de entrega:* ${fechaStr}`,
-    detalles ? `📝 *Detalles:* ${detalles}` : '',
-    ``,
-    `¡Gracias! 🥐`
-  ].filter(Boolean).join('\n');
-  window.open(`https://wa.me/5491153379763?text=${encodeURIComponent(msg)}`, '_blank');
-}
-
-// Fecha mínima = mañana
-const fi = document.getElementById('f-fecha');
-if (fi) { const d = new Date(); d.setDate(d.getDate()+1); fi.min = d.toISOString().split('T')[0]; }
-</script>
-
+  <script>
+    const bar=document.getElementById('bar'),nav=document.getElementById('nav');
+    addEventListener('scroll',()=>{const h=document.documentElement;bar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';nav.classList.toggle('scr',h.scrollTop>30)});
+    const links=document.getElementById('links');
+    document.getElementById('burger').addEventListener('click',()=>links.classList.toggle('open'));
+    links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  </script>
 </body>
 </html>
