@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- CV · Lautaro Manavella. Para PDF: abrí este link, Ctrl/Cmd+P > "Guardar como PDF". Editá email/WhatsApp/estudios. -->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CV — Lautaro Manavella · Desarrollador Web</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--ink:#14161c;--muted:#5b6273;--acc:#4f46e5;--acc-t:#eef0fe;--line:#e6e8ef;--fd:'Space Grotesk',sans-serif;--fb:'Inter',sans-serif}
+  html,body{background:#eceef3}
+  body{font-family:var(--fb);color:var(--ink);line-height:1.5;padding:24px;display:flex;justify-content:center}
+  .page{width:210mm;min-height:297mm;background:#fff;display:grid;grid-template-columns:68mm 1fr;box-shadow:0 12px 40px -18px rgba(0,0,0,.35)}
+  /* SIDEBAR */
+  .side{background:#14161c;color:#e9eaf0;padding:26px 22px}
+  .side .name{font-family:var(--fd);font-weight:700;font-size:1.5rem;line-height:1.1;color:#fff}
+  .side .role{color:#a9adbe;font-size:.82rem;margin-top:.35rem;font-weight:500}
+  .side h3{font-family:var(--fd);font-weight:600;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#7c6ff0;margin:1.6rem 0 .6rem}
+  .side .row{font-size:.8rem;color:#cdd0dc;margin:.28rem 0;word-break:break-word}
+  .side .row b{color:#fff;font-weight:600}
+  .chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.2rem}
+  .chip{font-size:.72rem;background:#23252f;border:1px solid #2f313d;color:#d7d9e3;padding:.22rem .5rem;border-radius:6px}
+  .side a{color:#b9b4f5;text-decoration:none}
+  /* MAIN */
+  .main{padding:26px 26px 26px 24px}
+  .main h2{font-family:var(--fd);font-weight:700;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin:0 0 .5rem}
+  .main section+section{margin-top:1.15rem}
+  .lead{font-size:.9rem;color:#3a3f4d}
+  .job{margin-top:.55rem}
+  .job .t{font-family:var(--fd);font-weight:600;font-size:.98rem}
+  .job .m{font-size:.78rem;color:var(--muted);margin:.05rem 0 .3rem}
+  .job ul{margin:0 0 0 1.05rem}
+  .job li{font-size:.84rem;margin:.15rem 0;color:#33384600;color:#333846}
+  .proj{display:flex;gap:.5rem;font-size:.84rem;margin:.28rem 0}
+  .proj b{font-family:var(--fd);font-weight:600}
+  .proj .lk{color:var(--acc);text-decoration:none}
+  .pill{display:inline-block;background:var(--acc-t);color:var(--acc);font-size:.72rem;font-weight:600;padding:.1rem .5rem;border-radius:6px;margin-left:.3rem}
+  @media print{
+    @page{size:A4;margin:0}
+    html,body{background:#fff;padding:0}
+    .page{box-shadow:none;width:210mm;min-height:297mm}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+  @media(max-width:800px){.page{grid-template-columns:1fr;width:100%}}
+</style>
+</head>
+<body>
+  <div class="page">
+    <aside class="side">
+      <div class="name">Lautaro<br>Manavella</div>
+      <div class="role">Desarrollador Web · Sitios a medida y sistemas de gestión</div>
+
+      <h3>Contacto</h3>
+      <div class="row"><b>Email</b><br>manavellalautaro@gmail.com</div>
+      <div class="row"><b>WhatsApp</b><br>[agregá tu número]</div>
+      <div class="row"><b>Ubicación</b><br>Argentina · Remoto</div>
+      <div class="row"><b>Portfolio</b><br><a href="https://web-leads-omega.vercel.app/portfolio.html">web-leads-omega.vercel.app/portfolio.html</a></div>
+      <div class="row"><b>GitHub</b><br><a href="https://github.com/mana1023">github.com/mana1023</a></div>
+
+      <h3>Habilidades</h3>
+      <div class="chips">
+        <span class="chip">JavaScript</span><span class="chip">React</span><span class="chip">Next.js</span>
+        <span class="chip">HTML5</span><span class="chip">CSS3</span><span class="chip">WordPress</span>
+        <span class="chip">Diseño Web</span><span class="chip">Responsive</span><span class="chip">UI/UX</span>
+        <span class="chip">Supabase</span><span class="chip">Git</span>
+      </div>
+
+      <h3>Idiomas</h3>
+      <div class="row">Español — nativo</div>
+      <div class="row">Inglés — intermedio (técnico)</div>
+
+      <h3>Formación</h3>
+      <div class="row"><b>Desarrollo de software</b><br>Estudiante · formación continua y autodidacta</div>
+    </aside>
+
+    <main class="main">
+      <section>
+        <h2>Perfil</h2>
+        <p class="lead">Desarrollador web enfocado en comercios y pymes. Diseño y programo sitios rápidos, modernos y 100% responsive, y sistemas de gestión que ordenan la operación del negocio (turnos, caja, clientes, mesas, stock). Trabajo con diseño propio —no plantillas— y entrego una primera versión en pocos días.</p>
+      </section>
+
+      <section>
+        <h2>Experiencia</h2>
+        <div class="job">
+          <div class="t">Desarrollador Web Freelance</div>
+          <div class="m">Proyectos propios · 2024 – actualidad</div>
+          <ul>
+            <li>Diseño y desarrollo integral de sitios web a medida para barberías, restaurantes, cafeterías, veterinarias, gimnasios, panaderías y mueblerías.</li>
+            <li>Desarrollo de sistemas de gestión interactivos: agenda de turnos, caja, ficha de clientes, POS de mesas, control de accesos, presupuestos y producción.</li>
+            <li>Maquetado responsive (HTML, CSS, JavaScript, React/Next.js), optimización para Google y despliegue online (Vercel).</li>
+            <li>Trabajo end-to-end con el cliente: relevamiento, diseño, desarrollo, ajustes y puesta en producción.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Proyectos destacados</h2>
+        <div class="proj"><span>▹</span><div><b>Suite de sitios + sistemas de gestión por rubro</b> <span class="pill">11 demos</span><br>Webs y paneles de gestión para 6 rubros. <a class="lk" href="https://web-leads-omega.vercel.app/portfolio.html">Ver portfolio →</a></div></div>
+        <div class="proj"><span>▹</span><div><b>CRM de prospección (Next.js + Supabase)</b><br>App para buscar comercios, puntuarlos y gestionar el seguimiento comercial, con integración a Google Places.</div></div>
+        <div class="proj"><span>▹</span><div><b>Sistemas de gestión interactivos</b><br>Paneles tipo POS/turnos/stock con lógica real de negocio (caja en vivo, comandas a cocina, historia clínica, cuotas y accesos).</div></div>
+      </section>
+
+      <section>
+        <h2>Qué ofrezco</h2>
+        <p class="lead">Webs a medida · Sistemas de gestión · Web + Sistema (combo) · Rediseños · Landing pages · Optimización y puesta online.</p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
