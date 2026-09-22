@@ -287,6 +287,54 @@
     .wa-float svg { width: 32px; height: 32px; }
     @keyframes pulse { 0% { box-shadow: 0 12px 30px -8px rgba(37,211,102,0.7), 0 0 0 0 rgba(37,211,102,0.5); } 70% { box-shadow: 0 12px 30px -8px rgba(37,211,102,0.7), 0 0 0 16px rgba(37,211,102,0); } 100% { box-shadow: 0 12px 30px -8px rgba(37,211,102,0.7), 0 0 0 0 rgba(37,211,102,0); } }
   </style>
+
+  <style>
+    /* ── Legibilidad ──────────────────────────────────────────────────────
+       El nav estaba fijo a 34px del borde, contando con UNA sola barra
+       arriba. Con la cinta de demo + la de promo se montaba encima y tapaba
+       el texto. Ahora va pegajoso debajo de las dos.                      */
+    nav {
+      position: sticky !important; top: 0 !important;
+      background: rgba(251,248,244,0.94);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 1px 0 var(--line);
+    }
+    .pers-ribbon, .announce { position: relative; z-index: 950; }
+    .announce { font-weight: 600; letter-spacing: 0.01em; }
+
+    /* El degradado diagonal dejaba la derecha casi clara y el texto blanco
+       encima no se leia. Se suma un velo vertical parejo.                 */
+    #hero { height: auto; min-height: calc(100vh - 110px); padding: 4rem 0 5rem; }
+    #hero-bg::after {
+      background:
+        linear-gradient(180deg, rgba(18,12,8,0.58) 0%, rgba(18,12,8,0.46) 45%, rgba(18,12,8,0.80) 100%),
+        linear-gradient(105deg, rgba(18,12,8,0.62) 0%, rgba(18,12,8,0.30) 60%, rgba(18,12,8,0.18) 100%);
+    }
+    #hero h1 { text-shadow: 0 2px 18px rgba(0,0,0,0.55); }
+    #hero p { color: #FCF7F1; text-shadow: 0 1px 14px rgba(0,0,0,0.6); }
+    .hero-badge { background: rgba(0,0,0,0.38); border-color: rgba(255,255,255,0.45); }
+    .btn-ghost { background: rgba(0,0,0,0.38); border-color: rgba(255,255,255,0.65); }
+    .scroll-hint { text-shadow: 0 1px 10px rgba(0,0,0,0.6); }
+
+    /* Si el JS no corre, las 38 secciones con fade-up quedaban INVISIBLES y
+       la pagina se veia vacia. Ahora se ven salvo que el JS diga lo contrario. */
+    .fade-up { opacity: 1; transform: none; }
+    html.anim .fade-up { opacity: 0; transform: translateY(34px); }
+    html.anim .fade-up.visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      html.anim .fade-up { opacity: 1 !important; transform: none !important; }
+    }
+
+    @media (max-width: 560px) {
+      #hero { min-height: 0; padding: 3rem 0 4rem; }
+      #hero h1 { font-size: clamp(2.1rem, 9.5vw, 3.1rem); max-width: 100%; }
+      #hero p { font-size: 1.02rem; }
+      .hero-ctas .btn { width: 100%; justify-content: center; }
+      .stat .lbl { font-size: 0.68rem; letter-spacing: 0.04em; }
+      .stats-grid { gap: 1.6rem 1rem; }
+    }
+  </style>
+  <script>document.documentElement.classList.add('anim');</script>
 </head>
 <body>
   <div id="progress-bar"></div>
@@ -617,7 +665,7 @@
       <div class="cols">
         <div class="fcol" style="max-width:280px">
           <div class="nav-logo">Fabricante Muebles</div>
-          <p style="font-size:0.9rem">Fábrica de muebles de diseño y a medida. Del living al placard, lo hacemos como lo imaginás.</p>
+          <p style="font-size:0.9rem">Fábrica de muebles a medida para hogar y oficina. Nos pasás las medidas y te pasamos el presupuesto cerrado.</p>
         </div>
         <div class="fcol">
           <h5>Muebles</h5>
@@ -672,6 +720,29 @@
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
     }, { threshold: 0.14 });
     document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+  </script>
+
+  <script>
+    // Red de seguridad: si algo quedo sin aparecer (scroll rapido, navegador
+    // viejo, JS lento), se muestra igual. Mejor sin animacion que invisible.
+    (function () {
+      var mostrar = function (el) { el.classList.add('visible'); };
+      var pendientes = function () {
+        return document.querySelectorAll('.fade-up:not(.visible)');
+      };
+      var revisar = function () {
+        Array.prototype.forEach.call(pendientes(), function (el) {
+          if (el.getBoundingClientRect().top < window.innerHeight * 1.2) mostrar(el);
+        });
+      };
+      window.addEventListener('scroll', revisar, { passive: true });
+      window.addEventListener('resize', revisar);
+      window.addEventListener('load', revisar);
+      setTimeout(revisar, 1200);
+      setTimeout(function () {
+        Array.prototype.forEach.call(pendientes(), mostrar);
+      }, 6000);
+    })();
   </script>
 </body>
 </html>

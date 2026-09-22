@@ -287,6 +287,54 @@
     .wa-float svg { width: 32px; height: 32px; }
     @keyframes pulse { 0% { box-shadow: 0 12px 30px -8px rgba(37,211,102,0.7), 0 0 0 0 rgba(37,211,102,0.5); } 70% { box-shadow: 0 12px 30px -8px rgba(37,211,102,0.7), 0 0 0 16px rgba(37,211,102,0); } 100% { box-shadow: 0 12px 30px -8px rgba(37,211,102,0.7), 0 0 0 0 rgba(37,211,102,0); } }
   </style>
+
+  <style>
+    /* ── Legibilidad ──────────────────────────────────────────────────────
+       El nav estaba fijo a 34px del borde, contando con UNA sola barra
+       arriba. Con la cinta de demo + la de promo se montaba encima y tapaba
+       el texto. Ahora va pegajoso debajo de las dos.                      */
+    nav {
+      position: sticky !important; top: 0 !important;
+      background: rgba(251,248,244,0.94);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 1px 0 var(--line);
+    }
+    .pers-ribbon, .announce { position: relative; z-index: 950; }
+    .announce { font-weight: 600; letter-spacing: 0.01em; }
+
+    /* El degradado diagonal dejaba la derecha casi clara y el texto blanco
+       encima no se leia. Se suma un velo vertical parejo.                 */
+    #hero { height: auto; min-height: calc(100vh - 110px); padding: 4rem 0 5rem; }
+    #hero-bg::after {
+      background:
+        linear-gradient(180deg, rgba(18,12,8,0.58) 0%, rgba(18,12,8,0.46) 45%, rgba(18,12,8,0.80) 100%),
+        linear-gradient(105deg, rgba(18,12,8,0.62) 0%, rgba(18,12,8,0.30) 60%, rgba(18,12,8,0.18) 100%);
+    }
+    #hero h1 { text-shadow: 0 2px 18px rgba(0,0,0,0.55); }
+    #hero p { color: #FCF7F1; text-shadow: 0 1px 14px rgba(0,0,0,0.6); }
+    .hero-badge { background: rgba(0,0,0,0.38); border-color: rgba(255,255,255,0.45); }
+    .btn-ghost { background: rgba(0,0,0,0.38); border-color: rgba(255,255,255,0.65); }
+    .scroll-hint { text-shadow: 0 1px 10px rgba(0,0,0,0.6); }
+
+    /* Si el JS no corre, las 38 secciones con fade-up quedaban INVISIBLES y
+       la pagina se veia vacia. Ahora se ven salvo que el JS diga lo contrario. */
+    .fade-up { opacity: 1; transform: none; }
+    html.anim .fade-up { opacity: 0; transform: translateY(34px); }
+    html.anim .fade-up.visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      html.anim .fade-up { opacity: 1 !important; transform: none !important; }
+    }
+
+    @media (max-width: 560px) {
+      #hero { min-height: 0; padding: 3rem 0 4rem; }
+      #hero h1 { font-size: clamp(2.1rem, 9.5vw, 3.1rem); max-width: 100%; }
+      #hero p { font-size: 1.02rem; }
+      .hero-ctas .btn { width: 100%; justify-content: center; }
+      .stat .lbl { font-size: 0.68rem; letter-spacing: 0.04em; }
+      .stats-grid { gap: 1.6rem 1rem; }
+    }
+  </style>
+  <script>document.documentElement.classList.add('anim');</script>
 </head>
 <body>
   <div id="progress-bar"></div>
@@ -317,7 +365,7 @@
   <!-- HERO -->
   <section id="hero">
     <div id="hero-bg">
-      <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=75" alt="Living amoblado por HM Muebles" />
+      <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=75" alt="Sala amoblada por HM Muebles" />
     </div>
     <div class="wrap">
       <span class="hero-badge"><span class="dot"></span> Te atendemos al momento por WhatsApp</span>
@@ -395,7 +443,7 @@
         <article class="cat fade-up">
           <div class="ph"><span class="badge">Living</span><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=70" alt="Sofá de living" loading="lazy" /></div>
           <div class="body">
-            <h3>Living & Sofás</h3>
+            <h3>Salas & Sofás</h3>
             <p>Sillones, sofás y mesas ratonas. Tapizados a elección y medidas a tu espacio.</p>
             <a class="go" href="https://wa.me/18096979005?text=Hola%20HM%20Muebles!%20Me%20interesan%20los%20muebles%20de%20living%20%F0%9F%9B%8B%EF%B8%8F" target="_blank" rel="noopener">Consultar por WhatsApp <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.3A7.9 7.9 0 0 0 12 4a8 8 0 0 0-6.9 12l-1 3.7 3.8-1A8 8 0 0 0 12 20a8 8 0 0 0 5.6-13.7ZM12 18.5c-1.2 0-2.4-.3-3.4-.9l-.2-.1-2.3.6.6-2.2-.2-.3A6.6 6.6 0 1 1 12 18.5Z"/></svg></a>
           </div>
@@ -422,9 +470,9 @@
         <article class="cat fade-up">
           <div class="ph"><span class="badge">A medida</span><img src="https://images.unsplash.com/photo-1558997519-83ea9252edf8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=70" alt="Placard de madera" loading="lazy" /></div>
           <div class="body">
-            <h3>Placares & Vestidores</h3>
-            <p>Placares, vestidores y roperos a medida. Aprovechamos hasta el último rincón.</p>
-            <a class="go" href="https://wa.me/18096979005?text=Hola%20HM%20Muebles!%20Quiero%20un%20placard%20a%20medida%20%F0%9F%9A%AA" target="_blank" rel="noopener">Consultar por WhatsApp <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.3A7.9 7.9 0 0 0 12 4a8 8 0 0 0-6.9 12l-1 3.7 3.8-1A8 8 0 0 0 12 20a8 8 0 0 0 5.6-13.7ZM12 18.5c-1.2 0-2.4-.3-3.4-.9l-.2-.1-2.3.6.6-2.2-.2-.3A6.6 6.6 0 1 1 12 18.5Z"/></svg></a>
+            <h3>Clósets & Vestidores</h3>
+            <p>Clósets, vestidores y roperos a medida. Aprovechamos hasta el último rincón.</p>
+            <a class="go" href="https://wa.me/18096979005?text=Hola%20HM%20Muebles!%20Quiero%20un%20cl%C3%B3set%20a%20medida%20%F0%9F%9A%AA" target="_blank" rel="noopener">Consultar por WhatsApp <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.3A7.9 7.9 0 0 0 12 4a8 8 0 0 0-6.9 12l-1 3.7 3.8-1A8 8 0 0 0 12 20a8 8 0 0 0 5.6-13.7ZM12 18.5c-1.2 0-2.4-.3-3.4-.9l-.2-.1-2.3.6.6-2.2-.2-.3A6.6 6.6 0 1 1 12 18.5Z"/></svg></a>
           </div>
         </article>
 
@@ -520,7 +568,7 @@
         <p class="lead">Algunos de los ambientes que amoblamos. El tuyo puede ser el próximo.</p>
       </div>
       <div class="gallery fade-up">
-        <a class="big" href="#contacto"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=70" alt="Living con sillón y rack" loading="lazy" /></a>
+        <a class="big" href="#contacto"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=70" alt="Sala con sillón y rack" loading="lazy" /></a>
         <a href="https://images.unsplash.com/photo-1540574163026-643ea20ade25?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=65" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1540574163026-643ea20ade25?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=65" alt="Sofá de cuero" loading="lazy" /></a>
         <a href="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=65" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=65" alt="Dormitorio moderno" loading="lazy" /></a>
         <a class="wide" href="#contacto"><img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=70" alt="Ambiente con sillones" loading="lazy" /></a>
@@ -552,7 +600,7 @@
       <div class="rev-grid">
         <div class="rev fade-up">
           <div class="stars">★★★★★</div>
-          <p>"Nos hicieron el placard del cuarto a medida y quedó impecable. Súper prolijos con la instalación y cumplieron los tiempos."</p>
+          <p>"Nos hicieron el clóset del cuarto a medida y quedó impecable. Súper prolijos con la instalación y cumplieron los tiempos."</p>
           <div class="who"><div class="av">MG</div><div><b>María González</b><small>Placard a medida · Banfield</small></div></div>
         </div>
         <div class="rev fade-up d1">
@@ -617,14 +665,14 @@
       <div class="cols">
         <div class="fcol" style="max-width:280px">
           <div class="nav-logo">HM Muebles</div>
-          <p style="font-size:0.9rem">Fábrica de muebles de diseño y a medida. Del living al placard, lo hacemos como lo imaginas.</p>
+          <p style="font-size:0.9rem">Fábrica y tienda de muebles en Santo Domingo: camas, colchones, comedores y muebles de oficina, a precio de fábrica.</p>
         </div>
         <div class="fcol">
           <h5>Muebles</h5>
-          <div><a href="#catalogo">Living & Sofás</a></div>
+          <div><a href="#catalogo">Salas & Sofás</a></div>
           <div><a href="#catalogo">Comedores</a></div>
           <div><a href="#catalogo">Dormitorios</a></div>
-          <div><a href="#catalogo">Placares</a></div>
+          <div><a href="#catalogo">Clósets</a></div>
           <div><a href="#catalogo">Cocinas</a></div>
         </div>
         <div class="fcol">
@@ -672,6 +720,29 @@
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
     }, { threshold: 0.14 });
     document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+  </script>
+
+  <script>
+    // Red de seguridad: si algo quedo sin aparecer (scroll rapido, navegador
+    // viejo, JS lento), se muestra igual. Mejor sin animacion que invisible.
+    (function () {
+      var mostrar = function (el) { el.classList.add('visible'); };
+      var pendientes = function () {
+        return document.querySelectorAll('.fade-up:not(.visible)');
+      };
+      var revisar = function () {
+        Array.prototype.forEach.call(pendientes(), function (el) {
+          if (el.getBoundingClientRect().top < window.innerHeight * 1.2) mostrar(el);
+        });
+      };
+      window.addEventListener('scroll', revisar, { passive: true });
+      window.addEventListener('resize', revisar);
+      window.addEventListener('load', revisar);
+      setTimeout(revisar, 1200);
+      setTimeout(function () {
+        Array.prototype.forEach.call(pendientes(), mostrar);
+      }, 6000);
+    })();
   </script>
 </body>
 </html>
