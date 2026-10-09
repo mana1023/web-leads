@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Presupuesto Tienda Online · Lautaro. Para PDF: Ctrl/Cmd+P > Guardar como PDF. Editá cliente/precios/fecha. -->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Presupuesto — Tienda Online · Lautaro Manavella</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--ink:#1a1c22;--muted:#5b6273;--soft:#8a90a0;--acc:#4338ca;--acc-t:#eef0fe;--ok:#0f7a43;--ok-t:#e9f7ef;--line:#dfe2ea;--fd:'Space Grotesk',sans-serif;--fb:'Inter',sans-serif}
+  html,body{background:#e9ebf0}
+  body{font-family:var(--fb);color:var(--ink);line-height:1.5;display:flex;justify-content:center;padding:22px;font-size:13px}
+  .page{width:210mm;min-height:297mm;background:#fff;padding:16mm 15mm}
+  .hd{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid var(--acc);padding-bottom:12px}
+  .hd .who .nm{font-family:var(--fd);font-weight:700;font-size:1.3rem;letter-spacing:-.01em}
+  .hd .who .rl{color:var(--acc);font-weight:600;font-size:.82rem}
+  .hd .who .ct{color:var(--muted);font-size:.76rem;margin-top:.3rem;line-height:1.6}
+  .hd .who .ct a{color:var(--muted);text-decoration:none}
+  .hd .doc{text-align:right}
+  .hd .doc h1{font-family:var(--fd);font-weight:700;font-size:1.35rem;letter-spacing:-.01em;color:var(--acc)}
+  .hd .doc .meta{font-size:.76rem;color:var(--muted);margin-top:.2rem;line-height:1.6}
+  .intro{margin:14px 0 4px;font-size:.9rem;color:#33384a}
+  .intro b{color:var(--ink)}
+  h2{font-family:var(--fd);font-weight:700;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--acc);margin:16px 0 .5rem}
+  .feat{columns:2;column-gap:22px;font-size:.84rem}
+  .feat div{break-inside:avoid;margin:.18rem 0;padding-left:1rem;position:relative;color:#333846}
+  .feat div::before{content:'';position:absolute;left:0;top:.5em;width:5px;height:5px;border-radius:50%;background:var(--acc)}
+  .opts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:.4rem}
+  .opt{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .opt .top{padding:10px 14px;border-bottom:1px solid var(--line)}
+  .opt .top .k{font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--acc)}
+  .opt .top .t{font-family:var(--fd);font-weight:700;font-size:1.02rem;margin-top:.1rem}
+  .opt .top .d{font-size:.78rem;color:var(--muted);margin-top:.2rem}
+  .opt .b{padding:10px 14px}
+  .opt .inc{font-size:.8rem}
+  .opt .inc div{margin:.16rem 0;padding-left:.95rem;position:relative;color:#3a3f4d}
+  .opt .inc div::before{content:'›';position:absolute;left:0;color:var(--acc);font-weight:700}
+  .opt .price{margin-top:.7rem;padding-top:.6rem;border-top:1px dashed var(--line)}
+  .opt .price .lbl{font-size:.72rem;color:var(--muted)}
+  .opt .price .n{font-family:var(--fd);font-weight:700;font-size:1.4rem;letter-spacing:-.02em}
+  .opt .price .n small{font-size:.72rem;color:var(--muted);font-weight:500}
+  .opt .foot{font-size:.74rem;color:var(--muted);margin-top:.5rem;line-height:1.5}
+  .opt .foot b{color:var(--ink)}
+  .badge{display:inline-block;font-size:.66rem;font-weight:600;padding:.1rem .45rem;border-radius:5px;margin-left:.3rem}
+  .badge.r{background:var(--ok-t);color:var(--ok)}
+  .badge.p{background:var(--acc-t);color:var(--acc)}
+  .terms{margin-top:14px;background:#f7f8fb;border:1px solid var(--line);border-radius:10px;padding:11px 14px;font-size:.8rem;color:#3a3f4d}
+  .terms b{color:var(--ink)}
+  .terms .row{margin:.2rem 0}
+  .note{font-size:.72rem;color:var(--soft);margin-top:10px;line-height:1.5}
+  .sign{margin-top:16px;display:flex;justify-content:space-between;align-items:flex-end;font-size:.8rem;color:var(--muted)}
+  .sign .l{font-family:var(--fd);font-weight:600;color:var(--ink)}
+  @media print{@page{size:A4;margin:0}html,body{background:#fff;padding:0}.page{width:210mm;min-height:auto}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+  @media(max-width:800px){.page{width:100%;padding:20px}.opts{grid-template-columns:1fr}.feat{columns:1}}
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="hd">
+      <div class="who">
+        <div class="nm">Lautaro Manavella</div>
+        <div class="rl">Desarrollador Web · Tiendas online y sistemas</div>
+        <div class="ct">
+          WhatsApp +54 9 11 5871-4709 · manavellalautaro@gmail.com<br>
+          Portfolio: <a href="https://web-leads-omega.vercel.app/portfolio.html">web-leads-omega.vercel.app/portfolio.html</a>
+        </div>
+      </div>
+      <div class="doc">
+        <h1>PRESUPUESTO</h1>
+        <div class="meta">Tienda online de indumentaria<br>Octubre 2026 · Válido por 15 días</div>
+      </div>
+    </div>
+
+    <p class="intro">Propuesta para el <b>desarrollo de tu tienda online</b>, en dos modalidades para que elijas según tu presupuesto y tus tiempos. En ambas, tu tienda vende sola y vos te ocupás solo de despachar.</p>
+
+    <h2>Qué incluye tu tienda (en las dos opciones)</h2>
+    <div class="feat">
+      <div>Catálogo con talles, colores y stock (baja solo al vender)</div>
+      <div>Carrito de compras</div>
+      <div>Pagos con Mercado Pago (tarjeta, débito y cuotas) con confirmación automática</div>
+      <div>Envíos a todo el país con cotización automática (Andreani / Correo / OCA) y etiquetas</div>
+      <div>Panel para cargar productos, cambiar precios y ver pedidos</div>
+      <div>100% responsive (optimizada para el celular)</div>
+      <div>Lista para vender por Instagram y Facebook</div>
+      <div>Optimización para aparecer en Google (SEO)</div>
+    </div>
+
+    <h2>Opciones</h2>
+    <div class="opts">
+      <div class="opt">
+        <div class="top">
+          <div class="k">Opción A <span class="badge r">Más rápida y económica</span></div>
+          <div class="t">Sobre plataforma profesional (Tiendanube)</div>
+          <div class="d">La monto y personalizo con tu marca sobre la plataforma líder de e-commerce en Argentina. Lista en pocos días.</div>
+        </div>
+        <div class="b">
+          <div class="inc">
+            <div>Diseño y personalización con tu marca</div>
+            <div>Carga de productos (fotos, talles, colores)</div>
+            <div>Configuración de Mercado Pago y envíos</div>
+            <div>Conexión de tu dominio y puesta online</div>
+            <div>Capacitación para que la manejes vos</div>
+          </div>
+          <div class="price">
+            <div class="lbl">Mi trabajo (pago único)</div>
+            <div class="n">$ 290.000 <small>ARS</small></div>
+          </div>
+          <div class="foot">
+            <b>Entrega:</b> 5 a 7 días.<br>
+            <b>Aparte (lo abonás vos a los proveedores):</b> plan mensual de la plataforma (desde ~$28.000/mes), comisión de Mercado Pago por venta y dominio (~$15.000/año).
+          </div>
+        </div>
+      </div>
+
+      <div class="opt">
+        <div class="top">
+          <div class="k">Opción B <span class="badge p">100% a medida</span></div>
+          <div class="t">Desarrollo desde cero</div>
+          <div class="d">Te programo una tienda única y totalmente tuya, sin depender de ninguna plataforma ni pagar cuota mensual.</div>
+        </div>
+        <div class="b">
+          <div class="inc">
+            <div>Desarrollo a medida (Next.js, React, Tailwind)</div>
+            <div>Base de datos propia (Supabase)</div>
+            <div>Integración de Mercado Pago y de los correos por API</div>
+            <div>Panel de administración propio</div>
+            <div>Diseño exclusivo y 100% de tu propiedad</div>
+          </div>
+          <div class="price">
+            <div class="lbl">Desarrollo (por etapas)</div>
+            <div class="n">desde $ 850.000 <small>ARS</small></div>
+          </div>
+          <div class="foot">
+            <b>Entrega:</b> 3 a 6 semanas.<br>
+            <b>Sin cuota mensual de plataforma.</b> Solo dominio (~$15.000/año) y comisión de Mercado Pago por venta.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="terms">
+      <div class="row"><b>Formas de pago:</b> Opción A — 50% de seña para arrancar y 50% al entregar. Opción B — 40% de seña y el resto por etapas (diseño, pagos, envíos y entrega final).</div>
+      <div class="row"><b>Incluye:</b> ajustes y correcciones durante el desarrollo. <b>Garantía:</b> 15 días de soporte post-entrega.</div>
+      <div class="row"><b>Tecnologías:</b> Mercado Pago · Envíopack/Zipnova (envíos) · Tiendanube (Opción A) · Next.js, React, Tailwind y Supabase (Opción B) · Google Analytics.</div>
+    </div>
+
+    <p class="note">Valores en pesos argentinos, de referencia y ajustables por inflación o por el alcance final (cantidad de productos, funciones extra como facturación AFIP, cupones, etc.). La diferencia entre las opciones es de concepto: la A es un montaje profesional sobre una plataforma lista (con abono mensual); la B es desarrollo propio desde cero (sin abono, pero mayor inversión y tiempo).</p>
+
+    <div class="sign">
+      <div>Gracias por la confianza.<br>Quedo a disposición para avanzar.</div>
+      <div class="l">Lautaro Manavella</div>
+    </div>
+  </div>
+</body>
+</html>
